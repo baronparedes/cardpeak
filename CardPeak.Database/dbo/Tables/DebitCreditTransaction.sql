@@ -4,5 +4,6 @@
     [AgentId] INT NOT NULL, 
     [Amount] DECIMAL(19, 4) NOT NULL, 
     [Remarks] VARCHAR(255) NOT NULL, 
+    [TransactionTypeId] INT NOT NULL DEFAULT 1, 
     CONSTRAINT [FK_DebitCreditTransaction_Agent] FOREIGN KEY ([AgentId]) REFERENCES [Agent]([AgentId])
 )

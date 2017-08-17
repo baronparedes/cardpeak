@@ -112,4 +112,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Units" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="bb9f0b43-001d-4b8c-9c1c-d318e0dc9ba1" ChangeDateTime="08/17/2017 15:35:52">
+    <Property Name="ElementName" Value="[dbo].[DebitCreditTransaction].[IsIncentive]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DebitCreditTransaction]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TransactionTypeId" />
+  </Operation>
 </Operations>

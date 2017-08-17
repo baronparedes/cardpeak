@@ -4,6 +4,7 @@ AS
 	SELECT 1, 'Bank' 
 	UNION ALL SELECT 2, 'Card Category' 
 	UNION ALL SELECT 3, 'Sub Card Category' 
+	UNION ALL SELECT 4, 'Transaction Type'
 )
 
 MERGE dbo.ReferenceType ref
