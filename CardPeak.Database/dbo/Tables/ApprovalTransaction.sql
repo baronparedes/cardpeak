@@ -11,5 +11,7 @@
     [ReferenceNumber2] VARCHAR(50) NULL, 
     [Client] VARCHAR(255) NULL, 
     [ApprovalDate] DATE NOT NULL, 
+    [BatchId] INT NULL, 
+    [IsDeleted] BIT NOT NULL DEFAULT 0, 
     CONSTRAINT [FK_ApprovalTransaction_Agent] FOREIGN KEY ([AgentId]) REFERENCES [Agent]([AgentId])
 )

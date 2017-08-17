@@ -25,8 +25,8 @@ GO
 :r Script/PopulateCardCategories.sql
 GO
 
-:r Script/PopulateDefaultRates.sql
+:r Script/PopulateTransactionTypes.sql
 GO
 
-:r Script/PopulateTransactionTypes.sql
+:r Script.PostDeployment.Defaults.sql
 GO

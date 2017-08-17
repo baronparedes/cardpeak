@@ -62,6 +62,7 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="Script" />
+    <Folder Include="Script\Defaults" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rate.sql" />
@@ -73,15 +74,20 @@
     <Build Include="dbo\Tables\Agent.sql" />
     <Build Include="dbo\Tables\ApprovalTransaction.sql" />
     <Build Include="dbo\Tables\DebitCreditTransaction.sql" />
+    <Build Include="dbo\Tables\BatchUpload.sql" />
+    <Build Include="dbo\Tables\User.sql" />
+    <None Include="Script\Defaults\PopulateDefaultRates.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
+    <None Include="Script.PostDeployment.Defaults.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Script\PopulateBanks.sql" />
     <None Include="CardPeak.Database.DEV.publish.xml" />
-    <None Include="Script\PopulateDefaultRates.sql" />
     <None Include="Script\PopulateTransactionTypes.sql" />
+    <None Include="Script\PopulateRoles.sql" />
+    <None Include="Script\Defaults\PopulateDefaultUsers.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CardPeak.Database.refactorlog" />
