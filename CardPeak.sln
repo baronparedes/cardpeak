@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Repository.EF", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.PlayPen", "CardPeak.PlayPen\CardPeak.PlayPen.csproj", "{3AF2352E-2C9D-411C-BB1D-026983FE02D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Service", "CardPeak.Service\CardPeak.Service.csproj", "{DCA5513F-0992-4300-BFED-93EE4A9787F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.WebAPI", "CardPeak.WebAPI\CardPeak.WebAPI.csproj", "{590842D3-7749-42AA-AFAA-7F3FAFF692E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{3AF2352E-2C9D-411C-BB1D-026983FE02D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AF2352E-2C9D-411C-BB1D-026983FE02D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AF2352E-2C9D-411C-BB1D-026983FE02D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA5513F-0992-4300-BFED-93EE4A9787F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA5513F-0992-4300-BFED-93EE4A9787F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA5513F-0992-4300-BFED-93EE4A9787F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA5513F-0992-4300-BFED-93EE4A9787F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
