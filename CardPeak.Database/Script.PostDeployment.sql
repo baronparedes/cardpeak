@@ -16,14 +16,17 @@ PRINT '*************************************************************************
 PRINT '********************************************************************************************************************************************'
 PRINT 'Environment: $(Environment)'
 
-:r Script/Script.PopulateReferenceTypes.sql
+:r Script/PopulateReferenceTypes.sql
 GO
 
-:r Script/Script.PopulateBanks.sql
+:r Script/PopulateBanks.sql
 GO
 
-:r Script/Script.PopulateCardCategories.sql
+:r Script/PopulateCardCategories.sql
 GO
 
-:r Script/Script.PopulateDefaultRates.sql
+:r Script/PopulateDefaultRates.sql
+GO
+
+:r Script/PopulateTransactionTypes.sql
 GO
