@@ -91,4 +91,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="BirthDate" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f55c96ff-c8c9-431f-a579-e8844ecf0d9b" ChangeDateTime="08/17/2017 15:17:06">
+    <Property Name="ElementName" Value="[dbo].[RetirementIncentive].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RetirementIncentive]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RateId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="181a1227-ad99-4a69-9461-29fd543335bf" ChangeDateTime="08/17/2017 15:23:06">
+    <Property Name="ElementName" Value="[dbo].[ApprovalTransaction].[SubCategory]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApprovalTransaction]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AgentId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="63a890ad-19c1-4016-8bf8-b53a84c0307c" ChangeDateTime="08/17/2017 15:23:46">
+    <Property Name="ElementName" Value="[dbo].[ApprovalTransaction].[Unit]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApprovalTransaction]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Units" />
+  </Operation>
 </Operations>

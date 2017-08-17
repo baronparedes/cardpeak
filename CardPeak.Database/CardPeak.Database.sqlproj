@@ -71,6 +71,8 @@
     <None Include="Script\Script.PopulateCardCategories.sql" />
     <Build Include="dbo\Tables\Account.sql" />
     <Build Include="dbo\Tables\Agent.sql" />
+    <Build Include="dbo\Tables\ApprovalTransaction.sql" />
+    <Build Include="dbo\Tables\DebitCreditTransaction.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
