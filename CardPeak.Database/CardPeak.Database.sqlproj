@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{06fd6147-076f-434f-9249-1bf78edba408}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -61,8 +61,28 @@
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
+    <Folder Include="Script" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Bank.sql" />
+    <Build Include="dbo\Tables\Reference.sql" />
+    <Build Include="dbo\Tables\ReferenceType.sql" />
+    <None Include="Script\Script.PopulateReferenceTypes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Script\Script.PopulateBanks.sql" />
+    <None Include="CardPeak.Database.DEV.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="CardPeak.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="Environment">
+      <DefaultValue>DEV</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
   </ItemGroup>
 </Project>
