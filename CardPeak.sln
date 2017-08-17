@@ -7,6 +7,14 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CardPeak.Database", "CardPe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "artifacts", "artifacts", "{D374FE6F-6B0F-4855-97ED-25E65821E96C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Domain", "CardPeak.Domain\CardPeak.Domain.csproj", "{15B6B1B8-C0D9-4F0E-8F61-D4665E343664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Repository", "CardPeak.Repository\CardPeak.Repository.csproj", "{0C152E52-413E-449E-9F51-B5FD65C03D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Repository.EF", "CardPeak.Repository.EF\CardPeak.Repository.EF.csproj", "{24F032D8-2342-4D48-BC52-71F7E167016C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.PlayPen", "CardPeak.PlayPen\CardPeak.PlayPen.csproj", "{3AF2352E-2C9D-411C-BB1D-026983FE02D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +27,22 @@ Global
 		{06FD6147-076F-434F-9249-1BF78EDBA408}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06FD6147-076F-434F-9249-1BF78EDBA408}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06FD6147-076F-434F-9249-1BF78EDBA408}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{15B6B1B8-C0D9-4F0E-8F61-D4665E343664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B6B1B8-C0D9-4F0E-8F61-D4665E343664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B6B1B8-C0D9-4F0E-8F61-D4665E343664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B6B1B8-C0D9-4F0E-8F61-D4665E343664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C152E52-413E-449E-9F51-B5FD65C03D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C152E52-413E-449E-9F51-B5FD65C03D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C152E52-413E-449E-9F51-B5FD65C03D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C152E52-413E-449E-9F51-B5FD65C03D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F032D8-2342-4D48-BC52-71F7E167016C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F032D8-2342-4D48-BC52-71F7E167016C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F032D8-2342-4D48-BC52-71F7E167016C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F032D8-2342-4D48-BC52-71F7E167016C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF2352E-2C9D-411C-BB1D-026983FE02D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF2352E-2C9D-411C-BB1D-026983FE02D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF2352E-2C9D-411C-BB1D-026983FE02D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF2352E-2C9D-411C-BB1D-026983FE02D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
