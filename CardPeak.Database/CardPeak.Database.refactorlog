@@ -28,4 +28,67 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ReferenceTypeId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="3cda32fc-c47a-412f-b5a2-e587b14d7ef4" ChangeDateTime="08/17/2017 14:26:41">
+    <Property Name="ElementName" Value="[dbo].[Bank].[BankId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Bank]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CardRateId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="89e7c756-0979-4143-b8b8-e5d00eedb2a6" ChangeDateTime="08/17/2017 14:27:08">
+    <Property Name="ElementName" Value="[dbo].[Bank].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Bank]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Rate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0ec038f3-534e-4b79-afe8-f5e188b86670" ChangeDateTime="08/17/2017 14:29:35">
+    <Property Name="ElementName" Value="[dbo].[Bank].[CardRateId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Bank]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RateId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ca80f570-f6df-44a1-afa6-b4dd6b2ff700" ChangeDateTime="08/17/2017 14:32:53">
+    <Property Name="ElementName" Value="[dbo].[Rate].[AgentId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Rate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AccountId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="44875992-c111-4b20-96fe-526692141e00" ChangeDateTime="08/17/2017 14:33:00">
+    <Property Name="ElementName" Value="[dbo].[Account].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Account]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AccountId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9c821ffd-8224-4764-a098-861787c89b83" ChangeDateTime="08/17/2017 14:42:12">
+    <Property Name="ElementName" Value="[dbo].[Rate].[AccountId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Rate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AgentId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a5cbaca7-431c-4dd1-84b4-6a532cbd72fa" ChangeDateTime="08/17/2017 14:42:21">
+    <Property Name="ElementName" Value="[dbo].[Account].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Account]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AgentId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="11212d7a-ad41-4f43-8662-3f142be08eb1" ChangeDateTime="08/17/2017 14:43:04">
+    <Property Name="ElementName" Value="[dbo].[Agent].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Agent]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AgentId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="02db6178-dfeb-4241-a039-d54b15db3e42" ChangeDateTime="08/17/2017 14:44:45">
+    <Property Name="ElementName" Value="[dbo].[Agent].[DateOfBirth]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Agent]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="BirthDate" />
+  </Operation>
 </Operations>

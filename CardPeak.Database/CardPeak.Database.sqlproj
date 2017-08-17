@@ -64,10 +64,13 @@
     <Folder Include="Script" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Bank.sql" />
+    <Build Include="dbo\Tables\Rate.sql" />
     <Build Include="dbo\Tables\Reference.sql" />
     <Build Include="dbo\Tables\ReferenceType.sql" />
     <None Include="Script\Script.PopulateReferenceTypes.sql" />
+    <None Include="Script\Script.PopulateCardCategories.sql" />
+    <Build Include="dbo\Tables\Account.sql" />
+    <Build Include="dbo\Tables\Agent.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
@@ -75,6 +78,7 @@
   <ItemGroup>
     <None Include="Script\Script.PopulateBanks.sql" />
     <None Include="CardPeak.Database.DEV.publish.xml" />
+    <None Include="Script\Script.PopulateDefaultRates.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CardPeak.Database.refactorlog" />

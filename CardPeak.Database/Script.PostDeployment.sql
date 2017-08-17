@@ -21,3 +21,9 @@ GO
 
 :r Script/Script.PopulateBanks.sql
 GO
+
+:r Script/Script.PopulateCardCategories.sql
+GO
+
+:r Script/Script.PopulateDefaultRates.sql
+GO
