@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CardPeak.Database", "CardPeak.Database\CardPeak.Database.sqlproj", "{06FD6147-076F-434F-9249-1BF78EDBA408}"
 EndProject
@@ -16,10 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.PlayPen", "CardPeak.PlayPen\CardPeak.PlayPen.csproj", "{3AF2352E-2C9D-411C-BB1D-026983FE02D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Service", "CardPeak.Service\CardPeak.Service.csproj", "{DCA5513F-0992-4300-BFED-93EE4A9787F5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.WebAPI", "CardPeak.WebAPI\CardPeak.WebAPI.csproj", "{590842D3-7749-42AA-AFAA-7F3FAFF692E5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.UI", "CardPeak.UI\CardPeak.UI.csproj", "{54B3792F-9F74-4D44-A051-4FD8751BD09E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,16 +49,11 @@ Global
 		{DCA5513F-0992-4300-BFED-93EE4A9787F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCA5513F-0992-4300-BFED-93EE4A9787F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCA5513F-0992-4300-BFED-93EE4A9787F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{590842D3-7749-42AA-AFAA-7F3FAFF692E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54B3792F-9F74-4D44-A051-4FD8751BD09E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54B3792F-9F74-4D44-A051-4FD8751BD09E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54B3792F-9F74-4D44-A051-4FD8751BD09E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54B3792F-9F74-4D44-A051-4FD8751BD09E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DDD7CAA-8597-44A4-A055-7A67A69EDEED}
 	EndGlobalSection
 EndGlobal
