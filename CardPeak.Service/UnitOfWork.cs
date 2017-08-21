@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Service
 {
-    public class UnitOfWork : IUnitOfWork
+    public abstract class UnitOfWork : IUnitOfWork
     {
         protected readonly CardPeakDbContext DomainContext;
 

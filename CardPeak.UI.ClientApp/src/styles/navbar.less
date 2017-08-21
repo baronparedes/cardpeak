@@ -1,0 +1,50 @@
+﻿@import "mixins.less";
+
+@nav-text-color: #D3D3D3;
+@nav-text-color-contrast: #D1773D;
+@nav-inverse-bg-color: #242424;
+
+.navbar-brand {
+    .brand-font;
+}
+
+.navbar-inverse {
+    background: none;
+    background-color: @nav-inverse-bg-color;
+}
+
+.navbar {
+    .navbar-brand {
+        color: @nav-text-color;
+    }
+
+    .navbar-nav,
+    .navbar-nav > li > a {
+        color: @nav-text-color;
+        text-transform: uppercase;
+
+        &:hover {
+            color: @nav-text-color-contrast;
+        }
+
+        &:focus {
+            color: @nav-text-color-contrast;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    }
+}
+
+.dropdown-menu {
+    background: none;
+    background-color: @nav-inverse-bg-color;
+}
+
+.dropdown-menu > li > a {
+    color: @nav-text-color;
+    &:hover,
+    &:focus {
+        background-image: none !important;
+        background-color: @nav-text-color-contrast;
+    }
+}

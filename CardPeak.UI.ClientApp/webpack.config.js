@@ -85,7 +85,7 @@ const loaders = [
         test: /\.less$/,
         exclude: /(node_modules)/,
         use: extractLess.extract({
-            use: ["less-loader", "css-loader"],
+            use: ["css-loader", "less-loader"],
             fallback: "style-loader"
         })
     },

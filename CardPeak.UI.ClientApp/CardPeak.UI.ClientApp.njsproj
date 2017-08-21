@@ -4,6 +4,11 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>CardPeak.UI.ClientApp</Name>
     <RootNamespace>CardPeak.UI.ClientApp</RootNamespace>
+    <EnableTypeScript>true</EnableTypeScript>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <ToolsVersionPromptShown>0.0</ToolsVersionPromptShown>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -36,10 +41,28 @@
     <Content Include=".gitignore">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\App.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\AppRouter.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\layout\NavigationBar.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\index.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\index.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\styles\main.less">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\styles\mixins.less">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\styles\navbar.less">
       <SubType>Code</SubType>
     </Content>
     <Content Include="tsconfig.json">
@@ -55,12 +78,18 @@
     <Folder Include="src\components\layout\" />
     <Folder Include="src\components\views\" />
     <Folder Include="src\content\" />
+    <Folder Include="src\types\" />
     <Folder Include="src\services\" />
     <Folder Include="src\services\actions\" />
     <Folder Include="src\services\api\" />
     <Folder Include="src\services\core\" />
     <Folder Include="src\services\reducers\" />
     <Folder Include="src\styles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\types\agent.d.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
