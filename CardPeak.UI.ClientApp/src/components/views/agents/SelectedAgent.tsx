@@ -1,27 +1,31 @@
 ﻿import * as React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ButtonProps } from 'react-bootstrap'
 
-const SelectedAgent = (props: { agent: CardPeak.Types.Agent }) => {
-    if (!!!props.agent) {
+export default class SelectedAgent extends React.Component<{ agent: CardPeak.Types.Agent, handleOnClick?: () => void  }, undefined> {
+    onClick = (e: React.MouseEvent<React.ClassicComponent<ButtonProps, {}>>): void => {
+        e.preventDefault();
+        this.props.handleOnClick();
+    }
+    render() {
+        if (!!!this.props.agent) {
+            return (
+                <div>
+                    <span className="text-muted spacer-right">Select an Agent</span>
+                    <Button onClick={e => this.onClick(e)}>
+                        <i className="fa fa-sm fa-users"></i>
+                    </Button>    
+                </div>
+            );
+        }
         return (
-            <div>
-                <span className="text-muted spacer-right">Select an Agent</span>
-                <Button>
+            <h5 className="spacer-right">
+                <span className="spacer-right">
+                    {this.props.agent.firstName + " " + this.props.agent.lastName}    
+                </span>
+                <Button onClick={e => this.onClick(e)}>
                     <i className="fa fa-sm fa-users"></i>
-                </Button>    
-            </div>
+                </Button>
+            </h5>
         );
     }
-    return (
-        <h5 className="spacer-right">
-            <span className="spacer-right">
-                {props.agent.firstName + " " + props.agent.lastName}    
-            </span>
-            <Button>
-                <i className="fa fa-sm fa-users"></i>
-            </Button>
-        </h5>
-    );
 }
-
-export default SelectedAgent;

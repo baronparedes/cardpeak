@@ -150,6 +150,7 @@ module.exports = {
     entry: {
         js: './index.tsx',
         vendor: [
+            'axios',
             'classnames',             
             'react',               
             'react-bootstrap',       
@@ -159,7 +160,8 @@ module.exports = {
             'react-router-dom',       
             'redux-action',          
             'redux-actions',        
-            'redux-logger'              
+            'redux-logger',
+            'redux-thunk'
         ],
     },
     output: {

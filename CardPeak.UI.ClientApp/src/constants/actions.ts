@@ -1,4 +1,5 @@
 ﻿export const AGENT_ACTIONS = {
     SELECT_AGENT: "SELECT_AGENT",
-    GET_ALL: "GET_ALL"
+    GET_ALL: "GET_ALL",
+    GET_ALL_COMPLETE: "GET_ALL_COMPLETE"
 }

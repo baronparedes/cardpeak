@@ -13,25 +13,27 @@ const initialState: CardPeak.Models.AgentsModel = {
     }
 };
 
-export default handleActions<CardPeak.Models.AgentsModel>({
+export default handleActions<CardPeak.Models.AgentsModel, CardPeak.Types.Agent | CardPeak.Types.Agent[]>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
-            selectedAgent: {
-                agentId: 2,
-                firstName: "Baron Patrick",
-                middleName: "Tablan",
-                lastName: "Paredes",
-                gender: "M",
-                email: "baronp@magenic.com"
-            },
+            selectedAgent: action.payload,
             ...action.payload,
             ...state
         };
     },
     [AGENT_ACTIONS.GET_ALL]: (state, action) => {
         return {
+            loadingAgents: true,
             ...action.payload,
             ...state
+        };
+    },
+    [AGENT_ACTIONS.GET_ALL_COMPLETE]: (state, action) => {
+        return {
+            loadingAgents: false,
+            agents: action.payload,
+            ...action.payload,
+            ...state,
         };
     }
 }, initialState);

@@ -16,11 +16,14 @@ const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
                 </Panel>
             </Grid>    
             <Grid fluid className="grid-rows margin-top">
-                {props.agents.map((agent) => {
-                    return (
-                        <AgentDetail agent={agent} />
-                    )
-                })}
+                {
+                    props.agents && props.agents.length > 0 ? 
+                        props.agents.map((agent) => {
+                            return (
+                                <AgentDetail agent={agent} key={agent.agentId} />
+                            )
+                        }) : null
+                }
             </Grid>   
         </div>
     )
