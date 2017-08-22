@@ -6,5 +6,28 @@ html,
 body {
     min-height: 100%;
     width: 100%;
+    background-color: @body-bg-color;
     .page-font;
+}
+
+h1, h2, h3 {
+    color: @header-font-color;
+    .header-font;
+}
+
+.btn-default {
+    text-transform: lowercase;
+    &:hover {
+        background-image: none;
+        color: @btn-default-color;
+        background-color: @btn-default-bg-color;
+
+        > a {
+            color: @btn-default-color;
+        }
+    }
+}
+
+.spacer-right {
+    padding-right: 10px;
 }

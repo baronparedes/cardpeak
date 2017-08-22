@@ -4,7 +4,7 @@ export default class AgentsView extends React.Component<{}, undefined> {
     render() {
         return (
             <div>
-                Agent View
+                <h1>Agents</h1>
             </div>
         )
     }

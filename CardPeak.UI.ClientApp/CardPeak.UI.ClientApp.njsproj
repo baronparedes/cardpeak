@@ -101,6 +101,9 @@
     <Folder Include="src\styles\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\services\reducers\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\types\agent.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
