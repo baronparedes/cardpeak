@@ -2,7 +2,14 @@
 import { AGENT_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.DashboardModel = {
-    selectedAgent: null
+    selectedAgent: {
+        agentId: 2,
+        firstName: "Baron Patrick",
+        middleName: "Tablan",
+        lastName: "Paredes",
+        gender: "M",
+        email: "baronp@magenic.com"
+    }
 };
 
 export default handleActions<CardPeak.Models.DashboardModel>({
@@ -14,8 +21,7 @@ export default handleActions<CardPeak.Models.DashboardModel>({
                 middleName: "Tablan",
                 lastName: "Paredes",
                 gender: "M",
-                email: "baronp@magenic.com",
-                birthDate: "09/01/1986"
+                email: "baronp@magenic.com"
             },
             ...action.payload,
             ...state

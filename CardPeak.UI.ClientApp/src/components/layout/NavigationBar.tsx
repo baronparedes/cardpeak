@@ -2,7 +2,7 @@
 import { Nav, Navbar, NavItem, NavbarHeader, NavDropdown, MenuItem, NavbarBrand } from 'react-bootstrap'
 import { Link, NavLink, Route } from 'react-router-dom'
 
-export const NavLinkText = (props: { text: string, fa: string }) => {
+const NavLinkText = (props: { text: string, fa: string }) => {
     return (
         <span>
             <i className={"fa fa-nav " + props.fa} aria-hidden="true"></i>

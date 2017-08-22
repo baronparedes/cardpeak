@@ -5,7 +5,7 @@
         public middleName: string;
         public lastName: string;
         public gender: string;
-        public birthDate: Date;
+        public birthDate?: Date;
         public email: string;
     }
 }
