@@ -1,8 +1,5 @@
 ﻿@import "mixins.less";
-
-@nav-text-color: #D3D3D3;
-@nav-text-color-contrast: #D1773D;
-@nav-inverse-bg-color: #242424;
+@import "theme.less";
 
 .navbar-brand {
     .brand-font;
@@ -29,8 +26,7 @@
 
         &:focus {
             color: @nav-text-color-contrast;
-            font-weight: bold;
-            text-decoration: underline;
+            font-weight: bolder;
         }
     }
 }
@@ -47,4 +43,8 @@
         background-image: none !important;
         background-color: @nav-text-color-contrast;
     }
+}
+
+.fa-nav {
+    padding-right: 5px;
 }

@@ -2,12 +2,16 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { App } from './App'
 
+import AgentsView from './views/agents/AgentsView'
+import DashboardView from './views/dashboard/DashboardView'
+
 export class AppRouter extends React.Component {
     render() {
         return (
             <Router>
                 <App>
-                    Main App within Router
+                    <Route exact path="/" component={DashboardView} />
+                    <Route exact path="/agents" component={AgentsView} />
                 </App>
             </Router>
         );

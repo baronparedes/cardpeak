@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import { NavigationBar } from './layout/NavigationBar'
+import { Footer } from './layout/Footer'
 
 export class App extends React.Component<{}, undefined>{
     render() {
@@ -8,6 +9,7 @@ export class App extends React.Component<{}, undefined>{
                 <NavigationBar />
                 <div id="content" className="container no-padding">
                     {this.props.children}
+                    <Footer />
                 </div>
             </div>
         )
