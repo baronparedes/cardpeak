@@ -150,11 +150,16 @@ module.exports = {
     entry: {
         js: './index.tsx',
         vendor: [
-            'react',
-            'react-dom',
-            'react-bootstrap',
-            'react-router-dom',
-            'classnames'
+            'classnames',             
+            'react',               
+            'react-bootstrap',       
+            'react-dom',       
+            'react-redux',       
+            'react-router',        
+            'react-router-dom',       
+            'redux-action',          
+            'redux-actions',        
+            'redux-logger'              
         ],
     },
     output: {

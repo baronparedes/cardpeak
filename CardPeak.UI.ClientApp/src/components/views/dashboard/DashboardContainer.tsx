@@ -37,9 +37,22 @@ class DashboardContainer extends React.Component<DashboardContainerProps, undefi
     }
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid no-padding">
                 <Panel>
                     <RenderAgentName agent={this.props.selectedAgent} />
+                </Panel>
+                <Panel className="text-right">
+                    <h4>
+                        Account Balance
+                        <span className="text-muted spacer-left">1000.00</span>
+                    </h4>
+                    <h4>
+                        Savings Incentive
+                        <span className="text-muted spacer-left">1000.00</span>
+                    </h4>
+                </Panel>
+                <Panel>
+                    Transactions Here
                 </Panel>
             </div>
         )
