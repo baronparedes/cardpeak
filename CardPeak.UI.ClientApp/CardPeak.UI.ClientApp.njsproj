@@ -8,7 +8,7 @@
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <ToolsVersionPromptShown>0.0</ToolsVersionPromptShown>
-    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -91,6 +91,7 @@
     <Folder Include="src\components\views\" />
     <Folder Include="src\components\views\agents\" />
     <Folder Include="src\components\views\dashboard\" />
+    <Folder Include="src\constants\" />
     <Folder Include="src\content\" />
     <Folder Include="src\types\" />
     <Folder Include="src\services\" />
@@ -101,12 +102,14 @@
     <Folder Include="src\styles\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\constants\actions.ts" />
     <TypeScriptCompile Include="src\services\reducers\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\types\agent.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\types\models.d.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

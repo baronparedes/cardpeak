@@ -1,0 +1,3 @@
+﻿export const AGENT_ACTIONS = {
+    SELECT_AGENT: "SELECT_AGENT"
+}
