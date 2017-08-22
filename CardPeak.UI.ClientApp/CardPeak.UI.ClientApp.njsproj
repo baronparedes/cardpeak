@@ -37,7 +37,6 @@
     <Compile Include="webpack.config.js">
       <SubType>Code</SubType>
     </Compile>
-    <None Include=".babelrc" />
     <Content Include=".gitignore">
       <SubType>Code</SubType>
     </Content>
@@ -103,6 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\constants\actions.ts" />
+    <TypeScriptCompile Include="src\services\actions\dashboardActions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\reducers\dashboardReducer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
