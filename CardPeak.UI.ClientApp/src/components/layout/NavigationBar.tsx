@@ -13,13 +13,6 @@ export const NavLinkText = (props: { text: string, fa: string }) => {
 
 export class NavigationBar extends React.Component<{}, undefined> {
     render() {
-        let settingsTitle = (
-            <span>
-                <i className="fa fa-sliders fa-nav" aria-hidden="true"></i>
-                Settings
-            </span>
-        );
-
         return (
             <Navbar inverse collapseOnSelect id="main-nav" staticTop>
                 <Navbar.Header>
@@ -32,7 +25,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     <Nav pullRight>
                         <li role="presentation">
                             <NavLink exact to="/">
-                                <NavLinkText text="Dashboard" fa="fa-tachometer" />
+                                <NavLinkText text="Dashboard" fa="fa-area-chart" />
                             </NavLink>
                         </li>
                         <li role="presentation">
@@ -40,13 +33,29 @@ export class NavigationBar extends React.Component<{}, undefined> {
                                 <NavLinkText text="Agents" fa="fa-users" />
                             </NavLink>
                         </li>
-                        <NavDropdown eventKey={3} title={<NavLinkText text="Settings" fa="fa-sliders"/>} id="basic-nav-dropdown">
-                            <li role="menuitem"><NavLink exact to="/">Banks</NavLink></li>
-                            <li role="menuitem"><NavLink exact to="/">Rates</NavLink></li>
+                        <NavDropdown eventKey={3} title={<NavLinkText text="Settings" fa="fa-cog"/>} id="basic-nav-dropdown">
+                            <li role="menuitem">
+                                <NavLink exact to="/">
+                                    <NavLinkText text="Banks" fa="fa-credit-card" />
+                                </NavLink>
+                            </li>
+                            <li role="menuitem">
+                                <NavLink exact to="/">
+                                    <NavLinkText text="Rates" fa="fa-sliders" />
+                                </NavLink>
+                            </li>
                             <MenuItem divider />
-                            <li role="menuitem"><NavLink exact to="/">Agent Aliases</NavLink></li>
+                            <li role="menuitem">
+                                <NavLink exact to="/">
+                                    <NavLinkText text="Aliases" fa="fa-user-circle" />
+                                </NavLink>
+                            </li>
                             <MenuItem divider />
-                            <li role="menuitem"><NavLink exact to="/">Configure Upload</NavLink></li>
+                            <li role="menuitem">
+                                <NavLink exact to="/">
+                                    <NavLinkText text="Configure Uploads" fa="fa-wrench" />
+                                </NavLink>
+                            </li>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
