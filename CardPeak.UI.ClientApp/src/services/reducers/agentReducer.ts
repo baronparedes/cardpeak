@@ -8,7 +8,8 @@ const initialState: CardPeak.Models.AgentsModel = {
         middleName: "Tablan",
         lastName: "Paredes",
         gender: "M",
-        email: "baronp@magenic.com"
+        email: "baronp@magenic.com",
+        alias: undefined
     }
 };
 
@@ -25,6 +26,12 @@ export default handleActions<CardPeak.Models.AgentsModel>({
             },
             ...action.payload,
             ...state
-        }
+        };
+    },
+    [AGENT_ACTIONS.GET_ALL]: (state, action) => {
+        return {
+            ...action.payload,
+            ...state
+        };
     }
 }, initialState);

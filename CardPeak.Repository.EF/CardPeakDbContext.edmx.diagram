@@ -17,6 +17,7 @@
         <AssociationConnector Association="CardPeakModel.FK_ApprovalTransaction_Agent" ManuallyRouted="false" />
         <AssociationConnector Association="CardPeakModel.FK_DebitCreditTransaction_Agent" ManuallyRouted="false" />
         <AssociationConnector Association="CardPeakModel.FK_Reference_ReferenceType" ManuallyRouted="false" />
+        <AssociationConnector Association="CardPeakModel.FK_Account_Agent" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

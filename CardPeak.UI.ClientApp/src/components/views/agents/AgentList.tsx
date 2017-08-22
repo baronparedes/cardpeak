@@ -7,7 +7,7 @@ interface AgentListProps {
     agents?: CardPeak.Types.Agent[]
 }
 
-const AgentList: React.StatelessComponent<{}> = () => {
+const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
     return (
         <div>
             <Grid fluid className="grid-header text-muted">
@@ -16,14 +16,11 @@ const AgentList: React.StatelessComponent<{}> = () => {
                 </Panel>
             </Grid>    
             <Grid fluid className="grid-rows margin-top">
-                <AgentDetail />
-                <AgentDetail />
-                <AgentDetail />
-                <AgentDetail />
-                <AgentDetail />
-                <AgentDetail />
-                <AgentDetail />
-                <AgentDetail />
+                {props.agents.map((agent) => {
+                    return (
+                        <AgentDetail agent={agent} />
+                    )
+                })}
             </Grid>   
         </div>
     )

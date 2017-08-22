@@ -11,7 +11,7 @@ namespace CardPeak.Service
 {
     public sealed class AgentService : UnitOfWork, IUnitOfWork
     {
-        public IAgentRepository AgentRepository { get; private set; }
+        private IAgentRepository AgentRepository;
 
         public AgentService(CardPeakDbContext context) 
             : base(context)

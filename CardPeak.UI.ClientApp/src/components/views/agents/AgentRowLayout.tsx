@@ -5,7 +5,7 @@ interface AgentRowLayoutProps {
     firstName?: string,
     lastName?: string,
     gender?: string,
-    alias?: string,
+    alias?: string[],
     isHeader: boolean
 }
 
@@ -22,7 +22,7 @@ const AgentRowLayout = (props: AgentRowLayoutProps) => {
                 {props.isHeader ? "gender" : props.gender}
             </Col>
             <Col md={1} lg={1} smHidden xsHidden>
-                {props.isHeader ? "alias" : props.alias}
+                {props.isHeader ? "alias" : "aliases"}
             </Col>
             <Col md={1} lg={1} sm={1} xs={1}>
                 {props.isHeader ? "actions" : "actions"}

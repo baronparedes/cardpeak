@@ -106,6 +106,18 @@
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
         </EntityType>
+        <Association Name="FK_Account_Agent">
+          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ApprovalTransaction_Agent">
           <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
           <End Role="ApprovalTransaction" Type="Self.ApprovalTransaction" Multiplicity="*" />
@@ -152,6 +164,10 @@
           <EntitySet Name="Reference" EntityType="Self.Reference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenceType" EntityType="Self.ReferenceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_Agent" Association="Self.FK_Account_Agent">
+            <End Role="Agent" EntitySet="Agent" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
           <AssociationSet Name="FK_ApprovalTransaction_Agent" Association="Self.FK_ApprovalTransaction_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="ApprovalTransaction" EntitySet="ApprovalTransaction" />
@@ -176,6 +192,7 @@
           </Key>
           <Property Name="AgentId" Type="Int32" Nullable="false" />
           <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_Account_Agent" FromRole="Account" ToRole="Agent" />
         </EntityType>
         <EntityType Name="Agent">
           <Key>
@@ -190,6 +207,7 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ApprovalTransactions" Relationship="Self.FK_ApprovalTransaction_Agent" FromRole="Agent" ToRole="ApprovalTransaction" />
           <NavigationProperty Name="DebitCreditTransactions" Relationship="Self.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
+          <NavigationProperty Name="Accounts" Relationship="CardPeakModel.FK_Account_Agent" FromRole="Agent" ToRole="Account" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
@@ -334,7 +352,23 @@
             <End Role="ReferenceType" EntitySet="ReferenceTypes" />
             <End Role="Reference" EntitySet="References" />
           </AssociationSet>
+          <AssociationSet Name="FK_Account_Agent" Association="CardPeakModel.FK_Account_Agent">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Account_Agent">
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
+          <End Type="CardPeakModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

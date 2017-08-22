@@ -16,5 +16,7 @@ namespace CardPeak.Domain
     {
         public int AgentId { get; set; }
         public string Alias { get; set; }
+    
+        public virtual Agent Agent { get; set; }
     }
 }
