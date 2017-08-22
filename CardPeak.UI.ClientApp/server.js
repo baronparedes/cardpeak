@@ -8,7 +8,9 @@ const compiler = Webpack(webpackConfig);
 const server = new WebpackDevServer(compiler, {
     stats: {
         colors: true
-    }
+    },
+    historyApiFallback: true,
+    hot: true
 });
 
 server.listen(3000, "127.0.0.1", function () {

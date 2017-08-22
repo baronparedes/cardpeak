@@ -1,5 +1,5 @@
 ﻿declare module CardPeak.Models {
-    export interface DashboardModel {
+    export interface AgentsModel {
         selectedAgent?: CardPeak.Types.Agent
     }
 }

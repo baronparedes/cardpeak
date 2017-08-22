@@ -186,6 +186,7 @@ module.exports = {
         inline: !isProduction,
         hot: !isProduction,
         host: 'localhost',
+        historyApiFallback: true,
         stats: {
             assets: true,
             children: false,

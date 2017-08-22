@@ -47,7 +47,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                             <MenuItem divider />
                             <li role="menuitem">
                                 <NavLink exact to="/">
-                                    <NavLinkText text="Aliases" fa="fa-user-circle" />
+                                    <NavLinkText text="Add New Agent" fa="fa-user-circle" />
                                 </NavLink>
                             </li>
                             <MenuItem divider />

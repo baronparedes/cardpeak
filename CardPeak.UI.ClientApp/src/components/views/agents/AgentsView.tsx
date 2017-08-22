@@ -1,11 +1,14 @@
 ﻿import * as React from 'react'
+import AgentContainer from './AgentContainer'
 
-export default class AgentsView extends React.Component<{}, undefined> {
-    render() {
-        return (
-            <div>
-                <h1>Agents</h1>
-            </div>
-        )
-    }
+
+const AgentView: React.StatelessComponent<{}> = () => {
+    return (
+        <div>
+            <h2>Agent Dashboard</h2>
+            <AgentContainer />
+        </div>
+    )
 }
+
+export default AgentView;

@@ -1,10 +1,10 @@
 ﻿import { combineReducers, Reducer } from 'redux';
-import dashboard from './dashboardReducer';
+import agents from './agentReducer';
 
 export interface RootState {
-    dashboard: CardPeak.Models.DashboardModel;
+    agents: CardPeak.Models.AgentsModel;
 }
 
 export default combineReducers<RootState>({
-    dashboard
+    agents
 });

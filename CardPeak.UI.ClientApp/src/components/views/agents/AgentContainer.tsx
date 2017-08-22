@@ -1,14 +1,16 @@
 ﻿import * as React from 'react'
-import * as DashboardActions from '../../../services/actions/dashboardActions'
+import * as AgentsActions from '../../../services/actions/agentActions'
 import { connect } from 'react-redux'
 import { Panel, Button } from 'react-bootstrap'
 import { RootState } from '../../../services/reducers'
 
-interface DashboardContainerProps {
+import AgentList from './AgentList'
+
+interface AgentContainerProps {
     selectedAgent?: CardPeak.Types.Agent;
 }
 
-const RenderAgentName = (props: { agent: CardPeak.Types.Agent }) => {
+const SelectedAgent = (props: { agent: CardPeak.Types.Agent }) => {
     if (!!!props.agent) {
         return (
             <div>
@@ -31,15 +33,15 @@ const RenderAgentName = (props: { agent: CardPeak.Types.Agent }) => {
     );
 }
 
-class DashboardContainer extends React.Component<DashboardContainerProps, undefined>{
-    constructor(props: DashboardContainerProps) {
+class AgentContainer extends React.Component<AgentContainerProps, undefined>{
+    constructor(props: AgentContainerProps) {
         super(props);
     }
     render() {
         return (
             <div className="container-fluid no-padding">
                 <Panel>
-                    <RenderAgentName agent={this.props.selectedAgent} />
+                    <SelectedAgent agent={this.props.selectedAgent} />
                 </Panel>
                 <Panel className="text-right">
                     <h4>
@@ -51,16 +53,14 @@ class DashboardContainer extends React.Component<DashboardContainerProps, undefi
                         <span className="text-muted spacer-left">1000.00</span>
                     </h4>
                 </Panel>
-                <Panel>
-                    Transactions Here
-                </Panel>
+                <AgentList />
             </div>
         )
     }
 }
 
-const mapStateToProps = (state: RootState):DashboardContainerProps  => ({
-    selectedAgent: state.dashboard.selectedAgent
+const mapStateToProps = (state: RootState):AgentContainerProps  => ({
+    selectedAgent: state.agents.selectedAgent
 });
 
-export default connect(mapStateToProps)(DashboardContainer);
+export default connect(mapStateToProps)(AgentContainer);
