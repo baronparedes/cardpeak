@@ -10,7 +10,7 @@ export default class SelectedAgent extends React.Component<{ agent: CardPeak.Typ
         if (!!!this.props.agent) {
             return (
                 <div>
-                    <span className="text-muted spacer-right">Select an Agent</span>
+                    <span className="text-muted spacer-right text-highlight">Select an Agent</span>
                     <Button onClick={e => this.onClick(e)}>
                         <i className="fa fa-sm fa-users"></i>
                     </Button>    
@@ -19,7 +19,7 @@ export default class SelectedAgent extends React.Component<{ agent: CardPeak.Typ
         }
         return (
             <h5 className="spacer-right">
-                <span className="spacer-right">
+                <span className="spacer-right text-highlight">
                     {this.props.agent.firstName + " " + this.props.agent.lastName}    
                 </span>
                 <Button onClick={e => this.onClick(e)}>

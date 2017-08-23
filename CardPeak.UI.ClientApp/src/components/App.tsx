@@ -7,7 +7,7 @@ export class App extends React.Component<{}, undefined>{
         return (
             <div>
                 <NavigationBar />
-                <div id="content" className="container no-padding">
+                <div id="content" className="container">
                     {this.props.children}
                 </div>
                 <Footer />

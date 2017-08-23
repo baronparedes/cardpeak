@@ -7,6 +7,7 @@ import * as AgentsActions from '../../../services/actions/agentActions'
 import { RootState } from '../../../services/reducers'
 import AgentList from './AgentList'
 import SelectedAgent from './SelectedAgent'
+import AgentDashboard from './AgentDashboard'
 
 interface AgentContainerDispatchProps {
     actions?: typeof AgentsActions
@@ -22,17 +23,12 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
                 <Panel>
                     <SelectedAgent agent={this.props.selectedAgent} handleOnClick={this.props.actions.getAllAgentsStart} />
                 </Panel>
-                <Panel className="text-right">
-                    <h4>
-                        Account Balance
-                        <span className="text-muted spacer-left">1000.00</span>
-                    </h4>
-                    <h4>
-                        Savings Incentive
-                        <span className="text-muted spacer-left">1000.00</span>
-                    </h4>
-                </Panel>
-                {this.props.loadingAgents ? "Loading..." : <AgentList agents={this.props.agents} />}
+                <div>
+                    <AgentDashboard />
+                </div>
+                <div>
+                    {this.props.loadingAgents ? "Loading..." : <AgentList agents={this.props.agents} />}
+                </div>
             </div>
         )
     }

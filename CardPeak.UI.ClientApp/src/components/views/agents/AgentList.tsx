@@ -10,12 +10,12 @@ interface AgentListProps {
 const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
     return (
         <div>
-            <Grid fluid className="grid-header text-muted">
+            <Grid fluid className="grid-header text-muted no-padding">
                 <Panel className="panel-row-header">
                     <AgentRowLayout isHeader={true} />
                 </Panel>
             </Grid>    
-            <Grid fluid className="grid-rows margin-top">
+            <Grid fluid className="grid-rows margin-top no-padding">
                 {
                     props.agents && props.agents.length > 0 ? 
                         props.agents.map((agent) => {
