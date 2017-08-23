@@ -1,5 +1,5 @@
-﻿using CardPeak.Service;
-using CardPeak.WebAPI.Models;
+﻿using CardPeak.Domain;
+using CardPeak.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +29,7 @@ namespace CardPeak.WebAPI.Controllers
 
         public IEnumerable<Agent> GetAllAgents()
         {
-            return this.AgentService.GetAllAgents().Select(_ => new Agent {
-                AgentId = _.AgentId,
-                FirstName = _.FirstName,
-                MiddleName = _.MiddleName,
-                LastName = _.LastName,
-                Gender = _.Gender,
-                BirthDate = _.BirthDate
-            });
+            return this.AgentService.GetAllAgents();
         }
 
         public IHttpActionResult GetAgent(int id)

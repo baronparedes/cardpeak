@@ -18,7 +18,8 @@ export default handleActions<CardPeak.Models.AgentsModel, CardPeak.Entities.Agen
         return {
             ...action.payload,
             ...state,
-            loadingAgentDashboard: true
+            loadingAgentDashboard: true,
+            selectedAgentDashboard: undefined,
         }
     },
     [AGENT_ACTIONS.SELECT_AGENT_DASHBOARD_COMPLETE]: (state, action) => {

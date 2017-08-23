@@ -11,7 +11,7 @@ namespace CardPeak.Domain
         public Agent Agent { get; set; }
         public decimal AccountBalance { get; set; }
         public decimal SavingsBalance { get; set; }
-        public int TotalApprovals { get; set; }
+        public decimal TotalApprovals { get; set; }
 
         public IEnumerable<Account> Accounts { get; set; }
         public IEnumerable<ApprovalTransaction> ApprovalTransactions { get; set; }

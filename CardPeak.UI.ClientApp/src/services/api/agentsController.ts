@@ -7,7 +7,6 @@ const AGENT_API = {
     GET_AGENT_DASHBOARD: '/agents/'
 }
 
-
 export function getAll(callback: (data: CardPeak.Entities.Agent[]) => void) {
     axios.get(AGENT_API.GET_ALL).then((r) => {
         console.log('GetAll - api/agents');

@@ -2,12 +2,11 @@
 import { connect } from 'react-redux'
 import { Panel } from 'react-bootstrap'
 import { bindActionCreators } from 'redux';
-
 import * as AgentsActions from '../../../services/actions/agentActions'
 import { RootState } from '../../../services/reducers'
 import AgentListModal from './AgentListModal'
 import SelectedAgent from './SelectedAgent'
-import AgentDashboard from './AgentDashboard'
+import AgentDashboardView from './AgentDashboardView'
 
 interface AgentContainerDispatchProps {
     actions?: typeof AgentsActions
@@ -36,6 +35,7 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
     onAgentSelected = (agent: CardPeak.Entities.Agent) => {
         this.handleToggleModal();
         this.props.actions.selectAgent(agent);
+        this.props.actions.selectAgentDashboardStart();;
     }
     render() {
         return (
@@ -49,12 +49,7 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
                         onAgentSelected={this.onAgentSelected}
                         isLoading={this.props.loadingAgents} />
                 </Panel>
-                <div>
-                    {this.props.selectedAgentDashboard ? <AgentDashboard /> : null}
-                </div>
-                <div>
-                    {this.props.selectedAgentDashboard ? "No Transactions" : null}
-                </div>
+                <AgentDashboardView agentDashboard={this.props.selectedAgentDashboard} loadingAgentDashboard={this.props.loadingAgentDashboard} />
             </div>
         )
     }

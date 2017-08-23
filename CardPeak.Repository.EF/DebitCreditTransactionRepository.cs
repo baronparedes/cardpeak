@@ -19,7 +19,7 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.TransactionTypeId == type && _.AgentId == id)
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
-                .First();
+                .FirstOrDefault();
         }
 
         public decimal AccountBalanceByAgent(int id)

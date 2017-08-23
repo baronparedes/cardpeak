@@ -19,12 +19,14 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.AgentId == id)
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
-                .First();
+                .FirstOrDefault();
         }
 
-        public decimal ApprovalsByAgent(int id)
+        public decimal TotalApprovalsByAgent(int id)
         {
-            throw new NotImplementedException();
+            return this.Context.ApprovalTransactions
+                .Where(_ => _.AgentId == id)
+                .Sum(_ => _.Units);
         }
 
         public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
