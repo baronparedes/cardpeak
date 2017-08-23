@@ -21,7 +21,7 @@ namespace CardPeak.Service
             return this.DomainContext.SaveChanges();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.DomainContext.Dispose();
         }

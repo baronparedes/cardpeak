@@ -41,7 +41,12 @@ namespace CardPeak.WebAPI.Controllers
 
         public IHttpActionResult GetAgent(int id)
         {
-
+            var result = this.AgentService.GetAgentDashboard(id, DateTime.Today);
+            if (result == null)
+            {
+                return this.NotFound();
+            }
+            return this.Ok(result);
         }
     }
 }
