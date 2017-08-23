@@ -2,7 +2,7 @@
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
 import { SpinnerGrid } from '../../layout/Spinner'
 import AgentDetail from './AgentDetail'
-import AgentRowLayout from './AgentRowLayout'
+import AgentDetailRowLayout from './AgentDetailRowLayout'
 
 interface AgentListProps {
     agents?: CardPeak.Entities.Agent[],
@@ -27,12 +27,12 @@ const LoadAgentList = (props: AgentListProps) => {
     )
 }
 
-const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
+const AgentList = (props: AgentListProps) => {
     return (
         <div>
             <Grid fluid className="grid-header text-muted no-padding">
                 <Panel className="panel-row-header">
-                    <AgentRowLayout isHeader={true} />
+                    <AgentDetailRowLayout isHeader={true} />
                 </Panel>
             </Grid>    
             <LoadAgentList

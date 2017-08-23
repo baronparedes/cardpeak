@@ -1,9 +1,11 @@
 ﻿import * as React from 'react'
+import * as AgentsActions from '../../../services/actions/agentActions'
+
 import { connect } from 'react-redux'
 import { Panel } from 'react-bootstrap'
 import { bindActionCreators } from 'redux';
-import * as AgentsActions from '../../../services/actions/agentActions'
 import { RootState } from '../../../services/reducers'
+
 import AgentListModal from './AgentListModal'
 import SelectedAgent from './SelectedAgent'
 import AgentDashboardView from './AgentDashboardView'

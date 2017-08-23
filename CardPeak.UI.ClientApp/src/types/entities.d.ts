@@ -29,6 +29,9 @@
         public approvalDate: Date;
         public batchId?: number;
         public isDeleted: boolean;
+        public bank?: string;
+        public cardCategory?: string;
+        
     }
 
     export class DebitCreditTransaction {

@@ -10,27 +10,23 @@ interface AgentListModalProps {
     isLoading?: boolean
 }
 
-export default class AgentListModal extends React.Component<AgentListModalProps, undefined> {
-    constructor(props: AgentListModalProps) {
-        super(props);
-    }
-
-    render () {
-        return (
-            <Modal show={this.props.showModal} onHide={this.props.onToggleModal}>
-                <Modal.Header>
-                    <Modal.Title>Agents</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <AgentList
-                        agents={this.props.agents}
-                        handleOnSelectAgent={this.props.onAgentSelected}
-                        isLoading={this.props.isLoading} />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button bsStyle="danger" onClick={this.props.onToggleModal}>Close</Button>
-                </Modal.Footer>
-            </Modal>
-        )
-    }
+const AgentListModal = (props: AgentListModalProps) => {
+    return (
+        <Modal show={props.showModal} onHide={props.onToggleModal}>
+            <Modal.Header>
+                <Modal.Title>Agents</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <AgentList
+                    agents={props.agents}
+                    handleOnSelectAgent={props.onAgentSelected}
+                    isLoading={props.isLoading} />
+            </Modal.Body>
+            <Modal.Footer>
+                <Button bsStyle="danger" onClick={props.onToggleModal}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
+
+export default AgentListModal;

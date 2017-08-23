@@ -2,7 +2,7 @@
 import AgentContainer from './AgentContainer'
 
 
-const AgentView: React.StatelessComponent<{}> = () => {
+const AgentView = () => {
     return (
         <div>
             <h2>Agent Dashboard</h2>
