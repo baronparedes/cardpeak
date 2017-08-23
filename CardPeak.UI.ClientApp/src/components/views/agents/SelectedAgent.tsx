@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Button, ButtonProps } from 'react-bootstrap'
 
-export default class SelectedAgent extends React.Component<{ agent: CardPeak.Types.Agent, handleOnClick?: () => void  }, undefined> {
+export default class SelectedAgent extends React.Component<{ agent: CardPeak.Entities.Agent, handleOnClick?: () => void  }, undefined> {
     onClick = (e: React.MouseEvent<React.ClassicComponent<ButtonProps, {}>>): void => {
         e.preventDefault();
         this.props.handleOnClick();

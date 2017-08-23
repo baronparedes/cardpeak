@@ -138,7 +138,7 @@
     <TypeScriptCompile Include="src\store.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\types\agent.d.ts">
+    <TypeScriptCompile Include="src\types\entities.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\types\models.d.ts" />

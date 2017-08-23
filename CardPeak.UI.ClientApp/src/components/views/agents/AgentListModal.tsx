@@ -4,8 +4,8 @@ import AgentList from './AgentList'
 
 interface AgentListModalProps {
     onToggleModal: () => void;
-    onAgentSelected: (agent: CardPeak.Types.Agent) => void;
-    agents: CardPeak.Types.Agent[],
+    onAgentSelected: (agent: CardPeak.Entities.Agent) => void;
+    agents: CardPeak.Entities.Agent[],
     showModal: boolean
 }
 

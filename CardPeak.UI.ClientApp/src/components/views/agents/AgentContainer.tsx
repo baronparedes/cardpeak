@@ -33,7 +33,7 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
         this.handleToggleModal();
         this.props.actions.getAllAgentsStart();
     }
-    onAgentSelected = (agent: CardPeak.Types.Agent) => {
+    onAgentSelected = (agent: CardPeak.Entities.Agent) => {
         this.handleToggleModal();
         this.props.actions.selectAgent(agent);
     }

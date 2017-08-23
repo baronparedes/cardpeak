@@ -3,8 +3,8 @@ import { Panel } from 'react-bootstrap'
 import AgentRowLayout from './AgentRowLayout'
 
 interface AgentDetailProps {
-    agent: CardPeak.Types.Agent;
-    handleOnSelectAgent: (agent: CardPeak.Types.Agent) => void;
+    agent: CardPeak.Entities.Agent;
+    handleOnSelectAgent: (agent: CardPeak.Entities.Agent) => void;
 }
 
 const AgentDetail: React.StatelessComponent<AgentDetailProps> = (props) => {

@@ -4,7 +4,7 @@ import { AGENT_ACTIONS } from '../../constants/actions'
 const initialState: CardPeak.Models.AgentsModel = {
 };
 
-export default handleActions<CardPeak.Models.AgentsModel, CardPeak.Types.Agent | CardPeak.Types.Agent[]>({
+export default handleActions<CardPeak.Models.AgentsModel, CardPeak.Entities.Agent | CardPeak.Entities.Agent[]>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
             selectedAgent: action.payload,

@@ -2,8 +2,8 @@
 import { Row, Col, Button } from 'react-bootstrap'
 
 interface AgentRowLayoutProps {
-    agent?: CardPeak.Types.Agent,
-    handleOnSelectAgent?: (agent: CardPeak.Types.Agent) => void;
+    agent?: CardPeak.Entities.Agent,
+    handleOnSelectAgent?: (agent: CardPeak.Entities.Agent) => void;
     isHeader: boolean
 }
 
