@@ -117,7 +117,6 @@
     <Folder Include="src\services\" />
     <Folder Include="src\services\actions\" />
     <Folder Include="src\services\api\" />
-    <Folder Include="src\services\core\" />
     <Folder Include="src\services\reducers\" />
     <Folder Include="src\styles\" />
   </ItemGroup>

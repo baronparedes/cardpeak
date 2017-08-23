@@ -6,7 +6,8 @@ interface AgentListModalProps {
     onToggleModal: () => void;
     onAgentSelected: (agent: CardPeak.Entities.Agent) => void;
     agents: CardPeak.Entities.Agent[],
-    showModal: boolean
+    showModal: boolean,
+    isLoading?: boolean
 }
 
 export default class AgentListModal extends React.Component<AgentListModalProps, undefined> {
@@ -18,10 +19,13 @@ export default class AgentListModal extends React.Component<AgentListModalProps,
         return (
             <Modal show={this.props.showModal} onHide={this.props.onToggleModal}>
                 <Modal.Header>
-                    <Modal.Title><h3>Agents</h3></Modal.Title>
+                    <Modal.Title>Agents</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AgentList agents={this.props.agents} handleOnSelectAgent={this.props.onAgentSelected} />
+                    <AgentList
+                        agents={this.props.agents}
+                        handleOnSelectAgent={this.props.onAgentSelected}
+                        isLoading={this.props.isLoading} />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button bsStyle="danger" onClick={this.props.onToggleModal}>Close</Button>

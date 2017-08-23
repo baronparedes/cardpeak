@@ -5,7 +5,25 @@ import AgentRowLayout from './AgentRowLayout'
 
 interface AgentListProps {
     agents?: CardPeak.Entities.Agent[],
-    handleOnSelectAgent: (agent: CardPeak.Entities.Agent) => void
+    handleOnSelectAgent: (agent: CardPeak.Entities.Agent) => void,
+    isLoading?: boolean
+}
+
+const LoadAgentList = (props: AgentListProps) => {
+    return (
+        <Grid fluid className="grid-rows margin-top no-padding">
+            {
+                props.isLoading ?
+                    <Row><Col className="text-center"><i className="fa fa-spinner fa-spin fa-3x fa-fw"></i></Col></Row> :
+                    props.agents && props.agents.length > 0 ?
+                        props.agents.map((agent) => {
+                            return (
+                                <AgentDetail agent={agent} key={agent.agentId} handleOnSelectAgent={props.handleOnSelectAgent} />
+                            )
+                        }) : null
+            }
+        </Grid>
+    )
 }
 
 const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
@@ -16,16 +34,10 @@ const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
                     <AgentRowLayout isHeader={true} />
                 </Panel>
             </Grid>    
-            <Grid fluid className="grid-rows margin-top no-padding">
-                {
-                    props.agents && props.agents.length > 0 ? 
-                        props.agents.map((agent) => {
-                            return (
-                                <AgentDetail agent={agent} key={agent.agentId} handleOnSelectAgent={props.handleOnSelectAgent} />
-                            )
-                        }) : null
-                }
-            </Grid>   
+            <LoadAgentList
+                agents={props.agents}
+                handleOnSelectAgent={props.handleOnSelectAgent}
+                isLoading={props.isLoading} /> 
         </div>
     )
 }

@@ -2,9 +2,9 @@
 import agents from './agentReducer';
 
 export interface RootState {
-    agents: CardPeak.Models.AgentsModel;
+    agentsModel: CardPeak.Models.AgentsModel;
 }
 
 export default combineReducers<RootState>({
-    agents
+    agentsModel: agents
 });

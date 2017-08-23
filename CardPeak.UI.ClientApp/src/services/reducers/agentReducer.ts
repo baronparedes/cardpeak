@@ -7,24 +7,42 @@ const initialState: CardPeak.Models.AgentsModel = {
 export default handleActions<CardPeak.Models.AgentsModel, CardPeak.Entities.Agent | CardPeak.Entities.Agent[]>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
-            selectedAgent: action.payload,
             ...action.payload,
-            ...state
+            ...state,
+            selectedAgent: action.payload,
+            selectedAgentDashboard: undefined,
+            loadingAgentDashboard: undefined
         };
+    },
+    [AGENT_ACTIONS.SELECT_AGENT_DASHBOARD]: (state, action) => {
+        return {
+            ...action.payload,
+            ...state,
+            loadingAgentDashboard: true
+        }
+    },
+    [AGENT_ACTIONS.SELECT_AGENT_DASHBOARD_COMPLETE]: (state, action) => {
+        return {
+            ...action.payload,
+            ...state,
+            loadingAgentDashboard: undefined,
+            selectedAgentDashboard: action.payload
+        }
     },
     [AGENT_ACTIONS.GET_ALL]: (state, action) => {
         return {
-            loadingAgents: true,
             ...action.payload,
-            ...state
+            ...state,
+            loadingAgents: true,
+            agents: undefined
         };
     },
     [AGENT_ACTIONS.GET_ALL_COMPLETE]: (state, action) => {
         return {
-            loadingAgents: false,
-            agents: action.payload,
             ...action.payload,
             ...state,
+            loadingAgents: undefined,
+            agents: action.payload
         };
     }
 }, initialState);

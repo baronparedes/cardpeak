@@ -46,13 +46,14 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
                         showModal={this.state.showModal}
                         agents={this.props.agents}
                         onToggleModal={this.handleToggleModal}
-                        onAgentSelected={this.onAgentSelected} />
+                        onAgentSelected={this.onAgentSelected}
+                        isLoading={this.props.loadingAgents} />
                 </Panel>
                 <div>
-                    {this.props.selectedAgent ? <AgentDashboard /> : null}
+                    {this.props.selectedAgentDashboard ? <AgentDashboard /> : null}
                 </div>
                 <div>
-                    No Transactions
+                    {this.props.selectedAgentDashboard ? "No Transactions" : null}
                 </div>
             </div>
         )
@@ -60,8 +61,11 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
 }
 
 const mapStateToProps = (state: RootState):CardPeak.Models.AgentsModel  => ({
-    selectedAgent: state.agents.selectedAgent,
-    agents: state.agents.agents
+    selectedAgent: state.agentsModel.selectedAgent,
+    selectedAgentDashboard: state.agentsModel.selectedAgentDashboard,
+    agents: state.agentsModel.agents,
+    loadingAgents: state.agentsModel.loadingAgents,
+    loadingAgentDashboard: state.agentsModel.loadingAgentDashboard
 });
 
 const mapDispatchToProps = (dispatch: any): AgentContainerDispatchProps => {
