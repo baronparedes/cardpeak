@@ -106,6 +106,38 @@
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ApprovalTransactionView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="BankId" />
+            <PropertyRef Name="CardCategoryId" />
+            <PropertyRef Name="AgentId" />
+            <PropertyRef Name="Units" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="ProductType" />
+            <PropertyRef Name="ApprovalDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="Bank" />
+            <PropertyRef Name="CardCategory" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="BankId" Type="int" Nullable="false" />
+          <Property Name="CardCategoryId" Type="int" Nullable="false" />
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="Units" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="ProductType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ReferenceNumber1" Type="varchar" MaxLength="50" />
+          <Property Name="ReferenceNumber2" Type="varchar" MaxLength="50" />
+          <Property Name="Client" Type="varchar" MaxLength="255" />
+          <Property Name="ApprovalDate" Type="date" Nullable="false" />
+          <Property Name="BatchId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Bank" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CardCategory" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Account_Agent">
           <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
           <End Role="Account" Type="Self.Account" Multiplicity="*" />
@@ -164,6 +196,25 @@
           <EntitySet Name="Reference" EntityType="Self.Reference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenceType" EntityType="Self.ReferenceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApprovalTransactionView" EntityType="Self.ApprovalTransactionView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ApprovalTransactionView].[Id] AS [Id], 
+    [ApprovalTransactionView].[BankId] AS [BankId], 
+    [ApprovalTransactionView].[CardCategoryId] AS [CardCategoryId], 
+    [ApprovalTransactionView].[AgentId] AS [AgentId], 
+    [ApprovalTransactionView].[Units] AS [Units], 
+    [ApprovalTransactionView].[Amount] AS [Amount], 
+    [ApprovalTransactionView].[ProductType] AS [ProductType], 
+    [ApprovalTransactionView].[ReferenceNumber1] AS [ReferenceNumber1], 
+    [ApprovalTransactionView].[ReferenceNumber2] AS [ReferenceNumber2], 
+    [ApprovalTransactionView].[Client] AS [Client], 
+    [ApprovalTransactionView].[ApprovalDate] AS [ApprovalDate], 
+    [ApprovalTransactionView].[BatchId] AS [BatchId], 
+    [ApprovalTransactionView].[IsDeleted] AS [IsDeleted], 
+    [ApprovalTransactionView].[Bank] AS [Bank], 
+    [ApprovalTransactionView].[CardCategory] AS [CardCategory]
+    FROM [dbo].[ApprovalTransactionView] AS [ApprovalTransactionView]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Account_Agent" Association="Self.FK_Account_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="Account" EntitySet="Account" />
@@ -356,6 +407,7 @@
             <End Role="Agent" EntitySet="Agents" />
             <End Role="Account" EntitySet="Accounts" />
           </AssociationSet>
+          <EntitySet Name="ApprovalTransactionView" EntityType="CardPeakModel.ApprovalTransactionView" />
         </EntityContainer>
         <Association Name="FK_Account_Agent">
           <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
@@ -369,6 +421,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ApprovalTransactionView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="BankId" />
+            <PropertyRef Name="CardCategoryId" />
+            <PropertyRef Name="AgentId" />
+            <PropertyRef Name="Units" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="ProductType" />
+            <PropertyRef Name="ApprovalDate" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="Bank" />
+            <PropertyRef Name="CardCategory" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="Units" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ProductType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ReferenceNumber1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReferenceNumber2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Client" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="BatchId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Bank" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CardCategory" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -481,6 +563,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ApprovalTransactionView">
+            <EntityTypeMapping TypeName="CardPeakModel.ApprovalTransactionView">
+              <MappingFragment StoreEntitySet="ApprovalTransactionView">
+                <ScalarProperty Name="CardCategory" ColumnName="CardCategory" />
+                <ScalarProperty Name="Bank" ColumnName="Bank" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="ReferenceNumber2" ColumnName="ReferenceNumber2" />
+                <ScalarProperty Name="ReferenceNumber1" ColumnName="ReferenceNumber1" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Units" ColumnName="Units" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -495,7 +598,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

@@ -23,10 +23,10 @@ export default class ApprovalTransactionDetailRowLayout extends React.Component<
                     <span className="text-center spacer-left">Approval Transactions</span>
                 </Col>
                 <Col md={2} lg={2} sm={3} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "bank" : "Metrobank"}
+                    {this.props.isHeader ? "bank" : this.props.transaction.bank}
                 </Col>
                 <Col md={2} lg={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "card category" : "Classic"}
+                    {this.props.isHeader ? "card category" : this.props.transaction.cardCategory}
                 </Col>
                 <Col md={2} lg={2} sm={3} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "product" : this.props.transaction.productType}

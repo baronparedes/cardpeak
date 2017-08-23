@@ -63,6 +63,7 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="Script" />
     <Folder Include="Script\Defaults" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rate.sql" />
@@ -77,6 +78,7 @@
     <Build Include="dbo\Tables\BatchUpload.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <None Include="Script\Defaults\PopulateDefaultRates.sql" />
+    <Build Include="dbo\Views\ApprovalTransactionView.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

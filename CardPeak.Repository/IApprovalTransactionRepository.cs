@@ -9,7 +9,7 @@ namespace CardPeak.Repository
 {
     public interface IApprovalTransactionRepository : IRepository<ApprovalTransaction>
     {
-        IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate);
+        IEnumerable<ApprovalTransactionView> FindByAgent(int id, DateTime startDate, DateTime? endDate);
         decimal AccountBalanceByAgent(int id);
         decimal TotalApprovalsByAgent(int agentId);
     }
