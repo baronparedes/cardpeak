@@ -88,6 +88,15 @@
     <Content Include="src\components\views\agents\ApprovalTransactionList.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\agents\DebitCreditTransactionDetail.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agents\DebitCreditTransactionDetailRowLayout.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agents\DebitCreditTransactionList.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\agents\SelectedAgent.tsx">
       <SubType>Code</SubType>
     </Content>
