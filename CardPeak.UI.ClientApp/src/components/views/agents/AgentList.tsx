@@ -4,7 +4,8 @@ import AgentDetail from './AgentDetail'
 import AgentRowLayout from './AgentRowLayout'
 
 interface AgentListProps {
-    agents?: CardPeak.Types.Agent[]
+    agents?: CardPeak.Types.Agent[],
+    handleOnSelectAgent: (agent: CardPeak.Types.Agent) => void
 }
 
 const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
@@ -20,7 +21,7 @@ const AgentList: React.StatelessComponent<AgentListProps> = (props) => {
                     props.agents && props.agents.length > 0 ? 
                         props.agents.map((agent) => {
                             return (
-                                <AgentDetail agent={agent} key={agent.agentId} />
+                                <AgentDetail agent={agent} key={agent.agentId} handleOnSelectAgent={props.handleOnSelectAgent} />
                             )
                         }) : null
                 }

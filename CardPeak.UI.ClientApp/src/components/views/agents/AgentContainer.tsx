@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import * as AgentsActions from '../../../services/actions/agentActions'
 import { RootState } from '../../../services/reducers'
-import AgentList from './AgentList'
+import AgentListModal from './AgentListModal'
 import SelectedAgent from './SelectedAgent'
 import AgentDashboard from './AgentDashboard'
 
@@ -13,21 +13,46 @@ interface AgentContainerDispatchProps {
     actions?: typeof AgentsActions
 }
 
-class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & AgentContainerDispatchProps, undefined>{
+interface AgentContainerState {
+    showModal: boolean;
+}
+
+class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & AgentContainerDispatchProps, AgentContainerState>{
     constructor(props: CardPeak.Models.AgentsModel & AgentContainerDispatchProps) {
         super(props);
+        this.state = {
+            showModal: false
+        }
+    }
+    handleToggleModal = () => {
+        this.setState({ 
+            showModal: !this.state.showModal
+        });
+    }
+    handleSelectedAgentOnClick = () => {
+        this.handleToggleModal();
+        this.props.actions.getAllAgentsStart();
+    }
+    onAgentSelected = (agent: CardPeak.Types.Agent) => {
+        this.handleToggleModal();
+        this.props.actions.selectAgent(agent);
     }
     render() {
         return (
             <div className="container-fluid no-padding">
                 <Panel>
-                    <SelectedAgent agent={this.props.selectedAgent} handleOnClick={this.props.actions.getAllAgentsStart} />
+                    <SelectedAgent agent={this.props.selectedAgent} handleOnClick={this.handleSelectedAgentOnClick} />
+                    <AgentListModal
+                        showModal={this.state.showModal}
+                        agents={this.props.agents}
+                        onToggleModal={this.handleToggleModal}
+                        onAgentSelected={this.onAgentSelected} />
                 </Panel>
                 <div>
-                    <AgentDashboard />
+                    {this.props.selectedAgent ? <AgentDashboard /> : null}
                 </div>
                 <div>
-                    {this.props.loadingAgents ? "Loading..." : <AgentList agents={this.props.agents} />}
+                    No Transactions
                 </div>
             </div>
         )

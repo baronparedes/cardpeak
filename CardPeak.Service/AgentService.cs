@@ -21,7 +21,12 @@ namespace CardPeak.Service
 
         public IEnumerable<Agent> GetAllAgents()
         {
-            return this.AgentRepository.GetAll();
+            return this.AgentRepository.GetAllOrderedByName();
+        }
+
+        public Agent GetAgentDashboard()
+        {
+
         }
     }
 }

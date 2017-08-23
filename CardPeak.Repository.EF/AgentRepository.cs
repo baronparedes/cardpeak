@@ -12,5 +12,10 @@ namespace CardPeak.Repository.EF
         public AgentRepository(CardPeakDbContext context) : base(context)
         {
         }
+
+        public IEnumerable<Agent> GetAllOrderedByName()
+        {
+            return this.Context.Agents.OrderBy(_ => _.FirstName).ThenBy(_ => _.LastName).ToList();
+        }
     }
 }

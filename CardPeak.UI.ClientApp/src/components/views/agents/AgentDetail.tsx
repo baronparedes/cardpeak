@@ -3,18 +3,17 @@ import { Panel } from 'react-bootstrap'
 import AgentRowLayout from './AgentRowLayout'
 
 interface AgentDetailProps {
-    agent: CardPeak.Types.Agent
+    agent: CardPeak.Types.Agent;
+    handleOnSelectAgent: (agent: CardPeak.Types.Agent) => void;
 }
 
 const AgentDetail: React.StatelessComponent<AgentDetailProps> = (props) => {
     return (
     <Panel className="panel-row">
         <AgentRowLayout 
-            isHeader={false} 
-            firstName={props.agent.firstName} 
-            lastName={props.agent.lastName} 
-            gender={props.agent.gender}
-            alias={props.agent.alias} />
+                agent={props.agent}
+                handleOnSelectAgent={props.handleOnSelectAgent}
+            isHeader={false} />
     </Panel>
     )
 }

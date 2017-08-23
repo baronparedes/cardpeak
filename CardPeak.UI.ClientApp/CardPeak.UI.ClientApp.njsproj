@@ -61,6 +61,9 @@
     <Content Include="src\components\views\agents\AgentList.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\agents\AgentListModal.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\agents\AgentRowLayout.tsx">
       <SubType>Code</SubType>
     </Content>

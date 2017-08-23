@@ -19,6 +19,7 @@ namespace CardPeak.Repository.EF
         public CardPeakDbContext()
             : base("name=CardPeakDbContext")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

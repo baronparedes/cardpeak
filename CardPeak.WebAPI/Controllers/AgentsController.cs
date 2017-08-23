@@ -35,9 +35,13 @@ namespace CardPeak.WebAPI.Controllers
                 MiddleName = _.MiddleName,
                 LastName = _.LastName,
                 Gender = _.Gender,
-                BirthDate = _.BirthDate,
-                Alias = _.Accounts.Select(a => a.Alias)
+                BirthDate = _.BirthDate
             });
+        }
+
+        public IHttpActionResult GetAgent(int id)
+        {
+
         }
     }
 }

@@ -330,7 +330,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CardPeakDbContext" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CardPeakDbContext" annotation:LazyLoadingEnabled="false">
           <EntitySet Name="Accounts" EntityType="Self.Account" />
           <EntitySet Name="Agents" EntityType="Self.Agent" />
           <EntitySet Name="ApprovalTransactions" EntityType="Self.ApprovalTransaction" />

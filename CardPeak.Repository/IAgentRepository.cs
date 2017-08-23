@@ -9,5 +9,6 @@ namespace CardPeak.Repository
 {
     public interface IAgentRepository : IRepository<Agent>
     {
+        IEnumerable<Agent> GetAllOrderedByName();
     }
 }

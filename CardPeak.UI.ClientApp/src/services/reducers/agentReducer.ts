@@ -2,15 +2,6 @@
 import { AGENT_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.AgentsModel = {
-    selectedAgent: {
-        agentId: 2,
-        firstName: "Baron Patrick",
-        middleName: "Tablan",
-        lastName: "Paredes",
-        gender: "M",
-        email: "baronp@magenic.com",
-        alias: undefined
-    }
 };
 
 export default handleActions<CardPeak.Models.AgentsModel, CardPeak.Types.Agent | CardPeak.Types.Agent[]>({

@@ -1,34 +1,32 @@
 ﻿import * as React from 'react'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 
 interface AgentRowLayoutProps {
-    firstName?: string,
-    lastName?: string,
-    gender?: string,
-    alias?: string[],
+    agent?: CardPeak.Types.Agent,
+    handleOnSelectAgent?: (agent: CardPeak.Types.Agent) => void;
     isHeader: boolean
 }
 
-const AgentRowLayout = (props: AgentRowLayoutProps) => {
-    return (
-        <Row>
-            <Col md={5} lg={5} sm={4} xs={4}>
-                {props.isHeader ? "first name" : props.firstName}
-            </Col>
-            <Col md={4} lg={4} sm={4} xs={4}>
-                {props.isHeader ? "last name" : props.lastName}
-            </Col>
-            <Col md={1} lg={1} smHidden xsHidden>
-                {props.isHeader ? "gender" : props.gender}
-            </Col>
-            <Col md={1} lg={1} smHidden xsHidden>
-                {props.isHeader ? "alias" : "aliases"}
-            </Col>
-            <Col md={1} lg={1} sm={1} xs={1}>
-                {props.isHeader ? "actions" : "actions"}
-            </Col>
-        </Row>   
-    )
+export default class AgentRowLayout extends React.Component<AgentRowLayoutProps, {}> {
+    constructor(props: AgentRowLayoutProps) {
+        super(props);
+    }
+    handleOnClick = () => {
+        this.props.handleOnSelectAgent(this.props.agent);
+    }
+    render() {
+        return (
+            <Row>
+                <Col md={5} lg={5} sm={4} xs={4}>
+                    {this.props.isHeader ? "first name" : this.props.agent.firstName}
+                </Col>
+                <Col md={5} lg={5} sm={4} xs={4}>
+                    {this.props.isHeader ? "last name" : this.props.agent.lastName}
+                </Col>
+                <Col md={2} lg={2} sm={2} xs={2}>
+                    {this.props.isHeader ? "" : <Button onClick={this.handleOnClick} bsStyle="primary">Select</Button>}
+                </Col>
+            </Row>
+        )
+    }
 }
-
-export default AgentRowLayout;

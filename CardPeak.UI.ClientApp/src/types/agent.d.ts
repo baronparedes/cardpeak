@@ -7,6 +7,5 @@
         public gender: string;
         public birthDate?: Date;
         public email: string;
-        public alias: string[];
     }
 }
