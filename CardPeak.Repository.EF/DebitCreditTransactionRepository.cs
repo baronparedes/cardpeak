@@ -16,7 +16,7 @@ namespace CardPeak.Repository.EF
         private decimal GetBalanceByAgent(int id, int type)
         {
             return this.Context.DebitCreditTransactions
-                .Where(_ => _.TransactionTypeId == type && _.AgentId == id)
+                .Where(_ => _.TransactionTypeId == type && _.AgentId == id && !_.IsDeleted)
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
                 .FirstOrDefault();
@@ -34,7 +34,8 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<DebitCreditTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context.DebitCreditTransactions.Where(_ => _.AgentId == id);
+            var result = this.Context
+                .DebitCreditTransactions.Where(_ => _.AgentId == id && !_.IsDeleted && _.TransactionTypeId == 1);
             if (endDate.HasValue)
             {
                 result.Where(_ => _.TransactionDateTime >= startDate.Date && _.TransactionDateTime <= endDate.GetValueOrDefault().Date);

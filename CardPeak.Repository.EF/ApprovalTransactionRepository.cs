@@ -16,7 +16,7 @@ namespace CardPeak.Repository.EF
         public decimal AccountBalanceByAgent(int id)
         {
             return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == id)
+                .Where(_ => _.AgentId == id && !_.IsDeleted)
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
                 .FirstOrDefault();
@@ -25,13 +25,13 @@ namespace CardPeak.Repository.EF
         public decimal TotalApprovalsByAgent(int id)
         {
             return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == id)
+                .Where(_ => _.AgentId == id && !_.IsDeleted)
                 .Sum(_ => _.Units);
         }
 
         public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context.ApprovalTransactions.Where(_ => _.AgentId == id);
+            var result = this.Context.ApprovalTransactions.Where(_ => _.AgentId == id && !_.IsDeleted);
             if (endDate.HasValue)
             {
                 result.Where(_ => _.ApprovalDate >= startDate.Date && _.ApprovalDate <= endDate.GetValueOrDefault().Date);
