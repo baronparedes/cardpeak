@@ -8,7 +8,7 @@ interface DebitCreditTransactionDetailProps {
 
 const DebitCreditTransactionDetail = (props: DebitCreditTransactionDetailProps) => {
     return (
-        <Panel className="panel-row">
+        <Panel className={"panel-row " + ((props.transaction.amount < 0) ? "panel-debit" : "panel-credit")}>
             <DebitCreditTransactionDetailRowLayout
                 transaction={props.transaction}
                 isHeader={false} />
