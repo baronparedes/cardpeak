@@ -18,26 +18,86 @@ const AgentDashboardLabel = (props: { label: string, metrics?: number, isCurrenc
     )
 }
 
+const TotalApprovedMetrics = (props: { totalApprovals: number }) => {
+    return (
+        <Panel className="text-center panel-agent-dashboard">
+            <Grid fluid>
+                <Row>
+                    <Col>
+                        <label className="text-label text-muted spacer-right">
+                            Total Approval Record
+                        </label>
+                    </Col>
+                    <Col>
+                        <span className="text-highlight">
+                            {props.totalApprovals}
+                        </span>
+                    </Col>
+                </Row>
+            </Grid>
+        </Panel>
+    )
+}
+
+const AgentPerformanceMetrics = (props: { performance: CardPeak.Entities.ApprovalPerformance[] }) => {
+    return (
+        <Panel className="text-center panel-agent-dashboard">
+            <Grid fluid>
+                <Row>
+                    <Col xs={6} sm={6}>
+                        <AgentDashboardLabel
+                            label={props.performance[0].month}
+                            metrics={props.performance[0].units} />
+                    </Col>
+                    <Col xs={6} sm={6}>
+                        <AgentDashboardLabel
+                            label={props.performance[1].month}
+                            metrics={props.performance[1].units} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6} sm={6}>
+                        <AgentDashboardLabel
+                            label={props.performance[2].month}
+                            metrics={props.performance[2].units} />
+                    </Col>
+                    <Col xs={6} sm={6}>
+                        <AgentDashboardLabel
+                            label={props.performance[3].month}
+                            metrics={props.performance[3].units} />
+                    </Col>
+                </Row>
+            </Grid>
+        </Panel>
+    )
+}
+
+const AgentAccountBalanceMetrics = (props: { accountBalance: number, savingsBalance: number }) => {
+    return (
+        <Panel className="text-right panel-agent-dashboard">
+            <AgentDashboardLabel label="Account Balance" metrics={props.accountBalance} isCurrency={true} />
+            <AgentDashboardLabel label="Savings" metrics={props.savingsBalance} isCurrency={true} />
+        </Panel>
+    )
+}
+
 const AgentDashboardSummary = (props: AgentDashboardSummaryProps) => {
     return (
         <div>
             <Grid fluid className="no-padding">
                 <Row className="row-eq-height">
                     <Col lg={4} md={4} sm={6} xs={6}>
-                        <Panel className="text-center panel-agent-dashboard">
-                            <AgentDashboardLabel label="Total Approvals" metrics={props.agentDashboard.totalApprovals} />
-                        </Panel>
+                        <TotalApprovedMetrics
+                            totalApprovals={props.agentDashboard.totalApprovals} />
                     </Col>
                     <Col lg={4} md={4} sm={6} xs={6}>
-                        <Panel className="text-center panel-agent-dashboard">
-                            <AgentDashboardLabel label="Some Statistics" />
-                        </Panel>
+                        <AgentPerformanceMetrics
+                            performance={props.agentDashboard.performance} />
                     </Col>
                     <Col lg={4} md={4} sm={12} xs={12}>
-                        <Panel className="text-right panel-agent-dashboard">
-                            <AgentDashboardLabel label="Account Balance" metrics={props.agentDashboard.accountBalance} isCurrency={true} />
-                            <AgentDashboardLabel label="Savings" metrics={props.agentDashboard.savingsBalance} isCurrency={true} />
-                        </Panel>
+                        <AgentAccountBalanceMetrics
+                            accountBalance={props.agentDashboard.accountBalance}
+                            savingsBalance={props.agentDashboard.savingsBalance} />
                     </Col>
                 </Row>
             </Grid>

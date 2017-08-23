@@ -70,7 +70,10 @@
     <Compile Include="Generated\DebitCreditTransaction.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>
-    <Compile Include="MonthlyApproval.cs" />
+    <Compile Include="Generated\GetAgentPerformance_Result.cs">
+      <DependentUpon>CardPeakDomain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ApprovalPerformance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generated\Rate.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>

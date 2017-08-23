@@ -186,6 +186,9 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetAgentPerformance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="targetAgentId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="CardPeakModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
@@ -408,6 +411,9 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
             <End Role="Account" EntitySet="Accounts" />
           </AssociationSet>
           <EntitySet Name="ApprovalTransactionView" EntityType="CardPeakModel.ApprovalTransactionView" />
+          <FunctionImport Name="GetAgentPerformance" ReturnType="Collection(CardPeakModel.GetAgentPerformance_Result)">
+            <Parameter Name="targetAgentId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <Association Name="FK_Account_Agent">
           <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
@@ -451,6 +457,10 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
           <Property Name="Bank" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CardCategory" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="GetAgentPerformance_Result">
+          <Property Type="String" Name="MonthName" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Units" Nullable="true" Precision="38" Scale="4" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -584,6 +594,14 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAgentPerformance" FunctionName="CardPeakModel.Store.GetAgentPerformance">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CardPeakModel.GetAgentPerformance_Result">
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+                <ScalarProperty Name="Units" ColumnName="Units" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

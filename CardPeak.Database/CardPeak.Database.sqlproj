@@ -64,6 +64,7 @@
     <Folder Include="Script" />
     <Folder Include="Script\Defaults" />
     <Folder Include="dbo\Views" />
+    <Folder Include="dbo\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rate.sql" />
@@ -79,6 +80,7 @@
     <Build Include="dbo\Tables\User.sql" />
     <None Include="Script\Defaults\PopulateDefaultRates.sql" />
     <Build Include="dbo\Views\ApprovalTransactionView.sql" />
+    <Build Include="dbo\Stored Procedures\GetAgentPerformance.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

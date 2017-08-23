@@ -44,9 +44,9 @@
         public isDeleted: boolean;
     }
 
-    export class MonthlyApproval {
+    export class ApprovalPerformance {
         public month: string;
-        public approvals: number;
+        public units: number;
     }
 
     export class AgentDashboard {
@@ -57,6 +57,6 @@
         public accounts?: Account[];
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
-        public performance?: MonthlyApproval[];
+        public performance?: ApprovalPerformance[];
     }
 }

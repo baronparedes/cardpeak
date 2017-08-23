@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { Spinner } from '../../layout/Spinner'
+import { SpinnerGrid } from '../../layout/Spinner'
 import AgentDashboardSummary from './AgentDashboardSummary'
 import AgentDashboardTransactions from './AgentDashboardTransactions'
 
@@ -12,7 +12,7 @@ interface AgentDashboardViewProps {
 const AgentDashboardView = (props: AgentDashboardViewProps) => {
     if (props.loadingAgentDashboard) {
         return (
-            <div className="text-center"><Spinner /></div>
+            <Grid fluid className="text-center"><SpinnerGrid /></Grid>
         )
     }
 

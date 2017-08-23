@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
+import { dateFormat } from '../../../helpers/dateHelpers'
 
 interface ApprovalTransactionDetailRowLayoutProps {
     transaction?: CardPeak.Entities.ApprovalTransaction,
@@ -35,7 +36,7 @@ export default class ApprovalTransactionDetailRowLayout extends React.Component<
                     {this.props.isHeader ? "client" : this.props.transaction.client}
                 </Col>
                 <Col md={2} lg={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "approval date" : this.props.transaction.approvalDate}
+                    {this.props.isHeader ? "approval date" : dateFormat(this.props.transaction.approvalDate)}
                 </Col>
                 <Col md={2} lg={2} sm={2} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "amount" : <span className="currency text-highlight">{this.props.transaction.amount}</span>}

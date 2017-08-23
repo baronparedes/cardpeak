@@ -140,6 +140,7 @@
     <Folder Include="src\components\views\dashboard\" />
     <Folder Include="src\constants\" />
     <Folder Include="src\content\" />
+    <Folder Include="src\helpers\" />
     <Folder Include="src\types\" />
     <Folder Include="src\services\" />
     <Folder Include="src\services\actions\" />
@@ -149,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\constants\actions.ts" />
+    <TypeScriptCompile Include="src\helpers\dateHelpers.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\actions\agentActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

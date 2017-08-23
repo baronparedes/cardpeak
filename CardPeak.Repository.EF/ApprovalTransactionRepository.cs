@@ -43,5 +43,15 @@ namespace CardPeak.Repository.EF
 
             return result.ToList();
         }
+
+        public IEnumerable<ApprovalPerformance> GetAgentPerformance(int id)
+        {
+            return this.Context.GetAgentPerformance(id)
+                .Select(_ => new ApprovalPerformance {
+                    Month = _.MonthName,
+                    Units = _.Units.GetValueOrDefault()
+                })
+                .ToList();
+        }
     }
 }
