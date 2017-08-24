@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import ApprovalTransactionList from './ApprovalTransactionList'
-import DebitCreditTransactionList from './DebitCreditTransactionList'
+import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
+import DebitCreditTransactionList from '../transactions//DebitCreditTransactionList'
 
 
 interface AgentDashboardTransactionsProps {

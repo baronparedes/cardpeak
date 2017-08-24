@@ -82,22 +82,22 @@
     <Content Include="src\components\views\agents\AgentView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\ApprovalTransactionDetail.tsx">
+    <Content Include="src\components\views\transactions\ApprovalTransactionDetail.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\ApprovalTransactionDetailRowLayout.tsx">
+    <Content Include="src\components\views\transactions\ApprovalTransactionDetailRowLayout.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\ApprovalTransactionList.tsx">
+    <Content Include="src\components\views\transactions\ApprovalTransactionList.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\DebitCreditTransactionDetail.tsx">
+    <Content Include="src\components\views\transactions\DebitCreditTransactionDetail.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\DebitCreditTransactionDetailRowLayout.tsx">
+    <Content Include="src\components\views\transactions\DebitCreditTransactionDetailRowLayout.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\DebitCreditTransactionList.tsx">
+    <Content Include="src\components\views\transactions\DebitCreditTransactionList.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\SelectedAgent.tsx">
@@ -141,6 +141,7 @@
     <Folder Include="src\components\views\" />
     <Folder Include="src\components\views\agents\" />
     <Folder Include="src\components\views\dashboard\" />
+    <Folder Include="src\components\views\transactions\" />
     <Folder Include="src\constants\" />
     <Folder Include="src\content\" />
     <Folder Include="src\helpers\" />
