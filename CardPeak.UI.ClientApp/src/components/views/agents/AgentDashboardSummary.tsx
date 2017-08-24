@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
+import PerformanceDashboard from '../../layout/PerformanceDashboard'
 
 interface AgentDashboardSummaryProps {
     agentDashboard: CardPeak.Entities.AgentDashboard
@@ -42,32 +43,7 @@ const TotalApprovedMetrics = (props: { totalApprovals: number }) => {
 const AgentPerformanceMetrics = (props: { performance: CardPeak.Entities.ApprovalPerformance[] }) => {
     return (
         <Panel className="text-center panel-agent-dashboard">
-            <Grid fluid>
-                <Row>
-                    <Col xs={6} sm={6}>
-                        <AgentDashboardLabel
-                            label={props.performance[0].month}
-                            metrics={props.performance[0].units} />
-                    </Col>
-                    <Col xs={6} sm={6}>
-                        <AgentDashboardLabel
-                            label={props.performance[1].month}
-                            metrics={props.performance[1].units} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6} sm={6}>
-                        <AgentDashboardLabel
-                            label={props.performance[2].month}
-                            metrics={props.performance[2].units} />
-                    </Col>
-                    <Col xs={6} sm={6}>
-                        <AgentDashboardLabel
-                            label={props.performance[3].month}
-                            metrics={props.performance[3].units} />
-                    </Col>
-                </Row>
-            </Grid>
+            <PerformanceDashboard performance={props.performance} />
         </Panel>
     )
 }

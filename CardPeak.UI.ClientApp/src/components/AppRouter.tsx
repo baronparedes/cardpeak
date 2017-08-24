@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { App } from './App'
 
-import AgentsView from './views/agents/AgentsView'
+import AgentsView from './views/agents/AgentView'
 import DashboardView from './views/dashboard/DashboardView'
 
 export class AppRouter extends React.Component {

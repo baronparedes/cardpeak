@@ -56,18 +56,8 @@ h5, h6 {
 }
 
 .panel-agent-dashboard {
-    height: 100px;
-    max-height: 100px;
-}
-
-.panel-debit {
-    background-image: none;
-    background-color: @theme-color-panel-debit;
-}
-
-.panel-credit {
-    background-image: none;
-    background-color: @theme-color-panel-credit;
+    height: 100%;
+    padding: 0;
 }
 
 .currency:before {
@@ -78,6 +68,14 @@ h5, h6 {
     font-size: large;
     font-weight: bold;
     color: @header-font-color;
+
+    &.amount-debit {
+        color: @theme-color-debit;
+    }
+
+    &.amount-credit {
+        color: @theme-color-credit;
+    }
 }
 
 .no-padding {
@@ -107,4 +105,12 @@ h5, h6 {
 .modal-header, .modal-footer {
     background-color: @body-bg-color;
     background-image: none;
+}
+
+.perf-up {
+    color: @theme-color-credit;
+}
+
+.perf-down {
+    color: @theme-color-debit;
 }

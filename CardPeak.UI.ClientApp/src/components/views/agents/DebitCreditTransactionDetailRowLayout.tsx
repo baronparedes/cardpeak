@@ -15,6 +15,10 @@ export default class DebitCreditTransactionDetailRowLayout extends React.Compone
         console.log('search date range')
     }
     render() {
+        let amountClassNames = "currency text-highlight";
+        if (!this.props.isHeader) {
+            amountClassNames += (this.props.transaction.amount > 0) ? " amount-credit" : " amount-debit";
+        }
         return (
             <Row>
                 <Col mdHidden
@@ -30,7 +34,7 @@ export default class DebitCreditTransactionDetailRowLayout extends React.Compone
                     {this.props.isHeader ? "transaction date" : dateFormat(this.props.transaction.transactionDateTime)}
                 </Col>
                 <Col md={2} lg={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "amount" : <span className="currency text-highlight">{this.props.transaction.amount}</span>}
+                    {this.props.isHeader ? "amount" : <span className={amountClassNames}>{this.props.transaction.amount}</span>}
                 </Col>
             </Row>
         )
