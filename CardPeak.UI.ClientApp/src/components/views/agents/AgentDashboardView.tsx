@@ -3,6 +3,7 @@ import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { SpinnerGrid } from '../../layout/Spinner'
 import AgentDashboardSummary from './AgentDashboardSummary'
 import AgentDashboardTransactions from './AgentDashboardTransactions'
+import AgentDashboardActions from './AgentDashboardActions'
 
 interface AgentDashboardViewProps {
     agentDashboard?: CardPeak.Entities.AgentDashboard,
@@ -20,6 +21,7 @@ const AgentDashboardView = (props: AgentDashboardViewProps) => {
         return (
             <div>
                 <AgentDashboardSummary agentDashboard={props.agentDashboard} />
+                <AgentDashboardActions />
                 <AgentDashboardTransactions agentDashboard={props.agentDashboard} />
             </div>
         )

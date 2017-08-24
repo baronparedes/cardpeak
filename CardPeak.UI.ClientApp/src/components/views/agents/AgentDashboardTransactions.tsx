@@ -1,5 +1,4 @@
 ﻿import * as React from 'react'
-import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
 import DebitCreditTransactionList from '../transactions//DebitCreditTransactionList'
 
@@ -15,9 +14,9 @@ export default class AgentDashboardTransactions extends React.Component<AgentDas
     render() {
         return (
             <div>
-                <ApprovalTransactionList transactions={this.props.agentDashboard.approvalTransactions} />
-                <br />
                 <DebitCreditTransactionList transactions={this.props.agentDashboard.debitCreditTransactions} />
+                <br />
+                <ApprovalTransactionList transactions={this.props.agentDashboard.approvalTransactions} />
             </div>
         )
     }
