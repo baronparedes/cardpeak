@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CardPeak.Service
+namespace CardPeak.Service.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

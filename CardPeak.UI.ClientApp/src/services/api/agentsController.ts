@@ -8,7 +8,13 @@ const AGENT_API = {
         return '/agents/' + agentId;
     },
     GET_AGENT_DASHBOARD_FILTER: (agentId: number) => {
-        return '/agents/' + agentId + "/filter/"
+        return '/agents/' + agentId + "/filter"
+    },
+    DEBIT_AGENT: (agentId: number) => {
+        return 'agents/' + agentId + '/debit'
+    },
+    CREDIT_AGENT: (agentId: number) => {
+        return 'agents/' + agentId + '/credit'
     }
 }
 
@@ -28,7 +34,9 @@ export function getAgentDashboard(agentId: number, callback: (data: CardPeak.Ent
         });
 }
 
-export function getAgentDashboardFiltered(agentId: number, to: Date, from: Date, callback: (data: CardPeak.Entities.AgentDashboard) => void) {
+export function getAgentDashboardFiltered(agentId: number, to: Date, from: Date,
+    callback: (data: CardPeak.Entities.AgentDashboard) => void) {
+
     axios.get(AGENT_API.GET_AGENT_DASHBOARD_FILTER(agentId), ({
             params: {
                 startDate: to,
@@ -38,5 +46,24 @@ export function getAgentDashboardFiltered(agentId: number, to: Date, from: Date,
         .then((r) => {
             let data = r.data as CardPeak.Entities.AgentDashboard;
             callback(data);
+        });
+}
+
+export function postAgentTransaction(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean,
+    callback: (data: CardPeak.Entities.DebitCreditTransaction) => void,
+    errorCallback: (reason: any) => void) {
+
+    let url = (isDebit) ? AGENT_API.DEBIT_AGENT(transaction.agentId) : AGENT_API.CREDIT_AGENT(transaction.agentId);
+    axios.post(url, {
+            params: {
+                amount: transaction.amount,
+                remarks: transaction.remarks
+            }
+        })
+        .then((r) => {
+            callback(transaction);
+        })
+        .catch((reason) => {
+            errorCallback(reason);
         });
 }

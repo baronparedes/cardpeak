@@ -37,8 +37,8 @@ namespace CardPeak.WebAPI.Controllers
             return this.GetAgent(id, DateTime.Today, null);
         }
 
-        [Route("agents/{id}/filter/")]
-        public IHttpActionResult GetAgent(int id, [FromUri]DateTime? startDate, DateTime? endDate)
+        [Route("agents/{id}/filter")]
+        public IHttpActionResult GetAgent(int id, [FromUri]DateTime? startDate, [FromUri]DateTime? endDate)
         {
             var result = this.AgentService.GetAgentDashboard(
                 id,
@@ -51,6 +51,28 @@ namespace CardPeak.WebAPI.Controllers
             }
 
             return this.Ok(result);
+        }
+
+        [Route("agents/{id}/credit")]
+        public IHttpActionResult CreditAgent(int id, [FromUri]decimal amount, [FromUri]string remarks)
+        {
+            if (this.AgentService.AddDebitCreditTransaction(id, amount, remarks, false))
+            {
+                return this.Ok();
+            }
+
+            return this.InternalServerError();
+        }
+
+        [Route("agents/{id}/debit")]
+        public IHttpActionResult DebitAgent(int id, [FromUri]decimal amount, [FromUri]string remarks)
+        {
+            if (this.AgentService.AddDebitCreditTransaction(id, amount, remarks, true))
+            {
+                return this.Ok();
+            }
+
+            return this.InternalServerError();
         }
     }
 }

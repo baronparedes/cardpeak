@@ -16,9 +16,9 @@ INSERT INTO dbo.DebitCreditTransaction
           TransactionDateTime ,
           IsDeleted
         )
-SELECT 1, 1000, 'Credit', 1, GETDATE(), 0 UNION ALL
-SELECT 1, -100, 'Debit', 1, GETDATE(), 0 UNION ALL
-SELECT 1, 1000, 'Savings', 2, GETDATE(), 0
+SELECT 1, 1000, 'Credit', 10, GETDATE(), 0 UNION ALL
+SELECT 1, -100, 'Debit', 10, GETDATE(), 0 UNION ALL
+SELECT 1, 1000, 'Savings', 11, GETDATE(), 0
 
 INSERT INTO dbo.ApprovalTransaction
         ( BankId ,

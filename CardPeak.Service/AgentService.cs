@@ -1,6 +1,7 @@
 ﻿using CardPeak.Domain;
 using CardPeak.Repository;
 using CardPeak.Repository.EF;
+using CardPeak.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Service
 {
-    public sealed class AgentService : UnitOfWork, IUnitOfWork
+    public sealed class AgentService : UnitOfWork, IAgentService
     {
         private IAgentRepository AgentRepository;
         private IAccountRepository AccountRepository;
@@ -43,6 +44,33 @@ namespace CardPeak.Service
                 TotalApprovals = this.ApprovalTransactionRepository.TotalApprovalsByAgent(agentId),
                 Performance = this.ApprovalTransactionRepository.GetAgentPerformance(agentId)
             };
+        }
+
+        public bool AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit)
+        {
+            try
+            {
+                var transactionAmount = (isDebit) ? Math.Abs(amount) * -1 : Math.Abs(amount);
+                var transaction = new DebitCreditTransaction
+                {
+                    AgentId = agentId,
+                    Remarks = remarks,
+                    TransactionDateTime = DateTime.Today,
+                    TransactionTypeId = (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction,
+                    IsDeleted = false,
+                    Amount = transactionAmount
+                };
+
+                this.DebitCreditTransactionRepository.Add(transaction);
+                this.DomainContext.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                // TODO: Log Errors
+                return false;
+            }
         }
     }
 }

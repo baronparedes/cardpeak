@@ -4,8 +4,7 @@ import { AGENT_ACTIONS } from '../../constants/actions'
 const initialState: CardPeak.Models.AgentsModel = {
 };
 
-export default handleActions<CardPeak.Models.AgentsModel,
-        CardPeak.Entities.Agent | CardPeak.Entities.Agent[] | CardPeak.Entities.AgentDashboard>({
+export default handleActions<CardPeak.Models.AgentsModel, any>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
             ...action.payload,
@@ -46,5 +45,32 @@ export default handleActions<CardPeak.Models.AgentsModel,
             loadingAgents: undefined,
             agents: action.payload
         };
-    }
+    },
+    [AGENT_ACTIONS.POST_AGENT_TRANSACTION]: (state, action) => {
+        return {
+            ...action.payload,
+            ...state,
+            postingTransaction: true,
+            postingTransactionError: undefined
+        };
+    },
+    [AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE]: (state, action) => {
+        let agentDashboard = state.selectedAgentDashboard;
+        agentDashboard.debitCreditTransactions.push(action.payload);
+        return {
+            ...action.payload,
+            ...state,
+            postingTransaction: undefined,
+            postingTransactionError: undefined,
+            selectedAgentDashboard: agentDashboard
+        };
+    },
+    [AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR]: (state, action) => {
+        return {
+            ...action.payload,
+            ...state,
+            postingTransaction: undefined,
+            postingTransactionError: action.payload
+        };
+    },
 }, initialState);

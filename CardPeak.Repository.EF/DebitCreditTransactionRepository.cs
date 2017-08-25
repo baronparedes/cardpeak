@@ -24,18 +24,21 @@ namespace CardPeak.Repository.EF
 
         public decimal AccountBalanceByAgent(int id)
         {
-            return this.GetBalanceByAgent(id, 1);
+            return this.GetBalanceByAgent(id, (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
         }
 
         public decimal SavingsBalanceByAgent(int id)
         {
-            return this.GetBalanceByAgent(id, 2);
+            return this.GetBalanceByAgent(id, (int)CardPeak.Domain.Enums.TransactionTypeEnum.SavingsTransaction);
         }
 
         public IEnumerable<DebitCreditTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
         {
             var result = this.Context
-                .DebitCreditTransactions.Where(_ => _.AgentId == id && !_.IsDeleted && _.TransactionTypeId == 1);
+                .DebitCreditTransactions
+                .Where(_ => _.AgentId == id && !_.IsDeleted)
+                .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+
             if (endDate.HasValue)
             {
                 result.Where(_ => _.TransactionDateTime >= startDate.Date && _.TransactionDateTime <= endDate.GetValueOrDefault().Date);

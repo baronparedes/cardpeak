@@ -9,6 +9,20 @@ export const selectAgentDashboard = createAction(AGENT_ACTIONS.SELECT_AGENT_DASH
 export const selectAgentDashboardComplete = createAction<CardPeak.Entities.AgentDashboard>(AGENT_ACTIONS.SELECT_AGENT_DASHBOARD_COMPLETE);
 export const getAllAgentsComplete = createAction<CardPeak.Entities.Agent[]>(AGENT_ACTIONS.GET_ALL_COMPLETE);
 export const getAllAgents = createAction(AGENT_ACTIONS.GET_ALL);
+export const postAgentTransaction = createAction(AGENT_ACTIONS.POST_AGENT_TRANSACTION);
+export const postAgentTransactionComplete = createAction<CardPeak.Entities.DebitCreditTransaction>(AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE);
+export const postAgentTransactionError = createAction<any>(AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR);
+
+export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(postAgentTransaction());
+        agentsController.postAgentTransaction(transaction, isDebit, (data: CardPeak.Entities.DebitCreditTransaction) => {
+            dispatch(postAgentTransactionComplete(data));
+        }, (data: any) => {
+            dispatch(postAgentTransactionError(data));
+        });
+    }
+}
 
 export function getAllAgentsStart() {
     return getAllAgentsStartThunkAction;
