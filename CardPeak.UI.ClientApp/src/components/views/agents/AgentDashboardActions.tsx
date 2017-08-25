@@ -20,14 +20,14 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
         }
     }
     handleOnTransactionToggleModal = (e: any) => {
-        this.setState({ transaction: e.target.name });
+        this.setState({ transaction: e.target.dataset.name });
         this.handleOnToggleModal();
     }
     handleOnToggleModal = () => {
         this.setState({ showModal: !this.state.showModal });
     }
     handleOnSubmitTransaction = (transaction: CardPeak.Entities.DebitCreditTransaction) => {
-        console.log(transaction);
+        // TODO
         this.handleOnToggleModal();
     }
     handleOnRefreshTransactions = () => {
@@ -43,8 +43,8 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                     <Col lg={6} md={6} sm={6} xsHidden className="text-right" >
                         <ButtonGroup>
                             <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary">Refresh Transactions</Button>
-                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" name="Credit">Credit</Button>
-                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" name="Debit">Debit</Button>
+                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit">Credit</Button>
+                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit">Debit</Button>
                         </ButtonGroup>
                     </Col>
                     <Col xs={12} smHidden lgHidden mdHidden className="text-right">
@@ -52,11 +52,11 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                             <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary">
                                 <i className="fa fa-refresh fa-2x" title="Refresh"></i>
                             </Button>
-                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" name="Credit">
-                                <i className="fa fa-plus fa-2x" title="Credit Credit"></i>
+                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit">
+                                <i className="fa fa-plus fa-2x" title="Credit Credit" data-name="Credit"></i>
                             </Button>
-                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" name="Debit">
-                                <i className="fa fa-minus fa-2x" title="Debit Transaction"></i>
+                            <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit">
+                                <i className="fa fa-minus fa-2x" title="Debit Transaction" data-name="Debit"></i>
                             </Button>
                         </ButtonGroup>
                         <DebitCreditTransactionFormModal
