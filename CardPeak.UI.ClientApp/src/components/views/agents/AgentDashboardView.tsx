@@ -21,7 +21,7 @@ const AgentDashboardView = (props: AgentDashboardViewProps) => {
         return (
             <div>
                 <AgentDashboardSummary agentDashboard={props.agentDashboard} />
-                <AgentDashboardActions />
+                <AgentDashboardActions agent={props.agentDashboard.agent} />
                 <AgentDashboardTransactions agentDashboard={props.agentDashboard} />
             </div>
         )

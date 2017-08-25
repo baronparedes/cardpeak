@@ -46,7 +46,19 @@
     <Content Include="src\components\AppRouter.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\ButtonLoadingText.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\layout\ModalConfirm.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\Footer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\layout\FormField.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\layout\ModalPanel.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\layout\NavigationBar.tsx">
@@ -98,6 +110,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\DebitCreditTransactionDetailRowLayout.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\transactions\DebitCreditTransactionForm.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\transactions\DebitCreditTransactionFormModal.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\DebitCreditTransactionList.tsx">

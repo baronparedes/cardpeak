@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import { Button, Modal, Panel } from 'react-bootstrap'
+import ModalPanel from '../../layout/ModalPanel'
 import AgentList from './AgentList'
 
 interface AgentListModalProps {
@@ -12,20 +12,12 @@ interface AgentListModalProps {
 
 const AgentListModal = (props: AgentListModalProps) => {
     return (
-        <Modal show={props.showModal} onHide={props.onToggleModal}>
-            <Modal.Header>
-                <Modal.Title>Agents</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <AgentList
-                    agents={props.agents}
-                    handleOnSelectAgent={props.onAgentSelected}
-                    isLoading={props.isLoading} />
-            </Modal.Body>
-            <Modal.Footer>
-                <Button bsStyle="danger" onClick={props.onToggleModal}>Close</Button>
-            </Modal.Footer>
-        </Modal>
+        <ModalPanel showModal={props.showModal} onToggleModal={props.onToggleModal} title="agents">
+            <AgentList
+                agents={props.agents}
+                handleOnSelectAgent={props.onAgentSelected}
+                isLoading={props.isLoading} />
+        </ModalPanel>
     )
 }
 

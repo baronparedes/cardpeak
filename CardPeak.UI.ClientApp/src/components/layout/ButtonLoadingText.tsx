@@ -1,0 +1,19 @@
+﻿import * as React from 'react'
+
+const ButtonLoadingText = (props: { isLoading: boolean, label: React.ReactNode}) => {
+    if (props.isLoading) {
+        return (
+            <div>
+                <span className="spacer-right">Loading..</span>
+                <i className="fa fa-spinner fa-spin"></i>
+            </div>
+        )
+    }
+    return (
+        <div>
+            {props.label}    
+        </div>
+    )
+}
+
+export default ButtonLoadingText;

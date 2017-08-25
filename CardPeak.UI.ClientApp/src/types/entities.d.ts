@@ -31,17 +31,16 @@
         public isDeleted: boolean;
         public bank?: string;
         public cardCategory?: string;
-        
     }
 
     export class DebitCreditTransaction {
-        public id: number;
+        public id?: number;
         public agentId: number;
         public amount: number;
         public remarks: string;
-        public transactionTypeId: number;
-        public transactionDateTime: Date;
-        public isDeleted: boolean;
+        public transactionTypeId?: number;
+        public transactionDateTime?: Date;
+        public isDeleted?: boolean;
     }
 
     export class ApprovalPerformance {
