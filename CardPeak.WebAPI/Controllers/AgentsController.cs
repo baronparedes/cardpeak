@@ -34,11 +34,22 @@ namespace CardPeak.WebAPI.Controllers
 
         public IHttpActionResult GetAgent(int id)
         {
-            var result = this.AgentService.GetAgentDashboard(id, DateTime.Today);
+            return this.GetAgent(id, DateTime.Today, null);
+        }
+
+        [Route("agents/{id}/filter/")]
+        public IHttpActionResult GetAgent(int id, [FromUri]DateTime? startDate, DateTime? endDate)
+        {
+            var result = this.AgentService.GetAgentDashboard(
+                id,
+                startDate.HasValue ? startDate.GetValueOrDefault() :
+                DateTime.Today, endDate);
+
             if (result == null)
             {
                 return this.NotFound();
             }
+
             return this.Ok(result);
         }
     }

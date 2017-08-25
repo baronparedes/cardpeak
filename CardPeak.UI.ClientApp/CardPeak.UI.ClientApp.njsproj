@@ -164,7 +164,6 @@
     <Folder Include="src\components\views\dashboard\" />
     <Folder Include="src\components\views\transactions\" />
     <Folder Include="src\constants\" />
-    <Folder Include="src\content\" />
     <Folder Include="src\helpers\" />
     <Folder Include="src\types\" />
     <Folder Include="src\services\" />

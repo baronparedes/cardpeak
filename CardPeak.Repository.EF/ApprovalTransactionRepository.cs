@@ -27,7 +27,9 @@ namespace CardPeak.Repository.EF
         {
             return this.Context.ApprovalTransactions
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
-                .Sum(_ => _.Units);
+                .Select(_ => _.Units)
+                .DefaultIfEmpty(0)
+                .Sum();
         }
 
         public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
