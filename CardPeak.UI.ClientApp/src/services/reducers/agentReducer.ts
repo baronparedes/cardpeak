@@ -48,12 +48,17 @@ export default handleActions<CardPeak.Models.AgentsModel, any>({
         };
     },
     [AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE]: (state, action) => {
-        let agentDashboard = state.selectedAgentDashboard;
-        agentDashboard.debitCreditTransactions.push(action.payload);
+        let transaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
+        let transactions = state.selectedAgentDashboard.debitCreditTransactions.slice();
+        transactions.push(transaction);
         return {
             ...state,
             postingTransaction: undefined,
-            selectedAgentDashboard: agentDashboard,
+            selectedAgentDashboard: {
+                ...state.selectedAgentDashboard,
+                accountBalance: state.selectedAgentDashboard.accountBalance + transaction.amount,
+                debitCreditTransactions: transactions
+            },
         };
     },
     [AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR]: (state, action) => {
