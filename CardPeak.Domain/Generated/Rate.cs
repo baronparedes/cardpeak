@@ -15,13 +15,13 @@ namespace CardPeak.Domain
     public partial class Rate
     {
         public int RateId { get; set; }
-        public decimal Rate1 { get; set; }
+        public decimal Amount { get; set; }
         public int BankId { get; set; }
         public int CardCategoryId { get; set; }
         public int AgentId { get; set; }
     
         public virtual Agent Agent { get; set; }
-        public virtual Reference Reference { get; set; }
-        public virtual Reference Reference1 { get; set; }
+        public virtual Reference Bank { get; set; }
+        public virtual Reference CardCategory { get; set; }
     }
 }

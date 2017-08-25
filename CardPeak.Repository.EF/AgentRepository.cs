@@ -15,7 +15,9 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<Agent> GetAllOrderedByName()
         {
-            return this.Context.Agents.OrderBy(_ => _.FirstName).ThenBy(_ => _.LastName).ToList();
+            return this.Context.Agents
+                .Where(_ => !_.IsDeleted)
+                .OrderBy(_ => _.FirstName).ThenBy(_ => _.LastName).ToList();
         }
     }
 }

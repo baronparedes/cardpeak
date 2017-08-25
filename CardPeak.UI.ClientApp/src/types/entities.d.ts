@@ -29,8 +29,8 @@
         public approvalDate: Date;
         public batchId?: number;
         public isDeleted: boolean;
-        public bank?: string;
-        public cardCategory?: string;
+        public bank?: Reference;
+        public cardCategory?: Reference;
     }
 
     export class DebitCreditTransaction {
@@ -41,6 +41,7 @@
         public transactionTypeId?: number;
         public transactionDateTime?: Date;
         public isDeleted?: boolean;
+        public transactionType?: Reference;
     }
 
     export class ApprovalPerformance {
@@ -57,5 +58,12 @@
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
         public performance?: ApprovalPerformance[];
+    }
+
+    export class Reference 
+    {
+        public referenceId: number;
+        public referenceTypeId: number;
+        public description: string;
     }
 }

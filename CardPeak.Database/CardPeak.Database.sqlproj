@@ -64,6 +64,7 @@
     <Folder Include="Script" />
     <Folder Include="Script\Defaults" />
     <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="Script\Sample Data" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rate.sql" />
@@ -88,6 +89,7 @@
   <ItemGroup>
     <None Include="CardPeak.Database.DEV.publish.xml" />
     <None Include="Script\Defaults\PopulateDefaultUsers.sql" />
+    <None Include="Script\Sample Data\Sample Agent.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CardPeak.Database.refactorlog" />

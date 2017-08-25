@@ -7,5 +7,5 @@
     [Gender] CHAR NOT NULL, 
     [BirthDate] DATE NULL, 
     [Email] VARCHAR(100) NULL,
-	[IsDeleted] BIT NULL DEFAULT 0
+	[IsDeleted] BIT NOT NULL DEFAULT 0
 )

@@ -5,21 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="caa02d65bbb241bd87d1be7c00c9a734" Name="Diagram1">
-        <EntityTypeShape EntityType="CardPeakModel.Account" Width="1.5" PointX="5.25" PointY="11.75" />
-        <EntityTypeShape EntityType="CardPeakModel.Agent" Width="1.5" PointX="3" PointY="10.875" />
-        <EntityTypeShape EntityType="CardPeakModel.ApprovalTransaction" Width="1.5" PointX="5.25" PointY="0.75" />
-        <EntityTypeShape EntityType="CardPeakModel.BatchUpload" Width="1.5" PointX="0.75" PointY="1.75" />
-        <EntityTypeShape EntityType="CardPeakModel.DebitCreditTransaction" Width="1.5" PointX="8.25" PointY="6.375" />
-        <EntityTypeShape EntityType="CardPeakModel.Rate" Width="1.5" PointX="5.25" PointY="6.5" />
-        <EntityTypeShape EntityType="CardPeakModel.Reference" Width="1.5" PointX="3" PointY="6.375" />
-        <EntityTypeShape EntityType="CardPeakModel.ReferenceType" Width="1.5" PointX="0.75" PointY="7" />
-        <EntityTypeShape EntityType="CardPeakModel.User" Width="1.5" PointX="7.75" PointY="1.75" />
+        <EntityTypeShape EntityType="CardPeakModel.Account" Width="1.5" PointX="8.25" PointY="0.75" />
+        <EntityTypeShape EntityType="CardPeakModel.Agent" Width="1.5" PointX="6" PointY="1.875" />
+        <EntityTypeShape EntityType="CardPeakModel.ApprovalTransaction" Width="1.5" PointX="5.25" PointY="6.5" />
+        <EntityTypeShape EntityType="CardPeakModel.BatchUpload" Width="1.5" PointX="5.25" PointY="19" />
+        <EntityTypeShape EntityType="CardPeakModel.DebitCreditTransaction" Width="1.5" PointX="8.25" PointY="7.125" />
+        <EntityTypeShape EntityType="CardPeakModel.Rate" Width="1.5" PointX="8.25" PointY="3.25" />
+        <EntityTypeShape EntityType="CardPeakModel.Reference" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="CardPeakModel.ReferenceType" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CardPeakModel.User" Width="1.5" PointX="0.75" PointY="0.75" />
         <AssociationConnector Association="CardPeakModel.FK_Account_Agent" />
         <AssociationConnector Association="CardPeakModel.FK_ApprovalTransaction_Agent" />
         <AssociationConnector Association="CardPeakModel.FK_DebitCreditTransaction_Agent" />
         <AssociationConnector Association="CardPeakModel.FK_Rate_Agent" />
         <AssociationConnector Association="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" />
         <AssociationConnector Association="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" />
+        <AssociationConnector Association="CardPeakModel.FK_BatchUpload_Bank" />
         <AssociationConnector Association="CardPeakModel.FK_DebitCreditTransaction_Reference" />
         <AssociationConnector Association="CardPeakModel.FK_Rate_Reference_BankId" />
         <AssociationConnector Association="CardPeakModel.FK_Rate_Reference_CardCategoryId" />

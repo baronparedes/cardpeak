@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentDashboard.cs" />
+    <Compile Include="Enums\ReferenceTypeEnum.cs" />
     <Compile Include="Generated\Account.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>

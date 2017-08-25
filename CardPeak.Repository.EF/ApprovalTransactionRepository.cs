@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace CardPeak.Repository.EF
 {
@@ -31,7 +32,12 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context.ApprovalTransactions.Where(_ => _.AgentId == id && !_.IsDeleted);
+            var result = this.Context
+                .ApprovalTransactions
+                .Include(_ => _.Bank)
+                .Include(_ => _.CardCategory)
+                .Where(_ => _.AgentId == id && !_.IsDeleted);
+
             if (endDate.HasValue)
             {
                 result.Where(_ => _.ApprovalDate >= startDate.Date && _.ApprovalDate <= endDate.GetValueOrDefault().Date);
@@ -41,7 +47,8 @@ namespace CardPeak.Repository.EF
                 result.Where(_ => _.ApprovalDate >= startDate.Date);
             }
 
-            return result.ToList();
+            var list = result.ToList();
+            return list;
         }
 
         public IEnumerable<ApprovalPerformance> GetAgentPerformance(int id)

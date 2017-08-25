@@ -20,5 +20,7 @@ namespace CardPeak.Domain
         public bool HasErrors { get; set; }
         public Nullable<System.DateTime> UploadStartDateTime { get; set; }
         public Nullable<System.DateTime> UploaedEndDateTime { get; set; }
+    
+        public virtual Reference Reference { get; set; }
     }
 }

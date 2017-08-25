@@ -3,7 +3,7 @@ GO
 
 DECLARE @defaultAgentId INT = 0;
 
-;WITH Rate_CTE(RateId, Rate, BankId, CardCategoryId)
+;WITH Rate_CTE(RateId, Amount, BankId, CardCategoryId)
 AS
 (
 	--Metrobank
@@ -43,13 +43,13 @@ USING Rate_CTE cte
 WHEN MATCHED THEN
 	UPDATE 
 	SET
-		ref.Rate = cte.Rate,
+		ref.Amount = cte.Amount,
 		ref.BankId = cte.BankId,
 		ref.CardCategoryId = cte.CardCategoryId,
 		ref.AgentId = @defaultAgentId
 WHEN NOT MATCHED BY TARGET THEN
-	INSERT (RateId, Rate, BankId, CardCategoryId, AgentId)
-	VALUES (cte.RateId, cte.Rate, cte.BankId, cte.CardCategoryId, @defaultAgentId);
+	INSERT (RateId, Amount, BankId, CardCategoryId, AgentId)
+	VALUES (cte.RateId, cte.Amount, cte.BankId, cte.CardCategoryId, @defaultAgentId);
 
 SET IDENTITY_INSERT dbo.Rate OFF
 GO

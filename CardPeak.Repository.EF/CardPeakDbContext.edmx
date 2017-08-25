@@ -24,7 +24,7 @@
           <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
-          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
@@ -74,7 +74,7 @@
             <PropertyRef Name="AgentId" />
           </Key>
           <Property Name="RateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BankId" Type="int" Nullable="false" />
           <Property Name="CardCategoryId" Type="int" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
@@ -151,6 +151,18 @@
             </Principal>
             <Dependent Role="ApprovalTransaction">
               <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BatchUpload_Bank">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="BatchUpload" Type="Self.BatchUpload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="BatchUpload">
+              <PropertyRef Name="BankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -255,6 +267,10 @@
             <End Role="Reference" EntitySet="Reference" />
             <End Role="ApprovalTransaction" EntitySet="ApprovalTransaction" />
           </AssociationSet>
+          <AssociationSet Name="FK_BatchUpload_Bank" Association="Self.FK_BatchUpload_Bank">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="BatchUpload" EntitySet="BatchUpload" />
+          </AssociationSet>
           <AssociationSet Name="FK_DebitCreditTransaction_Agent" Association="Self.FK_DebitCreditTransaction_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransaction" />
@@ -321,6 +337,10 @@
             <End Role="Reference" EntitySet="References" />
             <End Role="ApprovalTransaction" EntitySet="ApprovalTransactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_BatchUpload_Bank" Association="CardPeakModel.FK_BatchUpload_Bank">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="BatchUpload" EntitySet="BatchUploads" />
+          </AssociationSet>
           <AssociationSet Name="FK_DebitCreditTransaction_Reference" Association="CardPeakModel.FK_DebitCreditTransaction_Reference">
             <End Role="Reference" EntitySet="References" />
             <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransactions" />
@@ -362,7 +382,7 @@
           <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Accounts" Relationship="CardPeakModel.FK_Account_Agent" FromRole="Agent" ToRole="Account" />
           <NavigationProperty Name="ApprovalTransactions" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="Agent" ToRole="ApprovalTransaction" />
           <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
@@ -386,8 +406,8 @@
           <Property Name="BatchId" Type="Int32" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="ApprovalTransaction" ToRole="Agent" />
-          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" FromRole="ApprovalTransaction" ToRole="Reference" />
-          <NavigationProperty Name="Reference1" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" FromRole="ApprovalTransaction" ToRole="Reference" />
+          <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" FromRole="ApprovalTransaction" ToRole="Reference" />
+          <NavigationProperty Name="CardCategory" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" FromRole="ApprovalTransaction" ToRole="Reference" />
         </EntityType>
         <EntityType Name="BatchUpload">
           <Key>
@@ -399,6 +419,7 @@
           <Property Name="HasErrors" Type="Boolean" Nullable="false" />
           <Property Name="UploadStartDateTime" Type="DateTime" Precision="3" />
           <Property Name="UploaedEndDateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_BatchUpload_Bank" FromRole="BatchUpload" ToRole="Reference" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
           <Key>
@@ -412,7 +433,7 @@
           <Property Name="TransactionDateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="DebitCreditTransaction" ToRole="Agent" />
-          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_DebitCreditTransaction_Reference" FromRole="DebitCreditTransaction" ToRole="Reference" />
+          <NavigationProperty Name="TransactionType" Relationship="CardPeakModel.FK_DebitCreditTransaction_Reference" FromRole="DebitCreditTransaction" ToRole="Reference" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -421,13 +442,13 @@
             <PropertyRef Name="AgentId" />
           </Key>
           <Property Name="RateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rate1" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="BankId" Type="Int32" Nullable="false" />
           <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Rate" ToRole="Agent" />
-          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_Rate_Reference_BankId" FromRole="Rate" ToRole="Reference" />
-          <NavigationProperty Name="Reference1" Relationship="CardPeakModel.FK_Rate_Reference_CardCategoryId" FromRole="Rate" ToRole="Reference" />
+          <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_Rate_Reference_BankId" FromRole="Rate" ToRole="Reference" />
+          <NavigationProperty Name="CardCategory" Relationship="CardPeakModel.FK_Rate_Reference_CardCategoryId" FromRole="Rate" ToRole="Reference" />
         </EntityType>
         <EntityType Name="Reference">
           <Key>
@@ -436,11 +457,6 @@
           <Property Name="ReferenceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ReferenceTypeId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ApprovalTransactions" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" FromRole="Reference" ToRole="ApprovalTransaction" />
-          <NavigationProperty Name="ApprovalTransactions1" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" FromRole="Reference" ToRole="ApprovalTransaction" />
-          <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Reference" FromRole="Reference" ToRole="DebitCreditTransaction" />
-          <NavigationProperty Name="Rates" Relationship="CardPeakModel.FK_Rate_Reference_BankId" FromRole="Reference" ToRole="Rate" />
-          <NavigationProperty Name="Rates1" Relationship="CardPeakModel.FK_Rate_Reference_CardCategoryId" FromRole="Reference" ToRole="Rate" />
           <NavigationProperty Name="ReferenceType" Relationship="CardPeakModel.FK_Reference_ReferenceType" FromRole="Reference" ToRole="ReferenceType" />
         </EntityType>
         <EntityType Name="ReferenceType">
@@ -532,6 +548,18 @@
             </Principal>
             <Dependent Role="ApprovalTransaction">
               <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BatchUpload_Bank">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.BatchUpload" Role="BatchUpload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="BatchUpload">
+              <PropertyRef Name="BankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -669,7 +697,7 @@
                 <ScalarProperty Name="AgentId" ColumnName="AgentId" />
                 <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
-                <ScalarProperty Name="Rate1" ColumnName="Rate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="RateId" ColumnName="RateId" />
               </MappingFragment>
             </EntityTypeMapping>
