@@ -14,10 +14,30 @@ namespace CardPeak.Domain
     
     public partial class Reference
     {
-        public int Id { get; set; }
-        public int Type { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Reference()
+        {
+            this.ApprovalTransactions = new HashSet<ApprovalTransaction>();
+            this.ApprovalTransactions1 = new HashSet<ApprovalTransaction>();
+            this.DebitCreditTransactions = new HashSet<DebitCreditTransaction>();
+            this.Rates = new HashSet<Rate>();
+            this.Rates1 = new HashSet<Rate>();
+        }
+    
+        public int ReferenceId { get; set; }
+        public int ReferenceTypeId { get; set; }
         public string Description { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ApprovalTransaction> ApprovalTransactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ApprovalTransaction> ApprovalTransactions1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DebitCreditTransaction> DebitCreditTransactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rate> Rates { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rate> Rates1 { get; set; }
         public virtual ReferenceType ReferenceType { get; set; }
     }
 }

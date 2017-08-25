@@ -24,6 +24,7 @@
           <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
@@ -51,7 +52,7 @@
           <Property Name="FileName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="BankId" Type="int" Nullable="false" />
           <Property Name="HasErrors" Type="bit" Nullable="false" />
-          <Property Name="UploadStartDateTime" Type="datetime" Nullable="false" />
+          <Property Name="UploadStartDateTime" Type="datetime" />
           <Property Name="UploaedEndDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
@@ -80,11 +81,10 @@
         </EntityType>
         <EntityType Name="Reference">
           <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Type" />
+            <PropertyRef Name="ReferenceId" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="ReferenceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferenceTypeId" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="ReferenceType">
@@ -105,38 +105,6 @@
           <Property Name="Middlename" Type="varchar" MaxLength="50" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ApprovalTransactionView">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="BankId" />
-            <PropertyRef Name="CardCategoryId" />
-            <PropertyRef Name="AgentId" />
-            <PropertyRef Name="Units" />
-            <PropertyRef Name="Amount" />
-            <PropertyRef Name="ProductType" />
-            <PropertyRef Name="ApprovalDate" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="Bank" />
-            <PropertyRef Name="CardCategory" />
-          </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="BankId" Type="int" Nullable="false" />
-          <Property Name="CardCategoryId" Type="int" Nullable="false" />
-          <Property Name="AgentId" Type="int" Nullable="false" />
-          <Property Name="Units" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="ProductType" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ReferenceNumber1" Type="varchar" MaxLength="50" />
-          <Property Name="ReferenceNumber2" Type="varchar" MaxLength="50" />
-          <Property Name="Client" Type="varchar" MaxLength="255" />
-          <Property Name="ApprovalDate" Type="date" Nullable="false" />
-          <Property Name="BatchId" Type="int" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="Bank" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CardCategory" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK_Account_Agent">
           <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
@@ -162,6 +130,30 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ApprovalTransaction_Reference_BankId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="ApprovalTransaction" Type="Self.ApprovalTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="ApprovalTransaction">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApprovalTransaction_Reference_CardCategoryId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="ApprovalTransaction" Type="Self.ApprovalTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="ApprovalTransaction">
+              <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DebitCreditTransaction_Agent">
           <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
           <End Role="DebitCreditTransaction" Type="Self.DebitCreditTransaction" Multiplicity="*" />
@@ -174,6 +166,54 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DebitCreditTransaction_Reference">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="DebitCreditTransaction" Type="Self.DebitCreditTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DebitCreditTransaction">
+              <PropertyRef Name="TransactionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Agent">
+          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
+          <End Role="Rate" Type="Self.Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Reference_BankId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="Rate" Type="Self.Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Reference_CardCategoryId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="Rate" Type="Self.Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reference_ReferenceType">
           <End Role="ReferenceType" Type="Self.ReferenceType" Multiplicity="1" />
           <End Role="Reference" Type="Self.Reference" Multiplicity="*" />
@@ -182,7 +222,7 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
               <PropertyRef Name="ReferenceTypeId" />
             </Principal>
             <Dependent Role="Reference">
-              <PropertyRef Name="Type" />
+              <PropertyRef Name="ReferenceTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -199,25 +239,6 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
           <EntitySet Name="Reference" EntityType="Self.Reference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenceType" EntityType="Self.ReferenceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ApprovalTransactionView" EntityType="Self.ApprovalTransactionView" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ApprovalTransactionView].[Id] AS [Id], 
-    [ApprovalTransactionView].[BankId] AS [BankId], 
-    [ApprovalTransactionView].[CardCategoryId] AS [CardCategoryId], 
-    [ApprovalTransactionView].[AgentId] AS [AgentId], 
-    [ApprovalTransactionView].[Units] AS [Units], 
-    [ApprovalTransactionView].[Amount] AS [Amount], 
-    [ApprovalTransactionView].[ProductType] AS [ProductType], 
-    [ApprovalTransactionView].[ReferenceNumber1] AS [ReferenceNumber1], 
-    [ApprovalTransactionView].[ReferenceNumber2] AS [ReferenceNumber2], 
-    [ApprovalTransactionView].[Client] AS [Client], 
-    [ApprovalTransactionView].[ApprovalDate] AS [ApprovalDate], 
-    [ApprovalTransactionView].[BatchId] AS [BatchId], 
-    [ApprovalTransactionView].[IsDeleted] AS [IsDeleted], 
-    [ApprovalTransactionView].[Bank] AS [Bank], 
-    [ApprovalTransactionView].[CardCategory] AS [CardCategory]
-    FROM [dbo].[ApprovalTransactionView] AS [ApprovalTransactionView]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Account_Agent" Association="Self.FK_Account_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="Account" EntitySet="Account" />
@@ -226,9 +247,33 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
             <End Role="Agent" EntitySet="Agent" />
             <End Role="ApprovalTransaction" EntitySet="ApprovalTransaction" />
           </AssociationSet>
+          <AssociationSet Name="FK_ApprovalTransaction_Reference_BankId" Association="Self.FK_ApprovalTransaction_Reference_BankId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="ApprovalTransaction" EntitySet="ApprovalTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApprovalTransaction_Reference_CardCategoryId" Association="Self.FK_ApprovalTransaction_Reference_CardCategoryId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="ApprovalTransaction" EntitySet="ApprovalTransaction" />
+          </AssociationSet>
           <AssociationSet Name="FK_DebitCreditTransaction_Agent" Association="Self.FK_DebitCreditTransaction_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebitCreditTransaction_Reference" Association="Self.FK_DebitCreditTransaction_Reference">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Agent" Association="Self.FK_Rate_Agent">
+            <End Role="Agent" EntitySet="Agent" />
+            <End Role="Rate" EntitySet="Rate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Reference_BankId" Association="Self.FK_Rate_Reference_BankId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="Rate" EntitySet="Rate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Reference_CardCategoryId" Association="Self.FK_Rate_Reference_CardCategoryId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="Rate" EntitySet="Rate" />
           </AssociationSet>
           <AssociationSet Name="FK_Reference_ReferenceType" Association="Self.FK_Reference_ReferenceType">
             <End Role="ReferenceType" EntitySet="ReferenceType" />
@@ -239,13 +284,71 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CardPeakModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CardPeakDbContext" annotation:LazyLoadingEnabled="false">
+          <FunctionImport Name="GetAgentPerformance" ReturnType="Collection(CardPeakModel.GetAgentPerformance_Result)">
+          <Parameter Name="targetAgentId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Accounts" EntityType="CardPeakModel.Account" />
+          <EntitySet Name="Agents" EntityType="CardPeakModel.Agent" />
+          <EntitySet Name="ApprovalTransactions" EntityType="CardPeakModel.ApprovalTransaction" />
+          <EntitySet Name="BatchUploads" EntityType="CardPeakModel.BatchUpload" />
+          <EntitySet Name="DebitCreditTransactions" EntityType="CardPeakModel.DebitCreditTransaction" />
+          <EntitySet Name="Rates" EntityType="CardPeakModel.Rate" />
+          <EntitySet Name="References" EntityType="CardPeakModel.Reference" />
+          <EntitySet Name="ReferenceTypes" EntityType="CardPeakModel.ReferenceType" />
+          <EntitySet Name="Users" EntityType="CardPeakModel.User" />
+          <AssociationSet Name="FK_Account_Agent" Association="CardPeakModel.FK_Account_Agent">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApprovalTransaction_Agent" Association="CardPeakModel.FK_ApprovalTransaction_Agent">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="ApprovalTransaction" EntitySet="ApprovalTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebitCreditTransaction_Agent" Association="CardPeakModel.FK_DebitCreditTransaction_Agent">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Agent" Association="CardPeakModel.FK_Rate_Agent">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="Rate" EntitySet="Rates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApprovalTransaction_Reference_BankId" Association="CardPeakModel.FK_ApprovalTransaction_Reference_BankId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="ApprovalTransaction" EntitySet="ApprovalTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApprovalTransaction_Reference_CardCategoryId" Association="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="ApprovalTransaction" EntitySet="ApprovalTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DebitCreditTransaction_Reference" Association="CardPeakModel.FK_DebitCreditTransaction_Reference">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Reference_BankId" Association="CardPeakModel.FK_Rate_Reference_BankId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="Rate" EntitySet="Rates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rate_Reference_CardCategoryId" Association="CardPeakModel.FK_Rate_Reference_CardCategoryId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="Rate" EntitySet="Rates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reference_ReferenceType" Association="CardPeakModel.FK_Reference_ReferenceType">
+            <End Role="ReferenceType" EntitySet="ReferenceTypes" />
+            <End Role="Reference" EntitySet="References" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="GetAgentPerformance_Result">
+          <Property Type="String" Name="MonthName" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Units" Nullable="true" Precision="38" Scale="4" />
+        </ComplexType>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AgentId" />
             <PropertyRef Name="Alias" />
           </Key>
           <Property Name="AgentId" Type="Int32" Nullable="false" />
-          <Property Name="Alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Alias" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_Account_Agent" FromRole="Account" ToRole="Agent" />
         </EntityType>
         <EntityType Name="Agent">
@@ -253,195 +356,23 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
             <PropertyRef Name="AgentId" />
           </Key>
           <Property Name="AgentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="BirthDate" Type="DateTime" Precision="0" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ApprovalTransactions" Relationship="Self.FK_ApprovalTransaction_Agent" FromRole="Agent" ToRole="ApprovalTransaction" />
-          <NavigationProperty Name="DebitCreditTransactions" Relationship="Self.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
+          <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Accounts" Relationship="CardPeakModel.FK_Account_Agent" FromRole="Agent" ToRole="Account" />
+          <NavigationProperty Name="ApprovalTransactions" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="Agent" ToRole="ApprovalTransaction" />
+          <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
+          <NavigationProperty Name="Rates" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Agent" ToRole="Rate" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BankId" Type="Int32" Nullable="false" />
-          <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="AgentId" Type="Int32" Nullable="false" />
-          <Property Name="Units" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="ProductType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ReferenceNumber1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ReferenceNumber2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Client" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="BatchId" Type="Int32" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Agent" Relationship="Self.FK_ApprovalTransaction_Agent" FromRole="ApprovalTransaction" ToRole="Agent" />
-        </EntityType>
-        <EntityType Name="BatchUpload">
-          <Key>
-            <PropertyRef Name="BatchId" />
-          </Key>
-          <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="BankId" Type="Int32" Nullable="false" />
-          <Property Name="HasErrors" Type="Boolean" Nullable="false" />
-          <Property Name="UploadStartDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UploaedEndDateTime" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="DebitCreditTransaction">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AgentId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="Remarks" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
-          <Property Name="TransactionDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Agent" Relationship="Self.FK_DebitCreditTransaction_Agent" FromRole="DebitCreditTransaction" ToRole="Agent" />
-        </EntityType>
-        <EntityType Name="Rate">
-          <Key>
-            <PropertyRef Name="BankId" />
-            <PropertyRef Name="CardCategoryId" />
-            <PropertyRef Name="AgentId" />
-          </Key>
-          <Property Name="RateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rate1" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="BankId" Type="Int32" Nullable="false" />
-          <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="AgentId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Reference">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Type" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Type" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="ReferenceType" Relationship="Self.FK_Reference_ReferenceType" FromRole="Reference" ToRole="ReferenceType" />
-        </EntityType>
-        <EntityType Name="ReferenceType">
-          <Key>
-            <PropertyRef Name="ReferenceTypeId" />
-          </Key>
-          <Property Name="ReferenceTypeId" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="References" Relationship="Self.FK_Reference_ReferenceType" FromRole="ReferenceType" ToRole="Reference" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Middlename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_ApprovalTransaction_Agent">
-          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
-          <End Role="ApprovalTransaction" Type="Self.ApprovalTransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Agent">
-              <PropertyRef Name="AgentId" />
-            </Principal>
-            <Dependent Role="ApprovalTransaction">
-              <PropertyRef Name="AgentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DebitCreditTransaction_Agent">
-          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
-          <End Role="DebitCreditTransaction" Type="Self.DebitCreditTransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Agent">
-              <PropertyRef Name="AgentId" />
-            </Principal>
-            <Dependent Role="DebitCreditTransaction">
-              <PropertyRef Name="AgentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Reference_ReferenceType">
-          <End Role="ReferenceType" Type="Self.ReferenceType" Multiplicity="1" />
-          <End Role="Reference" Type="Self.Reference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ReferenceType">
-              <PropertyRef Name="ReferenceTypeId" />
-            </Principal>
-            <Dependent Role="Reference">
-              <PropertyRef Name="Type" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="CardPeakDbContext" annotation:LazyLoadingEnabled="false">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
-          <EntitySet Name="Agents" EntityType="Self.Agent" />
-          <EntitySet Name="ApprovalTransactions" EntityType="Self.ApprovalTransaction" />
-          <EntitySet Name="BatchUploads" EntityType="Self.BatchUpload" />
-          <EntitySet Name="DebitCreditTransactions" EntityType="Self.DebitCreditTransaction" />
-          <EntitySet Name="Rates" EntityType="Self.Rate" />
-          <EntitySet Name="References" EntityType="Self.Reference" />
-          <EntitySet Name="ReferenceTypes" EntityType="Self.ReferenceType" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_ApprovalTransaction_Agent" Association="Self.FK_ApprovalTransaction_Agent">
-            <End Role="Agent" EntitySet="Agents" />
-            <End Role="ApprovalTransaction" EntitySet="ApprovalTransactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DebitCreditTransaction_Agent" Association="Self.FK_DebitCreditTransaction_Agent">
-            <End Role="Agent" EntitySet="Agents" />
-            <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransactions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Reference_ReferenceType" Association="Self.FK_Reference_ReferenceType">
-            <End Role="ReferenceType" EntitySet="ReferenceTypes" />
-            <End Role="Reference" EntitySet="References" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Account_Agent" Association="CardPeakModel.FK_Account_Agent">
-            <End Role="Agent" EntitySet="Agents" />
-            <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
-          <EntitySet Name="ApprovalTransactionView" EntityType="CardPeakModel.ApprovalTransactionView" />
-          <FunctionImport Name="GetAgentPerformance" ReturnType="Collection(CardPeakModel.GetAgentPerformance_Result)">
-            <Parameter Name="targetAgentId" Mode="In" Type="Int32" />
-          </FunctionImport>
-        </EntityContainer>
-        <Association Name="FK_Account_Agent">
-          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
-          <End Type="CardPeakModel.Account" Role="Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Agent">
-              <PropertyRef Name="AgentId" />
-            </Principal>
-            <Dependent Role="Account">
-              <PropertyRef Name="AgentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ApprovalTransactionView">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="BankId" />
-            <PropertyRef Name="CardCategoryId" />
-            <PropertyRef Name="AgentId" />
-            <PropertyRef Name="Units" />
-            <PropertyRef Name="Amount" />
-            <PropertyRef Name="ProductType" />
-            <PropertyRef Name="ApprovalDate" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="Bank" />
-            <PropertyRef Name="CardCategory" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="BankId" Type="Int32" Nullable="false" />
           <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
@@ -454,146 +385,210 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
           <Property Name="ApprovalDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="BatchId" Type="Int32" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="Bank" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CardCategory" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="ApprovalTransaction" ToRole="Agent" />
+          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" FromRole="ApprovalTransaction" ToRole="Reference" />
+          <NavigationProperty Name="Reference1" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" FromRole="ApprovalTransaction" ToRole="Reference" />
         </EntityType>
-        <ComplexType Name="GetAgentPerformance_Result">
-          <Property Type="String" Name="MonthName" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="Units" Nullable="true" Precision="38" Scale="4" />
-        </ComplexType>
-      </Schema>
+        <EntityType Name="BatchUpload">
+          <Key>
+            <PropertyRef Name="BatchId" />
+          </Key>
+          <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <Property Name="HasErrors" Type="Boolean" Nullable="false" />
+          <Property Name="UploadStartDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UploaedEndDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DebitCreditTransaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="DebitCreditTransaction" ToRole="Agent" />
+          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_DebitCreditTransaction_Reference" FromRole="DebitCreditTransaction" ToRole="Reference" />
+        </EntityType>
+        <EntityType Name="Rate">
+          <Key>
+            <PropertyRef Name="BankId" />
+            <PropertyRef Name="CardCategoryId" />
+            <PropertyRef Name="AgentId" />
+          </Key>
+          <Property Name="RateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rate1" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Rate" ToRole="Agent" />
+          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_Rate_Reference_BankId" FromRole="Rate" ToRole="Reference" />
+          <NavigationProperty Name="Reference1" Relationship="CardPeakModel.FK_Rate_Reference_CardCategoryId" FromRole="Rate" ToRole="Reference" />
+        </EntityType>
+        <EntityType Name="Reference">
+          <Key>
+            <PropertyRef Name="ReferenceId" />
+          </Key>
+          <Property Name="ReferenceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ApprovalTransactions" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" FromRole="Reference" ToRole="ApprovalTransaction" />
+          <NavigationProperty Name="ApprovalTransactions1" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" FromRole="Reference" ToRole="ApprovalTransaction" />
+          <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Reference" FromRole="Reference" ToRole="DebitCreditTransaction" />
+          <NavigationProperty Name="Rates" Relationship="CardPeakModel.FK_Rate_Reference_BankId" FromRole="Reference" ToRole="Rate" />
+          <NavigationProperty Name="Rates1" Relationship="CardPeakModel.FK_Rate_Reference_CardCategoryId" FromRole="Reference" ToRole="Rate" />
+          <NavigationProperty Name="ReferenceType" Relationship="CardPeakModel.FK_Reference_ReferenceType" FromRole="Reference" ToRole="ReferenceType" />
+        </EntityType>
+        <EntityType Name="ReferenceType">
+          <Key>
+            <PropertyRef Name="ReferenceTypeId" />
+          </Key>
+          <Property Name="ReferenceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="References" Relationship="CardPeakModel.FK_Reference_ReferenceType" FromRole="ReferenceType" ToRole="Reference" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Middlename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Account_Agent">
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
+          <End Type="CardPeakModel.Account" Role="Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApprovalTransaction_Agent">
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
+          <End Type="CardPeakModel.ApprovalTransaction" Role="ApprovalTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="ApprovalTransaction">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebitCreditTransaction_Agent">
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
+          <End Type="CardPeakModel.DebitCreditTransaction" Role="DebitCreditTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="DebitCreditTransaction">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Agent">
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
+          <End Type="CardPeakModel.Rate" Role="Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApprovalTransaction_Reference_BankId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.ApprovalTransaction" Role="ApprovalTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="ApprovalTransaction">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApprovalTransaction_Reference_CardCategoryId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.ApprovalTransaction" Role="ApprovalTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="ApprovalTransaction">
+              <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DebitCreditTransaction_Reference">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.DebitCreditTransaction" Role="DebitCreditTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DebitCreditTransaction">
+              <PropertyRef Name="TransactionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Reference_BankId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.Rate" Role="Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rate_Reference_CardCategoryId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.Rate" Role="Rate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="Rate">
+              <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reference_ReferenceType">
+          <End Type="CardPeakModel.ReferenceType" Role="ReferenceType" Multiplicity="1" />
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReferenceType">
+              <PropertyRef Name="ReferenceTypeId" />
+            </Principal>
+            <Dependent Role="Reference">
+              <PropertyRef Name="ReferenceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CardPeakModelStoreContainer" CdmEntityContainer="CardPeakDbContext">
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="CardPeakModel.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
-                <ScalarProperty Name="Alias" ColumnName="Alias" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Agents">
-            <EntityTypeMapping TypeName="CardPeakModel.Agent">
-              <MappingFragment StoreEntitySet="Agent">
-                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ApprovalTransactions">
-            <EntityTypeMapping TypeName="CardPeakModel.ApprovalTransaction">
-              <MappingFragment StoreEntitySet="ApprovalTransaction">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="BankId" ColumnName="BankId" />
-                <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
-                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
-                <ScalarProperty Name="Units" ColumnName="Units" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
-                <ScalarProperty Name="ReferenceNumber1" ColumnName="ReferenceNumber1" />
-                <ScalarProperty Name="ReferenceNumber2" ColumnName="ReferenceNumber2" />
-                <ScalarProperty Name="Client" ColumnName="Client" />
-                <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BatchUploads">
-            <EntityTypeMapping TypeName="CardPeakModel.BatchUpload">
-              <MappingFragment StoreEntitySet="BatchUpload">
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="BankId" ColumnName="BankId" />
-                <ScalarProperty Name="HasErrors" ColumnName="HasErrors" />
-                <ScalarProperty Name="UploadStartDateTime" ColumnName="UploadStartDateTime" />
-                <ScalarProperty Name="UploaedEndDateTime" ColumnName="UploaedEndDateTime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DebitCreditTransactions">
-            <EntityTypeMapping TypeName="CardPeakModel.DebitCreditTransaction">
-              <MappingFragment StoreEntitySet="DebitCreditTransaction">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
-                <ScalarProperty Name="TransactionDateTime" ColumnName="TransactionDateTime" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Rates">
-            <EntityTypeMapping TypeName="CardPeakModel.Rate">
-              <MappingFragment StoreEntitySet="Rate">
-                <ScalarProperty Name="RateId" ColumnName="RateId" />
-                <ScalarProperty Name="Rate1" ColumnName="Rate" />
-                <ScalarProperty Name="BankId" ColumnName="BankId" />
-                <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
-                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="References">
-            <EntityTypeMapping TypeName="CardPeakModel.Reference">
-              <MappingFragment StoreEntitySet="Reference">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ReferenceTypes">
-            <EntityTypeMapping TypeName="CardPeakModel.ReferenceType">
-              <MappingFragment StoreEntitySet="ReferenceType">
-                <ScalarProperty Name="ReferenceTypeId" ColumnName="ReferenceTypeId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="CardPeakModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Middlename" ColumnName="Middlename" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ApprovalTransactionView">
-            <EntityTypeMapping TypeName="CardPeakModel.ApprovalTransactionView">
-              <MappingFragment StoreEntitySet="ApprovalTransactionView">
-                <ScalarProperty Name="CardCategory" ColumnName="CardCategory" />
-                <ScalarProperty Name="Bank" ColumnName="Bank" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
-                <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
-                <ScalarProperty Name="Client" ColumnName="Client" />
-                <ScalarProperty Name="ReferenceNumber2" ColumnName="ReferenceNumber2" />
-                <ScalarProperty Name="ReferenceNumber1" ColumnName="ReferenceNumber1" />
-                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Units" ColumnName="Units" />
-                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
-                <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
-                <ScalarProperty Name="BankId" ColumnName="BankId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetAgentPerformance" FunctionName="CardPeakModel.Store.GetAgentPerformance">
             <ResultMapping>
               <ComplexTypeMapping TypeName="CardPeakModel.GetAgentPerformance_Result">
@@ -602,7 +597,114 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="CardPeakModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Alias" ColumnName="Alias" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Agents">
+            <EntityTypeMapping TypeName="CardPeakModel.Agent">
+              <MappingFragment StoreEntitySet="Agent">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApprovalTransactions">
+            <EntityTypeMapping TypeName="CardPeakModel.ApprovalTransaction">
+              <MappingFragment StoreEntitySet="ApprovalTransaction">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+                <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="ReferenceNumber2" ColumnName="ReferenceNumber2" />
+                <ScalarProperty Name="ReferenceNumber1" ColumnName="ReferenceNumber1" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Units" ColumnName="Units" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BatchUploads">
+            <EntityTypeMapping TypeName="CardPeakModel.BatchUpload">
+              <MappingFragment StoreEntitySet="BatchUpload">
+                <ScalarProperty Name="UploaedEndDateTime" ColumnName="UploaedEndDateTime" />
+                <ScalarProperty Name="UploadStartDateTime" ColumnName="UploadStartDateTime" />
+                <ScalarProperty Name="HasErrors" ColumnName="HasErrors" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DebitCreditTransactions">
+            <EntityTypeMapping TypeName="CardPeakModel.DebitCreditTransaction">
+              <MappingFragment StoreEntitySet="DebitCreditTransaction">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="TransactionDateTime" ColumnName="TransactionDateTime" />
+                <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rates">
+            <EntityTypeMapping TypeName="CardPeakModel.Rate">
+              <MappingFragment StoreEntitySet="Rate">
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="Rate1" ColumnName="Rate" />
+                <ScalarProperty Name="RateId" ColumnName="RateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="References">
+            <EntityTypeMapping TypeName="CardPeakModel.Reference">
+              <MappingFragment StoreEntitySet="Reference">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReferenceTypeId" ColumnName="ReferenceTypeId" />
+                <ScalarProperty Name="ReferenceId" ColumnName="ReferenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReferenceTypes">
+            <EntityTypeMapping TypeName="CardPeakModel.ReferenceType">
+              <MappingFragment StoreEntitySet="ReferenceType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ReferenceTypeId" ColumnName="ReferenceTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CardPeakModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Middlename" ColumnName="Middlename" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -616,7 +718,7 @@ warning 6002: The table/view 'CardPeak.dbo.ApprovalTransactionView' does not hav
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

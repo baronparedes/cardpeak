@@ -56,9 +56,6 @@
     <Compile Include="Generated\ApprovalTransaction.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>
-    <Compile Include="Generated\ApprovalTransactionView.cs">
-      <DependentUpon>CardPeakDomain.tt</DependentUpon>
-    </Compile>
     <Compile Include="Generated\BatchUpload.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>

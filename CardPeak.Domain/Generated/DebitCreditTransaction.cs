@@ -23,5 +23,6 @@ namespace CardPeak.Domain
         public bool IsDeleted { get; set; }
     
         public virtual Agent Agent { get; set; }
+        public virtual Reference Reference { get; set; }
     }
 }

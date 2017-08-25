@@ -18,7 +18,7 @@ namespace CardPeak.Domain
         public string FileName { get; set; }
         public int BankId { get; set; }
         public bool HasErrors { get; set; }
-        public System.DateTime UploadStartDateTime { get; set; }
+        public Nullable<System.DateTime> UploadStartDateTime { get; set; }
         public Nullable<System.DateTime> UploaedEndDateTime { get; set; }
     }
 }

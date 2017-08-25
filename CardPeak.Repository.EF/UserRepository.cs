@@ -9,10 +9,8 @@ namespace CardPeak.Repository.EF
 {
     public sealed class UserRepository : Repository<User, CardPeakDbContext>, IUserRepository
     {
-        private readonly CardPeakDbContext DomainContext;
         public UserRepository(CardPeakDbContext context) : base(context)
         {
-            this.DomainContext = context;
         }
     }
 }

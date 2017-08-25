@@ -19,5 +19,9 @@ namespace CardPeak.Domain
         public int BankId { get; set; }
         public int CardCategoryId { get; set; }
         public int AgentId { get; set; }
+    
+        public virtual Agent Agent { get; set; }
+        public virtual Reference Reference { get; set; }
+        public virtual Reference Reference1 { get; set; }
     }
 }

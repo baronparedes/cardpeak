@@ -14,7 +14,7 @@ namespace CardPeak.Domain
         public decimal TotalApprovals { get; set; }
 
         public IEnumerable<Account> Accounts { get; set; }
-        public IEnumerable<ApprovalTransactionView> ApprovalTransactions { get; set; }
+        public IEnumerable<ApprovalTransaction> ApprovalTransactions { get; set; }
         public IEnumerable<DebitCreditTransaction> DebitCreditTransactions { get; set; }
         public IEnumerable<ApprovalPerformance> Performance { get; set; }
     }

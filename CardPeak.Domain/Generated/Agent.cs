@@ -17,9 +17,10 @@ namespace CardPeak.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Agent()
         {
+            this.Accounts = new HashSet<Account>();
             this.ApprovalTransactions = new HashSet<ApprovalTransaction>();
             this.DebitCreditTransactions = new HashSet<DebitCreditTransaction>();
-            this.Accounts = new HashSet<Account>();
+            this.Rates = new HashSet<Rate>();
         }
     
         public int AgentId { get; set; }
@@ -29,12 +30,15 @@ namespace CardPeak.Domain
         public string Gender { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Email { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Account> Accounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ApprovalTransaction> ApprovalTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitCreditTransaction> DebitCreditTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Rate> Rates { get; set; }
     }
 }
