@@ -26,10 +26,6 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     handleOnToggleModal = () => {
         this.setState({ showModal: !this.state.showModal });
     }
-    handleOnSubmitTransaction = (transaction: CardPeak.Entities.DebitCreditTransaction) => {
-        // TODO
-        this.handleOnToggleModal();
-    }
     handleOnRefreshTransactions = () => {
         // TODO
     }
@@ -72,7 +68,6 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                         </ButtonGroup>
                         <DebitCreditTransactionFormModal
                             agent={this.props.agent}
-                            onSubmitTransaction={this.handleOnSubmitTransaction}
                             onToggleModal={this.handleOnToggleModal}
                             showModal={this.state.showModal}
                             transaction={this.state.transaction} />

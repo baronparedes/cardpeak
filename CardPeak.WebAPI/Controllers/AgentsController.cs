@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace CardPeak.WebAPI.Controllers
 {
+    [RoutePrefix("api/agents")]
     public sealed class AgentsController : ApiController
     {
         public AgentService AgentService { get; set; }
@@ -37,14 +38,11 @@ namespace CardPeak.WebAPI.Controllers
             return this.GetAgent(id, DateTime.Today, null);
         }
 
-        [Route("agents/{id}/filter")]
-        public IHttpActionResult GetAgent(int id, [FromUri]DateTime? startDate, [FromUri]DateTime? endDate)
+        [HttpGet]
+        [Route("{id}/filter")]
+        public IHttpActionResult GetAgent(int id, [FromUri]DateTime startDate, [FromUri]DateTime? endDate = null)
         {
-            var result = this.AgentService.GetAgentDashboard(
-                id,
-                startDate.HasValue ? startDate.GetValueOrDefault() :
-                DateTime.Today, endDate);
-
+            var result = this.AgentService.GetAgentDashboard(id, startDate, endDate);
             if (result == null)
             {
                 return this.NotFound();
@@ -53,26 +51,29 @@ namespace CardPeak.WebAPI.Controllers
             return this.Ok(result);
         }
 
-        [Route("agents/{id}/credit")]
-        public IHttpActionResult CreditAgent(int id, [FromUri]decimal amount, [FromUri]string remarks)
+        [HttpPost]
+        [Route("{id}/credit")]
+        public IHttpActionResult CreditAgent(int id, decimal amount, string remarks)
         {
-            if (this.AgentService.AddDebitCreditTransaction(id, amount, remarks, false))
-            {
-                return this.Ok();
-            }
-
-            return this.InternalServerError();
+            return this.DebitCreditAgent(id, amount, remarks, false);
         }
 
-        [Route("agents/{id}/debit")]
-        public IHttpActionResult DebitAgent(int id, [FromUri]decimal amount, [FromUri]string remarks)
+        [HttpPost]
+        [Route("{id}/debit")]
+        public IHttpActionResult DebitAgent(int id, decimal amount, string remarks)
         {
-            if (this.AgentService.AddDebitCreditTransaction(id, amount, remarks, true))
+            return this.DebitCreditAgent(id, amount, remarks, true);
+        }
+
+        private IHttpActionResult DebitCreditAgent(int id, decimal amount, string remarks, bool isDebit)
+        {
+            var result = this.AgentService.AddDebitCreditTransaction(id, amount, remarks, isDebit);
+            if (result == null)
             {
-                return this.Ok();
+                return this.InternalServerError();
             }
 
-            return this.InternalServerError();
+            return this.Ok(result);
         }
     }
 }

@@ -21,16 +21,14 @@ const AGENT_API = {
 export function getAll(callback: (data: CardPeak.Entities.Agent[]) => void) {
     axios.get(AGENT_API.GET_ALL)
         .then((r) => {
-            let data = r.data as CardPeak.Entities.Agent[]
-            callback(data);
+            callback(r.data as CardPeak.Entities.Agent[]);
         });
 }
 
 export function getAgentDashboard(agentId: number, callback: (data: CardPeak.Entities.AgentDashboard) => void) {
     axios.get(AGENT_API.GET_AGENT_DASHBOARD(agentId))
         .then((r) => {
-            let data = r.data as CardPeak.Entities.AgentDashboard;
-            callback(data);
+            callback(r.data as CardPeak.Entities.AgentDashboard);
         });
 }
 
@@ -44,26 +42,26 @@ export function getAgentDashboardFiltered(agentId: number, to: Date, from: Date,
             }
         }))
         .then((r) => {
-            let data = r.data as CardPeak.Entities.AgentDashboard;
-            callback(data);
+            callback(r.data as CardPeak.Entities.AgentDashboard);
         });
 }
 
-export function postAgentTransaction(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean,
+export function postAgentTransaction(
+    transaction: CardPeak.Entities.DebitCreditTransaction,
+    isDebit: boolean,
     callback: (data: CardPeak.Entities.DebitCreditTransaction) => void,
     errorCallback: (reason: any) => void) {
 
     let url = (isDebit) ? AGENT_API.DEBIT_AGENT(transaction.agentId) : AGENT_API.CREDIT_AGENT(transaction.agentId);
-    axios.post(url, {
+    axios.post(url, null, {
             params: {
-                amount: transaction.amount,
-                remarks: transaction.remarks
+                amount: transaction.amount, remarks: transaction.remarks
             }
         })
         .then((r) => {
-            callback(transaction);
+            callback(r.data as CardPeak.Entities.DebitCreditTransaction);
         })
         .catch((reason) => {
-            errorCallback(reason);
+            errorCallback(reason.message);
         });
 }

@@ -1,6 +1,7 @@
 ﻿import * as React from 'react'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
 import { SpinnerGrid } from '../../layout/Spinner'
+import ListNoRecordsRow from '../../layout/ListNoRecordsRow'
 import AgentDetail from './AgentDetail'
 import AgentDetailRowLayout from './AgentDetailRowLayout'
 
@@ -22,6 +23,11 @@ const LoadAgentList = (props: AgentListProps) => {
                                 <AgentDetail agent={agent} key={agent.agentId} handleOnSelectAgent={props.handleOnSelectAgent} />
                             )
                         }) : null
+            }
+            {
+                props.agents.length === 0 ?
+                    <ListNoRecordsRow />
+                    : null
             }
         </Grid>
     )

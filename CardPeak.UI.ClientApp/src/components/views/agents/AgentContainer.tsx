@@ -2,9 +2,10 @@
 import * as AgentsActions from '../../../services/actions/agentActions'
 
 import { connect } from 'react-redux'
-import { Panel } from 'react-bootstrap'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
+
+import { Panel } from 'react-bootstrap'
 
 import AgentListModal from './AgentListModal'
 import SelectedAgent from './SelectedAgent'
@@ -57,7 +58,7 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
     }
 }
 
-const mapStateToProps = (state: RootState):CardPeak.Models.AgentsModel  => ({
+const mapStateToProps = (state: RootState): CardPeak.Models.AgentsModel  => ({
     selectedAgent: state.agentsModel.selectedAgent,
     selectedAgentDashboard: state.agentsModel.selectedAgentDashboard,
     agents: state.agentsModel.agents,

@@ -1,27 +1,43 @@
 ﻿import * as React from 'react'
+import * as AgentsActions from '../../../services/actions/agentActions'
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { RootState } from '../../../services/reducers'
+
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
 import FormField from '../../layout/FormField'
 import ModalConfirm from '../../layout/ModalConfirm'
 import ButtonLoadingText from '../../layout/ButtonLoadingText'
 
 interface DebitCreditTransactionFormState {
-    loading: boolean;
     showConfirmModal: boolean;
     remarks: string;
     amount: number;
     errors: {
         [error: string]: string,
     };
+    postingTransactionError?: string;
 }
 
 interface DebitCreditTransactionFormProps {
-    agent: CardPeak.Entities.Agent,
-    transaction: string,
-    onSubmitTransaction: (transaction: CardPeak.Entities.DebitCreditTransaction) => void
+    agent: CardPeak.Entities.Agent;
+    transaction: string;
+    onTransactionSubmitted?: () => void;
 }
 
-export default class DebitCreditTransactionForm extends React.Component<DebitCreditTransactionFormProps, DebitCreditTransactionFormState> {
-    constructor(props: DebitCreditTransactionFormProps) {
+interface DebitCreditTransactionFormPropsConnect {
+    postingTransaction?: boolean;
+}
+
+interface DebitCreditTransactionFormDispatchProps {
+    actions?: typeof AgentsActions
+}
+
+class DebitCreditTransactionForm extends React.Component<
+    DebitCreditTransactionFormProps & DebitCreditTransactionFormPropsConnect & DebitCreditTransactionFormDispatchProps,
+    DebitCreditTransactionFormState> {
+    constructor(props: DebitCreditTransactionFormProps & DebitCreditTransactionFormPropsConnect & DebitCreditTransactionFormDispatchProps) {
         super(props);
         this.state = {
             amount: 0,
@@ -30,7 +46,6 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
                 remarks: '',
                 amount: ''
             },
-            loading: false,
             showConfirmModal: false
         }
     }
@@ -47,13 +62,24 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
             return;
         }
         this.handleOnToggleModal();
-        this.props.onSubmitTransaction({
+
+        this.props.actions.postAgentTransactionStart({
+            agentId: this.props.agent.agentId,
             amount: this.state.amount,
-            remarks: this.state.remarks,
-            agentId: this.props.agent.agentId
-        });
+            remarks: this.state.remarks
+        },
+        (this.props.transaction.toLowerCase() == 'debit'),
+        this.handleOnTransactionSubmitted, this.handleOnTransactionSubmittedError);
+    }
+    handleOnTransactionSubmitted = () => {
+        this.setState({ postingTransactionError: undefined });
+        this.props.onTransactionSubmitted();
+    }
+    handleOnTransactionSubmittedError = (message: string) => {
+        this.setState({ postingTransactionError: message });
     }
     handleOnToggleModal = () => {
+        this.setState({ postingTransactionError: undefined });
         this.handleErrors();
         if (!!this.state.errors.remarks && !!this.state.errors.amount) {
             return;
@@ -78,7 +104,7 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
         return (
             <div className="container-fluid">
                 <Form horizontal>
-                    <fieldset disabled={this.state.loading}>
+                    <fieldset disabled={this.props.postingTransaction}>
                         <FormField
                             controlId="form-amount"
                             type="number"
@@ -101,8 +127,8 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
                                 <Button
                                     bsStyle={buttonClass}
                                     onClick={this.handleOnToggleModal}
-                                    disabled={this.state.loading}>
-                                    <ButtonLoadingText isLoading={this.state.loading} label={this.props.transaction} />
+                                    disabled={this.props.postingTransaction}>
+                                    <ButtonLoadingText isLoading={this.props.postingTransaction} label={this.props.transaction} />
                                 </Button>
                                 <ModalConfirm
                                     title="confirm transaction"
@@ -119,6 +145,13 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
                                     <p className="text-right">Do you wish to continue?</p>
                                 </ModalConfirm>
                             </Col>
+                            <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                                {
+                                    this.state.postingTransactionError ?
+                                        this.state.postingTransactionError
+                                        : null
+                                }
+                            </Col>
                         </FormGroup>
                     </fieldset>
                 </Form>
@@ -126,3 +159,15 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
         )
     }
 }
+
+const mapStateToProps = (state: RootState): DebitCreditTransactionFormPropsConnect => ({
+    postingTransaction: state.agentsModel.postingTransaction
+});
+
+const mapDispatchToProps = (dispatch: any): DebitCreditTransactionFormDispatchProps => {
+    return {
+        actions: bindActionCreators(AgentsActions as any, dispatch)
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DebitCreditTransactionForm);

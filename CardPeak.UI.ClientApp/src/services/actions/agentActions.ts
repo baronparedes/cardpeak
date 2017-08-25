@@ -11,38 +11,40 @@ export const getAllAgentsComplete = createAction<CardPeak.Entities.Agent[]>(AGEN
 export const getAllAgents = createAction(AGENT_ACTIONS.GET_ALL);
 export const postAgentTransaction = createAction(AGENT_ACTIONS.POST_AGENT_TRANSACTION);
 export const postAgentTransactionComplete = createAction<CardPeak.Entities.DebitCreditTransaction>(AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE);
-export const postAgentTransactionError = createAction<any>(AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR);
+export const postAgentTransactionError = createAction(AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR);
 
-export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean) {
+export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean, success?: () => void, error?: (m: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(postAgentTransaction());
         agentsController.postAgentTransaction(transaction, isDebit, (data: CardPeak.Entities.DebitCreditTransaction) => {
             dispatch(postAgentTransactionComplete(data));
-        }, (data: any) => {
-            dispatch(postAgentTransactionError(data));
+            if (success) {
+                success();
+            }
+        }, (message: string) => {
+            dispatch(postAgentTransactionError());
+            if (error) {
+                error(message);
+            }
         });
     }
 }
 
 export function getAllAgentsStart() {
-    return getAllAgentsStartThunkAction;
+    return (dispatch: (e: any) => void) => {
+        dispatch(getAllAgents());
+        agentsController.getAll((data: CardPeak.Entities.Agent[]) => {
+            dispatch(getAllAgentsComplete(data));
+        });
+    }
 }
 
 export function selectAgentDashboardStart() {
-    return getAgentDashboardThunkAction;
-}
-
-const getAllAgentsStartThunkAction: ThunkAction<void, RootState, void> = (dispatch) => {
-    dispatch(getAllAgents());
-    agentsController.getAll((data: CardPeak.Entities.Agent[]) => {
-        dispatch(getAllAgentsComplete(data));
-    });
-}
-
-const getAgentDashboardThunkAction: ThunkAction<void, RootState, CardPeak.Entities.Agent> = (dispatch, getState, payload) => {
-    let agent = getState().agentsModel.selectedAgent;
-    dispatch(selectAgentDashboard());
-    agentsController.getAgentDashboard(agent.agentId, (data: CardPeak.Entities.AgentDashboard) => {
-        dispatch(selectAgentDashboardComplete(data));
-    });
+    return (dispatch: (e: any) => void, getState: () => RootState) => {
+        let agent = getState().agentsModel.selectedAgent;
+        dispatch(selectAgentDashboard());
+        agentsController.getAgentDashboard(agent.agentId, (data: CardPeak.Entities.AgentDashboard) => {
+            dispatch(selectAgentDashboardComplete(data));
+        });
+    }
 }

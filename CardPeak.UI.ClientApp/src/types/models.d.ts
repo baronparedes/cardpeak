@@ -4,6 +4,7 @@
         selectedAgentDashboard?: CardPeak.Entities.AgentDashboard,
         agents?: CardPeak.Entities.Agent[],
         loadingAgents?: boolean,
-        loadingAgentDashboard? : boolean
+        loadingAgentDashboard?: boolean,
+        postingTransaction?: boolean,
     }
 }

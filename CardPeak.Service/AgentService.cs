@@ -46,7 +46,7 @@ namespace CardPeak.Service
             };
         }
 
-        public bool AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit)
+        public DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit)
         {
             try
             {
@@ -64,12 +64,12 @@ namespace CardPeak.Service
                 this.DebitCreditTransactionRepository.Add(transaction);
                 this.DomainContext.SaveChanges();
 
-                return true;
+                return transaction;
             }
             catch
             {
                 // TODO: Log Errors
-                return false;
+                return null;
             }
         }
     }

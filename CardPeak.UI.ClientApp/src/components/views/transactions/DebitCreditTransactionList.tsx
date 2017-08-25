@@ -1,6 +1,7 @@
 ﻿import * as React from 'react'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
 import { SpinnerGrid } from '../../layout/Spinner'
+import ListNoRecordsRow from '../../layout/ListNoRecordsRow'
 
 import DebitCreditTransactionDetail from './DebitCreditTransactionDetail'
 import DebitCreditTransactionDetailRowLayout from './DebitCreditTransactionDetailRowLayout'
@@ -29,6 +30,11 @@ export default class DebitCreditTransactionList extends React.Component<DebitCre
                                     <DebitCreditTransactionDetail transaction={transaction} key={transaction.id} />
                                 )
                             }) : null
+                    }
+                    {
+                        this.props.transactions.length === 0 ?
+                            <ListNoRecordsRow />
+                            : null
                     }
                 </Grid>
             </div>

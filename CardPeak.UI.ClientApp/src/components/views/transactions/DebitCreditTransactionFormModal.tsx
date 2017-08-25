@@ -4,7 +4,6 @@ import DebitCreditTransactionForm from './DebitCreditTransactionForm'
 
 interface DebitCreditTransactionFormModalProps {
     onToggleModal: () => void;
-    onSubmitTransaction: (transaction: CardPeak.Entities.DebitCreditTransaction) => void,
     agent: CardPeak.Entities.Agent
     showModal: boolean;
     transaction: string;
@@ -15,7 +14,7 @@ const DebitCreditTransactionFormModal = (props: DebitCreditTransactionFormModalP
         <ModalPanel showModal={props.showModal} onToggleModal={props.onToggleModal} title={props.transaction + " transaction"}>
             <DebitCreditTransactionForm
                 agent={props.agent}
-                onSubmitTransaction={props.onSubmitTransaction}
+                onTransactionSubmitted={props.onToggleModal}
                 transaction={props.transaction} />
         </ModalPanel>
     )
