@@ -10,8 +10,7 @@ interface DebitCreditTransactionFormState {
     remarks: string;
     amount: number;
     errors: {
-        remarks?: string,
-        amount?: string
+        [error: string]: string,
     };
 }
 
@@ -28,15 +27,25 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
             amount: 0,
             remarks: '',
             errors: {
+                remarks: '',
+                amount: ''
             },
             loading: false,
             showConfirmModal: false
         }
     }
-    controls: {
-        transactionForm: Form
+    handleErrors = () => {
+        let errors = this.state.errors;
+        if (this.state.amount === 0) errors.amount = "*";
+        if (this.state.remarks === '') errors.remarks = "*";
+        this.setState({ errors });
+        return errors;
     }
     handleOnConfirm = () => {
+        this.handleErrors();
+        if (!!this.state.errors.remarks && !!this.state.errors.amount) {
+            return;
+        }
         this.handleOnToggleModal();
         this.props.onSubmitTransaction({
             amount: this.state.amount,
@@ -45,13 +54,22 @@ export default class DebitCreditTransactionForm extends React.Component<DebitCre
         });
     }
     handleOnToggleModal = () => {
+        this.handleErrors();
+        if (!!this.state.errors.remarks && !!this.state.errors.amount) {
+            return;
+        }
         this.setState({ showConfirmModal: !this.state.showConfirmModal });
     }
     handleFocus = (e: any) => {
         e.target.select();
     }
     handleChange = (e: any) => {
-        this.setState({ [e.target.name]: e.target.value });
+        let errors = this.state.errors;
+        errors[e.target.name] = '';
+        this.setState({
+            [e.target.name]: e.target.value,
+            errors
+        });
     }
     render() {
         let isDebit: boolean = (this.props.transaction.toLowerCase() == 'debit');
