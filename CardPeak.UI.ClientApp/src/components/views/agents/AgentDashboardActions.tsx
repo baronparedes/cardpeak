@@ -37,8 +37,19 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
         return (
             <Grid fluid className="spacer-bottom">
                 <Row>
-                    <Col lg={6} md={6} xs={12} sm={6}>
-                        Date Picker here
+                    <Col lg={6} md={6} sm={6} xs={12}>
+                        <Grid fluid className="no-padding">
+                            <Row>
+                                <Col xs={6}>
+                                    <label className="text-muted spacer-right">from</label>
+                                    DATE_FROM__PICKER
+                                </Col>
+                                <Col xs={6}>
+                                    <label className="text-muted spacer-right">to</label>
+                                    DATE_TO__PICKER
+                                </Col>    
+                            </Row>
+                        </Grid>
                     </Col>
                     <Col lg={6} md={6} sm={6} xsHidden className="text-right" >
                         <ButtonGroup>

@@ -10,7 +10,7 @@ export default class SelectedAgent extends React.Component<{ agent: CardPeak.Ent
         if (!!!this.props.agent) {
             return (
                 <div>
-                    <span className="text-muted spacer-right text-highlight">Select an Agent</span>
+                    <label className="text-muted spacer-right text-highlight">Select an Agent</label>
                     <Button bsStyle="primary" onClick={e => this.onClick(e)}>
                         <i className="fa fa-sm fa-users"></i>
                     </Button>    
