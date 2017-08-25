@@ -4,6 +4,6 @@
     [FileName] VARCHAR(255) NOT NULL, 
     [BankId] INT NOT NULL, 
     [HasErrors] BIT NOT NULL DEFAULT 0, 
-    [UploadStartDateTime] DATETIME NOT NULL, 
+    [UploadStartDateTime] DATETIME NULL, 
     [UploaedEndDateTime] DATETIME NULL
 )

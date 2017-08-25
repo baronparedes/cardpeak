@@ -7,5 +7,6 @@
     [TransactionTypeId] INT NOT NULL DEFAULT 1, 
     [TransactionDateTime] DATETIME NOT NULL DEFAULT GETDATE(), 
     [IsDeleted] BIT NOT NULL DEFAULT 0, 
-    CONSTRAINT [FK_DebitCreditTransaction_Agent] FOREIGN KEY ([AgentId]) REFERENCES [Agent]([AgentId])
+    CONSTRAINT [FK_DebitCreditTransaction_Agent] FOREIGN KEY ([AgentId]) REFERENCES [Agent]([AgentId]), 
+    CONSTRAINT [FK_DebitCreditTransaction_Reference] FOREIGN KEY ([TransactionTypeId]) REFERENCES [Reference]([ReferenceId])
 )

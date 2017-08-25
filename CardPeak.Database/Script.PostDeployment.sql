@@ -19,13 +19,7 @@ PRINT 'Environment: $(Environment)'
 :r Script/PopulateReferenceTypes.sql
 GO
 
-:r Script/PopulateBanks.sql
-GO
-
-:r Script/PopulateCardCategories.sql
-GO
-
-:r Script/PopulateTransactionTypes.sql
+:r Script/PopulateReferences.sql
 GO
 
 :r Script.PostDeployment.Defaults.sql

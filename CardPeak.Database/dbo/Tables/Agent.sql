@@ -6,5 +6,6 @@
     [LastName] VARCHAR(50) NOT NULL, 
     [Gender] CHAR NOT NULL, 
     [BirthDate] DATE NULL, 
-    [Email] VARCHAR(100) NULL
+    [Email] VARCHAR(100) NULL,
+	[IsDeleted] BIT NULL DEFAULT 0
 )

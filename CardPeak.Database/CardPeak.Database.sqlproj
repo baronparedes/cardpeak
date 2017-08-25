@@ -63,15 +63,12 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="Script" />
     <Folder Include="Script\Defaults" />
-    <Folder Include="dbo\Views" />
     <Folder Include="dbo\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rate.sql" />
     <Build Include="dbo\Tables\Reference.sql" />
     <Build Include="dbo\Tables\ReferenceType.sql" />
-    <None Include="Script\PopulateReferenceTypes.sql" />
-    <None Include="Script\PopulateCardCategories.sql" />
     <Build Include="dbo\Tables\Account.sql" />
     <Build Include="dbo\Tables\Agent.sql" />
     <Build Include="dbo\Tables\ApprovalTransaction.sql" />
@@ -79,18 +76,17 @@
     <Build Include="dbo\Tables\BatchUpload.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <None Include="Script\Defaults\PopulateDefaultRates.sql" />
-    <Build Include="dbo\Views\ApprovalTransactionView.sql" />
     <Build Include="dbo\Stored Procedures\GetAgentPerformance.sql" />
+    <None Include="Script\PopulateReferenceTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
     <None Include="Script.PostDeployment.Defaults.sql" />
+    <None Include="Script\PopulateReferences.sql" />
+    <None Include="Script\Defaults\PopulateDefaultAgents.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Script\PopulateBanks.sql" />
     <None Include="CardPeak.Database.DEV.publish.xml" />
-    <None Include="Script\PopulateTransactionTypes.sql" />
-    <None Include="Script\PopulateRoles.sql" />
     <None Include="Script\Defaults\PopulateDefaultUsers.sql" />
   </ItemGroup>
   <ItemGroup>
