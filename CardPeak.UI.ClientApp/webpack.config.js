@@ -158,7 +158,6 @@ module.exports = {
             'react-redux',       
             'react-router',        
             'react-router-dom',       
-            'redux-action',          
             'redux-actions',        
             'redux-logger',
             'redux-thunk'

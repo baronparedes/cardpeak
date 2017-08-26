@@ -22,12 +22,7 @@ const LoadAgentList = (props: AgentListProps) => {
                             return (
                                 <AgentDetail agent={agent} key={agent.agentId} handleOnSelectAgent={props.handleOnSelectAgent} />
                             )
-                        }) : null
-            }
-            {
-                props.agents.length === 0 ?
-                    <ListNoRecordsRow />
-                    : null
+                        }) : <ListNoRecordsRow />
             }
         </Grid>
     )
