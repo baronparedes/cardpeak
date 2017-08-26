@@ -70,6 +70,9 @@
     <Content Include="src\components\layout\PerformanceDashboard.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\SearchBar.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\Spinner.tsx">
       <SubType>Code</SubType>
     </Content>

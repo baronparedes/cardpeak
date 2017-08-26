@@ -2,6 +2,7 @@
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
 import { SpinnerGrid } from '../../layout/Spinner'
 import ListNoRecordsRow from '../../layout/ListNoRecordsRow'
+import SearchBar from '../../layout/SearchBar'
 import AgentDetail from './AgentDetail'
 import AgentDetailRowLayout from './AgentDetailRowLayout'
 
@@ -31,6 +32,7 @@ const LoadAgentList = (props: AgentListProps) => {
 const AgentList = (props: AgentListProps) => {
     return (
         <div>
+            <SearchBar hidden={props.isLoading} />
             <Grid fluid className="grid-header text-muted no-padding">
                 <Panel className="panel-row-header">
                     <AgentDetailRowLayout isHeader={true} />
