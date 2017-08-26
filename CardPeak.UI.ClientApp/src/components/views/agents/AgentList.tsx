@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import { SearchBar, SpinnerGrid, ListNoRecordsRow } from '../../layout'
+import { SearchBar, SpinnerRow, ListNoRecordsRow } from '../../layout'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
 import AgentDetail from './AgentDetail'
 import AgentDetailRowLayout from './AgentDetailRowLayout'
@@ -15,7 +15,7 @@ const LoadAgentList = (props: AgentListProps) => {
         <Grid fluid className="grid-rows margin-top no-padding">
             {
                 props.isLoading ?
-                    <SpinnerGrid /> :
+                    <SpinnerRow /> :
                     props.agents && props.agents.length > 0 ?
                         props.agents.map((agent) => {
                             return (

@@ -1,19 +1,21 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { SpinnerGrid } from '../../layout/Spinner'
+import { SpinnerBlock } from '../../layout/Spinner'
 import AgentDashboardSummary from './AgentDashboardSummary'
 import AgentDashboardTransactions from './AgentDashboardTransactions'
 import AgentDashboardActions from './AgentDashboardActions'
 
 interface AgentDashboardViewProps {
     agentDashboard?: CardPeak.Entities.AgentDashboard,
-    loadingAgentDashboard?: boolean
+    onRefresh?: (toDate?: string, fromDate?: string) => void,
+    loadingAgentDashboard?: boolean,
+    refreshingAgentDashboard?: boolean
 }
 
 const AgentDashboardView = (props: AgentDashboardViewProps) => {
     if (props.loadingAgentDashboard) {
         return (
-            <Grid fluid className="text-center"><SpinnerGrid /></Grid>
+            <SpinnerBlock />
         )
     }
 
@@ -21,8 +23,11 @@ const AgentDashboardView = (props: AgentDashboardViewProps) => {
         return (
             <div>
                 <AgentDashboardSummary agentDashboard={props.agentDashboard} />
-                <AgentDashboardActions agent={props.agentDashboard.agent} />
-                <AgentDashboardTransactions agentDashboard={props.agentDashboard} />
+                <AgentDashboardActions agent={props.agentDashboard.agent} onRefresh={props.onRefresh} />
+                {
+                    props.refreshingAgentDashboard ? <SpinnerBlock /> :
+                        <AgentDashboardTransactions agentDashboard={props.agentDashboard} />
+                }
             </div>
         )
     }

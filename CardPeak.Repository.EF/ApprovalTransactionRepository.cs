@@ -38,19 +38,16 @@ namespace CardPeak.Repository.EF
                 .ApprovalTransactions
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
-                .Where(_ => _.AgentId == id && !_.IsDeleted);
+                .Where(_ => _.AgentId == id && !_.IsDeleted)
+                .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) == DbFunctions.TruncateTime(startDate));
 
-            if (endDate.HasValue)
+            endDate = endDate ?? DateTime.Today;
+            if (startDate <= endDate.Value)
             {
-                result.Where(_ => _.ApprovalDate >= startDate.Date && _.ApprovalDate <= endDate.GetValueOrDefault().Date);
-            }
-            else
-            {
-                result.Where(_ => _.ApprovalDate >= startDate.Date);
+                result = result.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= DbFunctions.TruncateTime(endDate.Value));
             }
 
-            var list = result.ToList();
-            return list;
+            return result.ToList();
         }
 
         public IEnumerable<ApprovalPerformance> GetAgentPerformance(int id)

@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
-import { SpinnerGrid, ListNoRecordsRow } from '../../layout'
+import { ListNoRecordsRow } from '../../layout'
 
 import DebitCreditTransactionDetail from './DebitCreditTransactionDetail'
 import DebitCreditTransactionDetailRowLayout from './DebitCreditTransactionDetailRowLayout'

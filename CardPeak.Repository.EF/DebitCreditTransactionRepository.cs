@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace CardPeak.Repository.EF
 {
@@ -37,15 +38,13 @@ namespace CardPeak.Repository.EF
             var result = this.Context
                 .DebitCreditTransactions
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
-                .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+                .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
+                .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) == startDate);
 
-            if (endDate.HasValue)
+            endDate = endDate ?? DateTime.Today;
+            if (startDate <= endDate.Value)
             {
-                result.Where(_ => _.TransactionDateTime >= startDate.Date && _.TransactionDateTime <= endDate.GetValueOrDefault().Date);
-            }
-            else
-            {
-                result.Where(_ => _.TransactionDateTime >= startDate.Date);
+                result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) <= endDate.Value);
             }
 
             return result.ToList();

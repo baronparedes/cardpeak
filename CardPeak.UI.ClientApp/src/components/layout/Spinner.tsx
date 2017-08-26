@@ -5,7 +5,7 @@ export const Spinner = () => {
     return <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>;
 }
 
-export const SpinnerGrid = () => {
+export const SpinnerRow = () => {
     return (
         <Row>
             <Col className="text-center">
@@ -13,4 +13,12 @@ export const SpinnerGrid = () => {
             </Col>
         </Row>
     );
+}
+
+export const SpinnerBlock = () => {
+    return (
+        <div className="container-fluid text-center" >
+            <SpinnerRow />
+        </div>
+    )
 }

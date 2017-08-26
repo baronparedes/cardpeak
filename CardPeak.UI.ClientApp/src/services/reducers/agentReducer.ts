@@ -11,6 +11,7 @@ export default handleActions<CardPeak.Models.AgentsModel, any>({
             selectedAgent: action.payload,
             selectedAgentDashboard: undefined,
             loadingAgentDashboard: undefined,
+            refreshingAgentDashboard: undefined
         };
     },
     [AGENT_ACTIONS.SELECT_AGENT_DASHBOARD]: (state, action) => {
@@ -18,6 +19,7 @@ export default handleActions<CardPeak.Models.AgentsModel, any>({
             ...state,
             loadingAgentDashboard: true,
             selectedAgentDashboard: undefined,
+            refreshingAgentDashboard: undefined
         }
     },
     [AGENT_ACTIONS.SELECT_AGENT_DASHBOARD_COMPLETE]: (state, action) => {
@@ -25,6 +27,7 @@ export default handleActions<CardPeak.Models.AgentsModel, any>({
             ...state,
             loadingAgentDashboard: undefined,
             selectedAgentDashboard: action.payload,
+            refreshingAgentDashboard: undefined
         }
     },
     [AGENT_ACTIONS.GET_ALL]: (state, action) => {
@@ -66,5 +69,18 @@ export default handleActions<CardPeak.Models.AgentsModel, any>({
             ...state,
             postingTransaction: undefined,
         };
+    },
+    [AGENT_ACTIONS.REFRESH_AGENT_DASHBOARD]: (state, action) => {
+        return {
+            ...state,
+            refreshingAgentDashboard: true
+        }
+    },
+    [AGENT_ACTIONS.REFRESH_AGENT_DASHBOARD_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            refreshingAgentDashboard: undefined,
+            selectedAgentDashboard: action.payload
+        }
     }
 }, initialState);

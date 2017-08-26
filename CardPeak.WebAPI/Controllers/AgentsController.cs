@@ -40,9 +40,13 @@ namespace CardPeak.WebAPI.Controllers
 
         [HttpGet]
         [Route("{id}/filter")]
-        public IHttpActionResult GetAgent(int id, [FromUri]DateTime startDate, [FromUri]DateTime? endDate = null)
+        public IHttpActionResult GetAgent(int id, [FromUri]DateTime? startDate = null, [FromUri]DateTime? endDate = null)
         {
-            var result = this.AgentService.GetAgentDashboard(id, startDate, endDate);
+            var result = this.AgentService.GetAgentDashboard(
+                id, 
+                startDate ?? DateTime.Today,
+                endDate);
+
             if (result == null)
             {
                 return this.NotFound();

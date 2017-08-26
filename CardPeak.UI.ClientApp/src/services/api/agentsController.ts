@@ -32,17 +32,19 @@ export function getAgentDashboard(agentId: number, callback: (data: CardPeak.Ent
         });
 }
 
-export function getAgentDashboardFiltered(agentId: number, to: Date, from: Date,
-    callback: (data: CardPeak.Entities.AgentDashboard) => void) {
+export function getAgentDashboardFiltered(agentId: number, startDate?: string, endDate?: string,
+    callback?: (data: CardPeak.Entities.AgentDashboard) => void) {
 
     axios.get(AGENT_API.GET_AGENT_DASHBOARD_FILTER(agentId), ({
             params: {
-                startDate: to,
-                endDate: from
+                startDate: startDate,
+                endDate: endDate
             }
         }))
         .then((r) => {
-            callback(r.data as CardPeak.Entities.AgentDashboard);
+            if (callback) {
+                callback(r.data as CardPeak.Entities.AgentDashboard);
+            }
         });
 }
 

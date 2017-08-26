@@ -4,21 +4,28 @@ import { DatePicker } from '../../layout/DatePicker'
 import DebitCreditTransactionFormModal from '../transactions/DebitCreditTransactionFormModal'
 
 interface AgentDashboardActionsProps {
-    agent: CardPeak.Entities.Agent
+    agent: CardPeak.Entities.Agent,
+    onRefresh?: (toDate?: string, fromDate?: string) => void
 }
 
 interface AgentDashboardActionsState {
     showModal: boolean;
     transaction: string;
+    startDate: string;
+    endDate: string
 }
 
 export default class AgentDashboardActions extends React.Component<AgentDashboardActionsProps, AgentDashboardActionsState> {
     constructor(props: AgentDashboardActionsProps) {
         super(props);
+        let dateToday = new Date().toISOString();
         this.state = {
             showModal: false,
-            transaction: "Credit"
+            transaction: "Credit",
+            startDate: dateToday,
+            endDate: dateToday
         }
+        console.log(dateToday)
     }
     handleOnTransactionToggleModal = (e: any) => {
         this.setState({ transaction: e.target.dataset.name });
@@ -28,7 +35,13 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
         this.setState({ showModal: !this.state.showModal });
     }
     handleOnRefreshTransactions = () => {
-        // TODO
+        this.props.onRefresh(this.state.startDate, this.state.endDate);
+    }
+    handleOnStartDatePickerChange = (value: string, formattedValue: string) => {
+        this.setState({ startDate: value });
+    }
+    handleOnEndDatePickerChange = (value: string, formattedValue: string) => {
+        this.setState({ endDate: value });
     }
     renderDateFilters() {
         return (
@@ -36,16 +49,16 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                 <div className="container-fluid no-padding">
                     <Row>
                         <Col lg={1} md={1} sm={1}>
-                            <label className="text-muted">from</label>
+                            <label className="text-muted">start</label>
                         </Col>
                         <Col lg={5} md={5} sm={5}>
-                            <DatePicker label="from" />
+                            <DatePicker value={this.state.startDate} onChange={this.handleOnStartDatePickerChange} />
                         </Col>
                         <Col lg={1} md={1} sm={1}>
-                            <label className="text-muted">to</label>
+                            <label className="text-muted">end</label>
                         </Col>
                         <Col lg={5} md={5} sm={5}>
-                            <DatePicker label="to" />
+                            <DatePicker value={this.state.endDate} onChange={this.handleOnEndDatePickerChange} />
                         </Col>
                     </Row>
                 </div>

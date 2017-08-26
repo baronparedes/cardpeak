@@ -35,7 +35,7 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
         this.handleToggleModal();
         this.props.actions.getAllAgentsStart();
     }
-    onAgentSelected = (agent: CardPeak.Entities.Agent) => {
+    handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
         this.handleToggleModal();
         this.props.actions.selectAgent(agent);
         this.props.actions.selectAgentDashboardStart();;
@@ -49,10 +49,14 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
                         showModal={this.state.showModal}
                         agents={this.props.agents}
                         onToggleModal={this.handleToggleModal}
-                        onAgentSelected={this.onAgentSelected}
+                        onAgentSelected={this.handleOnAgentSelected}
                         isLoading={this.props.loadingAgents} />
                 </Panel>
-                <AgentDashboardView agentDashboard={this.props.selectedAgentDashboard} loadingAgentDashboard={this.props.loadingAgentDashboard} />
+                <AgentDashboardView
+                    agentDashboard={this.props.selectedAgentDashboard}
+                    onRefresh={this.props.actions.refreshAgentDashboardStart}
+                    refreshingAgentDashboard={this.props.refreshingAgentDashboard}
+                    loadingAgentDashboard={this.props.loadingAgentDashboard} />
             </div>
         )
     }
@@ -63,7 +67,8 @@ const mapStateToProps = (state: RootState): CardPeak.Models.AgentsModel  => ({
     selectedAgentDashboard: state.agentsModel.selectedAgentDashboard,
     agents: state.agentsModel.agents,
     loadingAgents: state.agentsModel.loadingAgents,
-    loadingAgentDashboard: state.agentsModel.loadingAgentDashboard
+    loadingAgentDashboard: state.agentsModel.loadingAgentDashboard,
+    refreshingAgentDashboard: state.agentsModel.refreshingAgentDashboard
 });
 
 const mapDispatchToProps = (dispatch: any): AgentContainerDispatchProps => {
