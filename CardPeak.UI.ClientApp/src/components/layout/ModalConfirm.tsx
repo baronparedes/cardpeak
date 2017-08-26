@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Button } from 'react-bootstrap'
-import ModalPanel from './ModalPanel'
+import { ModalPanel } from './'
 
 interface ModalConfirmProps {
     onToggleModal: () => void;
@@ -18,7 +18,7 @@ const ModalConfirmActions = (props: { onToggleModal: () => void, onConfirm: () =
     )
 }
 
-const ModalConfirm: React.StatelessComponent<ModalConfirmProps> = (props) => {
+export const ModalConfirm: React.StatelessComponent<ModalConfirmProps> = (props) => {
     return (
         <ModalPanel
             title={props.title}
@@ -29,5 +29,3 @@ const ModalConfirm: React.StatelessComponent<ModalConfirmProps> = (props) => {
         </ModalPanel>
     )
 }
-
-export default ModalConfirm;

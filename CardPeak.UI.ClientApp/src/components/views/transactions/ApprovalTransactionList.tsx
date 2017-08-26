@@ -1,7 +1,6 @@
 ﻿import * as React from 'react'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
-import { SpinnerGrid } from '../../layout/Spinner'
-import ListNoRecordsRow from '../../layout/ListNoRecordsRow'
+import { SpinnerGrid, ListNoRecordsRow } from '../../layout'
 
 import ApprovalTransactionDetail from './ApprovalTransactionDetail'
 import ApprovalTransactionDetailRowLayout from './ApprovalTransactionDetailRowLayout'

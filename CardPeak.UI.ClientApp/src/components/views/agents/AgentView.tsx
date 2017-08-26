@@ -1,7 +1,6 @@
 ﻿import * as React from 'react'
 import AgentContainer from './AgentContainer'
 
-
 const AgentView = () => {
     return (
         <div>

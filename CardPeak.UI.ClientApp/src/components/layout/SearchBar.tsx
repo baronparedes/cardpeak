@@ -6,7 +6,7 @@ interface SearchBarProps {
     hidden?: boolean;
 }
 
-class SearchBar extends React.Component<SearchBarProps, undefined> {
+export class SearchBar extends React.Component<SearchBarProps, undefined> {
     controls: {
         searchInput?: HTMLInputElement;
     } = {};
@@ -39,5 +39,3 @@ class SearchBar extends React.Component<SearchBarProps, undefined> {
         )
     }
 }
-
-export default SearchBar;

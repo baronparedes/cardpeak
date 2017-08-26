@@ -23,7 +23,7 @@ const Performance = (props: { perf: CardPeak.Entities.ApprovalPerformance, compa
     )
 }
 
-const PerformanceDashboard = (props: { performance: CardPeak.Entities.ApprovalPerformance[] }) => {
+export const PerformanceDashboard = (props: { performance: CardPeak.Entities.ApprovalPerformance[] }) => {
     return (
         <Grid fluid>
             <Row>
@@ -45,5 +45,3 @@ const PerformanceDashboard = (props: { performance: CardPeak.Entities.ApprovalPe
         </Grid>
     )
 }
-
-export default PerformanceDashboard;

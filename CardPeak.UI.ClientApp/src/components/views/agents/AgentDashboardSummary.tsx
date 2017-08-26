@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import PerformanceDashboard from '../../layout/PerformanceDashboard'
+import { PerformanceDashboard } from '../../layout'
 
 interface AgentDashboardSummaryProps {
     agentDashboard: CardPeak.Entities.AgentDashboard

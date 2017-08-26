@@ -1,6 +1,5 @@
 ﻿import * as React from 'react'
-import { NavigationBar } from './layout/NavigationBar'
-import { Footer } from './layout/Footer'
+import { NavigationBar, Footer } from './layout'
 
 export class App extends React.Component<{}, undefined>{
     render() {

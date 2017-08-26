@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 
-const ButtonLoadingText = (props: { isLoading: boolean, label: React.ReactNode}) => {
+export const ButtonLoadingText = (props: { isLoading: boolean, label: React.ReactNode}) => {
     if (props.isLoading) {
         return (
             <div>
@@ -15,5 +15,3 @@ const ButtonLoadingText = (props: { isLoading: boolean, label: React.ReactNode})
         </div>
     )
 }
-
-export default ButtonLoadingText;

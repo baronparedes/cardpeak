@@ -1,8 +1,6 @@
 ﻿import * as React from 'react'
+import { SearchBar, SpinnerGrid, ListNoRecordsRow } from '../../layout'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
-import { SpinnerGrid } from '../../layout/Spinner'
-import ListNoRecordsRow from '../../layout/ListNoRecordsRow'
-import SearchBar from '../../layout/SearchBar'
 import AgentDetail from './AgentDetail'
 import AgentDetailRowLayout from './AgentDetailRowLayout'
 

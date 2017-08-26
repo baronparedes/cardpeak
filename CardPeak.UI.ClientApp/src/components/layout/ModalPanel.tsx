@@ -8,7 +8,7 @@ interface ModalPanelProps {
     footer?: React.ReactNode
 }
 
-const ModalPanel: React.StatelessComponent<ModalPanelProps> = (props) => {
+export const ModalPanel: React.StatelessComponent<ModalPanelProps> = (props) => {
     return (
         <Modal show={props.showModal} onHide={props.onToggleModal}>
             <Modal.Header>
@@ -23,5 +23,3 @@ const ModalPanel: React.StatelessComponent<ModalPanelProps> = (props) => {
         </Modal>
     )
 }
-
-export default ModalPanel;

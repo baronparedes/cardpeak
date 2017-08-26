@@ -23,7 +23,7 @@ const InputAddOn: React.StatelessComponent<{}> = (props) => {
     );
 }
 
-const FormField: React.StatelessComponent<FormFieldProps> = (props) => {
+export const FormField: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
         <FormGroup controlId={props.controlId} validationState={!!props.error && props.error != "" ? "error" : null}>
             <Col componentClass={ControlLabel} sm={2}>
@@ -58,5 +58,3 @@ const FormField: React.StatelessComponent<FormFieldProps> = (props) => {
         </FormGroup>
     );
 };
-
-export default FormField;

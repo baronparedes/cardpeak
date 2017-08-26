@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import ModalPanel from '../../layout/ModalPanel'
+import { ModalPanel } from '../../layout'
 import DebitCreditTransactionForm from './DebitCreditTransactionForm'
 
 interface DebitCreditTransactionFormModalProps {

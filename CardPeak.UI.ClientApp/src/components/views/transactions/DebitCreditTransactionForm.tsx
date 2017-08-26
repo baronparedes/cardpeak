@@ -6,9 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import FormField from '../../layout/FormField'
-import ModalConfirm from '../../layout/ModalConfirm'
-import ButtonLoadingText from '../../layout/ButtonLoadingText'
+import { FormField, ModalConfirm, ButtonLoadingText }from '../../layout'
 
 interface DebitCreditTransactionFormState {
     showConfirmModal: boolean;
