@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import { Button, Grid, Row, Col, ButtonGroup } from 'react-bootstrap'
+import { DatePicker } from '../../layout/DatePicker'
 import DebitCreditTransactionFormModal from '../transactions/DebitCreditTransactionFormModal'
 
 interface AgentDashboardActionsProps {
@@ -31,25 +32,29 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     }
     renderDateFilters() {
         return (
-            <Col lg={6} md={6} sm={6} xs={12}>
-                <Grid fluid className="no-padding">
+            <Col lg={6} md={6} sm={12} xs={12}>
+                <div className="container-fluid no-padding">
                     <Row>
-                        <Col xs={6}>
-                            <label className="text-muted spacer-right">from</label>
-                            DATE_FROM__PICKER
-                                </Col>
-                        <Col xs={6}>
-                            <label className="text-muted spacer-right">to</label>
-                            DATE_TO__PICKER
-                                </Col>
+                        <Col lg={1} md={1} sm={1}>
+                            <label className="text-muted">from</label>
+                        </Col>
+                        <Col lg={5} md={5} sm={5}>
+                            <DatePicker label="from" />
+                        </Col>
+                        <Col lg={1} md={1} sm={1}>
+                            <label className="text-muted">to</label>
+                        </Col>
+                        <Col lg={5} md={5} sm={5}>
+                            <DatePicker label="to" />
+                        </Col>
                     </Row>
-                </Grid>
+                </div>
             </Col>
         )
     }
     renderButtons() {
         return (
-            <Col lg= {6} md= {6} sm={6} xsHidden className= "text-right" >
+            <Col lg={6} md={6} sm={12}  xsHidden className="text-right">
                 <ButtonGroup>
                     <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary">Refresh Transactions</Button>
                     <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit">Credit</Button>
@@ -61,7 +66,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     renderSmallButtons() {
         return (
             <Col xs={12} smHidden lgHidden mdHidden className="text-right">
-                <ButtonGroup>
+                <ButtonGroup className="spacer-top spacer-bottom">
                     <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary">
                         <i className="fa fa-refresh fa-2x" title="Refresh"></i>
                     </Button>
