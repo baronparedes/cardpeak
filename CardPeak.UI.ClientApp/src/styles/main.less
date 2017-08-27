@@ -1,6 +1,7 @@
 ﻿@import "mixins.less";
 @import "navbar.less";
 @import "theme.less";
+@import "button.less";
 
 html,
 body {
@@ -63,6 +64,9 @@ hr {
 .panel-row {
     padding: 0;
     margin: 0;
+    .panel-body {
+        padding: 10px;
+    }
 }
 
 .panel-agent-dashboard {
@@ -85,6 +89,10 @@ hr {
 
     &.amount-credit {
         color: @theme-color-credit;
+    }
+
+    &.row-amount {
+        font-size: medium;
     }
 }
 

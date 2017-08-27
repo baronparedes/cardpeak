@@ -146,6 +146,9 @@
     <Content Include="src\index.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\styles\button.less">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\styles\main.less">
       <SubType>Code</SubType>
     </Content>

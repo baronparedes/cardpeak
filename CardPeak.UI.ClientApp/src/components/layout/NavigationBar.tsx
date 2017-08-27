@@ -14,7 +14,7 @@ const NavLinkText = (props: { text: string, fa: string }) => {
 export class NavigationBar extends React.Component<{}, undefined> {
     render() {
         return (
-            <Navbar inverse collapseOnSelect id="main-nav" staticTop>
+            <Navbar inverse collapseOnSelect id="main-nav" role="navigation" staticTop>
                 <Navbar.Header>
                     <NavbarBrand>
                         <a href="#">CARDPEAK</a>

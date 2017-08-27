@@ -1,19 +1,25 @@
 ﻿import * as React from 'react'
-import { Button, ButtonProps } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
-export default class SelectedAgent extends React.Component<{ agent: CardPeak.Entities.Agent, handleOnClick?: () => void  }, undefined> {
-    onClick = (e: React.MouseEvent<React.ClassicComponent<ButtonProps, {}>>): void => {
-        e.preventDefault();
-        this.props.handleOnClick();
+interface SelectedAgentProps {
+    agent: CardPeak.Entities.Agent,
+    onAgentSelectedClick?: () => void
+}
+
+export default class SelectedAgent extends React.Component<SelectedAgentProps, undefined> {
+    renderButton() {
+        return (
+            <Button bsStyle="primary" onClick={this.props.onAgentSelectedClick} bsSize="medium">
+                <i className="fa fa-sm fa-users"></i>
+            </Button>   
+        )
     }
     render() {
         if (!!!this.props.agent) {
             return (
                 <div>
-                    <label className="text-muted spacer-right text-highlight">Select an Agent</label>
-                    <Button bsStyle="primary" onClick={e => this.onClick(e)}>
-                        <i className="fa fa-sm fa-users"></i>
-                    </Button>    
+                    <label className="text-muted spacer-right text-highlight">select an agent</label>
+                    {this.renderButton()}
                 </div>
             );
         }
@@ -22,9 +28,7 @@ export default class SelectedAgent extends React.Component<{ agent: CardPeak.Ent
                 <span className="spacer-right text-highlight">
                     {this.props.agent.firstName + " " + this.props.agent.lastName}    
                 </span>
-                <Button bsStyle="primary" onClick={e => this.onClick(e)}>
-                    <i className="fa fa-sm fa-users"></i>
-                </Button>
+                {this.renderButton()}
             </h5>
         );
     }

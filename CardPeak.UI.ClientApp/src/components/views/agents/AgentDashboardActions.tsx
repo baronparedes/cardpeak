@@ -52,13 +52,19 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                             <label className="text-muted">start</label>
                         </Col>
                         <Col lg={5} md={5} sm={5}>
-                            <DatePicker value={this.state.startDate} onChange={this.handleOnStartDatePickerChange} />
+                            <DatePicker
+                                value={this.state.startDate}
+                                onChange={this.handleOnStartDatePickerChange}
+                                disabled={this.props.refreshingAgentDashboard} />
                         </Col>
                         <Col lg={1} md={1} sm={1}>
                             <label className="text-muted">end</label>
                         </Col>
                         <Col lg={5} md={5} sm={5}>
-                            <DatePicker value={this.state.endDate} onChange={this.handleOnEndDatePickerChange} />
+                            <DatePicker
+                                value={this.state.endDate}
+                                onChange={this.handleOnEndDatePickerChange}
+                                disabled={this.props.refreshingAgentDashboard} />
                         </Col>
                     </Row>
                 </div>
@@ -69,11 +75,26 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
         return (
             <Col lg={6} md={6} sm={12}  xsHidden className="text-right">
                 <ButtonGroup disabled={this.props.refreshingAgentDashboard}>
-                    <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary" disabled={this.props.refreshingAgentDashboard}>
+                    <Button
+                        onClick={this.handleOnRefreshTransactions}
+                        bsStyle="primary"
+                        disabled={this.props.refreshingAgentDashboard}>
                         <ButtonLoadingText isLoading={this.props.refreshingAgentDashboard} label="refresh transactions" />
                     </Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit" disabled={this.props.refreshingAgentDashboard}>Credit</Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit" disabled={this.props.refreshingAgentDashboard}>Debit</Button>
+                    <Button
+                        onClick={this.handleOnTransactionToggleModal}
+                        bsStyle="success"
+                        data-name="Credit"
+                        disabled={this.props.refreshingAgentDashboard}>
+                        Credit
+                    </Button>
+                    <Button
+                        onClick={this.handleOnTransactionToggleModal}
+                        bsStyle="danger"
+                        data-name="Debit"
+                        disabled={this.props.refreshingAgentDashboard}>
+                        Debit
+                    </Button>
                 </ButtonGroup>
             </Col >
         )
@@ -82,13 +103,24 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
         return (
             <Col xs={12} smHidden lgHidden mdHidden className="text-right">
                 <ButtonGroup className="spacer-top spacer-bottom" disabled={this.props.refreshingAgentDashboard}>
-                    <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary" disabled={this.props.refreshingAgentDashboard}>
+                    <Button
+                        onClick={this.handleOnRefreshTransactions}
+                        bsStyle="primary"
+                        disabled={this.props.refreshingAgentDashboard}>
                         <i className={"fa fa-refresh fa-2x" + (this.props.refreshingAgentDashboard ? " fa-spin" : "")} title="Refresh"></i>
                     </Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit" disabled={this.props.refreshingAgentDashboard}>
+                    <Button
+                        onClick={this.handleOnTransactionToggleModal}
+                        bsStyle="success"
+                        data-name="Credit"
+                        disabled={this.props.refreshingAgentDashboard}>
                         <i className="fa fa-plus fa-2x" title="Credit Credit" data-name="Credit"></i>
                     </Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit" disabled={this.props.refreshingAgentDashboard}>
+                    <Button
+                        onClick={this.handleOnTransactionToggleModal}
+                        bsStyle="danger"
+                        data-name="Debit"
+                        disabled={this.props.refreshingAgentDashboard}>
                         <i className="fa fa-minus fa-2x" title="Debit Transaction" data-name="Debit"></i>
                     </Button>
                 </ButtonGroup>

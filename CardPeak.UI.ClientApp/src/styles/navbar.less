@@ -20,13 +20,8 @@
         color: @nav-text-color;
         text-transform: uppercase;
 
-        &:hover {
+        .open, .active, &:focus, &:hover {
             color: @nav-text-color-contrast;
-        }
-
-        &:focus {
-            color: @nav-text-color-contrast;
-            font-weight: bolder;
         }
     }
 }

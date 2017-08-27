@@ -31,7 +31,7 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
             showModal: !this.state.showModal
         });
     }
-    handleSelectedAgentOnClick = () => {
+    handleOnSelectedAgentClick = () => {
         this.handleToggleModal();
         this.props.actions.getAllAgentsStart();
     }
@@ -44,7 +44,9 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
         return (
             <div className="container-fluid no-padding">
                 <Panel>
-                    <SelectedAgent agent={this.props.selectedAgent} handleOnClick={this.handleSelectedAgentOnClick} />
+                    <SelectedAgent
+                        agent={this.props.selectedAgent}
+                        onAgentSelectedClick={this.handleOnSelectedAgentClick} />
                     <AgentListModal
                         showModal={this.state.showModal}
                         agents={this.props.agents}
