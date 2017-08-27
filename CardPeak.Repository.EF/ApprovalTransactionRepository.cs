@@ -39,10 +39,10 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
-                .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) == DbFunctions.TruncateTime(startDate));
+                .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
             endDate = endDate ?? DateTime.Today;
-            if (startDate <= endDate.Value)
+            if (startDate.Date <= endDate.Value.Date)
             {
                 result = result.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= DbFunctions.TruncateTime(endDate.Value));
             }

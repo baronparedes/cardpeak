@@ -35,7 +35,7 @@ namespace CardPeak.WebAPI.Controllers
 
         public IHttpActionResult GetAgent(int id)
         {
-            return this.GetAgent(id, DateTime.Today, null);
+            return this.GetAgent(id, null, null);
         }
 
         [HttpGet]
@@ -44,7 +44,7 @@ namespace CardPeak.WebAPI.Controllers
         {
             var result = this.AgentService.GetAgentDashboard(
                 id, 
-                startDate ?? DateTime.Today,
+                startDate ?? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
                 endDate);
 
             if (result == null)

@@ -1,31 +1,31 @@
 ﻿import * as React from 'react'
 import { Button, Grid, Row, Col, ButtonGroup } from 'react-bootstrap'
-import { DatePicker } from '../../layout/DatePicker'
+import { ButtonLoadingText, DatePicker } from '../../layout'
 import DebitCreditTransactionFormModal from '../transactions/DebitCreditTransactionFormModal'
+import * as dateHelpers from '../../../helpers/dateHelpers'
 
 interface AgentDashboardActionsProps {
     agent: CardPeak.Entities.Agent,
-    onRefresh?: (toDate?: string, fromDate?: string) => void
+    onRefresh?: (toDate?: string, fromDate?: string) => void,
+    refreshingAgentDashboard?: boolean
 }
 
 interface AgentDashboardActionsState {
     showModal: boolean;
     transaction: string;
-    startDate: string;
-    endDate: string
+    startDate?: string;
+    endDate?: string
 }
 
 export default class AgentDashboardActions extends React.Component<AgentDashboardActionsProps, AgentDashboardActionsState> {
     constructor(props: AgentDashboardActionsProps) {
         super(props);
-        let dateToday = new Date().toISOString();
+        super(props);
         this.state = {
             showModal: false,
             transaction: "Credit",
-            startDate: dateToday,
-            endDate: dateToday
+            startDate: dateHelpers.firstDayOfTheMonth()
         }
-        console.log(dateToday)
     }
     handleOnTransactionToggleModal = (e: any) => {
         this.setState({ transaction: e.target.dataset.name });
@@ -68,10 +68,12 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     renderButtons() {
         return (
             <Col lg={6} md={6} sm={12}  xsHidden className="text-right">
-                <ButtonGroup>
-                    <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary">Refresh Transactions</Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit">Credit</Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit">Debit</Button>
+                <ButtonGroup disabled={this.props.refreshingAgentDashboard}>
+                    <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary" disabled={this.props.refreshingAgentDashboard}>
+                        <ButtonLoadingText isLoading={this.props.refreshingAgentDashboard} label="refresh transactions" />
+                    </Button>
+                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit" disabled={this.props.refreshingAgentDashboard}>Credit</Button>
+                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit" disabled={this.props.refreshingAgentDashboard}>Debit</Button>
                 </ButtonGroup>
             </Col >
         )
@@ -79,14 +81,14 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     renderSmallButtons() {
         return (
             <Col xs={12} smHidden lgHidden mdHidden className="text-right">
-                <ButtonGroup className="spacer-top spacer-bottom">
-                    <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary">
-                        <i className="fa fa-refresh fa-2x" title="Refresh"></i>
+                <ButtonGroup className="spacer-top spacer-bottom" disabled={this.props.refreshingAgentDashboard}>
+                    <Button onClick={this.handleOnRefreshTransactions} bsStyle="primary" disabled={this.props.refreshingAgentDashboard}>
+                        <i className={"fa fa-refresh fa-2x" + (this.props.refreshingAgentDashboard ? " fa-spin" : "")} title="Refresh"></i>
                     </Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit">
+                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="success" data-name="Credit" disabled={this.props.refreshingAgentDashboard}>
                         <i className="fa fa-plus fa-2x" title="Credit Credit" data-name="Credit"></i>
                     </Button>
-                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit">
+                    <Button onClick={this.handleOnTransactionToggleModal} bsStyle="danger" data-name="Debit" disabled={this.props.refreshingAgentDashboard}>
                         <i className="fa fa-minus fa-2x" title="Debit Transaction" data-name="Debit"></i>
                     </Button>
                 </ButtonGroup>

@@ -151,7 +151,8 @@ module.exports = {
         js: './index.tsx',
         vendor: [
             'axios',
-            'classnames',             
+            'classnames',     
+            'moment',
             'react',               
             'react-bootstrap',
             'react-bootstrap-date-picker',

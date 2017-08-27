@@ -23,7 +23,7 @@ const AgentDashboardView = (props: AgentDashboardViewProps) => {
         return (
             <div>
                 <AgentDashboardSummary agentDashboard={props.agentDashboard} />
-                <AgentDashboardActions agent={props.agentDashboard.agent} onRefresh={props.onRefresh} />
+                <AgentDashboardActions agent={props.agentDashboard.agent} onRefresh={props.onRefresh} refreshingAgentDashboard={props.refreshingAgentDashboard} />
                 {
                     props.refreshingAgentDashboard ? <SpinnerBlock /> :
                         <AgentDashboardTransactions agentDashboard={props.agentDashboard} />

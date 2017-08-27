@@ -39,12 +39,12 @@ namespace CardPeak.Repository.EF
                 .DebitCreditTransactions
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
                 .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
-                .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) == startDate);
+                .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) >= startDate.Date);
 
             endDate = endDate ?? DateTime.Today;
-            if (startDate <= endDate.Value)
+            if (startDate.Date <= endDate.Value.Date)
             {
-                result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) <= endDate.Value);
+                result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) <= DbFunctions.TruncateTime(endDate.Value));
             }
 
             return result.ToList();
