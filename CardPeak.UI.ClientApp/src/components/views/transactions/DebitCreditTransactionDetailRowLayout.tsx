@@ -7,36 +7,30 @@ interface DebitCreditTransactionDetailRowLayoutProps {
     isHeader: boolean
 }
 
-export default class DebitCreditTransactionDetailRowLayout extends React.Component<DebitCreditTransactionDetailRowLayoutProps, {}> {
-    constructor(props: DebitCreditTransactionDetailRowLayoutProps) {
-        super(props);
+const DebitCreditTransactionDetailRowLayout = (props: DebitCreditTransactionDetailRowLayoutProps) => {
+    let amountClassNames = "row-amount currency text-highlight";
+    if (!props.isHeader) {
+        amountClassNames += (props.transaction.amount > 0) ? " amount-credit" : " amount-debit";
     }
-    handleOnClick = () => {
-        console.log('search date range')
-    }
-    render() {
-        let amountClassNames = "row-amount currency text-highlight";
-        if (!this.props.isHeader) {
-            amountClassNames += (this.props.transaction.amount > 0) ? " amount-credit" : " amount-debit";
-        }
-        return (
-            <Row>
-                <Col mdHidden
-                    lgHidden
-                    smHidden
-                    xsHidden={!this.props.isHeader}>
-                    <span className="text-center spacer-left">Debit/Credit Transactions</span>
-                </Col>
-                <Col md={9} lg={9} sm={8} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "remarks" : this.props.transaction.remarks}
-                </Col>
-                <Col md={1} lg={1} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "transaction date" : dateFormat(this.props.transaction.transactionDateTime)}
-                </Col>
-                <Col md={2} lg={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "amount" : <span className={amountClassNames}>{this.props.transaction.amount}</span>}
-                </Col>
-            </Row>
-        )
-    }
+    return (
+        <Row>
+            <Col mdHidden
+                lgHidden
+                smHidden
+                xsHidden={!props.isHeader}>
+                <span className="text-center spacer-left">Debit/Credit Transactions</span>
+            </Col>
+            <Col md={9} lg={9} sm={8} xsHidden={props.isHeader}>
+                {props.isHeader ? "remarks" : props.transaction.remarks}
+            </Col>
+            <Col md={1} lg={1} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "transaction date" : dateFormat(props.transaction.transactionDateTime)}
+            </Col>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "amount" : <span className={amountClassNames}>{props.transaction.amount}</span>}
+            </Col>
+        </Row>
+    )
 }
+
+export default DebitCreditTransactionDetailRowLayout;

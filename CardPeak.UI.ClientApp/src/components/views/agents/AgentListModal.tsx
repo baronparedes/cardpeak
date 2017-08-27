@@ -15,7 +15,7 @@ const AgentListModal = (props: AgentListModalProps) => {
         <ModalPanel showModal={props.showModal} onToggleModal={props.onToggleModal} title="agents">
             <AgentList
                 agents={props.agents}
-                handleOnSelectAgent={props.onAgentSelected}
+                onSelectAgent={props.onAgentSelected}
                 isLoading={props.isLoading} />
         </ModalPanel>
     )
