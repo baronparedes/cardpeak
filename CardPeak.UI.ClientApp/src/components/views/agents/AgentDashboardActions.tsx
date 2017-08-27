@@ -49,7 +49,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                 <div className="container-fluid no-padding">
                     <Row>
                         <Col lg={1} md={1} sm={1}>
-                            <label className="text-muted">start</label>
+                            <label className="text-muted">from</label>
                         </Col>
                         <Col lg={5} md={5} sm={5}>
                             <DatePicker
@@ -58,7 +58,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                                 disabled={this.props.refreshingAgentDashboard} />
                         </Col>
                         <Col lg={1} md={1} sm={1}>
-                            <label className="text-muted">end</label>
+                            <label className="text-muted">to</label>
                         </Col>
                         <Col lg={5} md={5} sm={5}>
                             <DatePicker
