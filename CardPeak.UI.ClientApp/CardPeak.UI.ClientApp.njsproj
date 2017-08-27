@@ -85,6 +85,9 @@
     <Content Include="src\components\layout\Spinner.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\agents\AddAgentView.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\agents\AgentDashboardActions.tsx" />
     <Content Include="src\components\views\agents\AgentDashboardView.tsx">
       <SubType>Code</SubType>
@@ -108,6 +111,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agents\UpdateAgentView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\ApprovalTransactionDetail.tsx">

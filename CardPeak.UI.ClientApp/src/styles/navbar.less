@@ -15,12 +15,16 @@
         color: @nav-text-color;
     }
 
+    .navbar-nav > a > a.active {
+        color: red;
+    }
+
     .navbar-nav,
     .navbar-nav > li > a {
         color: @nav-text-color;
         text-transform: uppercase;
 
-        .open, .active, &:focus, &:hover {
+        &:focus, &:hover {
             color: @nav-text-color-contrast;
         }
     }
@@ -33,10 +37,14 @@
 
 .dropdown-menu > li > a {
     color: @nav-text-color;
-    &:hover,
-    &:focus {
+
+    &.active, &:hover {
         background-image: none !important;
-        background-color: @nav-text-color-contrast;
+        background-color: @nav-hover-bg-color;
+    }
+
+    &.active {
+        color: @nav-text-color-dark;
     }
 }
 
