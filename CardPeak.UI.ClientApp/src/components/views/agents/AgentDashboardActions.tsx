@@ -55,6 +55,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                             <DatePicker
                                 value={this.state.startDate}
                                 onChange={this.handleOnStartDatePickerChange}
+                                showClearButton={false}
                                 disabled={this.props.refreshingAgentDashboard} />
                         </Col>
                         <Col lg={1} md={1} sm={1}>
@@ -64,6 +65,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                             <DatePicker
                                 value={this.state.endDate}
                                 onChange={this.handleOnEndDatePickerChange}
+                                showClearButton
                                 disabled={this.props.refreshingAgentDashboard} />
                         </Col>
                     </Row>

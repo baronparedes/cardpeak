@@ -9,7 +9,7 @@ interface SelectedAgentProps {
 export default class SelectedAgent extends React.Component<SelectedAgentProps, undefined> {
     renderButton() {
         return (
-            <Button bsStyle="primary" onClick={this.props.onAgentSelectedClick} bsSize="medium">
+            <Button bsStyle="primary" onClick={this.props.onAgentSelectedClick}>
                 <i className="fa fa-sm fa-users"></i>
             </Button>   
         )

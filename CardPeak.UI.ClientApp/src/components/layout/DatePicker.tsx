@@ -5,7 +5,8 @@ import { FormGroup } from 'react-bootstrap'
 interface DatePickerProps {
     value?: string,
     onChange?: (value: string, formattedValue: string) => void,
-    disabled?: boolean
+    disabled?: boolean,
+    showClearButton?: boolean
 }
 
 export const DatePicker = (props: DatePickerProps) => {
@@ -15,7 +16,8 @@ export const DatePicker = (props: DatePickerProps) => {
                 onChange={props.onChange}
                 className="date-picker"
                 showTodayButton
-                showClearButton={false}
+                showClearButton={props.showClearButton}
+                clearButtonElement={<i className="fa fa-lg fa-eraser"></i>}
                 disabled={props.disabled}
                 value={props.value}>
             </DatePickerBootstrap>
