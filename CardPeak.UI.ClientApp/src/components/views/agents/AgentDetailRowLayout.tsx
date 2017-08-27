@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap'
 
 interface AgentRowLayoutProps {
     agent?: CardPeak.Entities.Agent,
-    handleOnSelectAgent?: (agent: CardPeak.Entities.Agent) => void;
+    onSelectAgent?: (agent: CardPeak.Entities.Agent) => void;
     isHeader: boolean
 }
 
@@ -12,7 +12,7 @@ export default class AgentRowLayout extends React.Component<AgentRowLayoutProps,
         super(props);
     }
     handleOnClick = () => {
-        this.props.handleOnSelectAgent(this.props.agent);
+        this.props.onSelectAgent(this.props.agent);
     }
     render() {
         return (

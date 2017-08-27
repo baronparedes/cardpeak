@@ -6,7 +6,7 @@ import AgentDetailRowLayout from './AgentDetailRowLayout'
 
 interface AgentListProps {
     agents?: CardPeak.Entities.Agent[],
-    handleOnSelectAgent: (agent: CardPeak.Entities.Agent) => void,
+    onSelectAgent: (agent: CardPeak.Entities.Agent) => void,
     isLoading?: boolean
 }
 
@@ -19,7 +19,7 @@ const LoadAgentList = (props: AgentListProps) => {
                     props.agents && props.agents.length > 0 ?
                         props.agents.map((agent) => {
                             return (
-                                <AgentDetail agent={agent} key={agent.agentId} handleOnSelectAgent={props.handleOnSelectAgent} />
+                                <AgentDetail agent={agent} key={agent.agentId} onSelectAgent={props.onSelectAgent} />
                             )
                         }) : <ListNoRecordsRow />
             }
@@ -38,7 +38,7 @@ const AgentList = (props: AgentListProps) => {
             </Grid>    
             <LoadAgentList
                 agents={props.agents}
-                handleOnSelectAgent={props.handleOnSelectAgent}
+                onSelectAgent={props.onSelectAgent}
                 isLoading={props.isLoading} /> 
         </div>
     )

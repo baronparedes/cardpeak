@@ -13,7 +13,7 @@ export class SearchBar extends React.Component<SearchBarProps, undefined> {
     constructor(props: SearchBarProps) {
         super(props);
     }
-    handleOnClick = () => {
+    handleOnClickClear = () => {
         this.controls.searchInput.value = '';
     }
     render() {
@@ -29,7 +29,7 @@ export class SearchBar extends React.Component<SearchBarProps, undefined> {
                                 onChange={this.props.onChange}
                                 ref={(input) => this.controls.searchInput = input} />
                             <InputGroup.Button>
-                                <Button bsStyle="primary" onClick={this.handleOnClick}>
+                                <Button bsStyle="primary" onClick={this.handleOnClickClear}>
                                     <i className="fa fa-eraser fa-lg"></i>
                                 </Button>
                             </InputGroup.Button>

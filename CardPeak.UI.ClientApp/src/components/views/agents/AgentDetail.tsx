@@ -4,7 +4,7 @@ import AgentDetailRowLayout from './AgentDetailRowLayout'
 
 interface AgentDetailProps {
     agent: CardPeak.Entities.Agent;
-    handleOnSelectAgent: (agent: CardPeak.Entities.Agent) => void;
+    onSelectAgent: (agent: CardPeak.Entities.Agent) => void;
 }
 
 const AgentDetail = (props: AgentDetailProps) => {
@@ -12,7 +12,7 @@ const AgentDetail = (props: AgentDetailProps) => {
         <Panel className="panel-row">
             <AgentDetailRowLayout 
                     agent={props.agent}
-                    handleOnSelectAgent={props.handleOnSelectAgent}
+                    onSelectAgent={props.onSelectAgent}
                     isHeader={false} />
         </Panel>
     )
