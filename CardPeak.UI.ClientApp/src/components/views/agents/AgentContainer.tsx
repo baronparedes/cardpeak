@@ -19,7 +19,8 @@ interface AgentContainerProps {
 interface AgentContainerPropsConnect {
     agents?: CardPeak.Entities.Agent[];
     loadingAgents?: boolean;
-    savingAgent?: boolean;
+    puttingAgent?: boolean;
+    postingAgent?: boolean;
 }
 
 interface AgentContainerDispatchProps {
@@ -29,18 +30,26 @@ interface AgentContainerDispatchProps {
 interface AgentContainerState {
     selectedAgent?: CardPeak.Entities.Agent;
     showModal?: boolean;
-    showWindow?: string;
+    showWindow?: string
 }
 
 class AgentContainer extends
     React.Component<AgentContainerProps & AgentContainerPropsConnect & AgentContainerDispatchProps, AgentContainerState> {
     constructor(props: AgentContainerProps & AgentContainerPropsConnect & AgentContainerDispatchProps) {
         super(props);
-        let defaultAgent: CardPeak.Entities.Agent;
-        defaultAgent = props.isNew ? new CardPeak.Entities.Agent() : undefined;
+        let selectedAgent: CardPeak.Entities.Agent = {
+            agentId: 0,
+            firstName: '',
+            middleName: '',
+            lastName: '',
+            gender: 'M',
+            email: '',
+            birthDate: new Date()
+        };
         this.state = {
-            selectedAgent: defaultAgent,
-            showWindow: 'details'
+            ...this.state,
+            showWindow: 'details',
+            selectedAgent: props.isNew ? selectedAgent : undefined
         }
     }
     handleToggleModal = () => {
@@ -62,7 +71,19 @@ class AgentContainer extends
     handleOnSaveAgent = (agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) => {
         if (this.props.isNew) {
             this.props.actions.postAgentStart(agent, () => {
-                this.setState({ selectedAgent: agent });
+                this.setState({
+                    selectedAgent: {
+                        ...this.state.selectedAgent,
+                        agentId: 0,
+                        firstName: '',
+                        middleName: '',
+                        lastName: '',
+                        gender: 'M',
+                        email: '',
+                        birthDate: new Date()
+                    }
+                });
+                    
             }, errorCallback);
         }
         else {
@@ -96,7 +117,7 @@ class AgentContainer extends
                 <Panel hidden={this.state.showWindow !== 'details'}>
                     <AgentForm
                         agent={this.state.selectedAgent}
-                        isSaving={this.props.savingAgent}
+                        isSaving={this.props.puttingAgent || this.props.postingAgent}
                         onSave={this.handleOnSaveAgent} />
                 </Panel>
             )
@@ -149,7 +170,8 @@ class AgentContainer extends
 const mapStateToProps = (state: RootState): AgentContainerPropsConnect => ({
     agents: state.agentDashboardModel.agents,
     loadingAgents: state.agentDashboardModel.loadingAgents,
-    savingAgent: state.agentDashboardModel.puttingAgent
+    puttingAgent: state.agentDashboardModel.puttingAgent,
+    postingAgent: state.agentDashboardModel.postingAgent
 });
 
 const mapDispatchToProps = (dispatch: any): AgentContainerDispatchProps => {

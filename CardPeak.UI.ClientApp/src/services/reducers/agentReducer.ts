@@ -128,13 +128,21 @@ export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
         }
     },
     [AGENT_ACTIONS.POST_AGENT_COMPLETE]: (state, action) => {
-        let agent = action.payload as CardPeak.Entities.Agent;
-        let agents = state.agents.slice();
-        agents.push(agent);
+        if (state.agents) {
+            let agent = action.payload as CardPeak.Entities.Agent;
+            let agents = state.agents.slice();
+            agents.push(agent);
+
+            return {
+                ...state,
+                postingAgent: undefined,
+                agents
+            }
+        }
+
         return {
             ...state,
-            postingAgent: undefined,
-            agents
+            postingAgent: undefined
         }
     },
 }, initialState);

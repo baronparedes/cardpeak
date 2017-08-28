@@ -84,7 +84,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
         })
     }
     componentWillReceiveProps(nextProps: AgentFormProps) {
-        if (this.state.agent.agentId != nextProps.agent.agentId) {
+        if (this.state.agent.agentId != nextProps.agent.agentId || nextProps.agent.agentId === 0) {
             this.setState({
                 agent: nextProps.agent
             });
@@ -101,7 +101,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                         <ButtonLoadingText isLoading={this.props.isSaving} label="Save" />
                     </Button>
                     <ModalConfirm
-                        title="update agent details"
+                        title="save agent details"
                         showModal={this.state.showConfirmModal}
                         onConfirm={this.handleOnConfirm}
                         onToggleModal={this.handleOnToggleModal}>
