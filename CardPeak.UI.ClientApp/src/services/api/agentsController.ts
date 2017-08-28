@@ -15,6 +15,9 @@ const AGENT_API = {
     },
     CREDIT_AGENT: (agentId: number) => {
         return 'agents/' + agentId + '/credit'
+    },
+    PUT_AGENT: (agentId: number) => {
+        return 'agents/' + agentId + '/update'
     }
 }
 
@@ -66,4 +69,18 @@ export function postAgentTransaction(
         .catch((reason) => {
             errorCallback(reason.message);
         });
+}
+
+export function putAgent(agent: CardPeak.Entities.Agent,
+    successCallback: (agent: CardPeak.Entities.Agent) => void,
+    errorCallback: (e: string) => void) {
+
+    let url = AGENT_API.PUT_AGENT(agent.agentId);
+    axios.put(url, { ...agent })
+        .then((r) => {
+            successCallback(r.data as CardPeak.Entities.Agent);
+        })
+        .catch((reason) => {
+            errorCallback(reason.message);
+        })
 }

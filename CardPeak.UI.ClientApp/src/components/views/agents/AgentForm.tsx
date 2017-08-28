@@ -5,8 +5,8 @@ import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ModalConfirm, Butto
 
 interface AgentFormProps {
     agent: CardPeak.Entities.Agent;
-    isSaving?: boolean;
-    onSave?: (agent: CardPeak.Entities.Agent, callbackError?: (error: string) => void) => void
+    onSave: (agent: CardPeak.Entities.Agent, callbackError?: (error: string) => void) => void;
+    isSaving: boolean;
 }
 
 interface AgentFormState {

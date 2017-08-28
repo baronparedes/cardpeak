@@ -55,6 +55,13 @@ namespace CardPeak.WebAPI.Controllers
             return this.Ok(result);
         }
 
+        [HttpPut]
+        [Route("{id}/update")]
+        public IHttpActionResult Update(CardPeak.Domain.Agent agent)
+        {
+            return null;
+        }
+
         [HttpPost]
         [Route("{id}/credit")]
         public IHttpActionResult CreditAgent(int id, decimal amount, string remarks)

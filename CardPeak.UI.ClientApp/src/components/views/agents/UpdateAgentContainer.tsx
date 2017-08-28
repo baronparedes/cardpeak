@@ -74,7 +74,7 @@ class UpdateAgentContainer extends
         if (this.state.selectedAgent) {
             return (
                 <Panel hidden={this.state.showWindow !== 'details'}>
-                    <AgentForm agent={this.state.selectedAgent} isSaving={false} />
+                    <AgentForm agent={this.state.selectedAgent} isSaving={false} onSave={this.props.actions.putAgentStart} />
                 </Panel>
             )
         }

@@ -13,11 +13,25 @@ export const postAgentTransaction = createAction(AGENT_ACTIONS.POST_AGENT_TRANSA
 export const postAgentTransactionComplete = createAction<CardPeak.Entities.DebitCreditTransaction>(AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE);
 export const postAgentTransactionError = createAction(AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR);
 export const refreshAgentDashboard = createAction(AGENT_ACTIONS.REFRESH_AGENT_DASHBOARD);
+export const putAgent = createAction(AGENT_ACTIONS.PUT_AGENT);
+export const putAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.PUT_AGENT_COMPLETE);
+export const putAgentError = createAction(AGENT_ACTIONS.PUT_AGENT_ERROR);
+
+export function putAgentStart(agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(putAgent());
+        agentsController.putAgent(agent, (agent: CardPeak.Entities.Agent) => {
+            dispatch(putAgentComplete(agent));
+        }, (error: string) => {
+            dispatch(putAgentError());
+            errorCallback(error);
+        });
+    }
+}
 
 export function refreshAgentDashboardStart(startDate?: string, endDate?: string) {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
         let agentId = getState().agentDashboardModel.selectedAgent.agentId;
-        console.log('refreshing agent dashboard: ' + agentId)
         dispatch(refreshAgentDashboard());
         agentsController.getAgentDashboardFiltered(agentId, startDate, endDate, (data: CardPeak.Entities.AgentDashboard) => {
             dispatch(selectAgentDashboardComplete(data));
