@@ -16,6 +16,26 @@ export const refreshAgentDashboard = createAction(AGENT_ACTIONS.REFRESH_AGENT_DA
 export const putAgent = createAction(AGENT_ACTIONS.PUT_AGENT);
 export const putAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.PUT_AGENT_COMPLETE);
 export const putAgentError = createAction(AGENT_ACTIONS.PUT_AGENT_ERROR);
+export const postAgent = createAction(AGENT_ACTIONS.POST_AGENT);
+export const postAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.POST_AGENT_COMPLETE);
+export const postAgentError = createAction(AGENT_ACTIONS.POST_AGENT_ERROR);
+
+export function postAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(postAgent());
+        agentsController.postAgent(agent, (agent: CardPeak.Entities.Agent) => {
+            dispatch(postAgentComplete(agent));
+            if (successCallback) {
+                successCallback();
+            }
+        }, (error: string) => {
+            dispatch(putAgentError());
+            if (errorCallback) {
+                errorCallback(error);
+            }
+        });
+    }
+}
 
 export function putAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {

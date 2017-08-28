@@ -1,11 +1,11 @@
 ﻿import * as React from 'react'
-import UpdateAgentContainer from './UpdateAgentContainer'
+import AgentContainer from './AgentContainer'
 
 const UpdateAgentView = () => {
     return (
         <div>
             <h2>Update Agent Details</h2>
-            <UpdateAgentContainer />
+            <AgentContainer isNew={false} />
         </div>
     )
 }

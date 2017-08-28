@@ -16,7 +16,7 @@ export class AppRouter extends React.Component {
                     <Route exact path="/" component={DashboardView} />
                     <Route exact path="/agents" component={AgentsView} />
                     <Route exact path="/agents/update" component={UpdateAgentView} />
-                    <Route exact path="/agents/add" component={AddAgentView} />
+                    <Route exact path="/agents/create" component={AddAgentView} />
                 </App>
             </Router>
         );

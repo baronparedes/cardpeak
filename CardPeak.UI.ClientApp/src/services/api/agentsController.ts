@@ -11,14 +11,15 @@ const AGENT_API = {
         return '/agents/' + agentId + "/filter"
     },
     DEBIT_AGENT: (agentId: number) => {
-        return 'agents/' + agentId + '/debit'
+        return '/agents/' + agentId + '/debit'
     },
     CREDIT_AGENT: (agentId: number) => {
-        return 'agents/' + agentId + '/credit'
+        return '/agents/' + agentId + '/credit'
     },
     PUT_AGENT: (agentId: number) => {
-        return 'agents/' + agentId + '/update'
-    }
+        return '/agents/' + agentId + '/update'
+    },
+    POST_AGENT: '/agents/create'
 }
 
 export function getAll(successCallback: (data: CardPeak.Entities.Agent[]) => void) {
@@ -79,6 +80,20 @@ export function putAgent(agent: CardPeak.Entities.Agent,
 
     let url = AGENT_API.PUT_AGENT(agent.agentId);
     axios.put(url, { ...agent })
+        .then((r) => {
+            successCallback(r.data as CardPeak.Entities.Agent);
+        })
+        .catch((reason) => {
+            errorCallback(reason.message);
+        })
+}
+
+export function postAgent(agent: CardPeak.Entities.Agent,
+    successCallback: (data: CardPeak.Entities.Agent) => void,
+    errorCallback: (error: string) => void) {
+
+    let url = AGENT_API.POST_AGENT;
+    axios.post(url, { ...agent })
         .then((r) => {
             successCallback(r.data as CardPeak.Entities.Agent);
         })

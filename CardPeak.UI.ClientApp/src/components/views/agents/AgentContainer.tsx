@@ -1,33 +1,50 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
+import { SpinnerBlock, RadioGroup } from '../../layout'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { Panel } from 'react-bootstrap'
+import { Panel, Grid, Row, Col } from 'react-bootstrap'
 
-import AgentListModal from './AgentListModal'
 import SelectedAgent from './SelectedAgent'
-import AgentDashboardView from '../agentDashboard/AgentDashboardView'
+import AgentListModal from './AgentListModal'
+import AgentForm from './AgentForm'
+
+interface AgentContainerProps {
+    isNew: boolean;
+}
+
+interface AgentContainerPropsConnect {
+    agents?: CardPeak.Entities.Agent[];
+    loadingAgents?: boolean;
+    savingAgent?: boolean;
+}
 
 interface AgentContainerDispatchProps {
-    actions?: typeof AgentsActions
+    actions?: typeof AgentsActions;
 }
 
 interface AgentContainerState {
-    showModal: boolean;
+    selectedAgent?: CardPeak.Entities.Agent;
+    showModal?: boolean;
+    showWindow?: string;
 }
 
-class AgentContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentContainerDispatchProps, AgentContainerState>{
-    constructor(props: CardPeak.Models.AgentDashboardModel & AgentContainerDispatchProps) {
+class AgentContainer extends
+    React.Component<AgentContainerProps & AgentContainerPropsConnect & AgentContainerDispatchProps, AgentContainerState> {
+    constructor(props: AgentContainerProps & AgentContainerPropsConnect & AgentContainerDispatchProps) {
         super(props);
+        let defaultAgent: CardPeak.Entities.Agent;
+        defaultAgent = props.isNew ? new CardPeak.Entities.Agent() : undefined;
         this.state = {
-            showModal: false
+            selectedAgent: defaultAgent,
+            showWindow: 'details'
         }
     }
     handleToggleModal = () => {
-        this.setState({ 
+        this.setState({
             showModal: !this.state.showModal
         });
     }
@@ -37,15 +54,73 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentDashboardModel
     }
     handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
         this.handleToggleModal();
-        this.props.actions.selectAgent(agent);
-        this.props.actions.selectAgentDashboardStart();;
+        this.setState({ selectedAgent: agent });
     }
-    render() {
-        return (
-            <div className="container-fluid no-padding">
+    handleOnWindowChange = (e: any) => {
+        this.setState({ showWindow: e.target.value });
+    }
+    handleOnSaveAgent = (agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) => {
+        if (this.props.isNew) {
+            this.props.actions.postAgentStart(agent, () => {
+                this.setState({ selectedAgent: agent });
+            }, errorCallback);
+        }
+        else {
+            this.props.actions.putAgentStart(agent, () => {
+                this.setState({ selectedAgent: agent });
+            }, errorCallback);
+        }
+        
+    }
+    renderActions() {
+        if (this.state.selectedAgent) {
+            return (
+                <Grid fluid className="text-right spacer-bottom">
+                    <RadioGroup
+                        name="update-options"
+                        value={this.state.showWindow}
+                        options={[
+                            ['details', 'Details'],
+                            ['rates', 'Rates']
+                        ]}
+                        onChange={this.handleOnWindowChange} />
+                </Grid>
+            )
+        }
+
+        return null;
+    }
+    renderDetails() {
+        if (this.state.selectedAgent) {
+            return (
+                <Panel hidden={this.state.showWindow !== 'details'}>
+                    <AgentForm
+                        agent={this.state.selectedAgent}
+                        isSaving={this.props.savingAgent}
+                        onSave={this.handleOnSaveAgent} />
+                </Panel>
+            )
+        }
+
+        return null;
+    }
+    renderRates() {
+        if (this.state.selectedAgent) {
+            return (
+                <Panel hidden={this.state.showWindow !== 'rates'}>
+                    Rates
+                </Panel>
+            )
+        }
+
+        return null;
+    }
+    renderSelectAgent() {
+        if (!this.props.isNew) {
+            return (
                 <Panel>
                     <SelectedAgent
-                        agent={this.props.selectedAgent}
+                        agent={this.state.selectedAgent}
                         onAgentSelectedClick={this.handleOnSelectedAgentClick} />
                     <AgentListModal
                         showModal={this.state.showModal}
@@ -54,23 +129,27 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentDashboardModel
                         onAgentSelected={this.handleOnAgentSelected}
                         isLoading={this.props.loadingAgents} />
                 </Panel>
-                <AgentDashboardView
-                    agentDashboard={this.props.selectedAgentDashboard}
-                    onRefresh={this.props.actions.refreshAgentDashboardStart}
-                    refreshingAgentDashboard={this.props.refreshingAgentDashboard}
-                    loadingAgentDashboard={this.props.loadingAgentDashboard} />
+            )
+        }
+
+        return null;
+    }
+    render() {
+        return (
+            <div className="container-fluid no-padding">
+                {this.renderSelectAgent()}
+                {this.renderActions()}
+                {this.renderDetails()}
+                {this.renderRates()}
             </div>
         )
     }
 }
 
-const mapStateToProps = (state: RootState): CardPeak.Models.AgentDashboardModel  => ({
-    selectedAgent: state.agentDashboardModel.selectedAgent,
-    selectedAgentDashboard: state.agentDashboardModel.selectedAgentDashboard,
+const mapStateToProps = (state: RootState): AgentContainerPropsConnect => ({
     agents: state.agentDashboardModel.agents,
     loadingAgents: state.agentDashboardModel.loadingAgents,
-    loadingAgentDashboard: state.agentDashboardModel.loadingAgentDashboard,
-    refreshingAgentDashboard: state.agentDashboardModel.refreshingAgentDashboard
+    savingAgent: state.agentDashboardModel.puttingAgent
 });
 
 const mapDispatchToProps = (dispatch: any): AgentContainerDispatchProps => {

@@ -1,11 +1,11 @@
 ﻿import * as React from 'react'
-import AgentContainer from './AgentContainer'
+import AgentDashboardContainer from './AgentDashboardContainer'
 
 const AgentView = () => {
     return (
         <div>
             <h2>Agent Dashboard</h2>
-            <AgentContainer />
+            <AgentDashboardContainer />
         </div>
     )
 }

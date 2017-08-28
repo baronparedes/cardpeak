@@ -116,7 +116,7 @@
     <Content Include="src\components\views\agents\AgentView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\UpdateAgentContainer.tsx">
+    <Content Include="src\components\views\agents\AgentContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentForm.tsx">
@@ -155,7 +155,7 @@
     <Content Include="src\components\views\dashboard\DashboardView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\AgentContainer.tsx">
+    <Content Include="src\components\views\agents\AgentDashboardContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\index.html">

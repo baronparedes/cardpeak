@@ -43,12 +43,12 @@ export class NavigationBar extends React.Component<{}, undefined> {
                 </li>
                 <MenuItem divider />
                 <li role="menuitem">
-                    <NavLink to="/agents/add">
+                    <NavLink exact to="/agents/create">
                         <NavLinkText text="Add New Agent" fa="fa-file-o" />
                     </NavLink>
                 </li>
                 <li role="menuitem">
-                    <NavLink to="/agents/update">
+                    <NavLink exact to="/agents/update">
                         <NavLinkText text="Update Agent Details" fa="fa-pencil" />
                     </NavLink>
                 </li>

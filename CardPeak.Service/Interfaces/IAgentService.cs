@@ -13,5 +13,6 @@ namespace CardPeak.Service.Interfaces
         AgentDashboard GetAgentDashboard(int agentId, DateTime startDate, DateTime? endDate);
         DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit);
         Agent Update(Agent agent);
+        Agent Create(Agent agent);
     }
 }

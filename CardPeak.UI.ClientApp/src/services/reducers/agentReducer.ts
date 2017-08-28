@@ -114,5 +114,27 @@ export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
             puttingAgent: undefined,
             agents
         }
-    }
+    },
+    [AGENT_ACTIONS.POST_AGENT]: (state, action) => {
+        return {
+            ...state,
+            postingAgent: true
+        }
+    },
+    [AGENT_ACTIONS.POST_AGENT_ERROR]: (state, action) => {
+        return {
+            ...state,
+            postingAgent: undefined
+        }
+    },
+    [AGENT_ACTIONS.POST_AGENT_COMPLETE]: (state, action) => {
+        let agent = action.payload as CardPeak.Entities.Agent;
+        let agents = state.agents.slice();
+        agents.push(agent);
+        return {
+            ...state,
+            postingAgent: undefined,
+            agents
+        }
+    },
 }, initialState);

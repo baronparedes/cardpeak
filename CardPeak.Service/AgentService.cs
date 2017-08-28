@@ -83,5 +83,12 @@ namespace CardPeak.Service
             this.DomainContext.SaveChanges();
             return result;
         }
+
+        public Agent Create(Agent agent)
+        {
+            this.AgentRepository.Add(agent);
+            this.DomainContext.SaveChanges();
+            return agent;
+        }
     }
 }
