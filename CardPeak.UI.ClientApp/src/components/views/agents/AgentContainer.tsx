@@ -9,7 +9,7 @@ import { Panel } from 'react-bootstrap'
 
 import AgentListModal from './AgentListModal'
 import SelectedAgent from './SelectedAgent'
-import AgentDashboardView from './AgentDashboardView'
+import AgentDashboardView from '../agentDashboard/AgentDashboardView'
 
 interface AgentContainerDispatchProps {
     actions?: typeof AgentsActions

@@ -14,7 +14,7 @@ export const RadioGroup: React.StatelessComponent<RadioGroupProps> = (props) => 
             {props.options.map(option =>
                 <Button
                     key={option[0]}
-                    bsStyle={option[0] === props.value ? 'info' : 'default'}
+                    bsStyle={option[0] === props.value ? 'primary' : 'default'}
                     children={option[1]}
                     name={props.name}
                     onClick={props.onChange}

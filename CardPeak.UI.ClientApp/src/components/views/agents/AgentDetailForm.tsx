@@ -95,7 +95,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             <FormGroup>
                 <Col sm={12} className="text-right">
                     <Button
-                        bsStyle="success"
+                        bsStyle="primary"
                         onClick={this.handleOnToggleModal}
                         disabled={this.props.isSaving}>
                         <ButtonLoadingText isLoading={this.props.isSaving} label="Save" />

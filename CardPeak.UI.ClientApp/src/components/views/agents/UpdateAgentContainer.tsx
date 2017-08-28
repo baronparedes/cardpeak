@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
-import { SpinnerBlock } from '../../layout'
+import { SpinnerBlock, RadioGroup } from '../../layout'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -23,7 +23,8 @@ interface UpdateAgentContainerDispatchProps {
 
 interface UpdateAgentContainerState {
     selectedAgent?: CardPeak.Entities.Agent;
-    showModal?: boolean
+    showModal?: boolean;
+    showWindow?: string;
 }
 
 class UpdateAgentContainer extends
@@ -31,7 +32,8 @@ class UpdateAgentContainer extends
     constructor(props: UpdateAgentContainerProps & UpdateAgentContainerDispatchProps) {
         super(props);
         this.state = {
-            selectedAgent: undefined
+            selectedAgent: undefined,
+            showWindow: 'details'
         }
     }
     handleToggleModal = () => {
@@ -47,11 +49,43 @@ class UpdateAgentContainer extends
         this.handleToggleModal();
         this.setState({ selectedAgent: agent });
     }
+    handleOnWindowChange = (e: any) => {
+        this.setState({ showWindow: e.target.value });
+    }
+    renderActions() {
+        if (this.state.selectedAgent) {
+            return (
+                <Grid fluid className="text-right spacer-bottom">
+                    <RadioGroup
+                        name="update-options"
+                        value={this.state.showWindow}
+                        options={[
+                            ['details', 'Details'],
+                            ['rates', 'Rates']
+                        ]}
+                        onChange={this.handleOnWindowChange} />
+                </Grid>
+            )
+        }
+
+        return null;
+    }
     renderDetails() {
         if (this.state.selectedAgent) {
             return (
-                <Panel>
+                <Panel hidden={this.state.showWindow !== 'details'}>
                     <AgentForm agent={this.state.selectedAgent} isSaving={false} />
+                </Panel>
+            )
+        }
+
+        return null;
+    }
+    renderRates() {
+        if (this.state.selectedAgent) {
+            return (
+                <Panel hidden={this.state.showWindow !== 'rates'}>
+                    Rates
                 </Panel>
             )
         }
@@ -72,7 +106,9 @@ class UpdateAgentContainer extends
                         onAgentSelected={this.handleOnAgentSelected}
                         isLoading={this.props.loadingAgents} />
                 </Panel>
+                {this.renderActions()}
                 {this.renderDetails()}
+                {this.renderRates()}
             </div>
         )
     }

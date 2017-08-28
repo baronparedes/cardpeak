@@ -91,14 +91,14 @@
     <Content Include="src\components\views\agents\AddAgentView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\AgentDashboardActions.tsx" />
-    <Content Include="src\components\views\agents\AgentDashboardView.tsx">
+    <Content Include="src\components\views\agentDashboard\AgentDashboardActions.tsx" />
+    <Content Include="src\components\views\agentDashboard\AgentDashboardView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\AgentDashboardSummary.tsx">
+    <Content Include="src\components\views\agentDashboard\AgentDashboardSummary.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\AgentDashboardTransactions.tsx">
+    <Content Include="src\components\views\agentDashboard\AgentDashboardTransactions.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentDetail.tsx">
@@ -193,6 +193,7 @@
     <Folder Include="src\components\views\" />
     <Folder Include="src\components\views\agents\" />
     <Folder Include="src\components\views\dashboard\" />
+    <Folder Include="src\components\views\agentDashboard\" />
     <Folder Include="src\components\views\transactions\" />
     <Folder Include="src\constants\" />
     <Folder Include="src\helpers\" />
