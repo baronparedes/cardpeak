@@ -72,5 +72,16 @@ namespace CardPeak.Service
                 return null;
             }
         }
+
+        public Agent Update(Agent agent)
+        {
+            var result = this.AgentRepository.Update(agent.AgentId, agent);
+            if (result == null)
+            {
+                return null;
+            }
+            this.DomainContext.SaveChanges();
+            return result;
+        }
     }
 }

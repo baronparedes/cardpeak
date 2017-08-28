@@ -21,22 +21,24 @@ const AGENT_API = {
     }
 }
 
-export function getAll(callback: (data: CardPeak.Entities.Agent[]) => void) {
+export function getAll(successCallback: (data: CardPeak.Entities.Agent[]) => void) {
     axios.get(AGENT_API.GET_ALL)
         .then((r) => {
-            callback(r.data as CardPeak.Entities.Agent[]);
+            successCallback(r.data as CardPeak.Entities.Agent[]);
         });
 }
 
-export function getAgentDashboard(agentId: number, callback: (data: CardPeak.Entities.AgentDashboard) => void) {
+export function getAgentDashboard(agentId: number,
+    successCallback: (data: CardPeak.Entities.AgentDashboard) => void) {
+
     axios.get(AGENT_API.GET_AGENT_DASHBOARD(agentId))
         .then((r) => {
-            callback(r.data as CardPeak.Entities.AgentDashboard);
+            successCallback(r.data as CardPeak.Entities.AgentDashboard);
         });
 }
 
 export function getAgentDashboardFiltered(agentId: number, startDate?: string, endDate?: string,
-    callback?: (data: CardPeak.Entities.AgentDashboard) => void) {
+    successCallback?: (data: CardPeak.Entities.AgentDashboard) => void) {
 
     axios.get(AGENT_API.GET_AGENT_DASHBOARD_FILTER(agentId), ({
             params: {
@@ -45,8 +47,8 @@ export function getAgentDashboardFiltered(agentId: number, startDate?: string, e
             }
         }))
         .then((r) => {
-            if (callback) {
-                callback(r.data as CardPeak.Entities.AgentDashboard);
+            if (successCallback) {
+                successCallback(r.data as CardPeak.Entities.AgentDashboard);
             }
         });
 }
@@ -54,8 +56,8 @@ export function getAgentDashboardFiltered(agentId: number, startDate?: string, e
 export function postAgentTransaction(
     transaction: CardPeak.Entities.DebitCreditTransaction,
     isDebit: boolean,
-    callback: (data: CardPeak.Entities.DebitCreditTransaction) => void,
-    errorCallback: (reason: any) => void) {
+    successCallback: (data: CardPeak.Entities.DebitCreditTransaction) => void,
+    errorCallback: (error: string) => void) {
 
     let url = (isDebit) ? AGENT_API.DEBIT_AGENT(transaction.agentId) : AGENT_API.CREDIT_AGENT(transaction.agentId);
     axios.post(url, null, {
@@ -64,7 +66,7 @@ export function postAgentTransaction(
             }
         })
         .then((r) => {
-            callback(r.data as CardPeak.Entities.DebitCreditTransaction);
+            successCallback(r.data as CardPeak.Entities.DebitCreditTransaction);
         })
         .catch((reason) => {
             errorCallback(reason.message);
@@ -72,8 +74,8 @@ export function postAgentTransaction(
 }
 
 export function putAgent(agent: CardPeak.Entities.Agent,
-    successCallback: (agent: CardPeak.Entities.Agent) => void,
-    errorCallback: (e: string) => void) {
+    successCallback: (data: CardPeak.Entities.Agent) => void,
+    errorCallback: (error: string) => void) {
 
     let url = AGENT_API.PUT_AGENT(agent.agentId);
     axios.put(url, { ...agent })

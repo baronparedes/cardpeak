@@ -17,5 +17,6 @@ namespace CardPeak.Repository
         void AddRange(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+        TEntity Update(int id, TEntity entity);
     }
 }

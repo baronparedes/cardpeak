@@ -6,6 +6,8 @@
         loadingAgents?: boolean,
         loadingAgentDashboard?: boolean,
         postingTransaction?: boolean,
-        refreshingAgentDashboard?: boolean
+        refreshingAgentDashboard?: boolean,
+        puttingAgent?: boolean,
+        postingAgent?: boolean,
     }
 }

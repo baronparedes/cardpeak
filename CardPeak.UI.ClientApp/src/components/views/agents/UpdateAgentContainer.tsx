@@ -13,12 +13,13 @@ import AgentListModal from './AgentListModal'
 import AgentForm from './AgentForm'
 
 interface UpdateAgentContainerProps {
-    agents?: CardPeak.Entities.Agent[],
-    loadingAgents?: boolean
+    agents?: CardPeak.Entities.Agent[];
+    loadingAgents?: boolean;
+    savingAgent?: boolean;
 }
 
 interface UpdateAgentContainerDispatchProps {
-    actions?: typeof AgentsActions
+    actions?: typeof AgentsActions;
 }
 
 interface UpdateAgentContainerState {
@@ -52,6 +53,11 @@ class UpdateAgentContainer extends
     handleOnWindowChange = (e: any) => {
         this.setState({ showWindow: e.target.value });
     }
+    handleOnSaveAgent = (agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) => {
+        this.props.actions.putAgentStart(agent, () => {
+            this.setState({ selectedAgent: agent });
+        }, errorCallback);
+    }
     renderActions() {
         if (this.state.selectedAgent) {
             return (
@@ -74,7 +80,10 @@ class UpdateAgentContainer extends
         if (this.state.selectedAgent) {
             return (
                 <Panel hidden={this.state.showWindow !== 'details'}>
-                    <AgentForm agent={this.state.selectedAgent} isSaving={false} onSave={this.props.actions.putAgentStart} />
+                    <AgentForm
+                        agent={this.state.selectedAgent}
+                        isSaving={this.props.savingAgent}
+                        onSave={this.handleOnSaveAgent} />
                 </Panel>
             )
         }
@@ -116,7 +125,8 @@ class UpdateAgentContainer extends
 
 const mapStateToProps = (state: RootState): UpdateAgentContainerProps => ({
     agents: state.agentDashboardModel.agents,
-    loadingAgents: state.agentDashboardModel.loadingAgents
+    loadingAgents: state.agentDashboardModel.loadingAgents,
+    savingAgent: state.agentDashboardModel.puttingAgent
 });
 
 const mapDispatchToProps = (dispatch: any): UpdateAgentContainerDispatchProps => {

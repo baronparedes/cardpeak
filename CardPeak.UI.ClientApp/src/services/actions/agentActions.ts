@@ -17,14 +17,19 @@ export const putAgent = createAction(AGENT_ACTIONS.PUT_AGENT);
 export const putAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.PUT_AGENT_COMPLETE);
 export const putAgentError = createAction(AGENT_ACTIONS.PUT_AGENT_ERROR);
 
-export function putAgentStart(agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) {
+export function putAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(putAgent());
         agentsController.putAgent(agent, (agent: CardPeak.Entities.Agent) => {
             dispatch(putAgentComplete(agent));
+            if (successCallback) {
+                successCallback();
+            }
         }, (error: string) => {
             dispatch(putAgentError());
-            errorCallback(error);
+            if (errorCallback) {
+                errorCallback(error);
+            }
         });
     }
 }
@@ -39,18 +44,20 @@ export function refreshAgentDashboardStart(startDate?: string, endDate?: string)
     }
 }
 
-export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean, success?: () => void, error?: (m: string) => void) {
+export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean,
+    successCallback?: () => void, errorCallback?: (m: string) => void) {
+
     return (dispatch: (e: any) => void) => {
         dispatch(postAgentTransaction());
         agentsController.postAgentTransaction(transaction, isDebit, (data: CardPeak.Entities.DebitCreditTransaction) => {
             dispatch(postAgentTransactionComplete(data));
-            if (success) {
-                success();
+            if (successCallback) {
+                successCallback();
             }
         }, (message: string) => {
             dispatch(postAgentTransactionError());
-            if (error) {
-                error(message);
+            if (errorCallback) {
+                errorCallback(message);
             }
         });
     }
