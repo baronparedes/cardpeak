@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormField, ModalConfirm, ButtonLoadingText }from '../../layout'
+import { FormFieldInput, ModalConfirm, ButtonLoadingText }from '../../layout'
 
 interface DebitCreditTransactionFormState {
     showConfirmModal: boolean;
@@ -103,20 +103,22 @@ class DebitCreditTransactionForm extends React.Component<
             <div className="container-fluid">
                 <Form horizontal>
                     <fieldset disabled={this.props.postingTransaction}>
-                        <FormField
+                        <FormFieldInput
                             controlId="form-amount"
                             type="number"
                             name="amount"
                             label="amount"
                             error={this.state.errors.amount}
                             value={this.state.amount}
+                            isRequired
                             onFocus={this.handleFocus}
                             onChange={this.handleChange} />
-                        <FormField
+                        <FormFieldInput
                             controlId="form-remarks"
                             type="textarea"
                             name="remarks"
                             label="remarks"
+                            isRequired
                             error={this.state.errors.remarks}
                             value={this.state.remarks}
                             onChange={this.handleChange} />
@@ -159,7 +161,7 @@ class DebitCreditTransactionForm extends React.Component<
 }
 
 const mapStateToProps = (state: RootState): DebitCreditTransactionFormPropsConnect => ({
-    postingTransaction: state.agentsModel.postingTransaction
+    postingTransaction: state.agentDashboardModel.postingTransaction
 });
 
 const mapDispatchToProps = (dispatch: any): DebitCreditTransactionFormDispatchProps => {

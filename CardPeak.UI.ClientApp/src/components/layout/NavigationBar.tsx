@@ -43,12 +43,12 @@ export class NavigationBar extends React.Component<{}, undefined> {
                 </li>
                 <MenuItem divider />
                 <li role="menuitem">
-                    <NavLink exact to="/agents/add">
+                    <NavLink to="/agents/add">
                         <NavLinkText text="Add New Agent" fa="fa-file-o" />
                     </NavLink>
                 </li>
                 <li role="menuitem">
-                    <NavLink exact to="/agents/update">
+                    <NavLink to="/agents/update">
                         <NavLinkText text="Update Agent Details" fa="fa-pencil" />
                     </NavLink>
                 </li>
@@ -59,18 +59,18 @@ export class NavigationBar extends React.Component<{}, undefined> {
         return (
             <NavDropdown title={<NavLinkText text="Settings" fa="fa-cog" />} id="settings-nav-dropdown">
                 <li role="menuitem">
-                    <NavLink exact to="/agents">
+                    <NavLink exact to="/banks">
                         <NavLinkText text="Banks" fa="fa-credit-card" />
                     </NavLink>
                 </li>
                 <li role="menuitem">
-                    <NavLink exact to="/agents">
-                        <NavLinkText text="Rates" fa="fa-sliders" />
+                    <NavLink exact to="/rates">
+                        <NavLinkText text="Default Rates" fa="fa-sliders" />
                     </NavLink>
                 </li>
                 <MenuItem divider />
                 <li role="menuitem">
-                    <NavLink exact to="/agents">
+                    <NavLink exact to="/config">
                         <NavLinkText text="Configure Uploads" fa="fa-wrench" />
                     </NavLink>
                 </li>

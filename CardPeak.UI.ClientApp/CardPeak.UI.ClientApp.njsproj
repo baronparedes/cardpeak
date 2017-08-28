@@ -79,6 +79,9 @@
     <Content Include="src\components\layout\PerformanceDashboard.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\RadioGroup.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\SearchBar.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -111,6 +114,12 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agents\UpdateAgentContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agents\AgentForm.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\UpdateAgentView.tsx">

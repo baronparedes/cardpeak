@@ -1,10 +1,10 @@
 ﻿import { handleActions } from 'redux-actions';
 import { AGENT_ACTIONS } from '../../constants/actions'
 
-const initialState: CardPeak.Models.AgentsModel = {
+const initialState: CardPeak.Models.AgentDashboardModel = {
 };
 
-export default handleActions<CardPeak.Models.AgentsModel, any>({
+export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
             ...state,

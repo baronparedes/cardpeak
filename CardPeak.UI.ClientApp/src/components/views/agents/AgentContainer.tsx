@@ -19,8 +19,8 @@ interface AgentContainerState {
     showModal: boolean;
 }
 
-class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & AgentContainerDispatchProps, AgentContainerState>{
-    constructor(props: CardPeak.Models.AgentsModel & AgentContainerDispatchProps) {
+class AgentContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentContainerDispatchProps, AgentContainerState>{
+    constructor(props: CardPeak.Models.AgentDashboardModel & AgentContainerDispatchProps) {
         super(props);
         this.state = {
             showModal: false
@@ -64,13 +64,13 @@ class AgentContainer extends React.Component<CardPeak.Models.AgentsModel & Agent
     }
 }
 
-const mapStateToProps = (state: RootState): CardPeak.Models.AgentsModel  => ({
-    selectedAgent: state.agentsModel.selectedAgent,
-    selectedAgentDashboard: state.agentsModel.selectedAgentDashboard,
-    agents: state.agentsModel.agents,
-    loadingAgents: state.agentsModel.loadingAgents,
-    loadingAgentDashboard: state.agentsModel.loadingAgentDashboard,
-    refreshingAgentDashboard: state.agentsModel.refreshingAgentDashboard
+const mapStateToProps = (state: RootState): CardPeak.Models.AgentDashboardModel  => ({
+    selectedAgent: state.agentDashboardModel.selectedAgent,
+    selectedAgentDashboard: state.agentDashboardModel.selectedAgentDashboard,
+    agents: state.agentDashboardModel.agents,
+    loadingAgents: state.agentDashboardModel.loadingAgents,
+    loadingAgentDashboard: state.agentDashboardModel.loadingAgentDashboard,
+    refreshingAgentDashboard: state.agentDashboardModel.refreshingAgentDashboard
 });
 
 const mapDispatchToProps = (dispatch: any): AgentContainerDispatchProps => {

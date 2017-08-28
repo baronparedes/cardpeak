@@ -16,7 +16,7 @@ export const refreshAgentDashboard = createAction(AGENT_ACTIONS.REFRESH_AGENT_DA
 
 export function refreshAgentDashboardStart(startDate?: string, endDate?: string) {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
-        let agentId = getState().agentsModel.selectedAgent.agentId;
+        let agentId = getState().agentDashboardModel.selectedAgent.agentId;
         console.log('refreshing agent dashboard: ' + agentId)
         dispatch(refreshAgentDashboard());
         agentsController.getAgentDashboardFiltered(agentId, startDate, endDate, (data: CardPeak.Entities.AgentDashboard) => {
@@ -53,7 +53,7 @@ export function getAllAgentsStart() {
 
 export function selectAgentDashboardStart() {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
-        let agent = getState().agentsModel.selectedAgent;
+        let agent = getState().agentDashboardModel.selectedAgent;
         dispatch(selectAgentDashboard());
         agentsController.getAgentDashboard(agent.agentId, (data: CardPeak.Entities.AgentDashboard) => {
             dispatch(selectAgentDashboardComplete(data));

@@ -9,18 +9,24 @@ interface DatePickerProps {
     showClearButton?: boolean
 }
 
+export const DatePickerForm = (props: DatePickerProps) => {
+    return (
+        <DatePickerBootstrap
+            onChange={props.onChange}
+            className="date-picker"
+            showTodayButton
+            showClearButton={props.showClearButton}
+            clearButtonElement={<i className="fa fa-lg fa-eraser"></i>}
+            disabled={props.disabled}
+            value={props.value}>
+        </DatePickerBootstrap>
+    )
+}
+
 export const DatePicker = (props: DatePickerProps) => {
     return (
         <FormGroup>
-            <DatePickerBootstrap
-                onChange={props.onChange}
-                className="date-picker"
-                showTodayButton
-                showClearButton={props.showClearButton}
-                clearButtonElement={<i className="fa fa-lg fa-eraser"></i>}
-                disabled={props.disabled}
-                value={props.value}>
-            </DatePickerBootstrap>
+            <DatePickerForm {...props} />
         </FormGroup>
     )
 }

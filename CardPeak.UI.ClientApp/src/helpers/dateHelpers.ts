@@ -4,6 +4,10 @@ export const dateFormat = (date: Date) => {
     return moment(date).format("MM/DD/YYYY")
 }
 
+export const dateFormatISO = (date: Date) => {
+    return moment(date).format("YYYY-MM-DD")
+}
+
 export const firstDayOfTheMonth = () => {
     let currentDate = new Date(), mm = currentDate.getMonth(), yyyy = currentDate.getFullYear();
     let fDay = new Date(yyyy, mm, 1);

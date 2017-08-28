@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { SpinnerBlock } from '../../layout/Spinner'
+import { SpinnerBlock } from '../../layout'
 import AgentDashboardSummary from './AgentDashboardSummary'
 import AgentDashboardTransactions from './AgentDashboardTransactions'
 import AgentDashboardActions from './AgentDashboardActions'

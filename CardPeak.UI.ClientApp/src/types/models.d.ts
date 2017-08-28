@@ -1,5 +1,5 @@
 ﻿declare module CardPeak.Models {
-    export interface AgentsModel {
+    export interface AgentDashboardModel {
         selectedAgent?: CardPeak.Entities.Agent,
         selectedAgentDashboard?: CardPeak.Entities.AgentDashboard,
         agents?: CardPeak.Entities.Agent[],
