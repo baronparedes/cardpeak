@@ -1,11 +1,15 @@
 ﻿import * as React from 'react'
+import { Route } from 'react-router-dom'
 import AgentDashboardContainer from './AgentDashboardContainer'
+import UpdateAgentView from './UpdateAgentView'
+import AddAgentView from './AddAgentView'
 
-const AgentView = () => {
+const AgentView: React.StatelessComponent<{ match: any }> = (props) => {
     return (
         <div>
-            <h2>Agent Dashboard</h2>
-            <AgentDashboardContainer />
+            <Route exact path={props.match.url} component={AgentDashboardContainer} />
+            <Route path={props.match.url + "/update"} component={UpdateAgentView} />
+            <Route path={props.match.url + "/create"} component={AddAgentView} />
         </div>
     )
 }

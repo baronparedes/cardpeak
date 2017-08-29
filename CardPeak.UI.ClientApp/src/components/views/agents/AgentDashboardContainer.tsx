@@ -42,23 +42,26 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashb
     }
     render() {
         return (
-            <div className="container-fluid no-padding">
-                <Panel>
-                    <SelectedAgent
-                        agent={this.props.selectedAgent}
-                        onAgentSelectedClick={this.handleOnSelectedAgentClick} />
-                    <AgentListModal
-                        showModal={this.state.showModal}
-                        agents={this.props.agents}
-                        onToggleModal={this.handleToggleModal}
-                        onAgentSelected={this.handleOnAgentSelected}
-                        isLoading={this.props.loadingAgents} />
-                </Panel>
-                <AgentDashboardView
-                    agentDashboard={this.props.selectedAgentDashboard}
-                    onRefresh={this.props.actions.refreshAgentDashboardStart}
-                    refreshingAgentDashboard={this.props.refreshingAgentDashboard}
-                    loadingAgentDashboard={this.props.loadingAgentDashboard} />
+            <div>
+                <h2>Agent Dashboard</h2>
+                <div className="container-fluid no-padding">
+                    <Panel>
+                        <SelectedAgent
+                            agent={this.props.selectedAgent}
+                            onAgentSelectedClick={this.handleOnSelectedAgentClick} />
+                        <AgentListModal
+                            showModal={this.state.showModal}
+                            agents={this.props.agents}
+                            onToggleModal={this.handleToggleModal}
+                            onAgentSelected={this.handleOnAgentSelected}
+                            isLoading={this.props.loadingAgents} />
+                    </Panel>
+                    <AgentDashboardView
+                        agentDashboard={this.props.selectedAgentDashboard}
+                        onRefresh={this.props.actions.refreshAgentDashboardStart}
+                        refreshingAgentDashboard={this.props.refreshingAgentDashboard}
+                        loadingAgentDashboard={this.props.loadingAgentDashboard} />
+                </div>
             </div>
         )
     }

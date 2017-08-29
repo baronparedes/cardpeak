@@ -184,7 +184,6 @@ module.exports = {
     plugins,
     devServer: {
         contentBase: isProduction ? './build' : './src',
-        historyApiFallback: true,
         port: 3000,
         compress: isProduction,
         inline: !isProduction,
