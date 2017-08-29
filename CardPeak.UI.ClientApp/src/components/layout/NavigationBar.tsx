@@ -49,7 +49,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
     }
     renderAgents() {
         return (
-            <LinkContainer exact to="/agents" onClick={(e) => e.preventDefault()}>
+            <LinkContainer to="/agents" onClick={(e) => e.preventDefault()}>
                 <NavDropdown
                     title={<NavLinkText text="Agents" fa="fa-users" />}
                     id="agents-nav-dropdown">
@@ -63,7 +63,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
     }
     renderSettings() {
         return (
-            <LinkContainer exact to="/settings" onClick={(e) => e.preventDefault()}>
+            <LinkContainer to="/settings" onClick={(e) => e.preventDefault()}>
                 <NavDropdown
                     title={<NavLinkText text="Settings" fa="fa-cog" />}
                     id="settings-nav-dropdown">
