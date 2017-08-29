@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Nav, Navbar, NavItem, NavbarHeader, NavDropdown, MenuItem, NavbarBrand } from 'react-bootstrap'
-import { Link, NavLink, Route } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap'
 
 const NavLinkText = (props: { text: string, fa: string }) => {
     return (
@@ -8,6 +8,26 @@ const NavLinkText = (props: { text: string, fa: string }) => {
             <i className={"fa fa-nav " + props.fa} aria-hidden="true"></i>
             {props.text}
         </span>
+    )
+}
+
+const NavItemLinkContainer = (props: { text: string, fa: string, exact: boolean, to: string }) => {
+    return (
+        <LinkContainer exact={props.exact} to={props.to}>
+            <NavItem href={props.to}>
+                <NavLinkText text={props.text} fa={props.fa} />
+            </NavItem>
+        </LinkContainer>
+    );
+}
+
+const MenuItemLinkContainer = (props: { text: string, fa: string, exact: boolean, to: string }) => {
+    return (
+        <LinkContainer exact={props.exact} to={props.to}>
+            <MenuItem href={props.to} >
+                <NavLinkText text={props.text} fa={props.fa} />
+            </MenuItem>
+        </LinkContainer>
     );
 }
 
@@ -24,62 +44,40 @@ export class NavigationBar extends React.Component<{}, undefined> {
     }
     renderDashboard() {
         return (
-            <li role="presentation">
-                <NavLink exact to="/">
-                    <NavLinkText text="Dashboard" fa="fa-area-chart" />
-                </NavLink>
-            </li>
+            <NavItemLinkContainer exact to="/" text="Dashboard" fa="fa-area-chart" />
         )
     }
     renderAgents() {
         return (
-            <NavDropdown
-                title={<NavLinkText text="Agents" fa="fa-users" />}
-                id="agents-nav-dropdown">
-                <li role="menuitem">
-                    <NavLink exact to="/agents">
-                        <NavLinkText text="Agent Dashboard" fa="fa-user-circle" />
-                    </NavLink>
-                </li>
-                <MenuItem divider />
-                <li role="menuitem">
-                    <NavLink exact to="/agents/create">
-                        <NavLinkText text="Add New Agent" fa="fa-file-o" />
-                    </NavLink>
-                </li>
-                <li role="menuitem">
-                    <NavLink exact to="/agents/update">
-                        <NavLinkText text="Update Agent Details" fa="fa-pencil" />
-                    </NavLink>
-                </li>
-            </NavDropdown>
+            <LinkContainer exact to="/agents" onClick={(e) => e.preventDefault()}>
+                <NavDropdown
+                    title={<NavLinkText text="Agents" fa="fa-users" />}
+                    id="agents-nav-dropdown">
+                    <MenuItemLinkContainer exact to="/agents" text="Agent Dashboard" fa="fa-user-circle" />
+                    <MenuItem divider />
+                    <MenuItemLinkContainer exact to="/agents/create" text="Create" fa="fa-file-o" />
+                    <MenuItemLinkContainer exact to="/agents/update" text="Update" fa="fa-pencil" />
+                </NavDropdown>
+            </LinkContainer>
         )
     }
     renderSettings() {
         return (
-            <NavDropdown title={<NavLinkText text="Settings" fa="fa-cog" />} id="settings-nav-dropdown">
-                <li role="menuitem">
-                    <NavLink exact to="/banks">
-                        <NavLinkText text="Banks" fa="fa-credit-card" />
-                    </NavLink>
-                </li>
-                <li role="menuitem">
-                    <NavLink exact to="/rates">
-                        <NavLinkText text="Default Rates" fa="fa-sliders" />
-                    </NavLink>
-                </li>
-                <MenuItem divider />
-                <li role="menuitem">
-                    <NavLink exact to="/config">
-                        <NavLinkText text="Configure Uploads" fa="fa-wrench" />
-                    </NavLink>
-                </li>
-            </NavDropdown>
+            <LinkContainer exact to="/settings" onClick={(e) => e.preventDefault()}>
+                <NavDropdown
+                    title={<NavLinkText text="Settings" fa="fa-cog" />}
+                    id="settings-nav-dropdown">
+                    <MenuItemLinkContainer exact to="/settings" text="Banks" fa="fa-credit-card" />
+                    <MenuItemLinkContainer exact to="/settings/rates" text="Default Rates" fa="fa-sliders" />
+                    <MenuItem divider />
+                    <MenuItemLinkContainer exact to="/settings/config" text="Configure Uploads" fa="fa-wrench" />
+                </NavDropdown>
+            </LinkContainer>
         )
     }
     render() {
         return (
-            <Navbar inverse collapseOnSelect id="main-nav" role="navigation" staticTop>
+            <Navbar collapseOnSelect id="main-nav" role="navigation" staticTop>
                 {this.renderHeader()}
                 <Navbar.Collapse>
                     <Nav pullRight>

@@ -1,27 +1,68 @@
 ﻿@import "mixins.less";
 @import "theme.less";
 
+.li-active() {
+    background: none !important;
+    background-image: none !important;
+    background-color: @nav-active-bg-color !important;
+    color: @nav-text-color-contrast !important;
+}
+
+.li-hover-active() {
+    > a {
+        color: @nav-text-color;
+        text-transform: lowercase;
+
+        &:focus, &:hover {
+            border: none;
+            background: none !important;
+            background-image: none !important;
+            background-color: @nav-hover-bg-color !important;
+            color: @nav-text-color-dark !important;
+        }
+    }
+
+    &.active > a {
+        .li-active
+    }
+}
+
 .navbar-brand {
     .brand-font;
 }
 
-.navbar-inverse {
+.navbar-default {
     background: none;
     background-color: @nav-inverse-bg-color;
+
+    .navbar-toggle {
+        border-color: @nav-text-color-contrast;
+
+        &:hover,
+        &:focus {
+            background-color: @nav-inverse-bg-color;
+            color: @nav-text-color-contrast;
+        }
+
+        .icon-bar {
+            background-color: @nav-text-color;
+        }
+    }
 }
 
+.navbar-collapse,
 .navbar {
     .navbar-brand {
         color: @nav-text-color;
     }
 
-    .navbar-nav,
-    .navbar-nav > li > a {
-        color: @nav-text-color;
-        text-transform: uppercase;
+    .navbar-nav > li {
+        .li-hover-active
+    }
 
-        &:focus, &:hover {
-            color: @nav-text-color-contrast;
+    .dropdown {
+        &.open > a {
+           .li-active
         }
     }
 }
@@ -29,23 +70,18 @@
 .dropdown-menu {
     background: none;
     background-color: @nav-inverse-bg-color;
-}
 
-.dropdown-menu > li > a {
-    color: @nav-text-color;
-
-    &:hover {
-        background-image: none !important;
-        background-color: @nav-hover-bg-color;
-    }
-
-    &.active {
-        background-image: none !important;
-        background-color: @nav-active-bg-color;
-        color: @nav-text-color-contrast;
+    > li {
+        .li-hover-active
     }
 }
 
 .fa-nav {
     padding-right: 5px;
+}
+
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: @nav-text-color;
+    }
 }
