@@ -2,6 +2,7 @@
 import { AGENT_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.AgentDashboardModel = {
+    agents: []
 };
 
 export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
@@ -128,21 +129,14 @@ export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
         }
     },
     [AGENT_ACTIONS.POST_AGENT_COMPLETE]: (state, action) => {
-        if (state.agents) {
-            let agent = action.payload as CardPeak.Entities.Agent;
-            let agents = state.agents.slice();
-            agents.push(agent);
-
-            return {
-                ...state,
-                postingAgent: undefined,
-                agents
-            }
-        }
+        let agent = action.payload as CardPeak.Entities.Agent;
+        let agents = state.agents.slice();
+        agents.push(agent);
 
         return {
             ...state,
-            postingAgent: undefined
+            postingAgent: undefined,
+            agents
         }
     },
 }, initialState);

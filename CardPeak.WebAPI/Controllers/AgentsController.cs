@@ -9,7 +9,6 @@ using System.Web.Http;
 
 namespace CardPeak.WebAPI.Controllers
 {
-    [RoutePrefix("api/agents")]
     public sealed class AgentsController : ApiController
     {
         public AgentService AgentService { get; set; }

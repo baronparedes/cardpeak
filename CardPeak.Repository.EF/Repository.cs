@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Repository.EF
 {
-    public class Repository<TEntity, TDBContext> : IRepository<TEntity> 
+    public abstract class Repository<TEntity, TDBContext> : IRepository<TEntity> 
         where TEntity : class
         where TDBContext : DbContext
     {

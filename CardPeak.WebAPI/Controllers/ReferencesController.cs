@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace CardPeak.WebAPI.Controllers
 {
-    public sealed class TransactionsController : ApiController
+    public sealed class ReferencesController : ApiController
     {
     }
 }
