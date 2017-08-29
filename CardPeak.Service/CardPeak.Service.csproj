@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="AgentService.cs" />
     <Compile Include="Interfaces\IAgentService.cs" />
+    <Compile Include="Interfaces\ISettingsService.cs" />
+    <Compile Include="SettingsService.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

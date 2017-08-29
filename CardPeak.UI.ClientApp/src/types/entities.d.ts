@@ -66,4 +66,21 @@
         public referenceTypeId: number;
         public description: string;
     }
+
+    export class Rate {
+        public rateId: number;
+        public amount: number;
+        public bankId: number;
+        public cardCategoryId: number;
+        public agentId: number;
+        public agent?: Agent;
+        public bank?: Reference;
+        public cardCategory?: Reference;
+    }
+
+    export class Settings {
+        public banks: CardPeak.Entities.Reference[];
+        public cardCategories: CardPeak.Entities.Reference[];
+        public rates: CardPeak.Entities.Rate[];
+    }
 }

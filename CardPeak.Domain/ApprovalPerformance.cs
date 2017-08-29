@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Domain
 {
-    public class ApprovalPerformance
+    public sealed class ApprovalPerformance
     {
         public string Month { get; set; }
         public decimal Units { get; set; }

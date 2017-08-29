@@ -125,6 +125,18 @@
     <Content Include="src\components\views\agents\UpdateAgentView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\settings\RateDetailRowLayout.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\settings\RateDetail.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\settings\RateList.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\settings\RatesContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\transactions\ApprovalTransactionDetail.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -194,6 +206,7 @@
     <Folder Include="src\components\views\agents\" />
     <Folder Include="src\components\views\dashboard\" />
     <Folder Include="src\components\views\agentDashboard\" />
+    <Folder Include="src\components\views\settings\" />
     <Folder Include="src\components\views\transactions\" />
     <Folder Include="src\constants\" />
     <Folder Include="src\helpers\" />
@@ -212,13 +225,22 @@
     <TypeScriptCompile Include="src\services\actions\agentActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\actions\settingActions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\api\agentsController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\api\settingsController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\agentReducer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\reducers\settingsReducer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\store.ts">

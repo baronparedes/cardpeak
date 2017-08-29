@@ -44,6 +44,8 @@
     <Compile Include="IAgentRepository.cs" />
     <Compile Include="IApprovalTransactionRepository.cs" />
     <Compile Include="IDebitCreditTransactionRepository.cs" />
+    <Compile Include="IRateRepository.cs" />
+    <Compile Include="IReferenceRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

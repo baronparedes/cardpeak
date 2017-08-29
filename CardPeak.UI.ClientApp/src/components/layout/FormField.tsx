@@ -101,3 +101,19 @@ export const FormFieldInput: React.StatelessComponent<FormFieldProps> = (props) 
         </FormField>
     );
 };
+
+export const FormFieldDropdown: React.StatelessComponent<FormFieldProps> = (props) => {
+    return (
+        <FormField {...props}>
+            <FormControl
+                componentClass="select"
+                placeholder={props.label}
+                name={props.name}
+                value={props.value}
+                onChange={props.onChange}>
+
+                {props.children}
+            </FormControl>
+        </FormField>
+    )
+}

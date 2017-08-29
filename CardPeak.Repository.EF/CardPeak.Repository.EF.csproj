@@ -64,6 +64,8 @@
     </Compile>
     <Compile Include="DebitCreditTransactionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RateRepository.cs" />
+    <Compile Include="ReferenceRepository.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>

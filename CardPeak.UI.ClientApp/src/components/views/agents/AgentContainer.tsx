@@ -1,13 +1,13 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
+import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { SpinnerBlock, RadioGroup } from '../../layout'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { Panel, Grid, Row, Col } from 'react-bootstrap'
-
+import RatesContainer from '../settings/RatesContainer'
 import SelectedAgent from './SelectedAgent'
 import AgentListModal from './AgentListModal'
 import AgentForm from './AgentForm'
@@ -30,14 +30,15 @@ interface AgentContainerDispatchProps {
 interface AgentContainerState {
     selectedAgent?: CardPeak.Entities.Agent;
     showModal?: boolean;
-    showWindow?: string
+    showWindow?: string;
+    emptyAgent: CardPeak.Entities.Agent;
 }
 
 class AgentContainer extends
     React.Component<AgentContainerProps & AgentContainerPropsConnect & AgentContainerDispatchProps, AgentContainerState> {
     constructor(props: AgentContainerProps & AgentContainerPropsConnect & AgentContainerDispatchProps) {
         super(props);
-        let selectedAgent: CardPeak.Entities.Agent = {
+        let agent: CardPeak.Entities.Agent = {
             agentId: 0,
             firstName: '',
             middleName: '',
@@ -49,7 +50,8 @@ class AgentContainer extends
         this.state = {
             ...this.state,
             showWindow: 'details',
-            selectedAgent: props.isNew ? selectedAgent : undefined
+            selectedAgent: props.isNew ? agent : undefined,
+            emptyAgent: agent
         }
     }
     handleToggleModal = () => {
@@ -74,13 +76,7 @@ class AgentContainer extends
                 this.setState({
                     selectedAgent: {
                         ...this.state.selectedAgent,
-                        agentId: 0,
-                        firstName: '',
-                        middleName: '',
-                        lastName: '',
-                        gender: 'M',
-                        email: '',
-                        birthDate: new Date()
+                        ...this.state.emptyAgent
                     }
                 });
                     
@@ -129,7 +125,7 @@ class AgentContainer extends
         if (this.state.selectedAgent && !this.props.isNew) {
             return (
                 <Panel hidden={this.state.showWindow !== 'rates'}>
-                    Rates
+                    <RatesContainer selectedAgentId={this.state.selectedAgent.agentId} />
                 </Panel>
             )
         }

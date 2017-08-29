@@ -1,14 +1,14 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 
-interface AgentRowLayoutProps {
+interface AgentDetailRowLayoutProps {
     agent?: CardPeak.Entities.Agent,
     onSelectAgent?: (agent: CardPeak.Entities.Agent) => void;
     isHeader: boolean
 }
 
-export default class AgentRowLayout extends React.Component<AgentRowLayoutProps, {}> {
-    constructor(props: AgentRowLayoutProps) {
+export default class AgentDetailRowLayout extends React.Component<AgentDetailRowLayoutProps, {}> {
+    constructor(props: AgentDetailRowLayoutProps) {
         super(props);
     }
     handleOnClick = () => {
