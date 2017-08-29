@@ -94,7 +94,7 @@ class AgentContainer extends
         
     }
     renderActions() {
-        if (this.state.selectedAgent) {
+        if (this.state.selectedAgent && !this.props.isNew) {
             return (
                 <Grid fluid className="text-right spacer-bottom">
                     <RadioGroup
@@ -126,7 +126,7 @@ class AgentContainer extends
         return null;
     }
     renderRates() {
-        if (this.state.selectedAgent) {
+        if (this.state.selectedAgent && !this.props.isNew) {
             return (
                 <Panel hidden={this.state.showWindow !== 'rates'}>
                     Rates
@@ -160,8 +160,8 @@ class AgentContainer extends
             <div className="container-fluid no-padding">
                 {this.renderSelectAgent()}
                 {this.renderActions()}
-                {this.renderDetails()}
                 {this.renderRates()}
+                {this.renderDetails()}
             </div>
         )
     }
