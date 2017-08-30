@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CardPeak.Domain;
 using CardPeak.Repository;
 using CardPeak.Repository.EF;
+using System.Data.Entity;
 
 namespace CardPeak.Service
 {
@@ -34,8 +35,14 @@ namespace CardPeak.Service
 
         public void SaveRates(int agentId, Settings settings)
         {
+            var rates = settings.Rates.ToList();
+            rates.ForEach(_ => {
+                _.AgentId = agentId;
+                this.DomainContext.Entry(_.Bank).State = EntityState.Detached;
+                this.DomainContext.Entry(_.CardCategory).State = EntityState.Detached;
+            });
             this.DomainContext.Rates.RemoveRange(this.DomainContext.Rates.Where(_ => _.AgentId == agentId));
-            this.DomainContext.Rates.AddRange(settings.Rates);
+            this.DomainContext.Rates.AddRange(rates);
             this.DomainContext.SaveChanges();
         }
 

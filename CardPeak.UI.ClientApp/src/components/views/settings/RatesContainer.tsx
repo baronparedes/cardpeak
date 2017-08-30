@@ -23,7 +23,8 @@ interface RatesContainerState {
     amount: number,
     errors: {
         [error: string]: string,
-    };
+    },
+    actionLabel: string
 }
 
 class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps, RatesContainerState> {
@@ -37,7 +38,8 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                 amount: '',
                 bankId: '',
                 cardCategoryId: ''
-            }
+            },
+            actionLabel: "Add"
         }
     }
     handleErrors = () => {
@@ -72,6 +74,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
             [e.target.name]: e.target.value,
             errors
         });
+        this.handleOnActionLabelChange();
     }
     handleFocus = (e: any) => {
         e.target.select();
@@ -81,6 +84,13 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
     }
     handleOnClickSaveRates = () => {
         this.props.actions.postRatesStart(this.props.agentId, this.props.rates);
+    }
+    handleOnActionLabelChange = () => {
+        let existing = this.props.rates.some(_ => {
+            return _.bankId === parseInt(this.state.bankId.toString()) && _.cardCategoryId === parseInt(this.state.cardCategoryId.toString());
+        });
+        let actionLabel = existing ? "Update" : "Add"
+        this.setState({ actionLabel });
     }
     componentDidMount() {
         this.props.actions.selectAgentStart(this.props.selectedAgentId);
@@ -96,7 +106,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                 <Row>
                     <Col lg={4} md={12} sm={12} xs={12}>
                         <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
-                            <fieldset disabled={this.props.postingRates}>
+                            <fieldset disabled={this.props.postingRates || this.props.loadingRates}>
                                 <FormFieldDropdown
                                     controlId="form-bank"
                                     label="Bank"
@@ -151,8 +161,8 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                             type="button"
                                             bsStyle="primary"
                                             onClick={this.handleOnClickAddRate}
-                                            disabled={this.props.postingRates}>
-                                            Add
+                                            disabled={this.props.postingRates || this.props.loadingRates}>
+                                            {this.state.actionLabel}
                                         </Button>
                                     </Col>
                                 </FormGroup>
@@ -163,14 +173,15 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                         <RateList
                             agentId={this.props.agentId}
                             rates={this.props.rates}
+                            isLoading={this.props.loadingRates}
                             onDeleteRate={this.handleOnDeleteRate} />
                     </Col>
                 </Row>
                 <Row>
                     <Col className="text-right container-fluid">
                         <br/>
-                        <Button bsStyle="success" onClick={this.handleOnClickSaveRates} disabled={this.props.postingRates}>
-                            <ButtonLoadingText isLoading={this.props.postingRates} label="Save" />
+                        <Button bsStyle="success" onClick={this.handleOnClickSaveRates} disabled={this.props.postingRates || this.props.loadingRates}>
+                            <ButtonLoadingText isLoading={this.props.postingRates || this.props.loadingRates} label="Save" />
                         </Button>
                     </Col>
                 </Row>
