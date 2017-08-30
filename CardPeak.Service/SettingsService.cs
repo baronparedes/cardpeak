@@ -37,9 +37,8 @@ namespace CardPeak.Service
         {
             var rates = settings.Rates.ToList();
             rates.ForEach(_ => {
-                _.AgentId = agentId;
-                this.DomainContext.Entry(_.Bank).State = EntityState.Detached;
-                this.DomainContext.Entry(_.CardCategory).State = EntityState.Detached;
+                this.DomainContext.Entry(_.Bank).State = EntityState.Unchanged;
+                this.DomainContext.Entry(_.CardCategory).State = EntityState.Unchanged;
             });
             this.DomainContext.Rates.RemoveRange(this.DomainContext.Rates.Where(_ => _.AgentId == agentId));
             this.DomainContext.Rates.AddRange(rates);

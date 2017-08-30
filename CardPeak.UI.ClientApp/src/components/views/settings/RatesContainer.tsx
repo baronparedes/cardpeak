@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Grid, Row, Col, Form, FormGroup, Button } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDropdown, ButtonLoadingText } from '../../layout'
+import { FormFieldInput, FormFieldDropdown, ButtonLoadingText, ModalConfirm } from '../../layout'
 import RateList from './RateList'
 
 interface RatesContainerProps {
@@ -24,7 +24,8 @@ interface RatesContainerState {
     errors: {
         [error: string]: string,
     },
-    actionLabel: string
+    postingRatesError?: string,
+    showConfirmModal?: boolean
 }
 
 class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps, RatesContainerState> {
@@ -38,9 +39,15 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                 amount: '',
                 bankId: '',
                 cardCategoryId: ''
-            },
-            actionLabel: "Add"
+            }
         }
+    }
+    handleOnToggleModal = () => {
+        this.setState({ showConfirmModal: !this.state.showConfirmModal, postingRatesError: undefined });
+    }
+    handleOnConfirm = () => {
+        this.handleOnToggleModal();
+        this.handleOnClickSaveRates();
     }
     handleErrors = () => {
         let errors = this.state.errors;
@@ -52,6 +59,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
     }
     handleOnClickAddRate = (e: any) => {
         this.handleErrors();
+        this.setState({ postingRatesError: undefined });
         if (!!this.state.errors.amount || !!this.state.errors.bankId || !!this.state.errors.cardCategoryId) {
             return;
         }
@@ -64,17 +72,16 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
             bank: this.props.banks.filter(_ => _.referenceId == this.state.bankId)[0],
             cardCategory: this.props.cardCategories.filter(_ => _.referenceId == this.state.cardCategoryId)[0]
         };
-        console.log(rate);
         this.props.actions.addRate(rate);
     }
     handleOnChange = (e: any) => {
+        this.setState({ postingRatesError: undefined });
         let errors = this.state.errors;
         errors[e.target.name] = '';
         this.setState({
             [e.target.name]: e.target.value,
             errors
         });
-        this.handleOnActionLabelChange();
     }
     handleFocus = (e: any) => {
         e.target.select();
@@ -83,14 +90,9 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
         this.props.actions.deleteRate(data);
     }
     handleOnClickSaveRates = () => {
-        this.props.actions.postRatesStart(this.props.agentId, this.props.rates);
-    }
-    handleOnActionLabelChange = () => {
-        let existing = this.props.rates.some(_ => {
-            return _.bankId === parseInt(this.state.bankId.toString()) && _.cardCategoryId === parseInt(this.state.cardCategoryId.toString());
+        this.props.actions.postRatesStart(this.props.agentId, this.props.rates, null, (e) => {
+            this.setState({ postingRatesError: e });
         });
-        let actionLabel = existing ? "Update" : "Add"
-        this.setState({ actionLabel });
     }
     componentDidMount() {
         this.props.actions.selectAgentStart(this.props.selectedAgentId);
@@ -162,8 +164,16 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                             bsStyle="primary"
                                             onClick={this.handleOnClickAddRate}
                                             disabled={this.props.postingRates || this.props.loadingRates}>
-                                            {this.state.actionLabel}
+                                            <i className="fa fa-lg fa-save"></i>
                                         </Button>
+                                        <ModalConfirm
+                                            title="save rates"
+                                            showModal={this.state.showConfirmModal}
+                                            onConfirm={this.handleOnConfirm}
+                                            onToggleModal={this.handleOnToggleModal}>
+
+                                            Do you want to continue?
+                                        </ModalConfirm>
                                     </Col>
                                 </FormGroup>
                             </fieldset>
@@ -183,6 +193,13 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                         <Button bsStyle="success" onClick={this.handleOnClickSaveRates} disabled={this.props.postingRates || this.props.loadingRates}>
                             <ButtonLoadingText isLoading={this.props.postingRates || this.props.loadingRates} label="Save" />
                         </Button>
+                    </Col>
+                    <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                        {
+                            this.state.postingRatesError ?
+                                this.state.postingRatesError
+                                : null
+                        }
                     </Col>
                 </Row>
             </Grid>

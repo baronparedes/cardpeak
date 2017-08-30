@@ -108,8 +108,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                         onToggleModal={this.handleOnToggleModal}>
 
                         Do you want to continue?
-
-                                </ModalConfirm>
+                    </ModalConfirm>
                 </Col>
                 <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
                     {
