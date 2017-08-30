@@ -95,6 +95,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             <FormGroup>
                 <Col sm={12} className="text-right">
                     <Button
+                        type="button"
                         bsStyle="success"
                         onClick={this.handleOnToggleModal}
                         disabled={this.props.isSaving}>
@@ -123,7 +124,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
     render() {
         return(
             <div className="container-fluid">
-                <Form horizontal>
+                <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
                     <fieldset disabled={this.props.isSaving}>
                         <FormFieldInput
                             controlId="form-first-name"

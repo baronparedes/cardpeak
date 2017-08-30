@@ -79,6 +79,9 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
     handleOnDeleteRate = (data: CardPeak.Entities.Rate) => {
         this.props.actions.deleteRate(data);
     }
+    handleOnClickSaveRates = () => {
+        this.props.actions.postRatesStart(this.props.agentId, this.props.rates);
+    }
     componentDidMount() {
         this.props.actions.selectAgentStart(this.props.selectedAgentId);
     }
@@ -91,8 +94,8 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
         return (
             <Grid fluid>
                 <Row>
-                    <Col lg={4} md={4} sm={12} xs={12}>
-                        <Form horizontal>
+                    <Col lg={4} md={12} sm={12} xs={12}>
+                        <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
                             <fieldset disabled={this.props.postingRates}>
                                 <FormFieldDropdown
                                     controlId="form-bank"
@@ -145,6 +148,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                 <FormGroup>
                                     <Col sm={12} className="text-right">
                                         <Button
+                                            type="button"
                                             bsStyle="primary"
                                             onClick={this.handleOnClickAddRate}
                                             disabled={this.props.postingRates}>
@@ -155,11 +159,18 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                             </fieldset>
                         </Form>
                     </Col>
-                    <Col lg={8} md={8} sm={12} xs={12}>
+                    <Col lg={8} md={12} sm={12} xs={12}>
                         <RateList
                             agentId={this.props.agentId}
                             rates={this.props.rates}
                             onDeleteRate={this.handleOnDeleteRate} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="text-right container-fluid">
+                        <Button bsStyle="success" onClick={this.handleOnClickSaveRates} disabled={this.props.postingRates}>
+                            <ButtonLoadingText isLoading={this.props.postingRates} label="Save" />
+                        </Button>
                     </Col>
                 </Row>
             </Grid>

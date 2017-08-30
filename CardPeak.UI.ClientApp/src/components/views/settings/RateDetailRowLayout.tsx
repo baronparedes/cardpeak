@@ -14,6 +14,16 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
     handleOnClick = () => {
         this.props.onDeleteRate(this.props.rate);
     }
+    renderButton = () => {
+        if (this.props.rate.agentId === 0) {
+            return null;
+        }
+        return (
+            <Button onClick={this.handleOnClick} bsStyle="danger" bsSize="sm">
+                <i className="fa fa-lg fa-trash-o"></i>
+            </Button>
+        )
+    }
     render() {
         return (
             <Row className="agent-item">
@@ -28,10 +38,7 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
                 </Col>
                 <Col md={1} lg={1} sm={1} xs={1}>
                     {
-                        this.props.isHeader ? "" :
-                            <Button onClick={this.handleOnClick} bsStyle="danger" bsSize="sm">
-                                <i className="fa fa-lg fa-trash-o"></i>
-                            </Button>
+                        this.props.isHeader ? "" : this.renderButton()
                     }
                 </Col>
             </Row>

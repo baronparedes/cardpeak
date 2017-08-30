@@ -101,7 +101,7 @@ class DebitCreditTransactionForm extends React.Component<
         let buttonClass = (isDebit) ? "danger" : "success";
         return (
             <div className="container-fluid">
-                <Form horizontal>
+                <Form horizontal onSubmit={(e) => { e.preventDefault() }}>
                     <fieldset disabled={this.props.postingTransaction}>
                         <FormFieldInput
                             controlId="form-amount"
@@ -125,6 +125,7 @@ class DebitCreditTransactionForm extends React.Component<
                         <FormGroup>
                             <Col sm={12} className="text-right">
                                 <Button
+                                    type="button"
                                     bsStyle={buttonClass}
                                     onClick={this.handleOnToggleModal}
                                     disabled={this.props.postingTransaction}>

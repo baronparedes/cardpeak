@@ -1,4 +1,5 @@
-﻿using CardPeak.Service;
+﻿using CardPeak.Domain;
+using CardPeak.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,13 @@ namespace CardPeak.WebAPI.Controllers
             }
 
             return this.Ok(result);
+        }
+
+        [HttpPost]
+        [Route("rates/{id}")]
+        public IHttpActionResult SaveRates(int id, Settings settings)
+        {
+            return this.Ok(settings.Rates);
         }
     }
 }

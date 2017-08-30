@@ -15,7 +15,7 @@ export function postRates(agentId: number,
     errorCallback: (message: string) => void) {
 
     axios.post(API.POST_RATES(agentId), {
-            ...rates
+            rates
         })
         .then((r) => {
             successCallback(r.data as CardPeak.Entities.Rate[]);
