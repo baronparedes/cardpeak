@@ -24,19 +24,35 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
     constructor(props: CardPeak.Models.SettingsModel & ReferencesContainerProps & ReferencesContainerDispatchProps) {
         super(props);
     }
+    handleOnSaveBank = (data: CardPeak.Entities.Reference) => {
+        console.log('save bank');
+    }
+    handleOnSaveCardCategory = (data: CardPeak.Entities.Reference) => {
+        console.log('save card category');
+    }
+    componenDidMount() {
+        this.props.actions.loadReferencesStart();
+    }
     render() {
         return (
             <div>
-                <h2>References</h2>
                 <Grid fluid>
                     <Row>
                         <Col lg={6} md={6} sm={12} xs={12}>
                             <h4>Banks</h4>
-                            <ReferenceList />
+                            <ReferenceList
+                                onSaveReference={this.handleOnSaveBank}
+                                references={this.props.banks}
+                                referenceTypeId={this.props.bankReferenceTypeId}
+                                isLoading={this.props.loadingBanks} />
                         </Col>
                         <Col lg={6} md={6} sm={12} xs={12}>
                             <h4>Categories</h4>
-                            <ReferenceList />
+                            <ReferenceList
+                                onSaveReference={this.handleOnSaveCardCategory}
+                                references={this.props.cardCategories}
+                                referenceTypeId={this.props.cardCategoryReferenceTypeId}
+                                isLoading={this.props.loadingCardCategories} />
                         </Col>
                     </Row>
                 </Grid>

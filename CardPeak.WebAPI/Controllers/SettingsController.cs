@@ -20,10 +20,23 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("")]
+        public IHttpActionResult GetAllSettings()
+        {
+            var result = this.SettingsService.GetSettings();
+            if (result == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(result);
+        }
+
+        [HttpGet]
         [Route("rates/{id}")]
         public IHttpActionResult GetRates(int id)
         {
-            var result = this.SettingsService.GetSettings(id);
+            var result = this.SettingsService.GetRates(id);
             if (result == null)
             {
                 return this.NotFound();

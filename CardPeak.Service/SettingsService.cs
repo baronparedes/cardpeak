@@ -23,13 +23,24 @@ namespace CardPeak.Service
             this.RateRepository = new RateRepository(context);
         }
 
-        public Settings GetSettings(int agentId = 0)
+        public Settings GetRates(int agentId = 0)
         {
             return new Settings
             {
                 Rates = this.RateRepository.GetRates(agentId),
                 Banks = this.ReferenceRepository.GetBanks(),
                 CardCategories = this.ReferenceRepository.GetCardCategories()
+            };
+        }
+
+        public Settings GetSettings()
+        {
+            return new Settings
+            {
+                Banks = this.ReferenceRepository.GetBanks(),
+                CardCategories = this.ReferenceRepository.GetCardCategories(),
+                BankReferenceTypeId = (int)CardPeak.Domain.Enums.ReferenceTypeEnum.Bank,
+                CardCategoryReferenceTypeId = (int)CardPeak.Domain.Enums.ReferenceTypeEnum.CardCategory
             };
         }
 

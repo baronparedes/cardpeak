@@ -9,7 +9,8 @@ namespace CardPeak.Service.Interfaces
 {
     public interface ISettingsService : IUnitOfWork
     {
-        Settings GetSettings(int agentId);
+        Settings GetSettings();
+        Settings GetRates(int agentId);
         IEnumerable<Rate> SaveRates(int agentId, Settings settings);
     }
 }

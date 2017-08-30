@@ -82,5 +82,7 @@
         public banks: CardPeak.Entities.Reference[];
         public cardCategories: CardPeak.Entities.Reference[];
         public rates: CardPeak.Entities.Rate[];
+        public bankReferenceTypeId: number;
+        public cardCategoryReferenceTypeId: number;
     }
 }

@@ -11,5 +11,7 @@ namespace CardPeak.Domain
         public IEnumerable<Reference> Banks { get; set; }
         public IEnumerable<Reference> CardCategories { get; set; }
         public IEnumerable<Rate> Rates { get; set; }
+        public int BankReferenceTypeId { get; set; }
+        public int CardCategoryReferenceTypeId { get; set; }
     }
 }
