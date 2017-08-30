@@ -30,7 +30,7 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
     handleOnSaveCardCategory = (data: CardPeak.Entities.Reference) => {
         console.log('save card category');
     }
-    componenDidMount() {
+    componentDidMount() {
         this.props.actions.loadReferencesStart();
     }
     render() {

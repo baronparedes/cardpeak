@@ -80,7 +80,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                 <NavDropdown
                     title={<NavLinkText text="Settings" fa="fa-cog" />}
                     id="settings-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/settings" text="References" fa="fa-file-code-o" />
+                    <MenuItemLinkContainer exact to="/settings/references" text="References" fa="fa-file-code-o" />
                     <MenuItemLinkContainer exact to="/settings/rates" text="Default Rates" fa="fa-sliders" />
                 </NavDropdown>
             </LinkContainer>

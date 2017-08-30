@@ -19,17 +19,11 @@ namespace CardPeak.WebAPI.Controllers
             this.SettingsService = new SettingsService(new Repository.EF.CardPeakDbContext());
         }
 
-        [HttpGet]
-        [Route("")]
-        public IHttpActionResult GetAllSettings()
+        [Route("references")]
+        public Settings GetAllAgents()
         {
             var result = this.SettingsService.GetSettings();
-            if (result == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.Ok(result);
+            return result;
         }
 
         [HttpGet]

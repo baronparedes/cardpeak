@@ -1,7 +1,7 @@
 ﻿import axios from 'axios'
 
 const API = {
-    LOAD_REFERENCES: "/settings"
+    LOAD_REFERENCES: "/settings/references"
 }
 
 export function getReferences(successCallback: (data: CardPeak.Entities.Settings) => void,
