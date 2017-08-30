@@ -52,37 +52,7 @@ export default handleActions<CardPeak.Models.RatesModel, any>({
         return {
             ...state,
             ...payload,
-            loadingRates: undefined,
-            rates: [
-                {
-                    agentId: 0,
-                    bankId: 90,
-                    cardCategoryId: 90,
-                    amount: 500,
-                    bank: {
-                        referenceId: 90,
-                        description: "BPI"
-                    },
-                    cardCategory: {
-                        referenceId: 90,
-                        description: "GOLD"
-                    }
-                },
-                {
-                    agentId: 0,
-                    bankId: 90,
-                    cardCategoryId: 99,
-                    amount: 500,
-                    bank: {
-                        referenceId: 90,
-                        description: "BPI"
-                    },
-                    cardCategory: {
-                        referenceId: 99,
-                        description: "CLASSIC"
-                    }
-                }
-            ]
+            loadingRates: undefined
         }
     },
     [SETTING_ACTIONS.POST_RATES]: (state, action) => {
