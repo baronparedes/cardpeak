@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
+import { HighlightedSpan } from '../../layout'
 
 interface RateDetailRowLayoutProps {
     rate?: CardPeak.Entities.Rate,
@@ -34,7 +35,7 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
                     {this.props.isHeader ? "category" : this.props.rate.cardCategory.description}
                 </Col>
                 <Col md={3} lg={3} sm={3} xs={3}>
-                    {this.props.isHeader ? "amount" : <span className="currency">{this.props.rate.amount}</span>}
+                    {this.props.isHeader ? "amount" : <HighlightedSpan className="currency" value={this.props.rate.amount} />}
                 </Col>
                 <Col md={1} lg={1} sm={1} xs={1}>
                     {
