@@ -8,6 +8,37 @@ const initialState: CardPeak.Models.RatesModel = {
     cardCategories: []
 };
 
+function sortRates(rates: CardPeak.Entities.Rate[]) {
+    rates.sort((a, b) => {
+        return a.bank.description.localeCompare(b.bank.description) || a.cardCategory.description.localeCompare(b.cardCategory.description);
+    })
+}
+function removeRate(state: CardPeak.Models.RatesModel, payload: CardPeak.Entities.Rate) {
+    let rates: CardPeak.Entities.Rate[] = [];
+    state.rates.forEach(_ => {
+        if (_.bankId === payload.bankId) {
+            if (_.cardCategoryId === payload.cardCategoryId) {
+                return;
+            }
+        }
+        rates.push(_);
+    });
+    return rates;
+}
+
+function deleteRate(state: CardPeak.Models.RatesModel, payload: CardPeak.Entities.Rate) {
+    let rates = removeRate(state, payload);
+    sortRates(rates);
+    return rates;
+}
+
+function addRate(state: CardPeak.Models.RatesModel, payload: CardPeak.Entities.Rate) {
+    let rates = removeRate(state, payload);
+    rates.push(payload);
+    sortRates(rates);
+    return rates;
+}
+
 export default handleActions<CardPeak.Models.RatesModel, any>({
     [SETTING_ACTIONS.SELECT_AGENT_RATE]: (state, action) => {
         return {
@@ -22,6 +53,36 @@ export default handleActions<CardPeak.Models.RatesModel, any>({
             ...state,
             ...payload,
             loadingRates: undefined,
+            rates: [
+                {
+                    agentId: 0,
+                    bankId: 90,
+                    cardCategoryId: 90,
+                    amount: 500,
+                    bank: {
+                        referenceId: 90,
+                        description: "BPI"
+                    },
+                    cardCategory: {
+                        referenceId: 90,
+                        description: "GOLD"
+                    }
+                },
+                {
+                    agentId: 0,
+                    bankId: 90,
+                    cardCategoryId: 99,
+                    amount: 500,
+                    bank: {
+                        referenceId: 90,
+                        description: "BPI"
+                    },
+                    cardCategory: {
+                        referenceId: 99,
+                        description: "CLASSIC"
+                    }
+                }
+            ]
         }
     },
     [SETTING_ACTIONS.POST_RATES]: (state, action) => {
@@ -44,17 +105,8 @@ export default handleActions<CardPeak.Models.RatesModel, any>({
         }
     },
     [SETTING_ACTIONS.DELETE_RATE]: (state, action) => {
-        let payload = action.payload as CardPeak.Entities.Rate
-        let rates = state.rates.slice();
-        rates= state.rates.filter((rate) => {
-            let result = rate.bankId != payload.bankId &&
-                rate.cardCategoryId != payload.cardCategoryId &&
-                rate.agentId != payload.agentId;
-
-            console.log(rate);
-
-            return result;
-        });
+        let payload = action.payload as CardPeak.Entities.Rate;
+        let rates = deleteRate(state, payload);
         return {
             ...state,
             rates
@@ -62,17 +114,7 @@ export default handleActions<CardPeak.Models.RatesModel, any>({
     },
     [SETTING_ACTIONS.ADD_RATE]: (state, action) => {
         let payload = action.payload as CardPeak.Entities.Rate
-        let rates = state.rates.slice();
-        rates = state.rates.filter((rate) => {
-            let result = rate.bankId != payload.bankId &&
-                rate.cardCategoryId != payload.cardCategoryId &&
-                rate.agentId != payload.agentId;
-
-            console.log(rate);
-
-            return result;
-        });
-        rates.push(payload);
+        let rates = addRate(state, payload);
         return {
             ...state,
             rates

@@ -12,6 +12,7 @@ interface RateListProps {
 }
 
 const RateListItems = (props: RateListProps) => {
+    let key: number = 0;
     return (
         <GridList header={<RateDetailRowLayout isHeader={true} />}>
             {
@@ -19,8 +20,9 @@ const RateListItems = (props: RateListProps) => {
                     <SpinnerRow /> :
                     props.rates && props.rates.length > 0 ?
                         props.rates.map((rate) => {
+                            key++;
                             return (
-                                <RateDetail rate={rate} key={rate.rateId} onDeleteRate={props.onDeleteRate} />
+                                <RateDetail rate={rate} key={key} onDeleteRate={props.onDeleteRate} />
                             )
                         }) : <ListNoRecordsRow />
             }

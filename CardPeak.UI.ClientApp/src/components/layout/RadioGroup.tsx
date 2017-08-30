@@ -10,7 +10,7 @@ interface RadioGroupProps {
 
 export const RadioGroup: React.StatelessComponent<RadioGroupProps> = (props) => {
     return (
-        <ButtonGroup {...props}>
+        <ButtonGroup>
             {props.options.map(option =>
                 <Button
                     key={option[0]}

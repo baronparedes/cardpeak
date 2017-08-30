@@ -56,12 +56,13 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
         let rate = {
             rateId: 0,
             agentId: this.props.selectedAgentId,
-            bankId: this.state.bankId,
-            cardCategoryId: this.state.cardCategoryId,
+            bankId: parseInt(this.state.bankId.toString()),
+            cardCategoryId: parseInt(this.state.cardCategoryId.toString()),
             amount: this.state.amount,
             bank: this.props.banks.filter(_ => _.referenceId == this.state.bankId)[0],
             cardCategory: this.props.cardCategories.filter(_ => _.referenceId == this.state.cardCategoryId)[0]
         };
+        console.log(rate);
         this.props.actions.addRate(rate);
     }
     handleOnChange = (e: any) => {
@@ -147,7 +148,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                             bsStyle="primary"
                                             onClick={this.handleOnClickAddRate}
                                             disabled={this.props.postingRates}>
-                                            <i className="fa fa-2x fa-plus"></i>
+                                            Add
                                         </Button>
                                     </Col>
                                 </FormGroup>
@@ -155,7 +156,10 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                         </Form>
                     </Col>
                     <Col lg={8} md={8} sm={12} xs={12}>
-                        <RateList agentId={this.props.agentId} rates={this.props.rates} onDeleteRate={this.handleOnDeleteRate} />
+                        <RateList
+                            agentId={this.props.agentId}
+                            rates={this.props.rates}
+                            onDeleteRate={this.handleOnDeleteRate} />
                     </Col>
                 </Row>
             </Grid>
