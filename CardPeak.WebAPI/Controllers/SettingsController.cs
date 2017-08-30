@@ -38,8 +38,8 @@ namespace CardPeak.WebAPI.Controllers
         {
             try
             {
-                this.SettingsService.SaveRates(id, settings);
-                return this.Ok(settings.Rates);
+                var result = this.SettingsService.SaveRates(id, settings);
+                return this.Ok(result);
             }
             catch (Exception e)
             {

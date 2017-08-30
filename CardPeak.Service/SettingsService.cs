@@ -33,7 +33,7 @@ namespace CardPeak.Service
             };
         }
 
-        public void SaveRates(int agentId, Settings settings)
+        public IEnumerable<Rate> SaveRates(int agentId, Settings settings)
         {
             var rates = this.DomainContext.Rates.Where(_ => _.AgentId == agentId).ToList();
             rates.ForEach(_ => {
@@ -54,12 +54,15 @@ namespace CardPeak.Service
                 var item = rates.FirstOrDefault(rate => rate.BankId == _.BankId && rate.CardCategoryId == _.CardCategoryId);
                 if (item == null)
                 {
+                    _.Bank = null;
+                    _.CardCategory = null;
                     this.DomainContext.Entry(_).State = EntityState.Added;
-                    this.DomainContext.Rates.Attach(_);
+                    this.DomainContext.Rates.Add(_);
                 }
             });
 
             this.DomainContext.SaveChanges();
+            return this.RateRepository.GetRates(agentId);
         }
 
     }
