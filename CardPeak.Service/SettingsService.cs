@@ -31,5 +31,13 @@ namespace CardPeak.Service
                 CardCategories = this.ReferenceRepository.GetCardCategories()
             };
         }
+
+        public void SaveRates(int agentId, Settings settings)
+        {
+            this.DomainContext.Rates.RemoveRange(this.DomainContext.Rates.Where(_ => _.AgentId == agentId));
+            this.DomainContext.Rates.AddRange(settings.Rates);
+            this.DomainContext.SaveChanges();
+        }
+
     }
 }

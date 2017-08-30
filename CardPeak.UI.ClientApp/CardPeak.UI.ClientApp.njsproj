@@ -34,6 +34,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="server.js" />
+    <Compile Include="src\components\views\settings\SettingsView.tsx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="webpack.config.js">
       <SubType>Code</SubType>
     </Compile>
@@ -113,7 +116,7 @@
     <Content Include="src\components\views\agents\AgentDetailRowLayout.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\AgentView.tsx">
+    <Content Include="src\components\views\agents\AgentsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentContainer.tsx">
@@ -123,6 +126,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\UpdateAgentView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\settings\DefaultRatesView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\settings\RateDetailRowLayout.tsx">

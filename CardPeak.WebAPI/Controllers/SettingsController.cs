@@ -36,7 +36,15 @@ namespace CardPeak.WebAPI.Controllers
         [Route("rates/{id}")]
         public IHttpActionResult SaveRates(int id, Settings settings)
         {
-            return this.Ok(settings.Rates);
+            try
+            {
+                this.SettingsService.SaveRates(id, settings);
+                return this.Ok(settings.Rates);
+            }
+            catch (Exception e)
+            {
+                return this.InternalServerError(e);
+            }
         }
     }
 }

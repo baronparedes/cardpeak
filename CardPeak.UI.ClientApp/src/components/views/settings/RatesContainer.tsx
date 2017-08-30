@@ -168,6 +168,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                 </Row>
                 <Row>
                     <Col className="text-right container-fluid">
+                        <br/>
                         <Button bsStyle="success" onClick={this.handleOnClickSaveRates} disabled={this.props.postingRates}>
                             <ButtonLoadingText isLoading={this.props.postingRates} label="Save" />
                         </Button>
