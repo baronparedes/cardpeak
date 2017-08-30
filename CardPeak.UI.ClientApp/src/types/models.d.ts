@@ -19,4 +19,15 @@
         banks?: CardPeak.Entities.Reference[],
         cardCategories?: CardPeak.Entities.Reference[]
     }
+
+    export interface SettingsModel {
+        banks?: CardPeak.Entities.Reference[],
+        cardCategories?: CardPeak.Entities.Reference[],
+        postingBank?: boolean;
+        postingCardCategory?: boolean;
+        loadingBanks?: boolean,
+        loadingCardCategories?: boolean;
+        cardCategoryReferenceTypeId?: number,
+        bankReferenceTypeId?: number
+    }
 }

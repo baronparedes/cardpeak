@@ -55,8 +55,21 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     id="agents-nav-dropdown">
                     <MenuItemLinkContainer exact to="/agents" text="Agent Dashboard" fa="fa-user-circle" />
                     <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/agents/create" text="Create" fa="fa-file-o" />
+                    <MenuItemLinkContainer exact to="/agents/create" text="Create" fa="fa-user-plus" />
                     <MenuItemLinkContainer exact to="/agents/update" text="Update" fa="fa-pencil" />
+                </NavDropdown>
+            </LinkContainer>
+        )
+    }
+    renderUploads() {
+        return (
+            <LinkContainer to="/uploads" onClick={(e) => e.preventDefault()}>
+                <NavDropdown
+                    title={<NavLinkText text="Uploads" fa="fa-upload" />}
+                    id="settings-nav-dropdown">
+                    <MenuItemLinkContainer exact to="/uploads/batch" text="New Batch" fa="fa-table" />
+                    <MenuItem divider />
+                    <MenuItemLinkContainer exact to="/uploads/config" text="Configure Uploads" fa="fa-wrench" />
                 </NavDropdown>
             </LinkContainer>
         )
@@ -67,10 +80,8 @@ export class NavigationBar extends React.Component<{}, undefined> {
                 <NavDropdown
                     title={<NavLinkText text="Settings" fa="fa-cog" />}
                     id="settings-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/settings" text="Banks" fa="fa-credit-card" />
+                    <MenuItemLinkContainer exact to="/settings" text="References" fa="fa-file-code-o" />
                     <MenuItemLinkContainer exact to="/settings/rates" text="Default Rates" fa="fa-sliders" />
-                    <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/settings/config" text="Configure Uploads" fa="fa-wrench" />
                 </NavDropdown>
             </LinkContainer>
         )
@@ -83,6 +94,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     <Nav pullRight>
                         {this.renderDashboard()}
                         {this.renderAgents()}
+                        {this.renderUploads()}
                         {this.renderSettings()}
                     </Nav>
                 </Navbar.Collapse>

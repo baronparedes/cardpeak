@@ -146,6 +146,18 @@
     <Content Include="src\components\views\settings\RatesContainer.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\settings\ReferenceDetail.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\settings\ReferenceDetailRowLayout.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\settings\ReferenceList.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\settings\ReferencesContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\transactions\ApprovalTransactionDetail.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -234,19 +246,25 @@
     <TypeScriptCompile Include="src\services\actions\agentActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\services\actions\settingActions.ts">
+    <TypeScriptCompile Include="src\services\actions\rateActions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\actions\settingsAction.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\api\agentsController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\services\api\settingsController.ts">
+    <TypeScriptCompile Include="src\services\api\ratesController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\agentReducer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\reducers\ratesReducer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\settingsReducer.ts">

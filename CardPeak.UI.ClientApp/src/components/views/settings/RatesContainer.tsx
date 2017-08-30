@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import * as SettingActions from '../../../services/actions/settingActions'
+import * as RateActions from '../../../services/actions/rateActions'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -14,7 +14,7 @@ interface RatesContainerProps {
 }
 
 interface RatesContainerDispatchProps {
-    actions?: typeof SettingActions;
+    actions?: typeof RateActions;
 }
 
 interface RatesContainerState {
@@ -218,7 +218,7 @@ const mapStateToProps = (state: RootState): CardPeak.Models.RatesModel => ({
 
 const mapDispatchToProps = (dispatch: any): RatesContainerDispatchProps => {
     return {
-        actions: bindActionCreators(SettingActions as any, dispatch)
+        actions: bindActionCreators(RateActions as any, dispatch)
     }
 };
 
