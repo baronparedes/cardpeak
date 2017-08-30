@@ -165,15 +165,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                             onClick={this.handleOnClickAddRate}
                                             disabled={this.props.postingRates || this.props.loadingRates}>
                                             <i className="fa fa-lg fa-save"></i>
-                                        </Button>
-                                        <ModalConfirm
-                                            title="save rates"
-                                            showModal={this.state.showConfirmModal}
-                                            onConfirm={this.handleOnConfirm}
-                                            onToggleModal={this.handleOnToggleModal}>
-
-                                            Do you want to continue?
-                                        </ModalConfirm>
+                                        </Button> 
                                     </Col>
                                 </FormGroup>
                             </fieldset>
@@ -190,9 +182,17 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                 <Row>
                     <Col className="text-right container-fluid">
                         <br/>
-                        <Button bsStyle="success" onClick={this.handleOnClickSaveRates} disabled={this.props.postingRates || this.props.loadingRates}>
+                        <Button bsStyle="success" onClick={this.handleOnToggleModal} disabled={this.props.postingRates || this.props.loadingRates}>
                             <ButtonLoadingText isLoading={this.props.postingRates || this.props.loadingRates} label="Save" />
                         </Button>
+                        <ModalConfirm
+                            title="save rates"
+                            showModal={this.state.showConfirmModal}
+                            onConfirm={this.handleOnConfirm}
+                            onToggleModal={this.handleOnToggleModal}>
+
+                            Do you want to continue?
+                        </ModalConfirm>
                     </Col>
                     <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
                         {
