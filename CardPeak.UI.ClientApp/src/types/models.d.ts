@@ -30,4 +30,10 @@
         cardCategoryReferenceTypeId?: number,
         bankReferenceTypeId?: number
     }
+
+    export interface BatchUploadModel {
+        selectedBatchUpload?: CardPeak.Entities.BatchUpload;
+        uploadingFile?: boolean;
+        processing?: boolean;
+    }
 }
