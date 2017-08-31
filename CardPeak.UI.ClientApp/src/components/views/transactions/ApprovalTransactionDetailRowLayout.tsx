@@ -1,10 +1,12 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 import { dateFormat } from '../../../helpers/dateHelpers'
+import * as concat from 'classnames'
 
 interface ApprovalTransactionDetailRowLayoutProps {
     transaction?: CardPeak.Entities.ApprovalTransaction,
-    isHeader: boolean
+    isHeader: boolean,
+    showAgent?: boolean
 }
 
 const ApprovalTransactionDetailRowLayout = (props: ApprovalTransactionDetailRowLayoutProps) => {
@@ -34,6 +36,13 @@ const ApprovalTransactionDetailRowLayout = (props: ApprovalTransactionDetailRowL
             <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "amount" : <span className="row-amount currency text-highlight">{props.transaction.amount}</span>}
             </Col>
+            {
+                !props.showAgent || props.isHeader ? null :
+                    <Col md={12} lg={12} sm={12} xs={12}>
+                        <label className="text-muted text-small spacer-right">credited to</label>
+                        <span className="text-highlight text-small">{concat(props.transaction.agent.lastName, ", ", props.transaction.agent.firstName)}</span>
+                    </Col>
+            }
         </Row>
     )
 }

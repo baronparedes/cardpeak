@@ -56,6 +56,7 @@ namespace CardPeak.Repository.EF
         {
             var result = this.Context
                 .ApprovalTransactions
+                .Include(_ => _.Agent)
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
@@ -77,8 +78,11 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalTransaction> FindByClient(string client)
         {
-            var result = this
-                .Find(_ => _.Client.ToLower().Contains(client.ToLower()))
+            var result = this.Context.ApprovalTransactions
+                .Include(_ => _.Agent)
+                .Include(_ => _.Bank)
+                .Include(_ => _.CardCategory)
+                .Where(_ => _.Client.ToLower().Contains(client.ToLower()))
                 .OrderBy(_ => _.Client);
             return result.ToList();
         }

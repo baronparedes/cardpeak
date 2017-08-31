@@ -6,7 +6,8 @@ import ApprovalTransactionDetail from './ApprovalTransactionDetail'
 import ApprovalTransactionDetailRowLayout from './ApprovalTransactionDetailRowLayout'
 
 interface ApprovalTransactionListProps {
-    transactions?: CardPeak.Entities.ApprovalTransaction[]
+    transactions?: CardPeak.Entities.ApprovalTransaction[],
+    showAgent?: boolean
 }
 
 export default class ApprovalTransactionList extends React.Component<ApprovalTransactionListProps, undefined> {
@@ -21,7 +22,7 @@ export default class ApprovalTransactionList extends React.Component<ApprovalTra
                         this.props.transactions && this.props.transactions.length > 0 ?
                             this.props.transactions.map((transaction) => {
                                 return (
-                                    <ApprovalTransactionDetail transaction={transaction} key={transaction.id} />
+                                    <ApprovalTransactionDetail transaction={transaction} key={transaction.id} showAgent={this.props.showAgent} />
                                 )
                             }) : <ListNoRecordsRow />
                     }

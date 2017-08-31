@@ -31,6 +31,7 @@
         public isDeleted: boolean;
         public bank?: Reference;
         public cardCategory?: Reference;
+        public agent?: Agent;
     }
 
     export class DebitCreditTransaction {

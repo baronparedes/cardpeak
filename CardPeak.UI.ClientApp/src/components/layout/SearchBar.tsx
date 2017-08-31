@@ -8,13 +8,11 @@ interface SearchBarProps {
     showButton?: boolean;
     onSearchBarClick?: () => void
     onSearchBarKeyPress?: (e: any) => void
-    placeholder?: string
+    placeholder?: string,
+    name?: string
 }
 
 export class SearchBar extends React.Component<SearchBarProps, undefined> {
-    controls: {
-        searchInput?: HTMLInputElement;
-    } = {};
     constructor(props: SearchBarProps) {
         super(props);
     }
@@ -35,13 +33,13 @@ export class SearchBar extends React.Component<SearchBarProps, undefined> {
                             }
                             <input
                                 type="text"
+                                name={this.props.name}
                                 placeholder={this.props.placeholder ? this.props.placeholder : "search"}
                                 className="form-control"
                                 onFocus={this.handleOnFocusSearch}
                                 onChange={this.props.onSearchBarChange}
                                 onKeyPress={this.props.onSearchBarKeyPress}
-                                disabled={this.props.disabled}
-                                ref={(input) => this.controls.searchInput = input} />
+                                disabled={this.props.disabled} />
                             {
                                 !this.props.showButton ? null :
                                     <InputGroup.Button>
