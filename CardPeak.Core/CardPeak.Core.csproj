@@ -53,7 +53,6 @@
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Service\IAgentService.cs" />
     <Compile Include="Service\IBatchService.cs" />
-    <Compile Include="Service\IProcessor.cs" />
     <Compile Include="Service\ISettingsService.cs" />
     <Compile Include="Service\ITransactionService.cs" />
     <Compile Include="Service\IUnitOfWork.cs" />

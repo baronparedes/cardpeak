@@ -1,4 +1,5 @@
-﻿using CardPeak.Core.Repository;
+﻿using CardPeak.Core.Processor;
+using CardPeak.Core.Repository;
 using CardPeak.Core.Service;
 using CardPeak.Domain;
 using CardPeak.Repository.EF;
@@ -6,16 +7,19 @@ using System;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CardPeak.Service
 {
     public sealed class BatchService : UnitOfWork, IBatchService
     {
+        private IProcessor Processor;
         private IReferenceRepository ReferenceRepository;
         private IBatchUploadRepository BatchUploadRepository;
 
         public BatchService(CardPeakDbContext context) : base(context)
         {
+            this.Processor = new CardPeak.Processor.Excel.Processor();
             this.ReferenceRepository = new ReferenceRepository(context);
             this.BatchUploadRepository = new BatchUploadRepository(context);
         }
@@ -50,7 +54,7 @@ namespace CardPeak.Service
             return batch;
         }
 
-        public BatchUpload Process(int id)
+        public async Task<BatchUpload> ProcessAsync(int id)
         {
             var batch = this.BatchUploadRepository.Get(id);
             batch.ProcessStartDateTime = DateTime.Now;
@@ -60,7 +64,9 @@ namespace CardPeak.Service
 
             try
             {
-                this.Process(batch);
+                await Task.Run(() => {
+                    this.Processor.Process(new FileInfo(batch.FileName));
+                });
                 batch.HasErrors = false;
             }
             catch(Exception)
@@ -77,11 +83,6 @@ namespace CardPeak.Service
             }
 
             return batch;
-        }
-
-        public void Process(BatchUpload batch)
-        {
-            System.Threading.Thread.Sleep(5000);
         }
     }
 }

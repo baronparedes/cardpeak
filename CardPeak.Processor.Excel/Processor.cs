@@ -8,7 +8,7 @@ namespace CardPeak.Processor.Excel
     {
         public void Process(FileInfo file)
         {
-            throw new NotImplementedException();
+            System.Threading.Thread.Sleep(5000);
         }
     }
 }

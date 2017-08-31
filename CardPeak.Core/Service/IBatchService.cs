@@ -11,6 +11,6 @@ namespace CardPeak.Core.Service
     public interface IBatchService : IUnitOfWork
     {
         BatchUpload CreateBatch(FileInfo file);
-        BatchUpload Process(int id);
+        Task<BatchUpload> ProcessAsync(int id);
     }
 }

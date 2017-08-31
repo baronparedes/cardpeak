@@ -34,11 +34,7 @@ namespace CardPeak.WebAPI.Controllers
             try
             {
                 BatchUpload result = null;
-                await Task.Run(() =>
-                {
-                    result = this.BatchService.Process(id);
-                });
-
+                result = await this.BatchService.ProcessAsync(id);
                 return this.Ok(result);
             }
             catch (Exception e)
