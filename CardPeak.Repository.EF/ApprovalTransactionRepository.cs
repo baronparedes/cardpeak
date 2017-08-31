@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace CardPeak.Repository.EF
 {
@@ -12,6 +13,14 @@ namespace CardPeak.Repository.EF
     {
         public ApprovalTransactionRepository(CardPeakDbContext context) : base(context)
         {
+        }
+
+        public override IEnumerable<ApprovalTransaction> Find(Expression<Func<ApprovalTransaction, bool>> predicate)
+        {
+            return this.Context.Set<ApprovalTransaction>()
+                .Include(_ => _.Bank)
+                .Include(_ => _.CardCategory)
+                .Where(predicate);
         }
 
         public decimal AccountBalanceByAgent(int id)
@@ -30,6 +39,17 @@ namespace CardPeak.Repository.EF
                 .Select(_ => _.Units)
                 .DefaultIfEmpty(0)
                 .Sum();
+        }
+
+        public IEnumerable<ApprovalPerformance> GetAgentPerformance(int id)
+        {
+            return this.Context.GetAgentPerformance(id)
+                .Select(_ => new ApprovalPerformance
+                {
+                    Month = _.MonthName,
+                    Units = _.Units.GetValueOrDefault()
+                })
+                .ToList();
         }
 
         public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
@@ -55,14 +75,12 @@ namespace CardPeak.Repository.EF
             return result.ToList();
         }
 
-        public IEnumerable<ApprovalPerformance> GetAgentPerformance(int id)
+        public IEnumerable<ApprovalTransaction> FindByClient(string client)
         {
-            return this.Context.GetAgentPerformance(id)
-                .Select(_ => new ApprovalPerformance {
-                    Month = _.MonthName,
-                    Units = _.Units.GetValueOrDefault()
-                })
-                .ToList();
+            var result = this
+                .Find(_ => _.Client.ToLower().Contains(client.ToLower()))
+                .OrderBy(_ => _.Client);
+            return result.ToList();
         }
     }
 }

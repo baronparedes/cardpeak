@@ -144,6 +144,12 @@
     <Content Include="src\components\views\agents\UpdateAgentView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\transactions\TransactionsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\transactions\TransactionsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\settings\DefaultRatesView.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -189,7 +195,7 @@
     <Content Include="src\components\views\transactions\DebitCreditTransactionDetailRowLayout.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\transactions\DebitCreditTransactionForm.tsx">
+    <Content Include="src\components\views\transactions\DebitCreditTransactionFormContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\DebitCreditTransactionFormModal.tsx">
@@ -285,6 +291,9 @@
     <TypeScriptCompile Include="src\services\actions\settingsAction.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\actions\transactionActions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\actions\uploadActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -295,6 +304,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\api\settingsController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\api\transactionsController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\api\uploadController.ts">

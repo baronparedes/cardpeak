@@ -29,7 +29,7 @@ namespace CardPeak.Repository.EF
             return this.Context.Set<TEntity>().ToList();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return this.Context.Set<TEntity>().Where(predicate);
         }

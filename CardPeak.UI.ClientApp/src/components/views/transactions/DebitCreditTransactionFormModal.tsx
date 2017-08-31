@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { ModalPanel } from '../../layout'
-import DebitCreditTransactionForm from './DebitCreditTransactionForm'
+import DebitCreditTransactionFormContainer from './DebitCreditTransactionFormContainer'
 
 interface DebitCreditTransactionFormModalProps {
     onToggleModal: () => void;
@@ -12,7 +12,7 @@ interface DebitCreditTransactionFormModalProps {
 const DebitCreditTransactionFormModal = (props: DebitCreditTransactionFormModalProps) => {
     return (
         <ModalPanel showModal={props.showModal} onToggleModal={props.onToggleModal} title={props.transaction + " transaction"}>
-            <DebitCreditTransactionForm
+            <DebitCreditTransactionFormContainer
                 agent={props.agent}
                 onTransactionSubmitted={props.onToggleModal}
                 transaction={props.transaction} />

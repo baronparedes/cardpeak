@@ -42,11 +42,6 @@ export class NavigationBar extends React.Component<{}, undefined> {
             </Navbar.Header>
         )
     }
-    renderDashboard() {
-        return (
-            <NavItemLinkContainer exact to="/" text="Dashboard" fa="fa-area-chart" />
-        )
-    }
     renderAgents() {
         return (
             <LinkContainer to="/agents" onClick={(e) => e.preventDefault()}>
@@ -92,7 +87,8 @@ export class NavigationBar extends React.Component<{}, undefined> {
                 {this.renderHeader()}
                 <Navbar.Collapse>
                     <Nav pullRight>
-                        {this.renderDashboard()}
+                        <NavItemLinkContainer exact to="/" text="Dashboard" fa="fa-area-chart" />
+                        <NavItemLinkContainer exact to="/transactions" text="Transactions" fa="fa-credit-card" />
                         {this.renderAgents()}
                         {this.renderUploads()}
                         {this.renderSettings()}

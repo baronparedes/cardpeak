@@ -32,7 +32,7 @@ interface DebitCreditTransactionFormDispatchProps {
     actions?: typeof AgentsActions
 }
 
-class DebitCreditTransactionForm extends React.Component<
+class DebitCreditTransactionFormContainer extends React.Component<
     DebitCreditTransactionFormProps & DebitCreditTransactionFormPropsConnect & DebitCreditTransactionFormDispatchProps,
     DebitCreditTransactionFormState> {
     constructor(props: DebitCreditTransactionFormProps & DebitCreditTransactionFormPropsConnect & DebitCreditTransactionFormDispatchProps) {
@@ -171,4 +171,4 @@ const mapDispatchToProps = (dispatch: any): DebitCreditTransactionFormDispatchPr
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DebitCreditTransactionForm);
+export default connect(mapStateToProps, mapDispatchToProps)(DebitCreditTransactionFormContainer);
