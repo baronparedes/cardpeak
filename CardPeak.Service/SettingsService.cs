@@ -72,7 +72,8 @@ namespace CardPeak.Service
                 }
             });
 
-            this.DomainContext.SaveChanges();
+            this.Complete();
+
             return this.RateRepository.GetRates(agentId);
         }
 

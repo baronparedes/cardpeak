@@ -43,6 +43,7 @@
     <Compile Include="IAccountRepository.cs" />
     <Compile Include="IAgentRepository.cs" />
     <Compile Include="IApprovalTransactionRepository.cs" />
+    <Compile Include="IBatchUploadRepository.cs" />
     <Compile Include="IDebitCreditTransactionRepository.cs" />
     <Compile Include="IRateRepository.cs" />
     <Compile Include="IReferenceRepository.cs" />

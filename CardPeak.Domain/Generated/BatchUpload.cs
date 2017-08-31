@@ -17,10 +17,10 @@ namespace CardPeak.Domain
         public int BatchId { get; set; }
         public string FileName { get; set; }
         public int BankId { get; set; }
-        public bool HasErrors { get; set; }
-        public Nullable<System.DateTime> UploadStartDateTime { get; set; }
-        public Nullable<System.DateTime> UploaedEndDateTime { get; set; }
+        public Nullable<bool> HasErrors { get; set; }
+        public Nullable<System.DateTime> ProcessStartDateTime { get; set; }
+        public Nullable<System.DateTime> ProcessEndDateTime { get; set; }
     
-        public virtual Reference Reference { get; set; }
+        public virtual Reference Bank { get; set; }
     }
 }

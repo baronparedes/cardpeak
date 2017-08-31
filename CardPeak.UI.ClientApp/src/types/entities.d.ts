@@ -90,9 +90,9 @@
         public batchId: number;
         public fileName: string;
         public bankId: number;
-        public hasErrors: boolean;
-        public uploadStartDateTime?: Date;
-        public uploaedEndDateTime?: Date;
+        public hasErrors?: boolean;
+        public processStartDateTime?: Date;
+        public processEndDateTime?: Date;
         public bank?: Reference;
     }
 }

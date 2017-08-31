@@ -49,11 +49,11 @@
             <PropertyRef Name="BatchId" />
           </Key>
           <Property Name="BatchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FileName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="FileName" Type="varchar(max)" Nullable="false" />
           <Property Name="BankId" Type="int" Nullable="false" />
-          <Property Name="HasErrors" Type="bit" Nullable="false" />
-          <Property Name="UploadStartDateTime" Type="datetime" />
-          <Property Name="UploaedEndDateTime" Type="datetime" />
+          <Property Name="HasErrors" Type="bit" />
+          <Property Name="ProcessStartDateTime" Type="datetime" />
+          <Property Name="ProcessEndDateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
           <Key>
@@ -414,12 +414,12 @@
             <PropertyRef Name="BatchId" />
           </Key>
           <Property Name="BatchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FileName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="BankId" Type="Int32" Nullable="false" />
-          <Property Name="HasErrors" Type="Boolean" Nullable="false" />
-          <Property Name="UploadStartDateTime" Type="DateTime" Precision="3" />
-          <Property Name="UploaedEndDateTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Reference" Relationship="CardPeakModel.FK_BatchUpload_Bank" FromRole="BatchUpload" ToRole="Reference" />
+          <Property Name="HasErrors" Type="Boolean" />
+          <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_BatchUpload_Bank" FromRole="BatchUpload" ToRole="Reference" />
+          <Property Name="ProcessStartDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ProcessEndDateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
           <Key>
@@ -669,8 +669,8 @@
           <EntitySetMapping Name="BatchUploads">
             <EntityTypeMapping TypeName="CardPeakModel.BatchUpload">
               <MappingFragment StoreEntitySet="BatchUpload">
-                <ScalarProperty Name="UploaedEndDateTime" ColumnName="UploaedEndDateTime" />
-                <ScalarProperty Name="UploadStartDateTime" ColumnName="UploadStartDateTime" />
+                <ScalarProperty Name="ProcessEndDateTime" ColumnName="ProcessEndDateTime" />
+                <ScalarProperty Name="ProcessStartDateTime" ColumnName="ProcessStartDateTime" />
                 <ScalarProperty Name="HasErrors" ColumnName="HasErrors" />
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />

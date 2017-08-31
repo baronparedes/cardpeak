@@ -1,4 +1,5 @@
-﻿using CardPeak.WebAPI.Core;
+﻿using CardPeak.Service;
+using CardPeak.WebAPI.Core;
 using System;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,17 @@ namespace CardPeak.WebAPI.Controllers
     [RoutePrefix("api/uploads")]
     public class BatchUploadController : ApiController
     {
+        private static readonly string Root = HttpContext.Current.Server.MapPath("~/App_Data/uploads");
+        private static readonly string Staging = HttpContext.Current.Server.MapPath("~/App_Data/staging");
+        private static readonly string Processed = HttpContext.Current.Server.MapPath("~/App_Data/Processed");
+
+        public BatchService BatchService { get; set; }
+
+        public BatchUploadController()
+        {
+            this.BatchService = new BatchService(new Repository.EF.CardPeakDbContext());
+        }
+
         [HttpPost]
         [Route("batchupload")]
         public async Task<IHttpActionResult> BatchUpload()
@@ -23,16 +35,19 @@ namespace CardPeak.WebAPI.Controllers
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            var root = HttpContext.Current.Server.MapPath("~/App_Data/uploads");
-            var provider = new BatchUploadMultipartFormDataStreamProvider(root);
-
             try
             {
+                var provider = new BatchUploadMultipartFormDataStreamProvider(BatchUploadController.Root);
                 await Request.Content.ReadAsMultipartAsync(provider);
-                var uploadedFile = provider.FileData.First();
-                Console.WriteLine(uploadedFile.LocalFileName);
+                var uploadedFile = new FileInfo(provider.FileData.First().LocalFileName);
+                var result = this.BatchService.CreateBatch(uploadedFile);
 
-                return this.Ok();
+                if (result == null)
+                {
+                    return this.NotFound();
+                }
+               
+                return this.Ok(result);
             }
             catch (System.Exception e)
             {

@@ -17,6 +17,6 @@ export function uploadFile(data: FormData,
             successCallback(r.data as CardPeak.Entities.BatchUpload);
         })
         .catch((reason) => {
-            errorCallback(reason.message);
+            errorCallback(reason.data.exceptionMessage);
         });
 }
