@@ -123,6 +123,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CardPeak.Core\CardPeak.Core.csproj">
+      <Project>{818666ad-4616-42a1-883c-14859ef8c677}</Project>
+      <Name>CardPeak.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CardPeak.Domain\CardPeak.Domain.csproj">
       <Project>{15b6b1b8-c0d9-4f0e-8f61-d4665e343664}</Project>
       <Name>CardPeak.Domain</Name>
@@ -130,10 +134,6 @@
     <ProjectReference Include="..\CardPeak.Repository.EF\CardPeak.Repository.EF.csproj">
       <Project>{24f032d8-2342-4d48-bc52-71f7e167016c}</Project>
       <Name>CardPeak.Repository.EF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CardPeak.Repository\CardPeak.Repository.csproj">
-      <Project>{0c152e52-413e-449e-9f51-b5fd65c03d99}</Project>
-      <Name>CardPeak.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\CardPeak.Service\CardPeak.Service.csproj">
       <Project>{dca5513f-0992-4300-bfed-93ee4a9787f5}</Project>

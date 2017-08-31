@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Core.Repository
 {
-    public interface IAccountRepository : IRepository<Account>
+    public interface IAgentRepository : IRepository<Agent>
     {
-        IEnumerable<Account> FindByAgent(int id);
+        IEnumerable<Agent> GetAllOrderedByName();
     }
 }

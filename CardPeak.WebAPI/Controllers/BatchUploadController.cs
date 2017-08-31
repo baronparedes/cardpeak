@@ -1,4 +1,5 @@
-﻿using CardPeak.Domain;
+﻿using CardPeak.Core.Service;
+using CardPeak.Domain;
 using CardPeak.Service;
 using CardPeak.WebAPI.Core;
 using System;
@@ -19,7 +20,7 @@ namespace CardPeak.WebAPI.Controllers
         private static readonly string Staging = HttpContext.Current.Server.MapPath("~/App_Data/staging");
         private static readonly string Processed = HttpContext.Current.Server.MapPath("~/App_Data/Processed");
 
-        public BatchService BatchService { get; set; }
+        public IBatchService BatchService { get; set; }
 
         public BatchUploadController()
         {

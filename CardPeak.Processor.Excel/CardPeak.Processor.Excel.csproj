@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DCA5513F-0992-4300-BFED-93EE4A9787F5}</ProjectGuid>
+    <ProjectGuid>{6B88189E-0CE5-4712-86E3-DBAB05F7267C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CardPeak.Service</RootNamespace>
-    <AssemblyName>CardPeak.Service</AssemblyName>
+    <RootNamespace>CardPeak.Processor.Excel</RootNamespace>
+    <AssemblyName>CardPeak.Processor.Excel</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,14 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,31 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgentService.cs" />
-    <Compile Include="BatchService.cs" />
-    <Compile Include="SettingsService.cs" />
-    <Compile Include="TransactionService.cs" />
-    <Compile Include="UnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CardPeak.Core\CardPeak.Core.csproj">
-      <Project>{818666ad-4616-42a1-883c-14859ef8c677}</Project>
-      <Name>CardPeak.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CardPeak.Domain\CardPeak.Domain.csproj">
-      <Project>{15b6b1b8-c0d9-4f0e-8f61-d4665e343664}</Project>
-      <Name>CardPeak.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CardPeak.Repository.EF\CardPeak.Repository.EF.csproj">
-      <Project>{24f032d8-2342-4d48-bc52-71f7e167016c}</Project>
-      <Name>CardPeak.Repository.EF</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

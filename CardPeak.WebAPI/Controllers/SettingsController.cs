@@ -1,4 +1,5 @@
-﻿using CardPeak.Domain;
+﻿using CardPeak.Core.Service;
+using CardPeak.Domain;
 using CardPeak.Service;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace CardPeak.WebAPI.Controllers
     [RoutePrefix("api/settings")]
     public sealed class SettingsController : ApiController
     {
-        public SettingsService SettingsService { get; set; }
+        public ISettingsService SettingsService { get; set; }
 
         public SettingsController()
         {

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CardPeak.Service.Interfaces
+namespace CardPeak.Service.Processor.ExcelProcessor
 {
-    public interface IUnitOfWork : IDisposable
+    class ExcelProcessor
     {
-        int Complete();
     }
 }

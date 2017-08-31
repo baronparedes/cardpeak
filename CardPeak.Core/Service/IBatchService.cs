@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CardPeak.Service.Interfaces
+namespace CardPeak.Core.Service
 {
     public interface IBatchService : IUnitOfWork
     {

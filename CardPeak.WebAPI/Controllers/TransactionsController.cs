@@ -1,4 +1,5 @@
-﻿using CardPeak.Service;
+﻿using CardPeak.Core.Service;
+using CardPeak.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace CardPeak.WebAPI.Controllers
     [RoutePrefix("api/transactions")]
     public sealed class TransactionsController : ApiController
     {
-        public TransactionService TransactionService { get; set; }
+        public ITransactionService TransactionService { get; set; }
 
         public TransactionsController()
         {

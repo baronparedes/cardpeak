@@ -1,4 +1,5 @@
-﻿using CardPeak.Domain;
+﻿using CardPeak.Core.Repository;
+using CardPeak.Domain;
 using System.Data.Entity;
 using System.Linq;
 

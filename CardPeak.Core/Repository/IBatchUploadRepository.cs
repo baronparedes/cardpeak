@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Core.Repository
 {
-    public interface IAccountRepository : IRepository<Account>
+    public interface IBatchUploadRepository : IRepository<BatchUpload>
     {
-        IEnumerable<Account> FindByAgent(int id);
     }
 }

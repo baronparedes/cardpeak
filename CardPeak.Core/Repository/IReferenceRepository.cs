@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Core.Repository
 {
-    public interface IAccountRepository : IRepository<Account>
+    public interface IReferenceRepository : IRepository<Reference>
     {
-        IEnumerable<Account> FindByAgent(int id);
+        IEnumerable<Reference> GetBanks();
+        IEnumerable<Reference> GetCardCategories();
     }
 }

@@ -1,10 +1,9 @@
-﻿using CardPeak.Domain;
+﻿using CardPeak.Core.Repository;
+using CardPeak.Domain;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Linq;
 
 namespace CardPeak.Repository.EF
 {

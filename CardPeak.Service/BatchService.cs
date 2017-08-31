@@ -1,14 +1,11 @@
-﻿using CardPeak.Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CardPeak.Core.Repository;
+using CardPeak.Core.Service;
 using CardPeak.Domain;
-using System.IO;
 using CardPeak.Repository.EF;
-using CardPeak.Repository;
+using System;
 using System.Data.Entity;
+using System.IO;
+using System.Linq;
 
 namespace CardPeak.Service
 {
