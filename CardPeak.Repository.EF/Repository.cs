@@ -19,7 +19,7 @@ namespace CardPeak.Repository.EF
             this.Context = context;
         }
 
-        public TEntity Get(int id)
+        public virtual TEntity Get(int id)
         {
             return this.Context.Set<TEntity>().Find(id);
         }

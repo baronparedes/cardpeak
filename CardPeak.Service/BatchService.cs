@@ -8,6 +8,7 @@ using CardPeak.Domain;
 using System.IO;
 using CardPeak.Repository.EF;
 using CardPeak.Repository;
+using System.Data.Entity;
 
 namespace CardPeak.Service
 {
@@ -52,9 +53,38 @@ namespace CardPeak.Service
             return batch;
         }
 
-        public BatchUpload Process(FileInfo file, string processedDirectory)
+        public BatchUpload Process(int id)
         {
-            throw new NotImplementedException();
+            var batch = this.BatchUploadRepository.Get(id);
+            batch.ProcessStartDateTime = DateTime.Now;
+            this.DomainContext.Entry(batch.Bank).State = EntityState.Unchanged;
+            this.DomainContext.Entry(batch).State = EntityState.Modified;
+            this.Complete();
+
+            try
+            {
+                this.Process(batch);
+                batch.HasErrors = false;
+            }
+            catch(Exception)
+            {
+                batch.HasErrors = true;
+                throw;
+            }
+            finally
+            {
+                batch.ProcessEndDateTime = DateTime.Now;
+                this.DomainContext.Entry(batch.Bank).State = EntityState.Unchanged;
+                this.DomainContext.Entry(batch).State = EntityState.Modified;
+                this.Complete();
+            }
+
+            return batch;
+        }
+
+        public void Process(BatchUpload batch)
+        {
+            System.Threading.Thread.Sleep(5000);
         }
     }
 }

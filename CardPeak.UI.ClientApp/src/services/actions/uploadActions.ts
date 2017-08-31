@@ -9,7 +9,7 @@ export const uploadFileComplete = createAction<CardPeak.Entities.BatchUpload>(UP
 export const uploadFileError = createAction(UPLOAD_ACTIONS.UPLOAD_FILE_ERROR);
 
 export const processBatch = createAction(UPLOAD_ACTIONS.PROCESS_BATCH);
-export const processBatchComplete = createAction(UPLOAD_ACTIONS.PROCESS_BATCH_COMPLETE);
+export const processBatchComplete = createAction<CardPeak.Entities.BatchUpload>(UPLOAD_ACTIONS.PROCESS_BATCH_COMPLETE);
 export const processBatchError = createAction(UPLOAD_ACTIONS.PROCESS_BATCH_ERROR);
 
 export function uploadFileStart(data: FormData, errorCallback?: (e: string) => void) {
@@ -29,12 +29,13 @@ export function uploadFileStart(data: FormData, errorCallback?: (e: string) => v
 export function processBatchStart(batchId: number, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(processBatch());
-        setTimeout(() => {
-            dispatch(processBatchComplete());
+        uploadController.processBatch(batchId, (data: CardPeak.Entities.BatchUpload) => {
+            dispatch(processBatchComplete(data));
+        }, (e: string) => {
             dispatch(processBatchError());
             if (errorCallback) {
-                errorCallback('');
+                errorCallback(e);
             }
-        }, 3000);
+        })
     }
 }

@@ -1,4 +1,5 @@
-﻿using CardPeak.Service;
+﻿using CardPeak.Domain;
+using CardPeak.Service;
 using CardPeak.WebAPI.Core;
 using System;
 using System.IO;
@@ -23,6 +24,26 @@ namespace CardPeak.WebAPI.Controllers
         public BatchUploadController()
         {
             this.BatchService = new BatchService(new Repository.EF.CardPeakDbContext());
+        }
+
+        [HttpPost]
+        [Route("batchupload/{id}")]
+        public async Task<IHttpActionResult> ProcessBatch(int id)
+        {
+            try
+            {
+                BatchUpload result = null;
+                await Task.Run(() =>
+                {
+                    result = this.BatchService.Process(id);
+                });
+
+                return this.Ok(result);
+            }
+            catch (Exception e)
+            {
+                return this.InternalServerError(e);
+            }
         }
 
         [HttpPost]

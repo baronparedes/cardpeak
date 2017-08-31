@@ -1,9 +1,6 @@
 ﻿using CardPeak.Domain;
-using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardPeak.Repository.EF
 {
@@ -11,6 +8,13 @@ namespace CardPeak.Repository.EF
     {
         public BatchUploadRepository(CardPeakDbContext context) : base(context)
         {
+        }
+
+        public override BatchUpload Get(int id)
+        {
+            return this.Context.BatchUploads
+                .Include(_ => _.Bank)
+                .Single(_ => _.BatchId == id);
         }
     }
 }

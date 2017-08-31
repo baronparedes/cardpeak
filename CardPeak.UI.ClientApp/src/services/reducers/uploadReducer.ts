@@ -38,12 +38,13 @@ export default handleActions<CardPeak.Models.BatchUploadModel, any>({
             processing: undefined,
             processingCompleted: undefined
         }
-    }
-    [UPLOAD_ACTIONS.PROCESS_BATCH_ERROR]: (state, action) => {
+    },
+    [UPLOAD_ACTIONS.PROCESS_BATCH_COMPLETE]: (state, action) => {
         return {
             ...state,
             processing: undefined,
-            processingCompleted: true
+            processingCompleted: true,
+            selectedBatchUpload: action.payload
         }
     }
 }, initialState);

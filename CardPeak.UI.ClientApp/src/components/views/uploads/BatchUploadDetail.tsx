@@ -1,6 +1,8 @@
 ﻿import * as React from 'react'
 import { Panel, Button } from 'react-bootstrap'
-import { SpinnerBlock, ButtonLoadingText, ModalConfirm } from '../../layout'
+import { SpinnerBlock, ButtonLoadingText, ModalConfirm, GridList } from '../../layout'
+
+import BatchUploadDetailRowLayout from './BatchUploadDetailRowLayout'
 
 interface BatchUploadDetailProps {
     uploadingFile: boolean,
@@ -46,25 +48,19 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
         }
         return (
             <Panel className="container-fluid">
-                <div>
-                    <label className="spacer-right">Batch Id</label>
-                    <span>{this.props.batchUpload.batchId}</span>
-                </div>
-                <div>
-                    <label className="spacer-right">filename</label>
-                    <span>{this.props.batchUpload.fileName.split('\\').pop().split('/').pop()}</span>
-                </div>
-                <div>
-                    <label className="spacer-right">Bank</label>
-                    <span className="text-highlight">{this.props.batchUpload.bank.description}</span>
-                </div>
+                <GridList header={<BatchUploadDetailRowLayout isHeader={true} />}>
+                    <Panel className="panel-row">
+                        <BatchUploadDetailRowLayout batchUpload={this.props.batchUpload} isHeader={false} />
+                    </Panel>
+                </GridList>
+                <br />
                 <div className="text-right">
                     <Button
                         hidden={this.props.processingComplete}
                         type="button"
                         bsStyle="success"
                         onClick={this.handleOnToggleModal}
-                        disabled={this.props.processing}>
+                        disabled={this.props.processing || this.props.processingComplete}>
                         <ButtonLoadingText isLoading={this.props.processing} label="Process" />
                     </Button>
                     <ModalConfirm
