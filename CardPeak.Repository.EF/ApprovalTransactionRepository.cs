@@ -44,8 +44,13 @@ namespace CardPeak.Repository.EF
             endDate = endDate ?? DateTime.Today;
             if (startDate.Date <= endDate.Value.Date)
             {
-                result = result.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= DbFunctions.TruncateTime(endDate.Value));
+                result = result
+                    .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= endDate.Value.Date);
             }
+
+            result = result
+                .OrderBy(_ => _.ApprovalDate)
+                .ThenBy(_ => _.Client);
 
             return result.ToList();
         }

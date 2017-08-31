@@ -94,6 +94,19 @@
     <Content Include="src\components\layout\Spinner.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\agentDashboard\metrics\AgentDashboardLabel.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agentDashboard\metrics\AgentAccountBalanceMetrics.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agentDashboard\metrics\AgentPerformanceMetrics.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agentDashboard\metrics\index.tsx" />
+    <Content Include="src\components\views\agentDashboard\metrics\TotalApprovedMetrics.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\agents\AddAgentView.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -239,6 +252,7 @@
     <Folder Include="src\components\" />
     <Folder Include="src\components\layout\" />
     <Folder Include="src\components\views\" />
+    <Folder Include="src\components\views\agentDashboard\metrics\" />
     <Folder Include="src\components\views\agents\" />
     <Folder Include="src\components\views\dashboard\" />
     <Folder Include="src\components\views\agentDashboard\" />
