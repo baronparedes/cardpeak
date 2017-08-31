@@ -252,6 +252,9 @@
     <Folder Include="src\styles\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\components\views\uploads\BatchUploadDetail.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\constants\actions.ts" />
     <TypeScriptCompile Include="src\helpers\dateHelpers.ts">
       <SubType>Code</SubType>

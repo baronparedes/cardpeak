@@ -8,6 +8,8 @@ import { RootState } from '../../../services/reducers'
 import { FormFieldFile, ModalConfirm, ButtonLoadingText } from '../../layout'
 import { Panel, Form, FormGroup, Button, Col } from 'react-bootstrap'
 
+import BatchUploadDetail from './BatchUploadDetail'
+
 interface BatchUploadContainerDispatchProps {
     actions?: typeof UploadActions;
 }
@@ -23,9 +25,6 @@ interface BatchUploadContainerState {
 }
 
 class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadModel & BatchUploadContainerDispatchProps, BatchUploadContainerState> {
-    controls: {
-        uploadFile?: HTMLInputElement
-    } = {};
     constructor(props: CardPeak.Models.BatchUploadModel & BatchUploadContainerDispatchProps) {
         super(props);
         this.state = {
@@ -83,47 +82,54 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
     }
     render() {
         return (
-            <Panel className="container-fluid">
-                <Form horizontal onSubmit={(e: any) => { e.preventDetfault() }}>
-                    <fieldset disabled={this.props.uploadingFile}>
-                        <FormFieldFile
-                            ref={(input) => this.controls.uploadFile = input}
-                            onChange={this.handleOnFileChange}
-                            label="file"
-                            name="fileName"
-                            value={this.state.fileName}
-                            error={this.state.errors.fileName}
-                            accept={".xls,.xlsx"}
-                            controlId="form-batch-upload" />
-                        <FormGroup>
-                            <Col sm={12} className="text-right">
-                                <Button
-                                    type="button"
-                                    bsStyle="success"
-                                    onClick={this.handleOnToggleModal}
-                                    disabled={this.props.uploadingFile}>
-                                    <ButtonLoadingText isLoading={this.props.uploadingFile} label="Upload" />
-                                </Button>
-                                <ModalConfirm
-                                    title="upload file"
-                                    showModal={this.state.showConfirmModal}
-                                    onConfirm={this.handleOnConfirm}
-                                    onToggleModal={this.handleOnToggleModal}>
+            <div className="container-fluid">
+                <Panel className="container-fluid">
+                    <Form horizontal onSubmit={(e: any) => { e.preventDetfault() }}>
+                        <fieldset disabled={this.props.uploadingFile || this.props.processing}>
+                            <FormFieldFile
+                                onChange={this.handleOnFileChange}
+                                label="file"
+                                name="fileName"
+                                value={this.state.fileName}
+                                error={this.state.errors.fileName}
+                                accept={".xls,.xlsx"}
+                                controlId="form-batch-upload" />
+                            <FormGroup>
+                                <Col sm={12} className="text-right">
+                                    <Button
+                                        type="button"
+                                        bsStyle="success"
+                                        onClick={this.handleOnToggleModal}
+                                        disabled={this.props.uploadingFile}>
+                                        <ButtonLoadingText isLoading={this.props.uploadingFile} label="Upload" />
+                                    </Button>
+                                    <ModalConfirm
+                                        title="upload file"
+                                        showModal={this.state.showConfirmModal}
+                                        onConfirm={this.handleOnConfirm}
+                                        onToggleModal={this.handleOnToggleModal}>
 
-                                    Do you want to continue?
-                                </ModalConfirm>
-                            </Col>
-                            <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
-                                {
-                                    this.state.onUploadError ?
-                                        this.state.onUploadError
-                                        : null
-                                }
-                            </Col>
-                        </FormGroup>
-                    </fieldset>
-                </Form>
-            </Panel>
+                                        Do you want to continue?
+                                    </ModalConfirm>
+                                </Col>
+                                <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                                    {
+                                        this.state.onUploadError ?
+                                            this.state.onUploadError
+                                            : null
+                                    }
+                                </Col>
+                            </FormGroup>
+                        </fieldset>
+                    </Form>
+                </Panel>
+                <BatchUploadDetail
+                    uploadingFile={this.props.uploadingFile}
+                    batchUpload={this.props.selectedBatchUpload}
+                    processing={this.props.processing}
+                    processingComplete={this.props.processingCompleted}
+                    onProcess={this.props.actions.processBatchStart} />
+            </div>
         )
     }
 }

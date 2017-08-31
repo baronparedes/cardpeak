@@ -25,3 +25,16 @@ export function uploadFileStart(data: FormData, errorCallback?: (e: string) => v
         })
     }
 }
+
+export function processBatchStart(batchId: number, errorCallback?: (e: string) => void) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(processBatch());
+        setTimeout(() => {
+            dispatch(processBatchComplete());
+            dispatch(processBatchError());
+            if (errorCallback) {
+                errorCallback('');
+            }
+        }, 3000);
+    }
+}

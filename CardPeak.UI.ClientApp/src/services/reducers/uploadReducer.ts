@@ -21,7 +21,29 @@ export default handleActions<CardPeak.Models.BatchUploadModel, any>({
         return {
             ...state,
             uploadingFile: undefined,
-            selectedBatchUpload: action.payload
+            selectedBatchUpload: action.payload,
+            processingCompleted: undefined
+        }
+    },
+    [UPLOAD_ACTIONS.PROCESS_BATCH]: (state, action) => {
+        return {
+            ...state,
+            processing: true,
+            processingCompleted: undefined
+        }
+    },
+    [UPLOAD_ACTIONS.PROCESS_BATCH_ERROR]: (state, action) => {
+        return {
+            ...state,
+            processing: undefined,
+            processingCompleted: undefined
+        }
+    }
+    [UPLOAD_ACTIONS.PROCESS_BATCH_ERROR]: (state, action) => {
+        return {
+            ...state,
+            processing: undefined,
+            processingCompleted: true
         }
     }
 }, initialState);
