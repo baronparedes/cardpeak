@@ -67,7 +67,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                 <NavDropdown
                     title={<NavLinkText text="Uploads" fa="fa-upload" />}
                     id="settings-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/uploads/batch" text="New Batch" fa="fa-table" />
+                    <MenuItemLinkContainer exact to="/uploads/batch" text="Batch Upload" fa="fa-table" />
                     <MenuItem divider />
                     <MenuItemLinkContainer exact to="/uploads/config" text="Configure Uploads" fa="fa-wrench" />
                 </NavDropdown>

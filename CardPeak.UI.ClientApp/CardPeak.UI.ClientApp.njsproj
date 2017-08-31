@@ -194,6 +194,15 @@
     <Content Include="src\components\views\agents\AgentDashboardContainer.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\uploads\BatchUploadContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\BatchUploadView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\UploadsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\index.html">
       <SubType>Code</SubType>
     </Content>
@@ -230,6 +239,7 @@
     <Folder Include="src\components\views\agents\" />
     <Folder Include="src\components\views\dashboard\" />
     <Folder Include="src\components\views\agentDashboard\" />
+    <Folder Include="src\components\views\uploads\" />
     <Folder Include="src\components\views\settings\" />
     <Folder Include="src\components\views\transactions\" />
     <Folder Include="src\constants\" />

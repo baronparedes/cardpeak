@@ -3,7 +3,10 @@ export { Spinner, SpinnerRow, SpinnerBlock } from './Spinner';
 export { ListNoRecordsRow } from './ListNoRecordsRow'
 export { ButtonLoadingText } from './ButtonLoadingText'
 export { Footer } from './Footer'
-export { FormField, FormFieldInput, FormFieldDate, FormFieldRadioGroup, FormFieldDropdown, FormFieldInline } from './FormField'
+export {
+    FormField, FormFieldInput, FormFieldDate, FormFieldFile,
+    FormFieldRadioGroup, FormFieldDropdown, FormFieldInline,
+} from './FormField'
 export { ModalConfirm } from './ModalConfirm'
 export { ModalPanel } from './ModalPanel'
 export { NavigationBar } from './NavigationBar'

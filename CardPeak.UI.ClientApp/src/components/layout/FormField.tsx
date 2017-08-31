@@ -5,16 +5,18 @@ import { DatePickerForm, RadioGroup } from './'
 
 interface FormFieldProps {
     controlId: string,
-    error?: string,
     label: string,
-    type?: string,
     name: string,
     value: any,
+    error?: string,
+    type?: string,
     options?: string[][]
     onChange?: (e: any) => void,
     onChangeDate?: (v: string, f: string) => void,
     onFocus?: (e: any) => void,
     isRequired?: boolean,
+    ref?: (control: any) => void,
+    accept?: string
 }
 
 export const FormFieldInline: React.StatelessComponent<FormFieldProps> = (props) => {
@@ -102,6 +104,21 @@ export const FormFieldInput: React.StatelessComponent<FormFieldProps> = (props) 
     );
 };
 
+export const FormFieldFile: React.StatelessComponent<FormFieldProps> = (props) => {
+    return (
+        <FormFieldInline {...props }>
+            <FormControl
+                onChange={props.onChange}
+                type="file"
+                ref={props.ref}
+                placeholder={props.label}
+                multiple={false}
+                accept={props.accept}
+                name={props.name} />
+        </FormFieldInline >
+    )
+}
+
 export const FormFieldDropdown: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
         <FormField {...props}>
@@ -111,7 +128,6 @@ export const FormFieldDropdown: React.StatelessComponent<FormFieldProps> = (prop
                 name={props.name}
                 value={props.value}
                 onChange={props.onChange}>
-
                 {props.children}
             </FormControl>
         </FormField>
