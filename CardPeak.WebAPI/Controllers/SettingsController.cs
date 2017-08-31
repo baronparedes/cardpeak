@@ -27,6 +27,13 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("references/create/{id}")]
+        public IHttpActionResult PostReference(int id, Reference reference)
+        {
+            return null;
+        }
+
+        [HttpGet]
         [Route("rates/{id}")]
         public IHttpActionResult GetRates(int id)
         {

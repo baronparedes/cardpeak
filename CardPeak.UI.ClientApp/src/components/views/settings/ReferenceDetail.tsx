@@ -13,9 +13,7 @@ const ReferenceDetail = (props: ReferenceDetailProps) => {
     return (
         <Panel className="panel-row">
             <ReferenceDetailRowLayout
-                isLoading={props.isLoading}
                 reference={props.reference}
-                onSaveReference={props.onSaveReference}
                 isHeader={false} />
         </Panel>
     )

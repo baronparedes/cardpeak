@@ -2,25 +2,13 @@
 import { Row, Col, Button } from 'react-bootstrap'
 
 interface ReferenceDetailRowLayoutProps {
-    referenceTypeId?: number;
     reference?: CardPeak.Entities.Reference;
-    onSaveReference?: (reference: CardPeak.Entities.Reference) => void;
-    isLoading?: boolean;
     isHeader: boolean;
 }
 
 export default class ReferenceDetailRowLayout extends React.Component<ReferenceDetailRowLayoutProps, {}> {
     constructor(props: ReferenceDetailRowLayoutProps) {
         super(props);
-    }
-    handleOnClick = () => {
-    }
-    renderButton = () => {
-        return (
-            <Button onClick={this.handleOnClick} bsStyle="success" bsSize="sm">
-                <i className="fa fa-lg fa-save"></i>
-            </Button>
-        )
     }
     render() {
         return (
@@ -30,11 +18,6 @@ export default class ReferenceDetailRowLayout extends React.Component<ReferenceD
                 </Col>
                 <Col md={8} lg={8} sm={7} xs={7}>
                     {this.props.isHeader ? "description" : this.props.reference.description}
-                </Col>
-                <Col md={1} lg={1} sm={1} xs={1}>
-                    {
-                        this.props.isHeader ? "" : this.renderButton()
-                    }
                 </Col>
             </Row>
         )
