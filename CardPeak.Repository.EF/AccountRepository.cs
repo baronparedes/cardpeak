@@ -15,5 +15,10 @@ namespace CardPeak.Repository.EF
         {
             return this.Find(_ => _.AgentId == id).ToList();
         }
+
+        public IEnumerable<Account> FindByAlias(string alias)
+        {
+            return this.Find(_ => _.Alias == alias).ToList();
+        }
     }
 }

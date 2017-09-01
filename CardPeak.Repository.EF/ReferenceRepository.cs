@@ -26,5 +26,13 @@ namespace CardPeak.Repository.EF
                 .OrderBy(_ => _.Description)
                 .ToList();
         }
+
+        public Reference GetCardCategoryByDescription(string description)
+        {
+            return this.Context.References
+                .Where(_ => _.Description.ToLower() == description.ToLower())
+                .Where(_ => _.ReferenceTypeId == (int)CardPeak.Domain.Enums.ReferenceTypeEnum.CardCategory)
+                .FirstOrDefault();
+        }
     }
 }

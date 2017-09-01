@@ -57,6 +57,10 @@
       <Project>{818666ad-4616-42a1-883c-14859ef8c677}</Project>
       <Name>CardPeak.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CardPeak.Domain\CardPeak.Domain.csproj">
+      <Project>{15b6b1b8-c0d9-4f0e-8f61-d4665e343664}</Project>
+      <Name>CardPeak.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AgentService.cs" />
     <Compile Include="BatchService.cs" />
+    <Compile Include="ProcessorService.cs" />
     <Compile Include="SettingsService.cs" />
     <Compile Include="TransactionService.cs" />
     <Compile Include="UnitOfWork.cs" />

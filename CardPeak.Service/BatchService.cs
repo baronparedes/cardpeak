@@ -16,12 +16,15 @@ namespace CardPeak.Service
         private IProcessor Processor;
         private IReferenceRepository ReferenceRepository;
         private IBatchUploadRepository BatchUploadRepository;
+        private IProcessorService ProcessorService;
 
         public BatchService(CardPeakDbContext context) : base(context)
         {
-            this.Processor = new CardPeak.Processor.Excel.Processor();
             this.ReferenceRepository = new ReferenceRepository(context);
             this.BatchUploadRepository = new BatchUploadRepository(context);
+            this.ProcessorService = new ProcessorService(context);
+
+            this.Processor = new CardPeak.Processor.Excel.Processor(this.ProcessorService);
         }
 
         private Reference DetermineBank(FileInfo file)
@@ -54,6 +57,25 @@ namespace CardPeak.Service
             return batch;
         }
 
+        private BatchUploadConfiguration GetBankConfiguration(int bankId)
+        {
+            var batchConfig = new BatchUploadConfiguration();
+            batchConfig.BankId = bankId;
+            batchConfig.FirstRowIsHeader = true;
+            batchConfig.Ref1Column = 0;
+            batchConfig.ApprovalDateColumn = 2;
+            batchConfig.ClientLastNameColumn = 3;
+            batchConfig.ClientFirstNameColumn = 4;
+            batchConfig.ClientMiddleNameColumn = 5;
+            batchConfig.ProductColumn = 6;
+            batchConfig.MultiplCardColumn = 8;
+            batchConfig.AliasColumn = 9;
+            batchConfig.AmountColumn = 10;
+            batchConfig.CardCategoryColumn = 11;
+
+            return batchConfig;
+        }
+
         public async Task<BatchUpload> ProcessAsync(int id)
         {
             var batch = this.BatchUploadRepository.Get(id);
@@ -65,7 +87,7 @@ namespace CardPeak.Service
             try
             {
                 await Task.Run(() => {
-                    this.Processor.Process(new FileInfo(batch.FileName));
+                    this.Processor.Process(new FileInfo(batch.FileName), batch, this.GetBankConfiguration(batch.BankId)); //TODO Fetch Config
                 });
                 batch.HasErrors = false;
             }
