@@ -27,16 +27,29 @@ namespace CardPeak.PlayPen
             batchConfig.ClientLastNameColumn = 3;
             batchConfig.ClientFirstNameColumn = 4;
             batchConfig.ClientMiddleNameColumn = 5;
-            batchConfig.ProductColumn = 6;
-            batchConfig.MultiplCardColumn = 8;
-            batchConfig.AliasColumn = 9;
-            batchConfig.AmountColumn = 10;
-            batchConfig.CardCategoryColumn = 11;
+            batchConfig.ProductTypeColumn = 7;
+            batchConfig.CardCountColumn = 10;
+            batchConfig.AliasColumn = 11;
+            batchConfig.CardCategoryColumn = 13;
 
             var fileName = @"D:\Metrobank.xlsx";
             var file = new FileInfo(fileName);
             var processor = new CardPeak.Processor.Excel.Processor(service);
-            processor.Process(file, batchUpload, batchConfig);
+            var result = processor.Process(file, batchUpload, batchConfig);
+
+            Console.WriteLine("Errors");
+            foreach (var item in result.Where(_ => _.HasErrors))
+            {
+                Console.WriteLine(item.Transaction.ReferenceNumber1);
+            }
+
+            Console.WriteLine("Processed");
+            foreach (var item in result.Where(_ => !_.HasErrors))
+            {
+                Console.WriteLine(item.Transaction.ReferenceNumber1);
+            }
+
+            Console.ReadLine("");
         }
     }
 }

@@ -4,6 +4,7 @@ using CardPeak.Core.Service;
 using CardPeak.Domain;
 using CardPeak.Repository.EF;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -60,18 +61,16 @@ namespace CardPeak.Service
         private BatchUploadConfiguration GetBankConfiguration(int bankId)
         {
             var batchConfig = new BatchUploadConfiguration();
-            batchConfig.BankId = bankId;
             batchConfig.FirstRowIsHeader = true;
             batchConfig.Ref1Column = 0;
             batchConfig.ApprovalDateColumn = 2;
             batchConfig.ClientLastNameColumn = 3;
             batchConfig.ClientFirstNameColumn = 4;
             batchConfig.ClientMiddleNameColumn = 5;
-            batchConfig.ProductColumn = 6;
-            batchConfig.MultiplCardColumn = 8;
-            batchConfig.AliasColumn = 9;
-            batchConfig.AmountColumn = 10;
-            batchConfig.CardCategoryColumn = 11;
+            batchConfig.ProductTypeColumn = 7;
+            batchConfig.CardCountColumn = 10;
+            batchConfig.AliasColumn = 11;
+            batchConfig.CardCategoryColumn = 13;
 
             return batchConfig;
         }
@@ -86,10 +85,16 @@ namespace CardPeak.Service
 
             try
             {
+                IEnumerable<ProcessedApprovalTransaction> result = null;
                 await Task.Run(() => {
-                    this.Processor.Process(new FileInfo(batch.FileName), batch, this.GetBankConfiguration(batch.BankId)); //TODO Fetch Config
+                    result = this.Processor.Process(new FileInfo(batch.FileName), batch, this.GetBankConfiguration(batch.BankId)); //TODO Fetch Config
                 });
-                batch.HasErrors = false;
+
+                batch.HasErrors = result.Any(_ => _.HasErrors);
+                if (!batch.HasErrors.Value)
+                {
+                    //TODO: SAVE
+                }
             }
             catch(Exception)
             {

@@ -8,7 +8,9 @@ namespace CardPeak.Domain
 {
     public sealed class ProcessedApprovalTransaction
     {
-        public IList<ApprovalTransaction> Processed { get; set; }
-        public IList<ApprovalTransaction> Errors { get; set; }
+        public ApprovalTransaction Transaction { get; set; }
+        public bool HasErrors { get; set; }
+        public IList<string> ErrorMessages { get; set; }
+        public bool ValidApproval { get; set; }
     }
 }

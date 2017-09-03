@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AgentDashboard.cs" />
     <Compile Include="BatchUploadConfiguration.cs" />
+    <Compile Include="Constants\ApprovalFileFields.cs" />
     <Compile Include="Enums\ReferenceTypeEnum.cs" />
     <Compile Include="Enums\TransactionTypeEnum.cs" />
     <Compile Include="Generated\Account.cs">
@@ -75,7 +76,6 @@
     </Compile>
     <Compile Include="ApprovalPerformance.cs" />
     <Compile Include="ProcessedApprovalTransaction.cs" />
-    <Compile Include="ProcessedTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generated\Rate.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
