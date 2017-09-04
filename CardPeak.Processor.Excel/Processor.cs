@@ -17,7 +17,7 @@ namespace CardPeak.Processor.Excel
         private const string InvalidConfigurationErrorMessageFormat = "No configuration for {0} has been found.";
         private const string NotFoundErrorMessageFormat = "{0} not found.";
         private const string InvalidConfiguratioNotFoundErrorMessage = "No configuration has been found.";
-        private const string NoAccountsFoundErrorMessageFormat = "Accounts were no found for the alias '{0}'";
+        private const string NoAccountsFoundErrorMessageFormat = "Accounts were not found for the alias '{0}'";
         private IProcessorService Service;
 
         public Processor(IProcessorService service)

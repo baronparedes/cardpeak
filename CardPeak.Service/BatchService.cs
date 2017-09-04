@@ -28,7 +28,7 @@ namespace CardPeak.Service
             this.Processor = new CardPeak.Processor.Excel.Processor(this.ProcessorService);
         }
 
-        private Reference DetermineBank(FileInfo file)
+        private Reference GetBankByFileName(FileInfo file)
         {
             var fileName = Path.GetFileNameWithoutExtension(file.FullName);
             var bank = this.ReferenceRepository
@@ -48,7 +48,7 @@ namespace CardPeak.Service
         {
             var batch = new BatchUpload
             {
-                BankId = this.DetermineBank(file).ReferenceId,
+                BankId = this.GetBankByFileName(file).ReferenceId,
                 FileName = file.FullName
             };
 
@@ -94,7 +94,11 @@ namespace CardPeak.Service
                 batch.HasErrors = processedApprovalTransactions.Any(_ => _.HasErrors);
                 if (!batch.HasErrors.Value)
                 {
-                    //TODO: SAVE
+                    foreach (var item in processedApprovalTransactions)
+                    {
+                        this.DomainContext.Entry(item.Transaction).State = EntityState.Added;
+                        this.DomainContext.ApprovalTransactions.Add(item.Transaction);
+                    }
                 }
             }
             catch(Exception)
