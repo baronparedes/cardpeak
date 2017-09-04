@@ -58,10 +58,9 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
         this.handleOnUpload();
     }
     handleErrors() {
-        this.setState({ onUploadError: undefined });
         let errors = this.state.errors;
         if (this.state.fileName === "") errors.fileName = "please choose a file to upload";
-        this.setState({ errors });
+        this.setState({ errors, onUploadError: undefined });
     }
     handleOnFileChange = (e: any) => {
         let errors = this.state.errors;
@@ -69,14 +68,18 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
         this.setState({
             files: e.target.files,
             [e.target.name]: e.target.value,
-            errors
+            errors,
+            onUploadError: undefined
         });
-        this.setState({ onUploadError: undefined });
     }
     handleOnUpload = () => {
         let formData = new FormData();
         formData.append('file', this.state.files[0]);
-        this.props.actions.uploadFileStart(formData, (e: string) => {
+        this.props.actions.uploadFileStart(formData, () => {
+            this.setState({
+                fileName: "",
+            });
+        }, (e: string) => {
             this.setState({ onUploadError: e });
         })
     }
@@ -128,6 +131,7 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                     batchUpload={this.props.selectedBatchUpload}
                     processing={this.props.processing}
                     processingComplete={this.props.processingCompleted}
+                    onClickClear={this.props.actions.clearBatch}
                     onProcess={this.props.actions.processBatchStart} />
             </div>
         )

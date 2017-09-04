@@ -9,7 +9,8 @@ interface BatchUploadDetailProps {
     batchUpload: CardPeak.Entities.BatchUpload,
     processing: boolean
     onProcess: (batchId: number, errorCallback: (e: string) => void) => void,
-    processingComplete: boolean
+    processingComplete: boolean,
+    onClickClear: () => void
 }
 
 interface BatchUploadDetailState {
@@ -55,14 +56,22 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                 </GridList>
                 <br />
                 <div className="text-right">
-                    <Button
-                        hidden={this.props.processingComplete}
-                        type="button"
-                        bsStyle="success"
-                        onClick={this.handleOnToggleModal}
-                        disabled={this.props.processing || this.props.processingComplete}>
-                        <ButtonLoadingText isLoading={this.props.processing} label="Process" />
-                    </Button>
+                    {
+                        this.props.processingComplete ? null :
+                            <Button
+                                type="button"
+                                bsStyle="success"
+                                onClick={this.handleOnToggleModal}
+                                disabled={this.props.processing || this.props.processingComplete}>
+                                <ButtonLoadingText isLoading={this.props.processing} label="Process" />
+                            </Button>
+                    }
+                    {
+                        !this.props.processingComplete ? null : 
+                            <Button type="button" bsStyle="primary" onClick={this.props.onClickClear} className="spacer-right">
+                                Clear
+                            </Button>
+                    }
                     <ModalConfirm
                         title="start processing"
                         showModal={this.state.showConfirmModal}

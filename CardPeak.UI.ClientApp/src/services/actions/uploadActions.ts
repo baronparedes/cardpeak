@@ -12,11 +12,16 @@ export const processBatch = createAction(UPLOAD_ACTIONS.PROCESS_BATCH);
 export const processBatchComplete = createAction<CardPeak.Entities.ProcessedBatchUpload>(UPLOAD_ACTIONS.PROCESS_BATCH_COMPLETE);
 export const processBatchError = createAction(UPLOAD_ACTIONS.PROCESS_BATCH_ERROR);
 
-export function uploadFileStart(data: FormData, errorCallback?: (e: string) => void) {
+export const clearBatch = createAction(UPLOAD_ACTIONS.CLEAR_BATCH);
+
+export function uploadFileStart(data: FormData, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(uploadFile());
         uploadController.uploadFile(data, (uploadBatch: CardPeak.Entities.BatchUpload) => {
             dispatch(uploadFileComplete(uploadBatch));
+            if (successCallback) {
+                successCallback();
+            }
         }, (e: string) => {
             dispatch(uploadFileError());
             if (errorCallback) {

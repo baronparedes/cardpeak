@@ -1,7 +1,7 @@
 ﻿export { SearchBar } from './SearchBar';
 export { Spinner, SpinnerRow, SpinnerBlock } from './Spinner';
 export { ListNoRecordsRow } from './ListNoRecordsRow'
-export { ButtonLoadingText } from './ButtonLoadingText'
+export { ButtonLoading, ButtonLoadingText } from './ButtonLoading'
 export { Footer } from './Footer'
 export {
     FormField, FormFieldInput, FormFieldDate, FormFieldFile,
@@ -15,3 +15,4 @@ export { DatePicker, DatePickerForm } from './DatePicker'
 export { GridList } from './GridList'
 export { RadioGroup } from './RadioGroup'
 export { HighlightedSpan } from './HighlightedSpan'
+export { ConfirmButton, ConfirmButtonLoading } from './ConfirmButton'
