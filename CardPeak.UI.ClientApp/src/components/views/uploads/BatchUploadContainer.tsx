@@ -9,6 +9,7 @@ import { FormFieldFile, ConfirmButtonLoading, ButtonLoadingText } from '../../la
 import { Panel, Form, FormGroup, Button, Col } from 'react-bootstrap'
 
 import BatchUploadDetail from './BatchUploadDetail'
+import BatchUploadErrorList from './BatchUploadErrorList'
 
 interface BatchUploadContainerDispatchProps {
     actions?: typeof UploadActions;
@@ -74,9 +75,9 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
         let formData = new FormData();
         formData.append('file', this.state.files[0]);
         this.props.actions.uploadFileStart(formData, () => {
-            this.setState({
-                fileName: "",
-            });
+            //this.setState({
+            //    fileName: "",
+            //});
         }, (e: string) => {
             this.setState({ onUploadError: e });
         })
@@ -125,6 +126,10 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                     processingComplete={this.props.processingCompleted}
                     onClickClear={this.props.actions.clearBatch}
                     onProcess={this.props.actions.processBatchStart} />
+                {
+                    !this.props.processingCompleted ? null :
+                        <BatchUploadErrorList processedItems={this.props.processedApprovalTransactions} />
+                }
             </div>
         )
     }

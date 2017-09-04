@@ -35,6 +35,7 @@ namespace CardPeak.WebAPI.Controllers
             {
                 ProcessedBatchUpload result = null;
                 result = await this.BatchService.ProcessAsync(id);
+                result.ProcessedApprovalTransactions = result.ProcessedApprovalTransactions.Where(_ => _.HasErrors);
                 return this.Ok(result);
             }
             catch (Exception e)

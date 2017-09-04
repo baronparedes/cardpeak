@@ -222,6 +222,15 @@
     <Content Include="src\components\views\uploads\BatchUploadContainer.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\uploads\BatchUploadErrorDetail.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\BatchUploadErrorDetailRowLayout.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\BatchUploadErrorList.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\uploads\BatchUploadView.tsx">
       <SubType>Code</SubType>
     </Content>

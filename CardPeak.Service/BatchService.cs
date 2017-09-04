@@ -97,6 +97,7 @@ namespace CardPeak.Service
                     foreach (var item in processedApprovalTransactions)
                     {
                         this.DomainContext.Entry(item.Transaction).State = EntityState.Added;
+                        this.DomainContext.Entry(item.Transaction.CardCategory).State = EntityState.Unchanged;
                         this.DomainContext.ApprovalTransactions.Add(item.Transaction);
                     }
                 }

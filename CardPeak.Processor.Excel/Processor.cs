@@ -83,6 +83,7 @@ namespace CardPeak.Processor.Excel
             if (cardCategory != null)
             {
                 result.Transaction.CardCategoryId = cardCategory.ReferenceId;
+                result.Transaction.CardCategory = cardCategory;
             }
             else
             {
@@ -140,13 +141,15 @@ namespace CardPeak.Processor.Excel
             return fullName;
         }
 
-        private List<ProcessedApprovalTransaction> ProcessItem(DataRow item, BatchUpload batch, BatchUploadConfiguration configuration)
+        private List<ProcessedApprovalTransaction> ProcessItem(DataRow item, BatchUpload batch, BatchUploadConfiguration configuration, int rowNumber)
         {
             var fields = this.ConvertItem(item, configuration);
             var result = this.ConvertItem(fields);
             var alias = fields[ApprovalFileFields.Alias];
             var accounts = this.Service.GetAgentsByAlias(alias);
 
+            result.Row = rowNumber;
+            result.Alias = alias;
             result.Transaction.BankId = batch.BankId;
             result.Transaction.BatchId = batch.BatchId;
             result.Transaction.AgentId = 0;
@@ -176,9 +179,11 @@ namespace CardPeak.Processor.Excel
                 var transaction = new ProcessedApprovalTransaction
                 {
                     Transaction = item.Transaction,
+                    Row = item.Row,
+                    Alias = item.Alias,
                     ErrorMessages = new List<string>(),
                     HasErrors = false,
-                    ValidApproval = true,
+                    ValidApproval = true
                 };
 
                 transaction.Transaction.AgentId = agent.AgentId;
@@ -261,6 +266,7 @@ namespace CardPeak.Processor.Excel
             this.ValidateConfiguration(configuration);
 
             var result = new List<ProcessedApprovalTransaction>();
+            var row = 0;
 
             using (var stream = File.Open(file.FullName, FileMode.Open, FileAccess.Read))
             {
@@ -271,7 +277,8 @@ namespace CardPeak.Processor.Excel
                     var dataTable = dataSet.Tables[0];
                     foreach (var item in dataTable.Rows)
                     {
-                        result.AddRange(this.ProcessItem(item as DataRow, batch, configuration));
+                        row++;
+                        result.AddRange(this.ProcessItem(item as DataRow, batch, configuration, row));
                     }
                 }
             }

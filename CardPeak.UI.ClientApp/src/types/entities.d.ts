@@ -99,6 +99,8 @@
 
     export class ProcessedApprovalTransaction {
         public transaction: ApprovalTransaction;
+        public row: number;
+        public alias: string;
         public hasErrors: boolean ;
         public errorMessages: string[];
         public validApproval: boolean  
@@ -106,6 +108,6 @@
 
     export class ProcessedBatchUpload {
         public batch: BatchUpload;
-        public processedApprovalTransaction: ProcessedApprovalTransaction[];
+        public processedApprovalTransactions: ProcessedApprovalTransaction[];
     }
 }
