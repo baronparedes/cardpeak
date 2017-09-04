@@ -49,7 +49,7 @@ namespace CardPeak.PlayPen
                 Console.WriteLine(item.Transaction.ReferenceNumber1);
             }
 
-            Console.ReadLine("");
+            Console.ReadLine();
         }
     }
 }

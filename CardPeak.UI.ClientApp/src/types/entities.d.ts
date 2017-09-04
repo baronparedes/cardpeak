@@ -96,4 +96,16 @@
         public processEndDateTime?: Date;
         public bank?: Reference;
     }
+
+    export class ProcessedApprovalTransaction {
+        public transaction: ApprovalTransaction;
+        public hasErrors: boolean ;
+        public errorMessages: string[];
+        public validApproval: boolean  
+    }
+
+    export class ProcessedBatchUpload {
+        public batch: BatchUpload;
+        public processedApprovalTransaction: ProcessedApprovalTransaction[];
+    }
 }

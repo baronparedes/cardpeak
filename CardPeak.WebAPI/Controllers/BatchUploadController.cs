@@ -33,7 +33,7 @@ namespace CardPeak.WebAPI.Controllers
         {
             try
             {
-                BatchUpload result = null;
+                ProcessedBatchUpload result = null;
                 result = await this.BatchService.ProcessAsync(id);
                 return this.Ok(result);
             }

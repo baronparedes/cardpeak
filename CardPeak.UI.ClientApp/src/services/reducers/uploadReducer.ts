@@ -29,22 +29,26 @@ export default handleActions<CardPeak.Models.BatchUploadModel, any>({
         return {
             ...state,
             processing: true,
-            processingCompleted: undefined
+            processingCompleted: undefined,
+            processedApprovalTransactions: undefined
         }
     },
     [UPLOAD_ACTIONS.PROCESS_BATCH_ERROR]: (state, action) => {
         return {
             ...state,
             processing: undefined,
-            processingCompleted: undefined
+            processingCompleted: undefined,
+            processedApprovalTransactions: undefined
         }
     },
     [UPLOAD_ACTIONS.PROCESS_BATCH_COMPLETE]: (state, action) => {
+        let payload = action.payload as CardPeak.Entities.ProcessedBatchUpload;
         return {
             ...state,
             processing: undefined,
             processingCompleted: true,
-            selectedBatchUpload: action.payload
+            selectedBatchUpload: payload.batch,
+            processedApprovalTransactions: payload.processedApprovalTransaction
         }
     }
 }, initialState);

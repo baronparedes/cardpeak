@@ -20,6 +20,7 @@ namespace CardPeak.Service
         {
             this.AccountRepository = new AccountRepository(context);
             this.ReferenceRepository = new ReferenceRepository(context);
+            this.RateRepository = new RateRepository(context);
         }
 
         public decimal ComputeAmountAllocation(int agentId, decimal units, int cardCategoryId, int bankId)

@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="ApprovalPerformance.cs" />
     <Compile Include="ProcessedApprovalTransaction.cs" />
+    <Compile Include="ProcessedBatchUpload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generated\Rate.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>

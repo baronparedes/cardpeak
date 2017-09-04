@@ -25,12 +25,12 @@ export function uploadFile(data: FormData,
 }
 
 export function processBatch(id: number,
-    successCallback: (data: CardPeak.Entities.BatchUpload) => void,
+    successCallback: (data: CardPeak.Entities.ProcessedBatchUpload) => void,
     errorCallback: (e: string) => void) {
 
     axios.post(API.PROCESS_BATCH(id))
         .then((r) => {
-            successCallback(r.data as CardPeak.Entities.BatchUpload);
+            successCallback(r.data as CardPeak.Entities.ProcessedBatchUpload);
         })
         .catch((reason) => {
             errorCallback(reason.message);

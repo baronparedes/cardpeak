@@ -60,6 +60,7 @@ namespace CardPeak.Service
 
         private BatchUploadConfiguration GetBankConfiguration(int bankId)
         {
+            //TODO: Fetch Config
             var batchConfig = new BatchUploadConfiguration();
             batchConfig.FirstRowIsHeader = true;
             batchConfig.Ref1Column = 0;
@@ -75,8 +76,9 @@ namespace CardPeak.Service
             return batchConfig;
         }
 
-        public async Task<BatchUpload> ProcessAsync(int id)
+        public async Task<ProcessedBatchUpload> ProcessAsync(int id)
         {
+            IEnumerable<ProcessedApprovalTransaction> processedApprovalTransactions = null;
             var batch = this.BatchUploadRepository.Get(id);
             batch.ProcessStartDateTime = DateTime.Now;
             this.DomainContext.Entry(batch.Bank).State = EntityState.Unchanged;
@@ -85,12 +87,11 @@ namespace CardPeak.Service
 
             try
             {
-                IEnumerable<ProcessedApprovalTransaction> result = null;
                 await Task.Run(() => {
-                    result = this.Processor.Process(new FileInfo(batch.FileName), batch, this.GetBankConfiguration(batch.BankId)); //TODO Fetch Config
+                    processedApprovalTransactions = this.Processor.Process(new FileInfo(batch.FileName), batch, this.GetBankConfiguration(batch.BankId));
                 });
 
-                batch.HasErrors = result.Any(_ => _.HasErrors);
+                batch.HasErrors = processedApprovalTransactions.Any(_ => _.HasErrors);
                 if (!batch.HasErrors.Value)
                 {
                     //TODO: SAVE
@@ -109,7 +110,11 @@ namespace CardPeak.Service
                 this.Complete();
             }
 
-            return batch;
+            return new ProcessedBatchUpload
+            {
+                Batch = batch,
+                ProcessedApprovalTransactions = processedApprovalTransactions
+            };
         }
     }
 }

@@ -35,6 +35,7 @@
         selectedBatchUpload?: CardPeak.Entities.BatchUpload;
         uploadingFile?: boolean;
         processing?: boolean;
-        processingCompleted?: boolean
+        processingCompleted?: boolean;
+        processedApprovalTransactions?: CardPeak.Entities.ProcessedApprovalTransaction[];
     }
 }
