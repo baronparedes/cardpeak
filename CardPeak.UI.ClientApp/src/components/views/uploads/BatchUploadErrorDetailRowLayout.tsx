@@ -22,6 +22,7 @@ class BatchUploadErrorDetailRowLayout extends React.Component<BatchUploadErrorDe
         this.setState({ showModal: !this.state.showModal });
     }
     renderShowErrorButton() {
+        let key: number = 0;
         if (this.props.isHeader) {
             return null;
         }
@@ -29,7 +30,10 @@ class BatchUploadErrorDetailRowLayout extends React.Component<BatchUploadErrorDe
             <div>
                 <Button bsStyle="warning" bsSize="sm" onClick={this.handleOnToggleModal}>errors</Button>
                 <ModalPanel title="Errors" onToggleModal={this.handleOnToggleModal} showModal={this.state.showModal}>
-                    {this.props.processedItem.errorMessages}
+                    {this.props.processedItem.errorMessages.map(error => {
+                        key++;
+                        return (<div key={this.props.processedItem.row + "." + key}>{error}</div>);
+                    })}
                 </ModalPanel>
             </div>
         )
