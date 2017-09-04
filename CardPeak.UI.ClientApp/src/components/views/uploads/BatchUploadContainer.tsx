@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { FormFieldFile, ModalConfirm, ButtonLoadingText } from '../../layout'
+import { FormFieldFile, ConfirmButtonLoading, ButtonLoadingText } from '../../layout'
 import { Panel, Form, FormGroup, Button, Col } from 'react-bootstrap'
 
 import BatchUploadDetail from './BatchUploadDetail'
@@ -17,7 +17,6 @@ interface BatchUploadContainerDispatchProps {
 interface BatchUploadContainerState {
     fileName: string,
     files: any
-    showConfirmModal?: boolean,
     onUploadError?: string,
     errors: {
         [error: string]: string,
@@ -44,17 +43,16 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
         }
         return result;
     }
-    handleOnToggleModal = () => {
+    handleOnPreventToggle = () => {
         if (this.hasErrors()) {
-            return;
+            return true;
         }
-        this.setState({ showConfirmModal: !this.state.showConfirmModal });
+        return false;
     }
     handleOnConfirm = () => {
         if (this.hasErrors()) {
             return;
         }
-        this.handleOnToggleModal();
         this.handleOnUpload();
     }
     handleErrors() {
@@ -99,21 +97,15 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                                 controlId="form-batch-upload" />
                             <FormGroup>
                                 <Col sm={12} className="text-right">
-                                    <Button
-                                        type="button"
+                                    <ConfirmButtonLoading
                                         bsStyle="success"
-                                        onClick={this.handleOnToggleModal}
-                                        disabled={this.props.uploadingFile}>
-                                        <ButtonLoadingText isLoading={this.props.uploadingFile} label="Upload" />
-                                    </Button>
-                                    <ModalConfirm
-                                        title="upload file"
-                                        showModal={this.state.showConfirmModal}
+                                        onPreventToggle={this.handleOnPreventToggle}
                                         onConfirm={this.handleOnConfirm}
-                                        onToggleModal={this.handleOnToggleModal}>
-
-                                        Do you want to continue?
-                                    </ModalConfirm>
+                                        confirmTitle="upload file"
+                                        confirmMessage="Do you want to continue?"
+                                        isLoading={this.props.uploadingFile}
+                                        disabled={this.props.uploadingFile}
+                                        buttonLabel="Upload" />
                                 </Col>
                                 <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
                                     {

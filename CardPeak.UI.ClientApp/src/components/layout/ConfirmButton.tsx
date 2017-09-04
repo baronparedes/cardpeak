@@ -3,22 +3,35 @@ import { Button } from 'react-bootstrap'
 import { ModalConfirm, ButtonLoading } from '.'
 
 interface ConfirmButtonProps {
-    onToggleConfirm: () => void;
+    onToggleConfirm?: () => void;
     onConfirm: () => void;
+    onPreventToggle?: () => boolean;
     confirmMessage: React.ReactNode;
     confirmTitle: React.ReactNode;
-    bsStyle?: string;
-    isLoading: boolean;
     buttonLabel: React.ReactNode;
+    bsStyle?: string;
+    isLoading?: boolean;
+    disabled?: boolean;
     className?: string;
 }
 
 interface ConfirmButtonState {
-    showConfirmModal: boolean
+    showConfirmModal?: boolean
 }
 
 export class ConfirmButtonLoading extends React.Component<ConfirmButtonProps, ConfirmButtonState> {
+    constructor(props: ConfirmButtonProps) {
+        super(props);
+        this.state = {
+            showConfirmModal: undefined
+        }
+    }
     handleOnToggleModal = () => {
+        if (this.props.onPreventToggle) {
+            if (this.props.onPreventToggle()) {
+                return;
+            }
+        }
         this.setState({ showConfirmModal: !this.state.showConfirmModal });
         if (this.props.onToggleConfirm) {
             this.props.onToggleConfirm();
@@ -36,6 +49,7 @@ export class ConfirmButtonLoading extends React.Component<ConfirmButtonProps, Co
                 <ButtonLoading
                     className={this.props.className}
                     bsStyle={this.props.bsStyle}
+                    disabled={this.props.disabled}
                     isLoading={this.props.isLoading}
                     label={this.props.buttonLabel}
                     onClick={this.handleOnToggleModal} />
@@ -52,7 +66,18 @@ export class ConfirmButtonLoading extends React.Component<ConfirmButtonProps, Co
 }
 
 export class ConfirmButton extends React.Component<ConfirmButtonProps, ConfirmButtonState> {
+    constructor(props: ConfirmButtonProps) {
+        super(props);
+        this.state = {
+            showConfirmModal: undefined
+        }
+    }
     handleOnToggleModal = () => {
+        if (this.props.onPreventToggle) {
+            if (this.props.onPreventToggle()) {
+                return;
+            }
+        }
         this.setState({ showConfirmModal: !this.state.showConfirmModal });
         if (this.props.onToggleConfirm) {
             this.props.onToggleConfirm();
@@ -68,6 +93,7 @@ export class ConfirmButton extends React.Component<ConfirmButtonProps, ConfirmBu
         return (
             <div>
                 <Button
+                    disabled={this.props.disabled}
                     className={this.props.className}
                     type="button"
                     bsStyle={this.props.bsStyle}

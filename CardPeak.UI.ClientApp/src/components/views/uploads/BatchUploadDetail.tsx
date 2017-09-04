@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Button } from 'react-bootstrap'
-import { SpinnerBlock, ButtonLoadingText, ModalConfirm, GridList } from '../../layout'
+import { SpinnerBlock, ConfirmButtonLoading, GridList } from '../../layout'
 
 import BatchUploadDetailRowLayout from './BatchUploadDetailRowLayout'
 
@@ -14,25 +14,22 @@ interface BatchUploadDetailProps {
 }
 
 interface BatchUploadDetailState {
-    showConfirmModal?: boolean,
-    onProcessError?: string,
+    onProcessError: string;
 }
 
 class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUploadDetailState> {
     constructor(props: BatchUploadDetailProps) {
         super(props);
         this.state = {
-
+            onProcessError: undefined
         }
     }
     handleOnToggleModal = () => {
         this.setState({
-            showConfirmModal: !this.state.showConfirmModal,
             onProcessError: undefined
         });
     }
     handleOnConfirm = () => {
-        this.handleOnToggleModal();
         this.handleOnProcess();
     }
     handleOnProcess = () => {
@@ -58,13 +55,15 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                 <div className="text-right">
                     {
                         this.props.processingComplete ? null :
-                            <Button
-                                type="button"
+                            <ConfirmButtonLoading
                                 bsStyle="success"
-                                onClick={this.handleOnToggleModal}
-                                disabled={this.props.processing || this.props.processingComplete}>
-                                <ButtonLoadingText isLoading={this.props.processing} label="Process" />
-                            </Button>
+                                onToggleConfirm={this.handleOnToggleModal}
+                                onConfirm={this.handleOnConfirm}
+                                confirmTitle="start processing"
+                                confirmMessage="Do you want to begin processing?"
+                                isLoading={this.props.processing}
+                                disabled={this.props.processing || this.props.processingComplete}
+                                buttonLabel="Process" />
                     }
                     {
                         !this.props.processingComplete ? null : 
@@ -72,15 +71,6 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                                 Clear
                             </Button>
                     }
-                    <ModalConfirm
-                        title="start processing"
-                        showModal={this.state.showConfirmModal}
-                        onConfirm={this.handleOnConfirm}
-                        onToggleModal={this.handleOnToggleModal}>
-
-                        Do you want to begin processing?
-
-                    </ModalConfirm>
                 </div>
                 <div>
                     {

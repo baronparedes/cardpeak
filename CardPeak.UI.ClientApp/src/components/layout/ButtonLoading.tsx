@@ -5,6 +5,7 @@ interface ButtonLoadingProps {
     bsStyle?: string,
     onClick?: () => void,
     isLoading: boolean,
+    disabled?: boolean
     label: React.ReactNode,
     className?: string;
 }
@@ -32,7 +33,7 @@ export const ButtonLoading = (props: ButtonLoadingProps) => {
             className={props.className}
             bsStyle={props.bsStyle}
             onClick={props.onClick}
-            disabled={props.isLoading}>
+            disabled={props.disabled}>
             <ButtonLoadingText isLoading={props.isLoading} label={props.label} />
         </Button>
     )
