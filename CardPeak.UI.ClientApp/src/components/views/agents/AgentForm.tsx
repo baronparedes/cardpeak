@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ModalConfirm, ButtonLoadingText } from '../../layout'
+import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButtonLoading } from '../../layout'
 
 interface AgentFormProps {
     agent: CardPeak.Entities.Agent;
@@ -11,7 +11,6 @@ interface AgentFormProps {
 
 interface AgentFormState {
     agent?: CardPeak.Entities.Agent;
-    showConfirmModal?: boolean;
     errors: {
         [error: string]: string,
     };
@@ -30,6 +29,13 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             }
         };
     }
+    hasErrors = () => {
+        this.handleErrors();
+        if (!!this.state.errors.firstName && !!this.state.errors.lastName) {
+            return true;
+        }
+        return false;
+    }
     handleErrors = () => {
         let errors = this.state.errors;
         if (this.state.agent.firstName === "") errors.firstName = "*";
@@ -38,12 +44,10 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
         return errors;
     }
     handleOnConfirm = () => {
-        this.handleErrors();
-        if (!!this.state.errors.firstName || !!this.state.errors.lastName) {
-            return;
-        }
-        this.handleOnToggleModal();
         this.handleOnUpdateAgentSubmitted();
+    }
+    handleOnToggleModal = () => {
+        this.setState({ onSaveAgentErrorMessage: undefined });
     }
     handleOnUpdateAgentSubmitted = () => {
         this.setState({ onSaveAgentErrorMessage: undefined });
@@ -51,14 +55,6 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
     }
     handleOnUpdateAgentSubmittedError = (error: string) => {
         this.setState({ onSaveAgentErrorMessage: error });
-    }
-    handleOnToggleModal = () => {
-        this.setState({ onSaveAgentErrorMessage: undefined });
-        this.handleErrors();
-        if (!!this.state.errors.firstName && !!this.state.errors.lastName) {
-            return;
-        }
-        this.setState({ showConfirmModal: !this.state.showConfirmModal });
     }
     handleFocus = (e: any) => {
         e.target.select();
@@ -94,21 +90,16 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
         return (
             <FormGroup>
                 <Col sm={12} className="text-right">
-                    <Button
-                        type="button"
+                    <ConfirmButtonLoading
                         bsStyle="success"
-                        onClick={this.handleOnToggleModal}
-                        disabled={this.props.isSaving}>
-                        <ButtonLoadingText isLoading={this.props.isSaving} label="Save" />
-                    </Button>
-                    <ModalConfirm
-                        title="save agent details"
-                        showModal={this.state.showConfirmModal}
+                        buttonLabel="Save"
+                        confirmTitle="save agent details"
+                        confirmMessage="Do you want to continue?"
                         onConfirm={this.handleOnConfirm}
-                        onToggleModal={this.handleOnToggleModal}>
-
-                        Do you want to continue?
-                    </ModalConfirm>
+                        onToggleConfirm={this.handleOnToggleModal}
+                        onPreventToggle={this.hasErrors}
+                        isLoading={this.props.isSaving}
+                        disabled={this.props.isSaving} />
                 </Col>
                 <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
                     {

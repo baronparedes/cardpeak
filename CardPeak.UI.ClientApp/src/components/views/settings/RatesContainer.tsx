@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Grid, Row, Col, Form, FormGroup, Button } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDropdown, ButtonLoadingText, ModalConfirm } from '../../layout'
+import { FormFieldInput, FormFieldDropdown, ConfirmButtonLoading } from '../../layout'
 import RateList from './RateList'
 
 interface RatesContainerProps {
@@ -25,7 +25,6 @@ interface RatesContainerState {
         [error: string]: string,
     },
     postingRatesError?: string,
-    showConfirmModal?: boolean
 }
 
 class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps, RatesContainerState> {
@@ -43,10 +42,9 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
         }
     }
     handleOnToggleModal = () => {
-        this.setState({ showConfirmModal: !this.state.showConfirmModal, postingRatesError: undefined });
+        this.setState({ postingRatesError: undefined });
     }
     handleOnConfirm = () => {
-        this.handleOnToggleModal();
         this.handleOnClickSaveRates();
     }
     handleErrors = () => {
@@ -181,18 +179,16 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                 </Row>
                 <Row>
                     <Col className="text-right container-fluid">
-                        <br/>
-                        <Button bsStyle="success" onClick={this.handleOnToggleModal} disabled={this.props.postingRates || this.props.loadingRates}>
-                            <ButtonLoadingText isLoading={this.props.postingRates || this.props.loadingRates} label="Save" />
-                        </Button>
-                        <ModalConfirm
-                            title="save rates"
-                            showModal={this.state.showConfirmModal}
+                        <br />
+                        <ConfirmButtonLoading
+                            bsStyle="success"
+                            buttonLabel="Save"
+                            confirmTitle="save rates"
+                            confirmMessage="Do you want to continue?"
+                            onToggleConfirm={this.handleOnToggleModal}
                             onConfirm={this.handleOnConfirm}
-                            onToggleModal={this.handleOnToggleModal}>
-
-                            Do you want to continue?
-                        </ModalConfirm>
+                            disabled={this.props.postingRates || this.props.loadingRates}
+                            isLoading={this.props.postingRates || this.props.loadingRates}/>
                     </Col>
                     <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
                         {
