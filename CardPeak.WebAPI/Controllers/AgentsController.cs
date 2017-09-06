@@ -40,6 +40,19 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("{id}/accounts")]
+        public IHttpActionResult GetAccounts(int id)
+        {
+            var result = this.AgentService.GetAccounts(id);
+            if (result == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(result);
+        }
+
+        [HttpGet]
         [Route("{id}/filter")]
         public IHttpActionResult GetAgent(int id, [FromUri]DateTime? startDate = null, [FromUri]DateTime? endDate = null)
         {

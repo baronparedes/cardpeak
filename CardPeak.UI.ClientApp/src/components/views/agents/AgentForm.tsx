@@ -3,6 +3,8 @@
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
 import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButtonLoading } from '../../layout'
 
+import AgentAccountList from './AgentAccountList'
+
 interface AgentFormProps {
     agent: CardPeak.Entities.Agent;
     onSave: (agent: CardPeak.Entities.Agent, errorCallback?: (error: string) => void) => void;
@@ -51,10 +53,9 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
     }
     handleOnUpdateAgentSubmitted = () => {
         this.setState({ onSaveAgentErrorMessage: undefined });
-        this.props.onSave(this.state.agent, this.handleOnUpdateAgentSubmittedError);
-    }
-    handleOnUpdateAgentSubmittedError = (error: string) => {
-        this.setState({ onSaveAgentErrorMessage: error });
+        this.props.onSave(this.state.agent, (e: string) => {
+            this.setState({ onSaveAgentErrorMessage: e })
+        });
     }
     handleFocus = (e: any) => {
         e.target.select();
@@ -116,58 +117,65 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             <div className="container-fluid">
                 <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
                     <fieldset disabled={this.props.isSaving}>
-                        <FormFieldInput
-                            controlId="form-first-name"
-                            type="text"
-                            name="firstName"
-                            label="first name"
-                            error={this.state.errors.firstName}
-                            value={this.state.agent.firstName}
-                            isRequired
-                            onFocus={this.handleFocus}
-                            onChange={this.handleChange} />
-                        <FormFieldInput
-                            controlId="form-middle-name"
-                            type="text"
-                            name="middleName"
-                            label="middle name"
-                            value={this.state.agent.middleName}
-                            onFocus={this.handleFocus}
-                            onChange={this.handleChange} />
-                        <FormFieldInput
-                            controlId="form-last-name"
-                            type="text"
-                            name="lastName"
-                            label="last name"
-                            error={this.state.errors.lastName}
-                            value={this.state.agent.lastName}
-                            isRequired
-                            onFocus={this.handleFocus}
-                            onChange={this.handleChange} />
-                        <FormFieldRadioGroup
-                            controlId="form-gender"
-                            name="gender"
-                            label="gender"
-                            value={this.state.agent.gender}
-                            options={[
-                                ['M', 'male'],
-                                ['F', 'female']
-                            ]}
-                            onChange={this.handleChange} />
-                        <FormFieldInput
-                            controlId="form-email"
-                            type="email"
-                            name="email"
-                            label="email"
-                            value={this.state.agent.email}
-                            onFocus={this.handleFocus}
-                            onChange={this.handleChange} />
-                        <FormFieldDate
-                            controlId="form-birth-date"
-                            name="birthDate"
-                            label="birth date"
-                            value={this.state.agent.birthDate}
-                            onChangeDate={this.handleChangeBirthDate} />
+                        <FormGroup>
+                            <Col lg={8} md={8} sm={12} xs={12}>
+                                <FormFieldInput
+                                    controlId="form-first-name"
+                                    type="text"
+                                    name="firstName"
+                                    label="first name"
+                                    error={this.state.errors.firstName}
+                                    value={this.state.agent.firstName}
+                                    isRequired
+                                    onFocus={this.handleFocus}
+                                    onChange={this.handleChange} />
+                                <FormFieldInput
+                                    controlId="form-middle-name"
+                                    type="text"
+                                    name="middleName"
+                                    label="middle name"
+                                    value={this.state.agent.middleName}
+                                    onFocus={this.handleFocus}
+                                    onChange={this.handleChange} />
+                                <FormFieldInput
+                                    controlId="form-last-name"
+                                    type="text"
+                                    name="lastName"
+                                    label="last name"
+                                    error={this.state.errors.lastName}
+                                    value={this.state.agent.lastName}
+                                    isRequired
+                                    onFocus={this.handleFocus}
+                                    onChange={this.handleChange} />
+                                <FormFieldRadioGroup
+                                    controlId="form-gender"
+                                    name="gender"
+                                    label="gender"
+                                    value={this.state.agent.gender}
+                                    options={[
+                                        ['M', 'male'],
+                                        ['F', 'female']
+                                    ]}
+                                    onChange={this.handleChange} />
+                                <FormFieldInput
+                                    controlId="form-email"
+                                    type="email"
+                                    name="email"
+                                    label="email"
+                                    value={this.state.agent.email}
+                                    onFocus={this.handleFocus}
+                                    onChange={this.handleChange} />
+                                <FormFieldDate
+                                    controlId="form-birth-date"
+                                    name="birthDate"
+                                    label="birth date"
+                                    value={this.state.agent.birthDate}
+                                    onChangeDate={this.handleChangeBirthDate} />
+                            </Col>
+                            <Col lg={4} md={4} sm={12} xs={12}>
+                                <AgentAccountList accounts={this.state.agent.accounts} onRemoveAccount={() => { }} />
+                            </Col>
+                        </FormGroup>
                         {this.renderFooter()}
                     </fieldset>
                 </Form>

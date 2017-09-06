@@ -20,6 +20,18 @@ export const postAgent = createAction(AGENT_ACTIONS.POST_AGENT);
 export const postAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.POST_AGENT_COMPLETE);
 export const postAgentError = createAction(AGENT_ACTIONS.POST_AGENT_ERROR);
 
+export function getAccounts(agentId: number, successCallback:(data: CardPeak.Entities.Account[]) => void) {
+    return (dispatch: (e: any) => void) => {
+        let selectAgentAction = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.SELECT_AGENT);
+        agentsController.getAccountsAsync(agentId).then((data: CardPeak.Entities.Account[]) => {
+            if (successCallback) {
+                successCallback(data);
+            }
+            dispatch(createAction<CardPeak.Entities.Account[]>(AGENT_ACTIONS.GET_ACCOUNTS)(data));
+        });
+    }
+}
+
 export function postAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(postAgent());

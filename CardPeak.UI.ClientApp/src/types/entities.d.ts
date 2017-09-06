@@ -8,6 +8,7 @@
         public gender: string;
         public birthDate?: Date;
         public email: string;
+        public accounts?: CardPeak.Entities.Account[]
     }
 
     export class Account {

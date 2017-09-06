@@ -88,5 +88,10 @@ namespace CardPeak.Service
             this.DomainContext.SaveChanges();
             return agent;
         }
+
+        public IEnumerable<Account> GetAccounts(int agentId)
+        {
+            return this.AccountRepository.FindByAgent(agentId);
+        }
     }
 }

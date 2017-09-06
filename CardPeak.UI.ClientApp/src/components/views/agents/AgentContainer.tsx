@@ -45,7 +45,8 @@ class AgentContainer extends
             lastName: '',
             gender: 'M',
             email: '',
-            birthDate: new Date()
+            birthDate: new Date(),
+            accounts: []
         };
         this.state = {
             ...this.state,
@@ -65,7 +66,10 @@ class AgentContainer extends
     }
     handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
         this.handleToggleModal();
-        this.setState({ selectedAgent: agent });
+        this.props.actions.getAccounts(agent.agentId, (data: CardPeak.Entities.Account[]) => {
+            agent.accounts = data;
+            this.setState({ selectedAgent: agent });
+        });
     }
     handleOnWindowChange = (e: any) => {
         this.setState({ showWindow: e.target.value });

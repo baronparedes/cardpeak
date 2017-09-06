@@ -17,7 +17,10 @@ const API = {
     PUT_AGENT: (agentId: number) => {
         return '/agents/' + agentId + '/update'
     },
-    POST_AGENT: '/agents/create'
+    POST_AGENT: '/agents/create',
+    GET_ACCOUNTS: (agentId: number) => {
+        return '/agents/' + agentId + '/accounts';
+    }
 }
 
 export function getAll(successCallback: (data: CardPeak.Entities.Agent[]) => void) {
@@ -98,4 +101,12 @@ export function postAgent(agent: CardPeak.Entities.Agent,
         .catch((reason) => {
             errorCallback(reason.message);
         })
+}
+
+export async function getAccountsAsync(agentId: number) {
+    let result = await axios(API.GET_ACCOUNTS(agentId));
+    if (result.status != 200) {
+        return [];
+    }
+    return result.data as CardPeak.Entities.Account[];
 }
