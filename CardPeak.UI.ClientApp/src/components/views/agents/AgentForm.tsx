@@ -81,13 +81,17 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
         })
     }
     handleOnAddAccount = (account: string) => {
-        this.handleOnDeleteAccount(account);
-        let accounts = this.state.agent.accounts.slice();
-        let newAccount: CardPeak.Entities.Account = {
+        let accounts: CardPeak.Entities.Account[] = []
+        this.state.agent.accounts.forEach(_ => {
+            if (_.alias.toLowerCase() === account.toLowerCase()) {
+                return;
+            }
+            accounts.push(_);
+        });
+        accounts.push({
             agentId: this.props.agent.agentId,
             alias: account
-        }
-        accounts.push(newAccount);
+        });
         this.setState({
             agent: {
                 ...this.state.agent,
@@ -96,7 +100,13 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
         });
     }
     handleOnDeleteAccount = (account: string) => {
-        let accounts = this.state.agent.accounts.filter(_ => _.alias.toLowerCase() !== account.toLowerCase());
+        let accounts: CardPeak.Entities.Account[] = []
+        this.state.agent.accounts.forEach(_ => {
+            if (_.alias.toLowerCase() === account.toLowerCase()) {
+                return;
+            }
+            accounts.push(_);
+        });
         this.setState({
             agent: {
                 ...this.state.agent,

@@ -71,11 +71,11 @@ class AgentAccountList extends React.Component<AgentAccountListProps, AgentAccou
         this.setState({ errors });
         return errors;
     }
-    handleOnClickAddRate = () => {
+    handleOnClickAddAccount = () => {
         if (this.hasErrors()) {
             return;
         }
-        this.props.onAddAccount(this.state.input);
+        this.props.onAddAccount(this.state.input.toUpperCase());
         this.setState({ input: "" });
     }
     handleOnChange = (e: any) => {
@@ -92,7 +92,7 @@ class AgentAccountList extends React.Component<AgentAccountListProps, AgentAccou
     handleOnKeyPress = (e: any) => {
         if (e.charCode === 13) {
             e.preventDefault();
-            this.handleOnClickAddRate();
+            this.handleOnClickAddAccount();
         }
     }
     render() {
@@ -105,6 +105,7 @@ class AgentAccountList extends React.Component<AgentAccountListProps, AgentAccou
                             name="input"
                             placeholder="alias"
                             className="form-control"
+                            value={this.state.input}
                             onFocus={this.handleFocus}
                             onChange={this.handleOnChange}
                             onKeyPress={this.handleOnKeyPress}
@@ -113,7 +114,7 @@ class AgentAccountList extends React.Component<AgentAccountListProps, AgentAccou
                             <Button
                                 type="button"
                                 bsStyle="primary"
-                                onClick={this.handleOnClickAddRate}
+                                onClick={this.handleOnClickAddAccount}
                                 disabled={this.props.isSaving}>
                                 <i className="fa fa-lg fa-save"></i>
                             </Button>

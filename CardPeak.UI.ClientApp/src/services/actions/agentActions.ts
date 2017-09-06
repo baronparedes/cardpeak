@@ -41,7 +41,7 @@ export function postAgentStart(agent: CardPeak.Entities.Agent, successCallback?:
                 successCallback();
             }
         }, (error: string) => {
-            dispatch(putAgentError());
+            dispatch(postAgentError());
             if (errorCallback) {
                 errorCallback(error);
             }
