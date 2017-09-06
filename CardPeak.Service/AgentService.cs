@@ -4,6 +4,7 @@ using CardPeak.Domain;
 using CardPeak.Repository.EF;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace CardPeak.Service
@@ -73,19 +74,23 @@ namespace CardPeak.Service
 
         public Agent Update(Agent agent)
         {
-            var result = this.AgentRepository.Update(agent.AgentId, agent);
-            if (result == null)
+            var accounts = this.AccountRepository.FindByAgent(agent.AgentId).ToList();
+            accounts.ForEach(_ => {
+                this.DomainContext.Entry(_).State = EntityState.Deleted;
+            });
+            this.DomainContext.Entry(agent).State = EntityState.Modified;
+            foreach (var account in agent.Accounts)
             {
-                return null;
+                this.DomainContext.Entry(account).State = EntityState.Added;
             }
-            this.DomainContext.SaveChanges();
-            return result;
+            this.Complete();
+            return agent;
         }
 
         public Agent Create(Agent agent)
         {
             this.AgentRepository.Add(agent);
-            this.DomainContext.SaveChanges();
+            this.Complete();
             return agent;
         }
 

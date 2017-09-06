@@ -80,6 +80,30 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             }
         })
     }
+    handleOnAddAccount = (account: string) => {
+        this.handleOnDeleteAccount(account);
+        let accounts = this.state.agent.accounts.slice();
+        let newAccount: CardPeak.Entities.Account = {
+            agentId: this.props.agent.agentId,
+            alias: account
+        }
+        accounts.push(newAccount);
+        this.setState({
+            agent: {
+                ...this.state.agent,
+                accounts
+            }
+        });
+    }
+    handleOnDeleteAccount = (account: string) => {
+        let accounts = this.state.agent.accounts.filter(_ => _.alias.toLowerCase() !== account.toLowerCase());
+        this.setState({
+            agent: {
+                ...this.state.agent,
+                accounts
+            }
+        });
+    }
     componentWillReceiveProps(nextProps: AgentFormProps) {
         if (this.state.agent.agentId != nextProps.agent.agentId || nextProps.agent.agentId === 0) {
             this.setState({
@@ -173,7 +197,11 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     onChangeDate={this.handleChangeBirthDate} />
                             </Col>
                             <Col lg={4} md={4} sm={12} xs={12}>
-                                <AgentAccountList accounts={this.state.agent.accounts} onRemoveAccount={() => { }} />
+                                <AgentAccountList
+                                    accounts={this.state.agent.accounts}
+                                    isSaving={this.props.isSaving}
+                                    onAddAccount={this.handleOnAddAccount}
+                                    onRemoveAccount={this.handleOnDeleteAccount} />
                             </Col>
                         </FormGroup>
                         {this.renderFooter()}
