@@ -25,8 +25,13 @@ namespace CardPeak.Service
 
         public decimal ComputeAmountAllocation(int agentId, decimal units, int cardCategoryId, int bankId)
         {
-            // TODO: Compute by Rates
-            return 0;
+            var rate = this.RateRepository.GetRate(agentId, cardCategoryId, bankId);
+            if (rate == null)
+            {
+                throw new ArgumentNullException("Rate for this agent was not found.");
+            }
+
+            return rate.Amount * units;
         }
 
         public IEnumerable<Account> GetAgentsByAlias(string alias)

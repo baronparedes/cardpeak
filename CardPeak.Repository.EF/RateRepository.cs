@@ -12,6 +12,17 @@ namespace CardPeak.Repository.EF
         {
         }
 
+        public Rate GetRate(int agentId, int cardCategoryId, int bankId)
+        {
+            var rate = this.Context.Rates
+                .Where(_ => _.BankId == bankId)
+                .Where(_ => _.CardCategoryId == cardCategoryId)
+                .Where(_ => _.AgentId == agentId || _.AgentId == 0)
+                .OrderBy(_ => _.AgentId)
+                .FirstOrDefault();
+            return rate;
+        }
+
         public IEnumerable<Rate> GetRates(int agentId)
         {
             return this.Context.Rates
