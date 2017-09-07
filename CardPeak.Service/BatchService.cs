@@ -18,13 +18,14 @@ namespace CardPeak.Service
         private IReferenceRepository ReferenceRepository;
         private IBatchUploadRepository BatchUploadRepository;
         private IProcessorService ProcessorService;
+        private IBatchFileConfigurationRepository BatchFileConfigurationRepository;
 
         public BatchService(CardPeakDbContext context) : base(context)
         {
             this.ReferenceRepository = new ReferenceRepository(context);
             this.BatchUploadRepository = new BatchUploadRepository(context);
             this.ProcessorService = new ProcessorService(context);
-
+            this.BatchFileConfigurationRepository = new BatchFileConfigurationRepository(context);
             this.Processor = new CardPeak.Processor.Excel.Processor(this.ProcessorService);
         }
 
@@ -62,7 +63,7 @@ namespace CardPeak.Service
         {
             IEnumerable<ProcessedApprovalTransaction> processedApprovalTransactions = null;
             var batch = this.BatchUploadRepository.Get(id);
-            var config = this.BatchUploadRepository.GetConfiguration(batch.BankId);
+            var config = this.BatchFileConfigurationRepository.FindByBankId(batch.BankId);
             batch.ProcessStartDateTime = DateTime.Now;
             this.DomainContext.Entry(batch.Bank).State = EntityState.Unchanged;
             this.DomainContext.Entry(batch).State = EntityState.Modified;

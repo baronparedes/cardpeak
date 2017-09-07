@@ -6,6 +6,6 @@ namespace CardPeak.Core.Processor
 {
     public interface IProcessor
     {
-        IEnumerable<ProcessedApprovalTransaction> Process(FileInfo file, BatchUpload batch, BatchUploadConfiguration config);
+        IEnumerable<ProcessedApprovalTransaction> Process(FileInfo file, BatchUpload batch, BatchFileConfiguration config);
     }
 }

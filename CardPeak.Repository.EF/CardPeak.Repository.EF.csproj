@@ -52,6 +52,7 @@
     <Compile Include="AccountRepository.cs" />
     <Compile Include="AgentRepository.cs" />
     <Compile Include="ApprovalTransactionRepository.cs" />
+    <Compile Include="BatchFileConfigurationRepository.cs" />
     <Compile Include="BatchUploadRepository.cs" />
     <Compile Include="CardPeakDbContext.Context.cs">
       <AutoGen>True</AutoGen>

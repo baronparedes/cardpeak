@@ -37,7 +37,7 @@ namespace CardPeak.Processor.Excel
             }
         }
 
-        private Dictionary<string, string> ConvertItem(DataRow item, BatchUploadConfiguration configuration)
+        private Dictionary<string, string> ConvertItem(DataRow item, BatchFileConfiguration configuration)
         {
             var fields = new Dictionary<string, string>();
             this.GetColumn(item, configuration.AliasColumn, ApprovalFileFields.Alias, fields);
@@ -141,7 +141,7 @@ namespace CardPeak.Processor.Excel
             return fullName;
         }
 
-        private List<ProcessedApprovalTransaction> ProcessItem(DataRow item, BatchUpload batch, BatchUploadConfiguration configuration, int rowNumber)
+        private List<ProcessedApprovalTransaction> ProcessItem(DataRow item, BatchUpload batch, BatchFileConfiguration configuration, int rowNumber)
         {
             var fields = this.ConvertItem(item, configuration);
             var result = this.ConvertItem(fields);
@@ -223,7 +223,7 @@ namespace CardPeak.Processor.Excel
         }
 
 
-        private void ValidateConfiguration(BatchUploadConfiguration configuration)
+        private void ValidateConfiguration(BatchFileConfiguration configuration)
         {
             if (configuration == null)
             {
@@ -239,19 +239,9 @@ namespace CardPeak.Processor.Excel
             {
                 throw new ArgumentException(string.Format(Processor.InvalidConfigurationErrorMessageFormat, "Card Category"));
             }
-
-            if (!configuration.ApprovalDateColumn.HasValue)
-            {
-                throw new ArgumentException(string.Format(Processor.InvalidConfigurationErrorMessageFormat, "Approval Date"));
-            }
-
-            if (!configuration.ProductTypeColumn.HasValue)
-            {
-                throw new ArgumentException(string.Format(Processor.InvalidConfigurationErrorMessageFormat, "Product Type"));
-            }
         }
 
-        private ExcelDataSetConfiguration DataSetConfiguration(BatchUploadConfiguration configuration)
+        private ExcelDataSetConfiguration DataSetConfiguration(BatchFileConfiguration configuration)
         {
             var config = new ExcelDataSetConfiguration
             {
@@ -272,7 +262,7 @@ namespace CardPeak.Processor.Excel
             return config;
         }
 
-        public IEnumerable<ProcessedApprovalTransaction> Process(FileInfo file, BatchUpload batch, BatchUploadConfiguration configuration)
+        public IEnumerable<ProcessedApprovalTransaction> Process(FileInfo file, BatchUpload batch, BatchFileConfiguration configuration)
         {
             if (!File.Exists(file.FullName))
             {

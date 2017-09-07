@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Core.Repository
 {
-    public interface IBatchUploadRepository : IRepository<BatchUpload>
+    public interface IBatchFileConfigurationRepository : IRepository<BatchFileConfiguration>
     {
+        BatchFileConfiguration FindByBankId(int bankId);
     }
 }

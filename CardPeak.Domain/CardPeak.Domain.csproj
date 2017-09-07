@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentDashboard.cs" />
-    <Compile Include="BatchUploadConfiguration.cs" />
     <Compile Include="Constants\ApprovalFileFields.cs" />
     <Compile Include="Enums\ReferenceTypeEnum.cs" />
     <Compile Include="Enums\TransactionTypeEnum.cs" />

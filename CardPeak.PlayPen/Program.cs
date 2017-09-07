@@ -20,8 +20,8 @@ namespace CardPeak.PlayPen
             batchUpload.BankId = 1;
             batchUpload.BatchId = 1;
 
-            var batchConfig = new BatchUploadConfiguration();
-            batchConfig.FirstRowIsHeader = true;
+            var batchConfig = new BatchFileConfiguration();
+            batchConfig.HasHeader = true;
             batchConfig.Ref1Column = 0;
             batchConfig.ApprovalDateColumn = 2;
             batchConfig.ClientLastNameColumn = 3;
