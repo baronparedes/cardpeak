@@ -196,4 +196,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="BatchUploadConfigurationId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="88cbfbeb-9a49-4666-99db-d4236aaa5a57" ChangeDateTime="09/07/2017 12:59:22">
+    <Property Name="ElementName" Value="[dbo].[BatchFileConfiguration].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BatchFileConfiguration]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="BatchFileConfigurationId" />
+  </Operation>
 </Operations>

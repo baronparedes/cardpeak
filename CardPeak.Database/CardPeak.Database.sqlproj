@@ -79,6 +79,7 @@
     <None Include="Script\Defaults\PopulateDefaultRates.sql" />
     <Build Include="dbo\Stored Procedures\GetAgentPerformance.sql" />
     <None Include="Script\PopulateReferenceTypes.sql" />
+    <Build Include="dbo\Tables\BatchFileConfiguration.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

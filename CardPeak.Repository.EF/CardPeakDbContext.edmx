@@ -34,8 +34,8 @@
           <Property Name="BankId" Type="int" Nullable="false" />
           <Property Name="CardCategoryId" Type="int" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
-          <Property Name="Units" Type="decimal" Precision="19" Scale="2" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="Units" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="ProductType" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ReferenceNumber1" Type="varchar" MaxLength="50" />
           <Property Name="ReferenceNumber2" Type="varchar" MaxLength="50" />
@@ -43,6 +43,26 @@
           <Property Name="ApprovalDate" Type="date" Nullable="false" />
           <Property Name="BatchId" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BatchFileConfiguration">
+          <Key>
+            <PropertyRef Name="BatchFileConfigurationId" />
+          </Key>
+          <Property Name="BatchFileConfigurationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BankId" Type="int" Nullable="false" />
+          <Property Name="HasHeader" Type="bit" Nullable="false" />
+          <Property Name="SkipNumberOfRows" Type="int" />
+          <Property Name="AliasColumn" Type="int" />
+          <Property Name="ProductTypeColumn" Type="int" />
+          <Property Name="Ref1Column" Type="int" />
+          <Property Name="Ref2Column" Type="int" />
+          <Property Name="ClientFullNameColumn" Type="int" />
+          <Property Name="ClientFirstNameColumn" Type="int" />
+          <Property Name="ClientMiddleNameColumn" Type="int" />
+          <Property Name="ClientLastNameColumn" Type="int" />
+          <Property Name="ApprovalDateColumn" Type="int" />
+          <Property Name="CardCategoryColumn" Type="int" />
+          <Property Name="CardCountColumn" Type="int" />
         </EntityType>
         <EntityType Name="BatchUpload">
           <Key>
@@ -62,7 +82,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Remarks" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="TransactionTypeId" Type="int" Nullable="false" />
           <Property Name="TransactionDateTime" Type="datetime" Nullable="false" />
@@ -75,7 +95,7 @@
             <PropertyRef Name="AgentId" />
           </Key>
           <Property Name="RateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Amount" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="BankId" Type="int" Nullable="false" />
           <Property Name="CardCategoryId" Type="int" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
@@ -152,6 +172,18 @@
             </Principal>
             <Dependent Role="ApprovalTransaction">
               <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BatchFileConfiguration_Reference_BankId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="BatchFileConfiguration" Type="Self.BatchFileConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="BatchFileConfiguration">
+              <PropertyRef Name="BankId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -246,6 +278,7 @@
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApprovalTransaction" EntityType="Self.ApprovalTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BatchFileConfiguration" EntityType="Self.BatchFileConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BatchUpload" EntityType="Self.BatchUpload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DebitCreditTransaction" EntityType="Self.DebitCreditTransaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
@@ -267,6 +300,10 @@
           <AssociationSet Name="FK_ApprovalTransaction_Reference_CardCategoryId" Association="Self.FK_ApprovalTransaction_Reference_CardCategoryId">
             <End Role="Reference" EntitySet="Reference" />
             <End Role="ApprovalTransaction" EntitySet="ApprovalTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BatchFileConfiguration_Reference_BankId" Association="Self.FK_BatchFileConfiguration_Reference_BankId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="BatchFileConfiguration" EntitySet="BatchFileConfiguration" />
           </AssociationSet>
           <AssociationSet Name="FK_BatchUpload_Bank" Association="Self.FK_BatchUpload_Bank">
             <End Role="Reference" EntitySet="Reference" />
@@ -358,6 +395,11 @@
             <End Role="ReferenceType" EntitySet="ReferenceTypes" />
             <End Role="Reference" EntitySet="References" />
           </AssociationSet>
+          <EntitySet Name="BatchFileConfiguration" EntityType="CardPeakModel.BatchFileConfiguration" />
+          <AssociationSet Name="FK_BatchFileConfiguration_Reference_BankId" Association="CardPeakModel.FK_BatchFileConfiguration_Reference_BankId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="BatchFileConfiguration" EntitySet="BatchFileConfiguration" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="GetAgentPerformance_Result">
           <Property Type="String" Name="MonthName" Nullable="true" MaxLength="30" />
@@ -397,8 +439,8 @@
           <Property Name="BankId" Type="Int32" Nullable="false" />
           <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
-          <Property Name="Units" Type="Decimal" Nullable="false" Precision="19" Scale="2" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="2" />
+          <Property Name="Units" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="ProductType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ReferenceNumber1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ReferenceNumber2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -429,7 +471,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="Remarks" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="TransactionTypeId" Type="Int32" Nullable="false" />
           <Property Name="TransactionDateTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -444,7 +486,7 @@
             <PropertyRef Name="AgentId" />
           </Key>
           <Property Name="RateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="BankId" Type="Int32" Nullable="false" />
           <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
           <Property Name="AgentId" Type="Int32" Nullable="false" />
@@ -613,6 +655,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BatchFileConfiguration">
+          <Key>
+            <PropertyRef Name="BatchFileConfigurationId" />
+          </Key>
+          <Property Name="BatchFileConfigurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <Property Name="HasHeader" Type="Boolean" Nullable="false" />
+          <Property Name="SkipNumberOfRows" Type="Int32" />
+          <Property Name="AliasColumn" Type="Int32" />
+          <Property Name="ProductTypeColumn" Type="Int32" />
+          <Property Name="Ref1Column" Type="Int32" />
+          <Property Name="Ref2Column" Type="Int32" />
+          <Property Name="ClientFullNameColumn" Type="Int32" />
+          <Property Name="ClientFirstNameColumn" Type="Int32" />
+          <Property Name="ClientMiddleNameColumn" Type="Int32" />
+          <Property Name="ClientLastNameColumn" Type="Int32" />
+          <Property Name="ApprovalDateColumn" Type="Int32" />
+          <Property Name="CardCategoryColumn" Type="Int32" />
+          <Property Name="CardCountColumn" Type="Int32" />
+          <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_BatchFileConfiguration_Reference_BankId" FromRole="BatchFileConfiguration" ToRole="Reference" />
+        </EntityType>
+        <Association Name="FK_BatchFileConfiguration_Reference_BankId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.BatchFileConfiguration" Role="BatchFileConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="BatchFileConfiguration">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -735,6 +810,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BatchFileConfiguration">
+            <EntityTypeMapping TypeName="CardPeakModel.BatchFileConfiguration">
+              <MappingFragment StoreEntitySet="BatchFileConfiguration">
+                <ScalarProperty Name="CardCountColumn" ColumnName="CardCountColumn" />
+                <ScalarProperty Name="CardCategoryColumn" ColumnName="CardCategoryColumn" />
+                <ScalarProperty Name="ApprovalDateColumn" ColumnName="ApprovalDateColumn" />
+                <ScalarProperty Name="ClientLastNameColumn" ColumnName="ClientLastNameColumn" />
+                <ScalarProperty Name="ClientMiddleNameColumn" ColumnName="ClientMiddleNameColumn" />
+                <ScalarProperty Name="ClientFirstNameColumn" ColumnName="ClientFirstNameColumn" />
+                <ScalarProperty Name="ClientFullNameColumn" ColumnName="ClientFullNameColumn" />
+                <ScalarProperty Name="Ref2Column" ColumnName="Ref2Column" />
+                <ScalarProperty Name="Ref1Column" ColumnName="Ref1Column" />
+                <ScalarProperty Name="ProductTypeColumn" ColumnName="ProductTypeColumn" />
+                <ScalarProperty Name="AliasColumn" ColumnName="AliasColumn" />
+                <ScalarProperty Name="SkipNumberOfRows" ColumnName="SkipNumberOfRows" />
+                <ScalarProperty Name="HasHeader" ColumnName="HasHeader" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="BatchFileConfigurationId" ColumnName="BatchFileConfigurationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -749,7 +845,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
