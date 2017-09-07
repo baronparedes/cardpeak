@@ -251,17 +251,21 @@ namespace CardPeak.Processor.Excel
             }
         }
 
-        private ExcelDataSetConfiguration DataSetConfiguration(bool useHeaderRow)
+        private ExcelDataSetConfiguration DataSetConfiguration(BatchUploadConfiguration configuration)
         {
             var config = new ExcelDataSetConfiguration
             {
                 ConfigureDataTable = (reader) => new ExcelDataTableConfiguration()
                 {
                     EmptyColumnNamePrefix = Processor.DefaultEmptyColumnPrefix,
-                    UseHeaderRow = useHeaderRow,
-                    //ReadHeaderRow = (rowReader) => {
-                    //    rowReader.Read();
-                    //}
+                    UseHeaderRow = configuration.HasHeader,
+                    ReadHeaderRow = (rowReader) =>
+                    {
+                        for (int i = 0; i < configuration.SkipNumberOfRows.GetValueOrDefault(); i++)
+                        {
+                            rowReader.Read();
+                        }
+                    }
                 }
             };
 
@@ -285,7 +289,7 @@ namespace CardPeak.Processor.Excel
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
                     var approvals = new List<ApprovalTransaction>();
-                    var dataSet = reader.AsDataSet(this.DataSetConfiguration(configuration.FirstRowIsHeader));
+                    var dataSet = reader.AsDataSet(this.DataSetConfiguration(configuration));
                     var dataTable = dataSet.Tables[0];
                     foreach (var item in dataTable.Rows)
                     {

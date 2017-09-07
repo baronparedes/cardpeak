@@ -61,8 +61,7 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
                 .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
-            endDate = endDate ?? DateTime.Today;
-            if (startDate.Date <= endDate.Value.Date)
+            if (endDate != null && startDate.Date <= endDate.Value.Date)
             {
                 result = result
                     .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= DbFunctions.TruncateTime(endDate.Value));

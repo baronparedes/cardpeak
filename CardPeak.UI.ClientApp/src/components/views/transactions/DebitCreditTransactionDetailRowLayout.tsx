@@ -20,10 +20,10 @@ const DebitCreditTransactionDetailRowLayout = (props: DebitCreditTransactionDeta
                 xsHidden={!props.isHeader}>
                 <span className="text-center spacer-left">Debit/Credit Transactions</span>
             </Col>
-            <Col md={9} lg={9} sm={8} xsHidden={props.isHeader}>
+            <Col md={8} lg={8} sm={8} xsHidden={props.isHeader}>
                 {props.isHeader ? "remarks" : props.transaction.remarks}
             </Col>
-            <Col md={1} lg={1} sm={2} xsHidden={props.isHeader}>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "transaction date" : dateFormat(props.transaction.transactionDateTime)}
             </Col>
             <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>

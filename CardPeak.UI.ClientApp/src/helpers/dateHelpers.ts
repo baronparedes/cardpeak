@@ -1,11 +1,11 @@
 ﻿import * as moment from 'moment'
 
 export const dateFormat = (date: Date) => {
-    return moment(date).format("DD/MM/YYYY")
+    return moment(date).format("MMM-DD-YYYY")
 }
 
 export const dateTimeFormat = (date: Date) => {
-    return moment(date).format("DD/MM/YYYY HH:mm")
+    return moment(date).format("MMM-DD-YYYY HH:mm")
 }
 
 export const dateFormatISO = (date: Date) => {

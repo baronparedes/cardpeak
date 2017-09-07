@@ -20,7 +20,12 @@ export function uploadFile(data: FormData,
             successCallback(r.data as CardPeak.Entities.BatchUpload);
         })
         .catch((reason) => {
-            errorCallback(reason.message);
+            try {
+                errorCallback(reason.response.data.exceptionMessage)
+            }
+            catch (e) {
+                errorCallback(reason.message);
+            }
         });
 }
 

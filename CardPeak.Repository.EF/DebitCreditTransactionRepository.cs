@@ -40,8 +40,7 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
                 .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) >= startDate.Date);
 
-            endDate = endDate ?? DateTime.Today;
-            if (startDate.Date <= endDate.Value.Date)
+            if (endDate != null && startDate.Date <= endDate.Value.Date)
             {
                 result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) <= DbFunctions.TruncateTime(endDate.Value));
             }

@@ -9,5 +9,6 @@ namespace CardPeak.Core.Repository
 {
     public interface IBatchUploadRepository : IRepository<BatchUpload>
     {
+        BatchUploadConfiguration GetConfiguration(int bankId);
     }
 }

@@ -11,7 +11,8 @@ namespace CardPeak.Domain
         public int BatchUploadConfigurationId { get; set; }
         public int BankId { get; set; }
         public Reference Bank { get; set; }
-        public bool FirstRowIsHeader { get; set; }
+        public bool HasHeader { get; set; }
+        public int? SkipNumberOfRows { get; set; }
         public int? AliasColumn { get; set; }
         public int? ProductTypeColumn { get; set; }
         public int? Ref1Column { get; set; }
