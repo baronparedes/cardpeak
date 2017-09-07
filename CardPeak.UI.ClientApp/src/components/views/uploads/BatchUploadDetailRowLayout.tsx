@@ -16,25 +16,28 @@ const BatchUploadDetailRowLayout = (props: BatchUploadDetailRowLayoutProps) => {
                 xsHidden={!props.isHeader}>
                 <span className="text-center spacer-left">Batch Details</span>
             </Col>
-            <Col md={1} lg={1} sm={2} xsHidden={props.isHeader}>
+            <Col md={1} lg={1} sm={1} xsHidden={props.isHeader}>
                 {props.isHeader ? "id" : props.batchUpload.batchId}
             </Col>
-            <Col md={2} lg={2} sm={3} xsHidden={props.isHeader}>
+            <Col md={3} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "bank" : props.batchUpload.bank.description}
             </Col>
-            <Col md={3} lg={3} sm={4} xsHidden={props.isHeader}>
+            <Col md={4} lg={4} sm={5} xsHidden={props.isHeader}>
                 {props.isHeader ? "file" : props.batchUpload.fileName.split('\\').pop().split('/').pop()}
             </Col>
-            <Col md={2} lg={2} smHidden xsHidden={props.isHeader}>
+            <Col mdHidden lg={1} smHidden xsHidden={props.isHeader}>
                 {props.isHeader ? "start" : props.batchUpload.processStartDateTime ? dateTimeFormat(props.batchUpload.processStartDateTime) : null}
             </Col>
-            <Col md={2} lg={2} smHidden xsHidden={props.isHeader}>
+            <Col mdHidden lg={1} smHidden xsHidden={props.isHeader}>
                 {props.isHeader ? "end" : props.batchUpload.processEndDateTime ? dateTimeFormat(props.batchUpload.processEndDateTime) : null}
             </Col>
-            <Col md={1} lg={1} sm={2} xsHidden={props.isHeader}>
+            <Col md={1} lg={1} sm={1} xsHidden={props.isHeader}>
+                {props.isHeader ? "rows" : props.batchUpload.processedRecords ? props.batchUpload.processedRecords : null}
+            </Col>
+            <Col md={1} lg={1} sm={1} xsHidden={props.isHeader}>
                 {props.isHeader ? "completed" : null}
-                {!props.isHeader && props.batchUpload.hasErrors === true ? <span className="text-highlight">No</span> : null}
-                {!props.isHeader && props.batchUpload.hasErrors === false ? <span className="text-highlight">Yes</span> : null}
+                {!props.isHeader && props.batchUpload.hasErrors === true ? <span className="text-highlight text-danger">No</span> : null}
+                {!props.isHeader && props.batchUpload.hasErrors === false ? <span className="text-highlight text-success">Yes</span> : null}
             </Col>
         </Row>
     )

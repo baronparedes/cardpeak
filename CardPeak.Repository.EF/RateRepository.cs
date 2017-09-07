@@ -18,7 +18,7 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.BankId == bankId)
                 .Where(_ => _.CardCategoryId == cardCategoryId)
                 .Where(_ => _.AgentId == agentId || _.AgentId == 0)
-                .OrderBy(_ => _.AgentId)
+                .OrderByDescending(_ => _.AgentId)
                 .FirstOrDefault();
             return rate;
         }

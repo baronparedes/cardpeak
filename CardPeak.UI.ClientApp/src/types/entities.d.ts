@@ -95,6 +95,7 @@
         public hasErrors?: boolean;
         public processStartDateTime?: Date;
         public processEndDateTime?: Date;
+        public processedRecords?: number;
         public bank?: Reference;
     }
 

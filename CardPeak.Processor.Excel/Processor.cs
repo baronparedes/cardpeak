@@ -173,12 +173,24 @@ namespace CardPeak.Processor.Excel
         private List<ProcessedApprovalTransaction> SplitTransactions(ProcessedApprovalTransaction item, IEnumerable<Account> accounts)
         {
             var result = new List<ProcessedApprovalTransaction>();
-            decimal splitUnits = 1 / accounts.Count();
+            decimal splitUnits = 1.0m / accounts.Count();
             foreach (var agent in accounts)
             {
                 var transaction = new ProcessedApprovalTransaction
                 {
-                    Transaction = item.Transaction,
+                    Transaction = new ApprovalTransaction
+                    {
+                        ApprovalDate = item.Transaction.ApprovalDate,
+                        BankId = item.Transaction.BankId,
+                        Bank = item.Transaction.Bank,
+                        CardCategory = item.Transaction.CardCategory,
+                        CardCategoryId = item.Transaction.CardCategoryId,
+                        Client = item.Transaction.Client,
+                        BatchId = item.Transaction.BatchId,
+                        ProductType = item.Transaction.ProductType,
+                        ReferenceNumber1 = item.Transaction.ReferenceNumber1,
+                        ReferenceNumber2 = item.Transaction.ReferenceNumber2
+                    },
                     Row = item.Row,
                     Alias = item.Alias,
                     ErrorMessages = new List<string>(),
@@ -247,9 +259,9 @@ namespace CardPeak.Processor.Excel
                 {
                     EmptyColumnNamePrefix = Processor.DefaultEmptyColumnPrefix,
                     UseHeaderRow = useHeaderRow,
-                    ReadHeaderRow = (rowReader) => {
-                        rowReader.Read();
-                    }
+                    //ReadHeaderRow = (rowReader) => {
+                    //    rowReader.Read();
+                    //}
                 }
             };
 

@@ -92,6 +92,7 @@ namespace CardPeak.Service
                 });
 
                 batch.HasErrors = processedApprovalTransactions.Any(_ => _.HasErrors);
+                batch.ProcessedRecords = processedApprovalTransactions.Select(_ => _.Row).Distinct().Count();
                 if (!batch.HasErrors.Value)
                 {
                     foreach (var item in processedApprovalTransactions)

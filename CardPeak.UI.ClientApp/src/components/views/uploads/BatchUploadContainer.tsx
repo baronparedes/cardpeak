@@ -127,7 +127,7 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                     onClickClear={this.props.actions.clearBatch}
                     onProcess={this.props.actions.processBatchStart} />
                 {
-                    !this.props.processingCompleted ? null :
+                    !this.props.processingCompleted || !this.props.selectedBatchUpload.hasErrors ? null :
                         <BatchUploadErrorList processedItems={this.props.processedApprovalTransactions} />
                 }
             </div>

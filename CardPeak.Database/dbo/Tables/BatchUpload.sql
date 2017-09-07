@@ -6,5 +6,6 @@
     [HasErrors] BIT NULL DEFAULT 0, 
     [ProcessStartDateTime] DATETIME NULL, 
     [ProcessEndDateTime] DATETIME NULL, 
+    [ProcessedRecords] INT NULL, 
     CONSTRAINT [FK_BatchUpload_Bank] FOREIGN KEY (BankId) REFERENCES [Reference]([ReferenceId])
 )

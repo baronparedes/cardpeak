@@ -20,6 +20,7 @@ namespace CardPeak.Domain
         public Nullable<bool> HasErrors { get; set; }
         public Nullable<System.DateTime> ProcessStartDateTime { get; set; }
         public Nullable<System.DateTime> ProcessEndDateTime { get; set; }
+        public Nullable<int> ProcessedRecords { get; set; }
     
         public virtual Reference Bank { get; set; }
     }
