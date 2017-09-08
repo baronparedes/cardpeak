@@ -89,6 +89,7 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                     <Form horizontal onSubmit={(e: any) => { e.preventDetfault() }}>
                         <fieldset disabled={this.props.uploadingFile || this.props.processing}>
                             <FormFieldFile
+                                block
                                 onChange={this.handleOnFileChange}
                                 label="file"
                                 name="fileName"

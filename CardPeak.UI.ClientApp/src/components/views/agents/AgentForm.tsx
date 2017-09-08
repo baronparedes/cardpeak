@@ -152,7 +152,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                 <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
                     <fieldset disabled={this.props.isSaving}>
                         <FormGroup>
-                            <Col lg={8} md={8} sm={12} xs={12}>
+                            <Col lg={7} md={6} sm={12} xs={12}>
                                 <FormFieldInput
                                     controlId="form-first-name"
                                     type="text"
@@ -206,7 +206,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     value={this.state.agent.birthDate}
                                     onChangeDate={this.handleChangeBirthDate} />
                             </Col>
-                            <Col lg={4} md={4} sm={12} xs={12}>
+                            <Col lg={5} md={6} sm={12} xs={12}>
                                 <AgentAccountList
                                     accounts={this.state.agent.accounts}
                                     isSaving={this.props.isSaving}

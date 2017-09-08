@@ -16,60 +16,57 @@ interface FormFieldProps {
     onFocus?: (e: any) => void,
     isRequired?: boolean,
     ref?: (control: any) => void,
-    accept?: string
+    accept?: string,
+    block?: boolean
 }
 
-export const FormFieldInline: React.StatelessComponent<FormFieldProps> = (props) => {
+export const FormFieldGroup: React.StatelessComponent<FormFieldProps> = (props) => {
+    const sm1 = props.block ? 1 : 3;
+    const sm2 = props.block ? 11 : 9;
     return (
         <FormGroup controlId={props.controlId} validationState={!!props.error && props.error != "" ? "error" : null}>
-            <Col sm={2}>
+            <Col sm={sm1}>
                 <ControlLabel className="text-muted">
                     {props.label}
                 </ControlLabel>
             </Col>
-            <Col>
-                <InputGroup>
-                    {props.children}
-                </InputGroup>
+            <Col sm={sm2}>
+                {props.children}
             </Col>
         </FormGroup>
+    )
+}
+
+export const FormFieldInline: React.StatelessComponent<FormFieldProps> = (props) => {
+    return (
+        <FormFieldGroup {...props}>
+            <InputGroup>
+                {props.children}
+            </InputGroup>
+        </FormFieldGroup>
     )
 }
 
 export const FormField: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
-        <FormGroup controlId={props.controlId} validationState={!!props.error && props.error != "" ? "error" : null}>
-            <Col sm={2}>
-                <ControlLabel className="text-muted">
-                    {props.label}
-                </ControlLabel>
-            </Col>
-            <Col>
-                <InputGroup>
-                    {props.children}
-                    <InputGroup.Addon className="addon-form">
-                        {props.isRequired ? <i className="fa fa-asterisk fa-fw text-danger" aria-hidden /> : null}
-                    </InputGroup.Addon>
-                </InputGroup>
-            </Col>
-        </FormGroup>
+        <FormFieldGroup {...props}>
+            <InputGroup>
+                {props.children}
+                <InputGroup.Addon className="addon-form">
+                    {props.isRequired ? <i className="fa fa-asterisk fa-fw text-danger" aria-hidden /> : null}
+                </InputGroup.Addon>
+            </InputGroup>
+        </FormFieldGroup>
     )
 }
 
 export const FormFieldLabel: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
-        <FormGroup>
-            <Col lg={1}>
-                <ControlLabel className="text-muted">
-                    {props.label}
-                </ControlLabel>
-            </Col>
-            <Col lg={11} md={9}>
-                <FormControl.Static>
-                    {props.value}
-                </FormControl.Static>
-            </Col>
-        </FormGroup>
+        <FormFieldGroup {...props}>
+            <FormControl.Static>
+                {props.value}
+            </FormControl.Static>
+        </FormFieldGroup>
     )
 }
 
