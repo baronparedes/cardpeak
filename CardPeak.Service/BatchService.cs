@@ -111,5 +111,13 @@ namespace CardPeak.Service
         {
             return this.BatchFileConfigurationRepository.FindByBankId(bankId);
         }
+
+        public BatchFileConfiguration SaveBatchFileConfiguration(BatchFileConfiguration batchFileConfiguration)
+        {
+            var result = this.BatchFileConfigurationRepository.Save(batchFileConfiguration);
+            this.Complete();
+
+            return result;
+        }
     }
 }

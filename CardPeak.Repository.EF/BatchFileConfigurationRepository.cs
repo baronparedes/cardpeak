@@ -28,5 +28,20 @@ namespace CardPeak.Repository.EF
 
             return result;
         }
+
+        public BatchFileConfiguration Save(BatchFileConfiguration batchFileConfiguration)
+        {
+            if (batchFileConfiguration.BatchFileConfigurationId == 0)
+            {
+                this.Context.Entry(batchFileConfiguration).State = EntityState.Added;
+                this.Context.BatchFileConfiguration.Add(batchFileConfiguration);
+            }
+            else
+            {
+                this.Context.Entry(batchFileConfiguration).State = EntityState.Modified;
+            }
+
+            return batchFileConfiguration;
+        }
     }
 }

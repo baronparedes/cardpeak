@@ -39,5 +39,6 @@
         processedApprovalTransactions?: CardPeak.Entities.ProcessedApprovalTransaction[];
         selectedBatchFileConfiguration?: CardPeak.Entities.BatchFileConfiguration;
         loadingBatchFileConfiguration?: boolean;
+        postingBatchFileConfiguration?: boolean
     }
 }

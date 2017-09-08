@@ -40,6 +40,19 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("config")]
+        public IHttpActionResult PostBatchFileConfig(BatchFileConfiguration batchFileConfiguration)
+        {
+            var result = this.BatchService.SaveBatchFileConfiguration(batchFileConfiguration);
+            if (result == null)
+            {
+                return this.InternalServerError();
+            }
+
+            return this.Ok(result);
+        }
+
+        [HttpPost]
         [Route("batch/{id}")]
         public async Task<IHttpActionResult> ProcessBatch(int id)
         {

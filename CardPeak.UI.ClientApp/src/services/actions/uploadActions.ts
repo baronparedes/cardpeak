@@ -17,7 +17,26 @@ export const clearBatch = createAction(UPLOAD_ACTIONS.CLEAR_BATCH);
 export const getBatchFileConfig = createAction(UPLOAD_ACTIONS.GET_BATCH_FILE_CONFIG);
 export const getBatchFileConfigComplete = createAction<CardPeak.Entities.BatchFileConfiguration>(UPLOAD_ACTIONS.GET_BATCH_FILE_CONFIG_COMPLETED);
 export const getBatchFileConfigError = createAction(UPLOAD_ACTIONS.GET_BATCH_FILE_CONFIG_ERROR);
-export const clearBatchFileConfig = createAction(UPLOAD_ACTIONS.CLEAR_BATCH_FILE_CONFIG)
+
+export const clearBatchFileConfig = createAction(UPLOAD_ACTIONS.CLEAR_BATCH_FILE_CONFIG);
+
+export const postBatchFileConfig = createAction(UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG);
+export const postBatchFileConfigComplete = createAction<CardPeak.Entities.BatchFileConfiguration>(UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG_COMPLETE);
+export const postBatchFileConfigError = createAction(UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG_ERROR);
+
+export function postBatchFileConfigStart(data: CardPeak.Entities.BatchFileConfiguration, errorCallback?: (e: string) => void) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(postBatchFileConfig());
+        uploadController.postBatchFileConfig(data, (data: CardPeak.Entities.BatchFileConfiguration) => {
+            dispatch(postBatchFileConfigComplete(data));
+        }, (e: string) => {
+            dispatch(postBatchFileConfigError());
+            if (errorCallback) {
+                errorCallback(e);
+            }
+        });
+    }
+}
 
 export function getBatchFileConfigStart(bankId: number, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {

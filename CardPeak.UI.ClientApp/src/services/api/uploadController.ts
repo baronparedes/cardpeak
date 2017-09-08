@@ -7,7 +7,8 @@ const API = {
     },
     GET_BATCH_FILE_CONFIG: (bankId: number) => {
         return '/uploads/config/' + bankId;
-    }
+    },
+    POST_BATCH_FILE_CONFIG: '/uploads/config'
 }
 
 export function uploadFile(data: FormData,
@@ -55,4 +56,17 @@ export function getBatchFileConfig(bankId: number,
         .catch((reason) => {
             errorCallback(reason.message);
         });
+}
+
+export function postBatchFileConfig(batchFileConfiguration: CardPeak.Entities.BatchFileConfiguration,
+    successCallback: (data: CardPeak.Entities.BatchFileConfiguration) => void,
+    errorCallback: (error: string) => void) {
+    let url = API.POST_BATCH_FILE_CONFIG;
+    axios.post(url, { ...batchFileConfiguration })
+        .then((r) => {
+            successCallback(r.data as CardPeak.Entities.BatchFileConfiguration);
+        })
+        .catch((reason) => {
+            errorCallback(reason.message);
+        })
 }

@@ -61,7 +61,7 @@ namespace CardPeak.Service
                 };
 
                 this.DebitCreditTransactionRepository.Add(transaction);
-                this.DomainContext.SaveChanges();
+                this.Complete();
 
                 return transaction;
             }

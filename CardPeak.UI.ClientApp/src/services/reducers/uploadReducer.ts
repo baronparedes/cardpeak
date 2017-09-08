@@ -87,5 +87,24 @@ export default handleActions<CardPeak.Models.BatchUploadModel, any>({
             selectedBatchFileConfiguration: undefined,
             loadingBatchFileConfiguration: undefined
         }
+    },
+    [UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG]: (state, action) => {
+        return {
+            ...state,
+            postingBatchFileConfiguration: true
+        }
+    },
+    [UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG_ERROR]: (state, action) => {
+        return {
+            ...state,
+            postingBatchFileConfiguration: undefined
+        }
+    },
+    [UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            postingBatchFileConfiguration: undefined,
+            selectedBatchFileConfiguration: action.payload
+        }
     }
 }, initialState);

@@ -4,8 +4,8 @@ import { ConfirmButtonLoading, FormFieldInput, FormFieldDropdown, FormFieldBoole
 
 interface BatchFileConfigurationFormProps {
     batchFileConfiguration: CardPeak.Entities.BatchFileConfiguration,
-    isSaving?: boolean,
-    onSave?: (data: CardPeak.Entities.BatchFileConfiguration, errorCallback?: (e: string) => void) => void
+    isSaving: boolean,
+    onSave: (data: CardPeak.Entities.BatchFileConfiguration, errorCallback?: (e: string) => void) => void
 }
 
 interface BatchFileConfigurationFormState {
@@ -80,11 +80,10 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
         return errors;
     }
     handleOnConfirm = () => {
-        //this.setState({ onSaveErrorMessage: undefined });
-        //this.props.onSave(this.state.batchFileConfiguration, (e: string) => {
-        //    this.setState({ onSaveErrorMessage: e })
-        //});
-        console.log(this.state.batchFileConfiguration);
+        this.setState({ onSaveErrorMessage: undefined });
+        this.props.onSave(this.state.batchFileConfiguration, (e: string) => {
+            this.setState({ onSaveErrorMessage: e })
+        });
     }
     handleOnToggleModal = () => {
         this.setState({ onSaveErrorMessage: undefined });
@@ -124,104 +123,117 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
             <div className="container-fluid">
                 <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
                     <fieldset disabled={this.props.isSaving}>
-                        <FormFieldBoolean
-                            controlId="form-hasHeader"
-                            name="hasHeader"
-                            label="has header"
-                            value={this.state.batchFileConfiguration.hasHeader}
-                            onChange={this.handleOnChange}/>
-                        <FormFieldInput
-                            controlId="form-skipNumberOfRows"
-                            type="number"
-                            name="skipNumberOfRows"
-                            label="skip rows"
-                            value={this.state.batchFileConfiguration.skipNumberOfRows}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-aliasColumn"
-                            type="number"
-                            name="aliasColumn"
-                            label="alias"
-                            isRequired
-                            error={this.state.errors.aliasColumn}
-                            value={this.state.batchFileConfiguration.aliasColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-cardCategoryColumn"
-                            type="number"
-                            name="cardCategoryColumn"
-                            label="card category"
-                            isRequired
-                            error={this.state.errors.cardCategoryColumn}
-                            value={this.state.batchFileConfiguration.cardCategoryColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-productTypeColumn"
-                            type="number"
-                            name="productTypeColumn"
-                            label="product type"
-                            isRequired
-                            error={this.state.errors.productTypeColumn}
-                            value={this.state.batchFileConfiguration.productTypeColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-approvalDateColumn"
-                            type="number"
-                            name="approvalDateColumn"
-                            label="approval date"
-                            isRequired
-                            error={this.state.errors.approvalDateColumn}
-                            value={this.state.batchFileConfiguration.approvalDateColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-ref1Column"
-                            type="number"
-                            name="ref1Column"
-                            label="reference 1"
-                            value={this.state.batchFileConfiguration.ref1Column}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-ref2Column"
-                            type="number"
-                            name="ref2Column"
-                            label="reference 2"
-                            value={this.state.batchFileConfiguration.ref2Column}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-clientFullNameColumn"
-                            type="number"
-                            name="clientFullNameColumn"
-                            label="client full name"
-                            value={this.state.batchFileConfiguration.clientFullNameColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-clientFirstNameColumn"
-                            type="number"
-                            name="clientFirstNameColumn"
-                            label="client first name"
-                            value={this.state.batchFileConfiguration.clientFirstNameColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-clientMiddleNameColumn"
-                            type="number"
-                            name="clientMiddleNameColumn"
-                            label="client middle name"
-                            value={this.state.batchFileConfiguration.clientMiddleNameColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-clientLastNameColumn"
-                            type="number"
-                            name="clientLastNameColumn"
-                            label="client last name"
-                            value={this.state.batchFileConfiguration.clientLastNameColumn}
-                            onChange={this.handleOnChangeNumber} />
-                        <FormFieldInput
-                            controlId="form-cardCountColumn"
-                            type="number"
-                            name="cardCountColumn"
-                            label="card count"
-                            value={this.state.batchFileConfiguration.cardCountColumn}
-                            onChange={this.handleOnChangeNumber} />
+                        <FormGroup>
+                            <Col lg={6} md={6}>
+                                <FormFieldDropdown
+                                    controlId="form-hasHeader"
+                                    label="has header"
+                                    name="hasHeader"
+                                    value={this.state.batchFileConfiguration.hasHeader ? "true" : "false"}
+                                    onChange={this.handleOnChangeBoolean} >
+                                    <option value="true">
+                                        Yes
+                                    </option>
+                                    <option value="false">
+                                        No
+                                    </option>
+                                </FormFieldDropdown>
+                                <FormFieldInput
+                                    controlId="form-skipNumberOfRows"
+                                    type="number"
+                                    name="skipNumberOfRows"
+                                    label="skip rows"
+                                    value={this.state.batchFileConfiguration.skipNumberOfRows}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-aliasColumn"
+                                    type="number"
+                                    name="aliasColumn"
+                                    label="alias"
+                                    isRequired
+                                    error={this.state.errors.aliasColumn}
+                                    value={this.state.batchFileConfiguration.aliasColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-cardCategoryColumn"
+                                    type="number"
+                                    name="cardCategoryColumn"
+                                    label="card category"
+                                    isRequired
+                                    error={this.state.errors.cardCategoryColumn}
+                                    value={this.state.batchFileConfiguration.cardCategoryColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-productTypeColumn"
+                                    type="number"
+                                    name="productTypeColumn"
+                                    label="product type"
+                                    isRequired
+                                    error={this.state.errors.productTypeColumn}
+                                    value={this.state.batchFileConfiguration.productTypeColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-approvalDateColumn"
+                                    type="number"
+                                    name="approvalDateColumn"
+                                    label="approval date"
+                                    isRequired
+                                    error={this.state.errors.approvalDateColumn}
+                                    value={this.state.batchFileConfiguration.approvalDateColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                            </Col>
+                            <Col lg={6} md={6}>
+                                <FormFieldInput
+                                    controlId="form-ref1Column"
+                                    type="number"
+                                    name="ref1Column"
+                                    label="reference 1"
+                                    value={this.state.batchFileConfiguration.ref1Column}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-ref2Column"
+                                    type="number"
+                                    name="ref2Column"
+                                    label="reference 2"
+                                    value={this.state.batchFileConfiguration.ref2Column}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-clientFullNameColumn"
+                                    type="number"
+                                    name="clientFullNameColumn"
+                                    label="full name"
+                                    value={this.state.batchFileConfiguration.clientFullNameColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-clientFirstNameColumn"
+                                    type="number"
+                                    name="clientFirstNameColumn"
+                                    label="first name"
+                                    value={this.state.batchFileConfiguration.clientFirstNameColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-clientMiddleNameColumn"
+                                    type="number"
+                                    name="clientMiddleNameColumn"
+                                    label="middle name"
+                                    value={this.state.batchFileConfiguration.clientMiddleNameColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-clientLastNameColumn"
+                                    type="number"
+                                    name="clientLastNameColumn"
+                                    label="last name"
+                                    value={this.state.batchFileConfiguration.clientLastNameColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                                <FormFieldInput
+                                    controlId="form-cardCountColumn"
+                                    type="number"
+                                    name="cardCountColumn"
+                                    label="card count"
+                                    value={this.state.batchFileConfiguration.cardCountColumn}
+                                    onChange={this.handleOnChangeNumber} />
+                            </Col>
+                        </FormGroup>
                         {this.renderButtons()}
                     </fieldset>
                 </Form>

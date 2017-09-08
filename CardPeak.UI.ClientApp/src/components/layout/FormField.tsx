@@ -22,7 +22,7 @@ interface FormFieldProps {
 export const FormFieldInline: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
         <FormGroup controlId={props.controlId} validationState={!!props.error && props.error != "" ? "error" : null}>
-            <Col lg={2} md={3}>
+            <Col sm={2}>
                 <ControlLabel className="text-muted">
                     {props.label}
                 </ControlLabel>
@@ -39,7 +39,7 @@ export const FormFieldInline: React.StatelessComponent<FormFieldProps> = (props)
 export const FormField: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
         <FormGroup controlId={props.controlId} validationState={!!props.error && props.error != "" ? "error" : null}>
-            <Col lg={2} md={3}>
+            <Col sm={2}>
                 <ControlLabel className="text-muted">
                     {props.label}
                 </ControlLabel>
@@ -51,6 +51,23 @@ export const FormField: React.StatelessComponent<FormFieldProps> = (props) => {
                         {props.isRequired ? <i className="fa fa-asterisk fa-fw text-danger" aria-hidden /> : null}
                     </InputGroup.Addon>
                 </InputGroup>
+            </Col>
+        </FormGroup>
+    )
+}
+
+export const FormFieldLabel: React.StatelessComponent<FormFieldProps> = (props) => {
+    return (
+        <FormGroup>
+            <Col lg={1}>
+                <ControlLabel className="text-muted">
+                    {props.label}
+                </ControlLabel>
+            </Col>
+            <Col lg={11} md={9}>
+                <FormControl.Static>
+                    {props.value}
+                </FormControl.Static>
             </Col>
         </FormGroup>
     )
@@ -79,22 +96,6 @@ export const FormFieldDate: React.StatelessComponent<FormFieldProps> = (props) =
     )
 }
 
-export const FormFieldLabel: React.StatelessComponent<FormFieldProps> = (props) => {
-    return (
-        <FormGroup>
-            <Col lg={2} md={3}>
-                <ControlLabel className="text-muted">
-                    {props.label}
-                </ControlLabel>
-            </Col>
-            <Col>
-                <FormControl.Static>
-                    {props.value}
-                </FormControl.Static>
-            </Col>
-        </FormGroup>
-    )
-}
 export const FormFieldInput: React.StatelessComponent<FormFieldProps> = (props) => {
     let formControl = (
         <FormControl
@@ -172,6 +173,7 @@ export const FormFieldBoolean: React.StatelessComponent<FormFieldProps> = (props
     return (
         <FormFieldInline {...props}>
             <Checkbox
+                checked={props.value}
                 value={props.value}
                 onChange={props.onChange}
                 name={props.name}>

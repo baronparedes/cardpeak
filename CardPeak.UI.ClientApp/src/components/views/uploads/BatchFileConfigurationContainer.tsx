@@ -17,6 +17,7 @@ interface BatchFileConfigurationContainerProps {
     selectedBatchFileConfig?: CardPeak.Entities.BatchFileConfiguration;
     loadingBanks?: boolean;
     loadingBatchFileConfig?: boolean;
+    postingBatchFileConfig?: boolean
 }
 
 interface BatchFileConfigurationContainerDispatchProps {
@@ -54,23 +55,25 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
                 <Panel>
                     {
                         this.props.loadingBanks ? <SpinnerBlock /> :
-                            <FormFieldDropdown
-                                controlId="form-bank"
-                                label="Bank"
-                                name="bankId"
-                                isRequired
-                                onChange={this.handleOnBankChange} >
-                                <option key={0} value={0}>Select...</option>
-                                {
-                                    this.props.banks.map((bank) => {
-                                        return (
-                                            <option key={bank.referenceId} value={bank.referenceId}>
-                                                {bank.description}
-                                            </option>
-                                        )
-                                    })
-                                }
-                            </FormFieldDropdown>
+                            <fieldset disabled={this.props.loadingBatchFileConfig || this.props.postingBatchFileConfig}>
+                                <FormFieldDropdown
+                                    controlId="form-bank"
+                                    label="Bank"
+                                    name="bankId"
+                                    isRequired
+                                    onChange={this.handleOnBankChange} >
+                                    <option key={0} value={0}>Select...</option>
+                                    {
+                                        this.props.banks.map((bank) => {
+                                            return (
+                                                <option key={bank.referenceId} value={bank.referenceId}>
+                                                    {bank.description}
+                                                </option>
+                                            )
+                                        })
+                                    }
+                                </FormFieldDropdown>
+                            </fieldset>
                     }
                     {
                         this.state.loadingBatchFileConfigError ?
@@ -85,7 +88,10 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
                 {
                     !this.props.selectedBatchFileConfig ? null :
                         <Panel>
-                            <BatchFileConfigurationForm batchFileConfiguration={this.props.selectedBatchFileConfig} />
+                            <BatchFileConfigurationForm
+                                isSaving={this.props.postingBatchFileConfig}
+                                onSave={this.props.uploadActions.postBatchFileConfigStart}
+                                batchFileConfiguration={this.props.selectedBatchFileConfig} />
                         </Panel>
                 }
             </div>
@@ -98,6 +104,7 @@ const mapStateToProps = (state: RootState): BatchFileConfigurationContainerProps
     loadingBanks: state.settingsModel.loadingBanks,
     loadingBatchFileConfig: state.batchUploadModel.loadingBatchFileConfiguration,
     selectedBatchFileConfig: state.batchUploadModel.selectedBatchFileConfiguration,
+    postingBatchFileConfig: state.batchUploadModel.postingBatchFileConfiguration
 });
 
 const mapDispatchToProps = (dispatch: any): BatchFileConfigurationContainerDispatchProps => {
