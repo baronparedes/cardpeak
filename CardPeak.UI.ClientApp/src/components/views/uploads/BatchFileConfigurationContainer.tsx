@@ -2,7 +2,7 @@
 import * as SettingsActions from '../../../services/actions/settingsAction'
 import * as UploadActions from '../../../services/actions/uploadActions'
 
-import { Panel, Form } from 'react-bootstrap'
+import { Panel } from 'react-bootstrap'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -55,30 +55,26 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
                 <Panel>
                     {
                         this.props.loadingBanks ? <SpinnerBlock /> :
-                            <div className="container-fluid">
-                                <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
-                                    <fieldset disabled={this.props.loadingBatchFileConfig || this.props.postingBatchFileConfig}>
-                                        <FormFieldDropdown
-                                            block
-                                            controlId="form-bank"
-                                            label="Bank"
-                                            name="bankId"
-                                            isRequired
-                                            onChange={this.handleOnBankChange} >
-                                            <option key={0} value={0}>Select...</option>
-                                            {
-                                                this.props.banks.map((bank) => {
-                                                    return (
-                                                        <option key={bank.referenceId} value={bank.referenceId}>
-                                                            {bank.description}
-                                                        </option>
-                                                    )
-                                                })
-                                            }
-                                        </FormFieldDropdown>
-                                    </fieldset>
-                                </Form>
-                            </div>
+                            <fieldset disabled={this.props.loadingBatchFileConfig || this.props.postingBatchFileConfig}>
+                                <FormFieldDropdown
+                                    block
+                                    controlId="form-bank"
+                                    label="Bank"
+                                    name="bankId"
+                                    isRequired
+                                    onChange={this.handleOnBankChange} >
+                                    <option key={0} value={0}>Select...</option>
+                                    {
+                                        this.props.banks.map((bank) => {
+                                            return (
+                                                <option key={bank.referenceId} value={bank.referenceId}>
+                                                    {bank.description}
+                                                </option>
+                                            )
+                                        })
+                                    }
+                                </FormFieldDropdown>
+                            </fieldset>
                     }
                     {
                         this.state.loadingBatchFileConfigError ?
