@@ -204,12 +204,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 }
 
 const mapStateToProps = (state: RootState): CardPeak.Models.RatesModel => ({
-    postingRates: state.ratesModel.postingRates,
-    loadingRates: state.ratesModel.loadingRates,
-    rates: state.ratesModel.rates,
-    agentId: state.ratesModel.agentId,
-    banks: state.ratesModel.banks,
-    cardCategories: state.ratesModel.cardCategories
+    ...state.ratesModel
 });
 
 const mapDispatchToProps = (dispatch: any): RatesContainerDispatchProps => {

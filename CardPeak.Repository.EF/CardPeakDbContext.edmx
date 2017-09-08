@@ -52,16 +52,16 @@
           <Property Name="BankId" Type="int" Nullable="false" />
           <Property Name="HasHeader" Type="bit" Nullable="false" />
           <Property Name="SkipNumberOfRows" Type="int" />
-          <Property Name="AliasColumn" Type="int" />
-          <Property Name="ProductTypeColumn" Type="int" />
+          <Property Name="AliasColumn" Type="int" Nullable="false" />
+          <Property Name="ProductTypeColumn" Type="int" Nullable="false" />
           <Property Name="Ref1Column" Type="int" />
           <Property Name="Ref2Column" Type="int" />
           <Property Name="ClientFullNameColumn" Type="int" />
           <Property Name="ClientFirstNameColumn" Type="int" />
           <Property Name="ClientMiddleNameColumn" Type="int" />
           <Property Name="ClientLastNameColumn" Type="int" />
-          <Property Name="ApprovalDateColumn" Type="int" />
-          <Property Name="CardCategoryColumn" Type="int" />
+          <Property Name="ApprovalDateColumn" Type="int" Nullable="false" />
+          <Property Name="CardCategoryColumn" Type="int" Nullable="false" />
           <Property Name="CardCountColumn" Type="int" />
         </EntityType>
         <EntityType Name="BatchUpload">
@@ -663,16 +663,16 @@
           <Property Name="BankId" Type="Int32" Nullable="false" />
           <Property Name="HasHeader" Type="Boolean" Nullable="false" />
           <Property Name="SkipNumberOfRows" Type="Int32" />
-          <Property Name="AliasColumn" Type="Int32" />
-          <Property Name="ProductTypeColumn" Type="Int32" />
+          <Property Name="AliasColumn" Type="Int32" Nullable="false" />
+          <Property Name="ProductTypeColumn" Type="Int32" Nullable="false" />
           <Property Name="Ref1Column" Type="Int32" />
           <Property Name="Ref2Column" Type="Int32" />
           <Property Name="ClientFullNameColumn" Type="Int32" />
           <Property Name="ClientFirstNameColumn" Type="Int32" />
           <Property Name="ClientMiddleNameColumn" Type="Int32" />
           <Property Name="ClientLastNameColumn" Type="Int32" />
-          <Property Name="ApprovalDateColumn" Type="Int32" />
-          <Property Name="CardCategoryColumn" Type="Int32" />
+          <Property Name="ApprovalDateColumn" Type="Int32" Nullable="false" />
+          <Property Name="CardCategoryColumn" Type="Int32" Nullable="false" />
           <Property Name="CardCountColumn" Type="Int32" />
           <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_BatchFileConfiguration_Reference_BankId" FromRole="BatchFileConfiguration" ToRole="Reference" />
         </EntityType>

@@ -219,6 +219,15 @@
     <Content Include="src\components\views\agents\AgentDashboardContainer.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\uploads\BatchFileConfigurationContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\BatchFileConfigurationForm.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\BatchFileConfigurationView.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\uploads\BatchUploadDetailRowLayout.tsx">
       <SubType>Code</SubType>
     </Content>

@@ -1,13 +1,13 @@
 ﻿import * as React from 'react';
 import { dateFormatISO } from '../../helpers/dateHelpers'
-import { FormGroup, FormControl, ControlLabel, Col, InputGroup, Radio } from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Col, InputGroup, Radio, Checkbox } from 'react-bootstrap'
 import { DatePickerForm, RadioGroup } from './'
 
 interface FormFieldProps {
     controlId: string,
     label: string,
     name: string,
-    value: any,
+    value?: any,
     error?: string,
     type?: string,
     options?: string[][]
@@ -22,10 +22,12 @@ interface FormFieldProps {
 export const FormFieldInline: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
         <FormGroup controlId={props.controlId} validationState={!!props.error && props.error != "" ? "error" : null}>
-            <Col componentClass={ControlLabel} sm={2}>
-                {props.label}
+            <Col lg={2} md={3}>
+                <ControlLabel className="text-muted">
+                    {props.label}
+                </ControlLabel>
             </Col>
-            <Col sm={10}>
+            <Col>
                 <InputGroup>
                     {props.children}
                 </InputGroup>
@@ -37,10 +39,12 @@ export const FormFieldInline: React.StatelessComponent<FormFieldProps> = (props)
 export const FormField: React.StatelessComponent<FormFieldProps> = (props) => {
     return (
         <FormGroup controlId={props.controlId} validationState={!!props.error && props.error != "" ? "error" : null}>
-            <Col componentClass={ControlLabel} sm={2}>
-                {props.label}
+            <Col lg={2} md={3}>
+                <ControlLabel className="text-muted">
+                    {props.label}
+                </ControlLabel>
             </Col>
-            <Col sm={10}>
+            <Col>
                 <InputGroup>
                     {props.children}
                     <InputGroup.Addon className="addon-form">
@@ -75,31 +79,62 @@ export const FormFieldDate: React.StatelessComponent<FormFieldProps> = (props) =
     )
 }
 
+export const FormFieldLabel: React.StatelessComponent<FormFieldProps> = (props) => {
+    return (
+        <FormGroup>
+            <Col lg={2} md={3}>
+                <ControlLabel className="text-muted">
+                    {props.label}
+                </ControlLabel>
+            </Col>
+            <Col>
+                <FormControl.Static>
+                    {props.value}
+                </FormControl.Static>
+            </Col>
+        </FormGroup>
+    )
+}
 export const FormFieldInput: React.StatelessComponent<FormFieldProps> = (props) => {
+    let formControl = (
+        <FormControl
+            type={props.type}
+            placeholder={props.label}
+            name={props.name}
+            value={props.value}
+            onFocus={props.onFocus}
+            onChange={props.onChange} />
+    );
+
+    if (props.type === 'textarea') {
+        formControl = (
+            <FormControl
+                componentClass="textarea"
+                rows={4}
+                placeholder={props.label}
+                name={props.name}
+                value={props.value}
+                onFocus={props.onFocus}
+                onChange={props.onChange} />
+        );
+    }
+
+    if (props.type === 'number') {
+        let value = !props.value ? '' : props.value;
+        formControl = (
+            <FormControl
+                type={props.type}
+                placeholder={props.label}
+                name={props.name}
+                value={value}
+                onFocus={props.onFocus}
+                onChange={props.onChange} />
+        );
+    }
+
     return (
         <FormField {...props}>
-            {
-                props.type === 'textarea' ?
-                    (
-                        <FormControl
-                            componentClass="textarea"
-                            rows={4}
-                            placeholder={props.label}
-                            name={props.name}
-                            value={props.value}
-                            onFocus={props.onFocus}
-                            onChange={props.onChange} />
-                    ) :
-                    (
-                        <FormControl
-                            type={props.type}
-                            placeholder={props.label}
-                            name={props.name}
-                            value={props.value}
-                            onFocus={props.onFocus}
-                            onChange={props.onChange} />
-                    )
-            }
+            {formControl}
         </FormField>
     );
 };
@@ -130,5 +165,17 @@ export const FormFieldDropdown: React.StatelessComponent<FormFieldProps> = (prop
                 {props.children}
             </FormControl>
         </FormField>
+    )
+}
+
+export const FormFieldBoolean: React.StatelessComponent<FormFieldProps> = (props) => {
+    return (
+        <FormFieldInline {...props}>
+            <Checkbox
+                value={props.value}
+                onChange={props.onChange}
+                name={props.name}>
+            </Checkbox>
+        </FormFieldInline>
     )
 }

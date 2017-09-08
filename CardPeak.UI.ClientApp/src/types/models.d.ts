@@ -37,5 +37,7 @@
         processing?: boolean;
         processingCompleted?: boolean;
         processedApprovalTransactions?: CardPeak.Entities.ProcessedApprovalTransaction[];
+        selectedBatchFileConfiguration?: CardPeak.Entities.BatchFileConfiguration;
+        loadingBatchFileConfiguration?: boolean;
     }
 }

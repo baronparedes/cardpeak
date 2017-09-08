@@ -18,16 +18,16 @@ namespace CardPeak.Domain
         public int BankId { get; set; }
         public bool HasHeader { get; set; }
         public Nullable<int> SkipNumberOfRows { get; set; }
-        public Nullable<int> AliasColumn { get; set; }
-        public Nullable<int> ProductTypeColumn { get; set; }
+        public int AliasColumn { get; set; }
+        public int ProductTypeColumn { get; set; }
         public Nullable<int> Ref1Column { get; set; }
         public Nullable<int> Ref2Column { get; set; }
         public Nullable<int> ClientFullNameColumn { get; set; }
         public Nullable<int> ClientFirstNameColumn { get; set; }
         public Nullable<int> ClientMiddleNameColumn { get; set; }
         public Nullable<int> ClientLastNameColumn { get; set; }
-        public Nullable<int> ApprovalDateColumn { get; set; }
-        public Nullable<int> CardCategoryColumn { get; set; }
+        public int ApprovalDateColumn { get; set; }
+        public int CardCategoryColumn { get; set; }
         public Nullable<int> CardCountColumn { get; set; }
     
         public virtual Reference Bank { get; set; }

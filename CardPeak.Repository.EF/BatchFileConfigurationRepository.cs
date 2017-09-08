@@ -1,10 +1,7 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
-using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CardPeak.Repository.EF
 {
@@ -16,7 +13,20 @@ namespace CardPeak.Repository.EF
 
         public BatchFileConfiguration FindByBankId(int bankId)
         {
-            return this.Context.BatchFileConfiguration.SingleOrDefault(_ => _.BankId == bankId);
+            var result = this.Context.BatchFileConfiguration
+                .Include(_ => _.Bank)
+                .SingleOrDefault(_ => _.BankId == bankId);
+
+            if (result == null)
+            {
+                result = new BatchFileConfiguration
+                {
+                    BankId = bankId,
+                    Bank = this.Context.References.Where(_ => _.ReferenceId == bankId).Single(),
+                };
+            }
+
+            return result;
         }
     }
 }

@@ -118,16 +118,16 @@
         public bankId: number;
         public hasHeader: boolean;
         public skipNumberOfRows?: number;
-        public aliasColumn?: number;
-        public productTypeColumn?: number;
+        public aliasColumn: number;
+        public productTypeColumn: number;
         public ref1Column?: number;
         public ref2Column?: number;
         public clientFullNameColumn?: number;
         public clientFirstNameColumn?: number;
         public clientMiddleNameColumn?: number;
         public clientLastNameColumn?: number;
-        public approvalDateColumn?: number;
-        public cardCategoryColumn?: number;
+        public approvalDateColumn: number;
+        public cardCategoryColumn: number;
         public cardCountColumn?: number;
         public bank?: Reference;
     }

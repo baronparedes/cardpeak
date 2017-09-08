@@ -4,8 +4,8 @@ export { ListNoRecordsRow } from './ListNoRecordsRow'
 export { ButtonLoading, ButtonLoadingText } from './ButtonLoading'
 export { Footer } from './Footer'
 export {
-    FormField, FormFieldInput, FormFieldDate, FormFieldFile,
-    FormFieldRadioGroup, FormFieldDropdown, FormFieldInline,
+    FormField, FormFieldInput, FormFieldDate, FormFieldFile, FormFieldBoolean,
+    FormFieldRadioGroup, FormFieldDropdown, FormFieldInline, FormFieldLabel
 } from './FormField'
 export { ModalConfirm } from './ModalConfirm'
 export { ModalPanel } from './ModalPanel'

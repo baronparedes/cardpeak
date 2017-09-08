@@ -106,5 +106,10 @@ namespace CardPeak.Service
                 ProcessedApprovalTransactions = processedApprovalTransactions
             };
         }
+
+        public BatchFileConfiguration GetBatchFileConfiguration(int bankId)
+        {
+            return this.BatchFileConfigurationRepository.FindByBankId(bankId);
+        }
     }
 }

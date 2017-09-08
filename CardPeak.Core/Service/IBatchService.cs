@@ -12,5 +12,6 @@ namespace CardPeak.Core.Service
     {
         BatchUpload CreateBatch(FileInfo file);
         Task<ProcessedBatchUpload> ProcessAsync(int id);
+        BatchFileConfiguration GetBatchFileConfiguration(int bankId);
     }
 }
