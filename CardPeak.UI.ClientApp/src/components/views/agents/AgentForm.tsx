@@ -33,7 +33,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
     }
     hasErrors = () => {
         this.handleErrors();
-        if (!!this.state.errors.firstName && !!this.state.errors.lastName) {
+        if (!!this.state.errors.firstName || !!this.state.errors.lastName) {
             return true;
         }
         return false;

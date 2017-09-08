@@ -120,7 +120,7 @@ export const FormFieldInput: React.StatelessComponent<FormFieldProps> = (props) 
     }
 
     if (props.type === 'number') {
-        let value = !props.value ? '' : props.value;
+        let value = !props.value && props.value !== 0 ? '' : props.value;
         formControl = (
             <FormControl
                 type={props.type}

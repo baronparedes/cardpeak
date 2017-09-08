@@ -29,6 +29,7 @@ export class ConfirmButtonLoading extends React.Component<ConfirmButtonProps, Co
     handleOnToggleModal = () => {
         if (this.props.onPreventToggle) {
             if (this.props.onPreventToggle()) {
+                console.log('preventing toggle');
                 return;
             }
         }

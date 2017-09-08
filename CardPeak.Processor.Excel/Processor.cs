@@ -229,16 +229,6 @@ namespace CardPeak.Processor.Excel
             {
                 throw new ArgumentNullException(Processor.InvalidConfiguratioNotFoundErrorMessage);
             }
-
-            if (!configuration.AliasColumn.HasValue)
-            {
-                throw new ArgumentException(string.Format(Processor.InvalidConfigurationErrorMessageFormat, "Alias"));
-            }
-
-            if (!configuration.CardCategoryColumn.HasValue)
-            {
-                throw new ArgumentException(string.Format(Processor.InvalidConfigurationErrorMessageFormat, "Card Category"));
-            }
         }
 
         private ExcelDataSetConfiguration DataSetConfiguration(BatchFileConfiguration configuration)
