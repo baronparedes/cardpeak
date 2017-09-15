@@ -1,4 +1,5 @@
 ﻿using CardPeak.Domain;
+using System.Collections.Generic;
 
 namespace CardPeak.Core.Repository
 {
@@ -6,5 +7,6 @@ namespace CardPeak.Core.Repository
     {
         void StartBatchProcess(BatchUpload batch);
         void EndBatchProcess(BatchUpload batch);
+        IEnumerable<BatchUpload> GetLatestProcessed();
     }
 }

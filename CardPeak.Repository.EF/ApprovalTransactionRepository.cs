@@ -25,7 +25,10 @@ namespace CardPeak.Repository.EF
         public override void Add(ApprovalTransaction transaction)
         {
             this.Context.Entry(transaction).State = EntityState.Added;
-            this.Context.Entry(transaction.CardCategory).State = EntityState.Unchanged;
+            if (transaction.CardCategory != null)
+            {
+                this.Context.Entry(transaction.CardCategory).State = EntityState.Unchanged;
+            }
             this.Context.ApprovalTransactions.Add(transaction);
         }
 

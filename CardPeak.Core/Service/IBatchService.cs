@@ -1,4 +1,5 @@
 ﻿using CardPeak.Domain;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -10,5 +11,6 @@ namespace CardPeak.Core.Service
         Task<ProcessedBatchUpload> ProcessAsync(int id);
         BatchFileConfiguration GetBatchFileConfiguration(int bankId);
         BatchFileConfiguration SaveBatchFileConfiguration(BatchFileConfiguration batchFileConfiguration);
+        IEnumerable<BatchUpload> GetLatestProcessed();
     }
 }

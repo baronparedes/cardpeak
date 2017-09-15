@@ -100,6 +100,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AgentsController.cs" />
     <Compile Include="Controllers\BatchUploadController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Core\BatchUploadMultipartFormDataStreamProvider.cs" />

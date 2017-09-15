@@ -3,6 +3,7 @@ using CardPeak.Domain;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CardPeak.Repository.EF
 {
@@ -31,6 +32,16 @@ namespace CardPeak.Repository.EF
             batch.ProcessEndDateTime = DateTime.Now;
             this.Context.Entry(batch.Bank).State = EntityState.Unchanged;
             this.Context.Entry(batch).State = EntityState.Modified;
+        }
+
+        public IEnumerable<BatchUpload> GetLatestProcessed()
+        {
+            var result = this.Context.BatchUploads
+                .Include(_ => _.Bank)
+                .Where(_ => _.ProcessStartDateTime != null)
+                .OrderByDescending(_ => _.BatchId)
+                .Take(5);
+            return result;
         }
     }
 }

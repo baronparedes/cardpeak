@@ -13,22 +13,22 @@
 
     export interface RatesModel {
         agentId?: number;
-        rates?: CardPeak.Entities.Rate[],
-        loadingRates?: boolean,
-        postingRates?: boolean,
-        banks?: CardPeak.Entities.Reference[],
-        cardCategories?: CardPeak.Entities.Reference[]
+        rates?: CardPeak.Entities.Rate[];
+        loadingRates?: boolean;
+        postingRates?: boolean;
+        banks?: CardPeak.Entities.Reference[];
+        cardCategories?: CardPeak.Entities.Reference[];
     }
 
     export interface SettingsModel {
-        banks?: CardPeak.Entities.Reference[],
-        cardCategories?: CardPeak.Entities.Reference[],
+        banks?: CardPeak.Entities.Reference[];
+        cardCategories?: CardPeak.Entities.Reference[];
         postingBank?: boolean;
         postingCardCategory?: boolean;
-        loadingBanks?: boolean,
+        loadingBanks?: boolean;
         loadingCardCategories?: boolean;
-        cardCategoryReferenceTypeId?: number,
-        bankReferenceTypeId?: number
+        cardCategoryReferenceTypeId?: number;
+        bankReferenceTypeId?: number;
     }
 
     export interface BatchUploadModel {
@@ -39,6 +39,11 @@
         processedApprovalTransactions?: CardPeak.Entities.ProcessedApprovalTransaction[];
         selectedBatchFileConfiguration?: CardPeak.Entities.BatchFileConfiguration;
         loadingBatchFileConfiguration?: boolean;
-        postingBatchFileConfiguration?: boolean
+        postingBatchFileConfiguration?: boolean;
+    }
+
+    export interface DashboardModel {
+        latestProcessedBatch?: CardPeak.Entities.BatchUpload[];
+        refreshing?: boolean;
     }
 }

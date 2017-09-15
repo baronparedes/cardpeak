@@ -150,6 +150,12 @@
     <Content Include="src\components\views\agents\UpdateAgentView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\dashboard\DashboardContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\dashboard\metrics\LatestProcessedBatchList.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\transactions\TransactionsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -286,6 +292,7 @@
     <Folder Include="src\components\views\agents\" />
     <Folder Include="src\components\views\dashboard\" />
     <Folder Include="src\components\views\agentDashboard\" />
+    <Folder Include="src\components\views\dashboard\metrics\" />
     <Folder Include="src\components\views\uploads\" />
     <Folder Include="src\components\views\settings\" />
     <Folder Include="src\components\views\transactions\" />
@@ -299,6 +306,9 @@
     <Folder Include="src\styles\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\components\views\dashboard\metrics\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\uploads\BatchUploadDetail.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -307,6 +317,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\actions\agentActions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\actions\dashboardActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\actions\rateActions.ts">
@@ -324,6 +337,9 @@
     <TypeScriptCompile Include="src\services\api\agentsController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\api\dashboardController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\api\ratesController.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -337,6 +353,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\agentReducer.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\reducers\dashboardReducer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\index.ts">

@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AgentDashboard.cs" />
     <Compile Include="Constants\ApprovalFileFields.cs" />
+    <Compile Include="Dashboard.cs" />
     <Compile Include="Enums\ReferenceTypeEnum.cs" />
     <Compile Include="Enums\TransactionTypeEnum.cs" />
     <Compile Include="Generated\Account.cs">
