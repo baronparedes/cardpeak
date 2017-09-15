@@ -33,5 +33,34 @@ namespace CardPeak.Repository.EF
                 .ThenBy(_ => _.CardCategory.Description)
                 .ToList();
         }
+
+        public void SaveRates(int agentId, Settings settings)
+        {
+            var rates = this.Context.Rates.Where(_ => _.AgentId == agentId).ToList();
+            rates.ForEach(_ => {
+                var item = settings.Rates.FirstOrDefault(rate => rate.BankId == _.BankId && rate.CardCategoryId == _.CardCategoryId);
+                if (item != null)
+                {
+                    _.Amount = item.Amount;
+                    this.Context.Entry(_).State = EntityState.Modified;
+                }
+                else
+                {
+                    this.Context.Entry(_).State = EntityState.Deleted;
+                }
+            });
+
+            var newRates = settings.Rates.ToList();
+            newRates.ForEach(_ => {
+                var item = rates.FirstOrDefault(rate => rate.BankId == _.BankId && rate.CardCategoryId == _.CardCategoryId);
+                if (item == null)
+                {
+                    _.Bank = null;
+                    _.CardCategory = null;
+                    this.Context.Entry(_).State = EntityState.Added;
+                    this.Context.Rates.Add(_);
+                }
+            });
+        }
     }
 }

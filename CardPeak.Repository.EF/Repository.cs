@@ -38,7 +38,7 @@ namespace CardPeak.Repository.EF
             return this.Context.Set<TEntity>().SingleOrDefault(predicate);
         }
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             this.Context.Set<TEntity>().Add(entity);
         }

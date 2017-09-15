@@ -43,36 +43,9 @@ namespace CardPeak.Service
 
         public IEnumerable<Rate> SaveRates(int agentId, Settings settings)
         {
-            var rates = this.DomainContext.Rates.Where(_ => _.AgentId == agentId).ToList();
-            rates.ForEach(_ => {
-                var item = settings.Rates.FirstOrDefault(rate => rate.BankId == _.BankId && rate.CardCategoryId == _.CardCategoryId);
-                if (item != null)
-                {
-                    _.Amount = item.Amount;
-                    this.DomainContext.Entry(_).State = EntityState.Modified;
-                }
-                else
-                {
-                    this.DomainContext.Entry(_).State = EntityState.Deleted;
-                }
-            });
-
-            var newRates = settings.Rates.ToList();
-            newRates.ForEach(_ => {
-                var item = rates.FirstOrDefault(rate => rate.BankId == _.BankId && rate.CardCategoryId == _.CardCategoryId);
-                if (item == null)
-                {
-                    _.Bank = null;
-                    _.CardCategory = null;
-                    this.DomainContext.Entry(_).State = EntityState.Added;
-                    this.DomainContext.Rates.Add(_);
-                }
-            });
-
+            this.RateRepository.SaveRates(agentId, settings);
             this.Complete();
-
             return this.RateRepository.GetRates(agentId);
         }
-
     }
 }

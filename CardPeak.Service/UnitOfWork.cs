@@ -1,25 +1,26 @@
 ﻿using CardPeak.Core.Service;
 using CardPeak.Repository.EF;
+using System;
 
 namespace CardPeak.Service
 {
-    public abstract class UnitOfWork : IUnitOfWork
+    public abstract class UnitOfWork : IUnitOfWork, IDisposable
     {
-        protected readonly CardPeakDbContext DomainContext;
+        private readonly CardPeakDbContext Context;
 
         public UnitOfWork(CardPeakDbContext context)
         {
-            this.DomainContext = context;
+            this.Context = context;
         }
 
         public int Complete()
         {
-            return this.DomainContext.SaveChanges();
+            return this.Context.SaveChanges();
         }
 
         public virtual void Dispose()
         {
-            this.DomainContext.Dispose();
+            this.Context.Dispose();
         }
     }
 }

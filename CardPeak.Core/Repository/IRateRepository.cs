@@ -11,5 +11,6 @@ namespace CardPeak.Core.Repository
     {
         IEnumerable<Rate> GetRates(int agentId);
         Rate GetRate(int agentId, int cardCategoryId, int bankId);
+        void SaveRates(int agentId, Settings settings);
     }
 }

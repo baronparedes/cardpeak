@@ -74,32 +74,8 @@ namespace CardPeak.Service
 
         public Agent Update(Agent agent)
         {
-            var accountsLeaf = agent.Accounts;
             var accounts = this.AccountRepository.FindByAgent(agent.AgentId).ToList();
-            accounts.ForEach(_ => {
-                var item = agent.Accounts.FirstOrDefault(account => account.Alias.ToLower() == _.Alias.ToLower());
-                if (item != null)
-                {
-                    _.Alias = item.Alias;
-                    this.DomainContext.Entry(_).State = EntityState.Modified;
-                }
-                else
-                {
-                    this.DomainContext.Entry(_).State = EntityState.Deleted;
-                }
-            });
-
-            var newAccounts = accountsLeaf.ToList();
-            newAccounts.ForEach(_ => {
-                var item = accounts.FirstOrDefault(account => account.Alias.ToLower() == _.Alias.ToLower());
-                if (item == null)
-                {
-                    this.DomainContext.Entry(_).State = EntityState.Added;
-                }
-            });
-
-            agent.Accounts = null;
-            this.DomainContext.Entry(agent).State = EntityState.Modified;
+            this.AgentRepository.Update(agent, accounts);
             this.Complete();
             return agent;
         }

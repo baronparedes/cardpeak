@@ -19,6 +19,7 @@ namespace CardPeak.Service
         private IBatchUploadRepository BatchUploadRepository;
         private IProcessorService ProcessorService;
         private IBatchFileConfigurationRepository BatchFileConfigurationRepository;
+        private IApprovalTransactionRepository ApprovalTransactionRepository;
 
         public BatchService(CardPeakDbContext context) : base(context)
         {
@@ -26,6 +27,7 @@ namespace CardPeak.Service
             this.BatchUploadRepository = new BatchUploadRepository(context);
             this.ProcessorService = new ProcessorService(context);
             this.BatchFileConfigurationRepository = new BatchFileConfigurationRepository(context);
+            this.ApprovalTransactionRepository = new ApprovalTransactionRepository(context);
             this.Processor = new CardPeak.Processor.Excel.Processor(this.ProcessorService);
         }
 
@@ -64,9 +66,7 @@ namespace CardPeak.Service
             IEnumerable<ProcessedApprovalTransaction> processedApprovalTransactions = null;
             var batch = this.BatchUploadRepository.Get(id);
             var config = this.BatchFileConfigurationRepository.FindByBankId(batch.BankId);
-            batch.ProcessStartDateTime = DateTime.Now;
-            this.DomainContext.Entry(batch.Bank).State = EntityState.Unchanged;
-            this.DomainContext.Entry(batch).State = EntityState.Modified;
+            this.BatchUploadRepository.StartBatchProcess(batch);
             this.Complete();
 
             try
@@ -81,9 +81,7 @@ namespace CardPeak.Service
                 {
                     foreach (var item in processedApprovalTransactions)
                     {
-                        this.DomainContext.Entry(item.Transaction).State = EntityState.Added;
-                        this.DomainContext.Entry(item.Transaction.CardCategory).State = EntityState.Unchanged;
-                        this.DomainContext.ApprovalTransactions.Add(item.Transaction);
+                        this.ApprovalTransactionRepository.Add(item.Transaction);
                     }
                 }
             }
@@ -94,9 +92,7 @@ namespace CardPeak.Service
             }
             finally
             {
-                batch.ProcessEndDateTime = DateTime.Now;
-                this.DomainContext.Entry(batch.Bank).State = EntityState.Unchanged;
-                this.DomainContext.Entry(batch).State = EntityState.Modified;
+                this.BatchUploadRepository.EndBatchProcess(batch);
                 this.Complete();
             }
 
@@ -116,7 +112,6 @@ namespace CardPeak.Service
         {
             var result = this.BatchFileConfigurationRepository.Save(batchFileConfiguration);
             this.Complete();
-
             return result;
         }
     }

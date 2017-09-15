@@ -22,6 +22,13 @@ namespace CardPeak.Repository.EF
                 .Where(predicate);
         }
 
+        public override void Add(ApprovalTransaction transaction)
+        {
+            this.Context.Entry(transaction).State = EntityState.Added;
+            this.Context.Entry(transaction.CardCategory).State = EntityState.Unchanged;
+            this.Context.ApprovalTransactions.Add(transaction);
+        }
+
         public decimal AccountBalanceByAgent(int id)
         {
             return this.Context.ApprovalTransactions
