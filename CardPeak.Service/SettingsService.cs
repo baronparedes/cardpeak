@@ -3,8 +3,6 @@ using CardPeak.Core.Service;
 using CardPeak.Domain;
 using CardPeak.Repository.EF;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 
 namespace CardPeak.Service
 {

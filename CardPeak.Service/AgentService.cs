@@ -4,7 +4,6 @@ using CardPeak.Domain;
 using CardPeak.Repository.EF;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace CardPeak.Service

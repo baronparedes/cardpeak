@@ -9,13 +9,12 @@
 
 namespace CardPeak.Repository.EF
 {
+    using CardPeak.Domain;
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    using CardPeak.Domain;
     using System.Data.Entity.Core.Objects;
-    using System.Linq;
-    
+    using System.Data.Entity.Infrastructure;
+
     public partial class CardPeakDbContext : DbContext
     {
         public CardPeakDbContext()
