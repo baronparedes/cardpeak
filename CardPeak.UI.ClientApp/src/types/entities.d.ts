@@ -46,11 +46,6 @@
         public transactionType?: Reference;
     }
 
-    export class ApprovalPerformance {
-        public month: string;
-        public units: number;
-    }
-
     export class AgentDashboard {
         public agent: Agent;
         public accountBalance: number;
@@ -59,7 +54,7 @@
         public accounts?: Account[];
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
-        public performance?: ApprovalPerformance[];
+        public performance?: Metric[];
     }
 
     export class Reference 

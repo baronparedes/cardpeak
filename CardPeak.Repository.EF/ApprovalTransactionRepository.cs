@@ -51,15 +51,36 @@ namespace CardPeak.Repository.EF
                 .Sum();
         }
 
-        public IEnumerable<ApprovalPerformance> GetAgentPerformance(int id)
+        public IEnumerable<Metric> GetAgentPerformance(int id)
         {
-            return this.Context.GetAgentPerformance(id)
-                .Select(_ => new ApprovalPerformance
+            var result = new Dictionary<string, decimal>
+            {
+                { DateTime.Now.ToString("MMM"), 0 },
+                { DateTime.Now.AddMonths(-1).ToString("MMM"), 0 },
+                { DateTime.Now.AddMonths(-2).ToString("MMM"), 0 },
+                { DateTime.Now.AddMonths(-3).ToString("MMM"), 0 }
+            };
+
+            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-3);
+            var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
+
+            var query = this.Context.ApprovalTransactions
+                .Where(_ => _.AgentId == id)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
+                .GroupBy(_ => _.ApprovalDate.Month)
+                .Select(_ => new
                 {
-                    Month = _.MonthName,
-                    Units = _.Units.GetValueOrDefault()
+                    Month = _.FirstOrDefault().ApprovalDate.Month,
+                    Approvals = _.Sum(approvals => approvals.Units)
                 })
                 .ToList();
+
+            query.ForEach(_ => {
+                result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString("MMM")] = _.Approvals;
+            });
+
+            return result.Select(_ => new Metric { Key = _.Key, Value = _.Value });
         }
 
         public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
@@ -116,7 +137,7 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public Dictionary<string, decimal> GetApprovalsByBank(int year, int month)
+        public IEnumerable<Metric> GetApprovalsByBank(int year, int month)
         {
             var result = this.Context.References
                 .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
@@ -135,10 +156,10 @@ namespace CardPeak.Repository.EF
                 result[_.Bank] = _.Approvals;
             });
 
-            return result;
+            return result.Select(_ => new Metric { Key = _.Key, Value = _.Value });
         }
 
-        public Dictionary<string, decimal> GetApprovalsByCategory(int year, int month)
+        public IEnumerable<Metric> GetApprovalsByCategory(int year, int month)
         {
             var result = this.Context.References
                 .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
@@ -157,10 +178,10 @@ namespace CardPeak.Repository.EF
                 result[_.CardCategory] = _.Approvals;
             });
 
-            return result;
+            return result.Select(_ => new Metric { Key = _.Key, Value = _.Value });
         }
 
-        public IEnumerable<ApprovalPerformance> GetYearlyPerformance(int year)
+        public IEnumerable<Metric> GetYearlyPerformance(int year)
         {
             throw new NotImplementedException();
         }

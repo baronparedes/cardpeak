@@ -78,7 +78,7 @@
     <Compile Include="Generated\GetAgentPerformance_Result.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>
-    <Compile Include="ApprovalPerformance.cs" />
+    <Compile Include="Metric.cs" />
     <Compile Include="ProcessedApprovalTransaction.cs" />
     <Compile Include="ProcessedBatchUpload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
