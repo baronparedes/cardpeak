@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentDashboard.cs" />
+    <Compile Include="AgentMetric.cs" />
     <Compile Include="Constants\ApprovalFileFields.cs" />
     <Compile Include="Constants\CardCategory.cs" />
     <Compile Include="Dashboard.cs" />

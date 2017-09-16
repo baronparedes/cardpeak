@@ -1,8 +1,8 @@
 ﻿namespace CardPeak.Domain
 {
-    public sealed class Metric
+    public sealed class AgentMetric
     {
-        public string Key { get; set; }
+        public Agent Agent { get; set; }
         public decimal Value { get; set; }
     }
 }
