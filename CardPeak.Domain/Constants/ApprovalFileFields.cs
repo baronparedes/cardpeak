@@ -20,6 +20,4 @@ namespace CardPeak.Domain.Constants
         public const string Ref2 = "Ref2";
         public const string CardCount = "CardCount";
     }
-
-
 }

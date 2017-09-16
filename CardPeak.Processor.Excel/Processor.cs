@@ -173,7 +173,8 @@ namespace CardPeak.Processor.Excel
         private List<ProcessedApprovalTransaction> SplitTransactions(ProcessedApprovalTransaction item, IEnumerable<Account> accounts)
         {
             var result = new List<ProcessedApprovalTransaction>();
-            decimal splitUnits = 1.0m / accounts.Count();
+            var agentCount = accounts.Count();
+            decimal splitUnits = 1.0m / agentCount;
             foreach (var agent in accounts)
             {
                 var transaction = new ProcessedApprovalTransaction
@@ -207,7 +208,7 @@ namespace CardPeak.Processor.Excel
                     try
                     {
                         transaction.Transaction.Amount = this.Service
-                            .ComputeAmountAllocation(agent.AgentId, splitUnits, item.Transaction.CardCategoryId, item.Transaction.BankId);
+                            .ComputeAmountAllocation(agent.AgentId, agentCount, item.Transaction.CardCategoryId, item.Transaction.BankId);
                     }
                     catch (Exception ex)
                     {

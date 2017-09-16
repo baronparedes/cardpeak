@@ -1,6 +1,7 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Core.Service;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
 using CardPeak.Repository.EF;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace CardPeak.Service
             this.RateRepository = new RateRepository(context);
         }
 
-        public decimal ComputeAmountAllocation(int agentId, decimal units, int cardCategoryId, int bankId)
+        public decimal ComputeAmountAllocation(int agentId, int agentCount, int cardCategoryId, int bankId)
         {
             var rate = this.RateRepository.GetRate(agentId, cardCategoryId, bankId);
             if (rate == null)
@@ -28,7 +29,7 @@ namespace CardPeak.Service
                 throw new ArgumentNullException("Rate for this agent was not found.");
             }
 
-            return rate.Amount * units;
+            return rate.Amount / agentCount;
         }
 
         public IEnumerable<Account> GetAgentsByAlias(string alias)
@@ -38,23 +39,8 @@ namespace CardPeak.Service
 
         public Reference GetCardCategoryByCode(string code)
         {
-            var description = "";
-            code = code.ToUpper();
-            switch (code)
-            {
-                case "C":
-                    description = "Classic";
-                    break;
-                case "G":
-                    description = "Gold";
-                    break;
-                case "P":
-                    description = "Platinum";
-                    break;
-                default:
-                    return null;
-            }
-
+            var codes = CardCategory.Codes;
+            var description = codes[code.ToUpper()];
             return this.ReferenceRepository.GetCardCategoryByDescription(description);
         }
     }

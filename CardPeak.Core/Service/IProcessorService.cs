@@ -7,6 +7,6 @@ namespace CardPeak.Core.Service
     {
         IEnumerable<Account> GetAgentsByAlias(string alias);
         Reference GetCardCategoryByCode(string code);
-        decimal ComputeAmountAllocation(int agentId, decimal units, int cardCategoryId, int bankId);
+        decimal ComputeAmountAllocation(int agentId, int agentCount, int cardCategoryId, int bankId);
     }
 }
