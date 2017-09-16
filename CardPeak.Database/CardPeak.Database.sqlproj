@@ -63,7 +63,6 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="Script" />
     <Folder Include="Script\Defaults" />
-    <Folder Include="dbo\Stored Procedures" />
     <Folder Include="Script\Sample Data" />
   </ItemGroup>
   <ItemGroup>
@@ -77,7 +76,6 @@
     <Build Include="dbo\Tables\BatchUpload.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <None Include="Script\Defaults\PopulateDefaultRates.sql" />
-    <Build Include="dbo\Stored Procedures\GetAgentPerformance.sql" />
     <None Include="Script\PopulateReferenceTypes.sql" />
     <Build Include="dbo\Tables\BatchFileConfiguration.sql" />
   </ItemGroup>

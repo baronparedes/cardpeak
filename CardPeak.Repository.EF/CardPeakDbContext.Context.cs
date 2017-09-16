@@ -9,12 +9,11 @@
 
 namespace CardPeak.Repository.EF
 {
-    using CardPeak.Domain;
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-
+    using CardPeak.Domain;
+    
     public partial class CardPeakDbContext : DbContext
     {
         public CardPeakDbContext()
@@ -38,14 +37,5 @@ namespace CardPeak.Repository.EF
         public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<BatchFileConfiguration> BatchFileConfiguration { get; set; }
-    
-        public virtual ObjectResult<GetAgentPerformance_Result> GetAgentPerformance(Nullable<int> targetAgentId)
-        {
-            var targetAgentIdParameter = targetAgentId.HasValue ?
-                new ObjectParameter("targetAgentId", targetAgentId) :
-                new ObjectParameter("targetAgentId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAgentPerformance_Result>("GetAgentPerformance", targetAgentIdParameter);
-        }
     }
 }

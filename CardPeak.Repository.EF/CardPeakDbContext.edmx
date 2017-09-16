@@ -271,9 +271,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetAgentPerformance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="targetAgentId" Type="int" Mode="In" />
-        </Function>
         <EntityContainer Name="CardPeakModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
@@ -339,9 +336,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CardPeakModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CardPeakDbContext" annotation:LazyLoadingEnabled="false">
-          <FunctionImport Name="GetAgentPerformance" ReturnType="Collection(CardPeakModel.GetAgentPerformance_Result)">
-          <Parameter Name="targetAgentId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="Accounts" EntityType="CardPeakModel.Account" />
           <EntitySet Name="Agents" EntityType="CardPeakModel.Agent" />
           <EntitySet Name="ApprovalTransactions" EntityType="CardPeakModel.ApprovalTransaction" />
@@ -401,10 +395,6 @@
             <End Role="BatchFileConfiguration" EntitySet="BatchFileConfiguration" />
           </AssociationSet>
           </EntityContainer>
-        <ComplexType Name="GetAgentPerformance_Result">
-          <Property Type="String" Name="MonthName" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="Units" Nullable="true" Precision="38" Scale="4" />
-        </ComplexType>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AgentId" />
@@ -694,14 +684,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CardPeakModelStoreContainer" CdmEntityContainer="CardPeakDbContext">
-          <FunctionImportMapping FunctionImportName="GetAgentPerformance" FunctionName="CardPeakModel.Store.GetAgentPerformance">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CardPeakModel.GetAgentPerformance_Result">
-                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
-                <ScalarProperty Name="Units" ColumnName="Units" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="CardPeakModel.Account">
               <MappingFragment StoreEntitySet="Account">
