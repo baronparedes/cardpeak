@@ -19,6 +19,7 @@ namespace CardPeak.Repository.EF
             return this.Context.Set<ApprovalTransaction>()
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
+                .Where(_ => !_.IsDeleted)
                 .Where(predicate);
         }
 
@@ -32,7 +33,7 @@ namespace CardPeak.Repository.EF
             this.Context.ApprovalTransactions.Add(transaction);
         }
 
-        public decimal AccountBalanceByAgent(int id)
+        public decimal GetAccountBalanceByAgent(int id)
         {
             return this.Context.ApprovalTransactions
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
@@ -41,7 +42,7 @@ namespace CardPeak.Repository.EF
                 .FirstOrDefault();
         }
 
-        public decimal TotalApprovalsByAgent(int id)
+        public decimal GetTotalApprovalsByAgent(int id)
         {
             return this.Context.ApprovalTransactions
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
@@ -68,6 +69,7 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Agent)
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
+                .Where(_ => !_.IsDeleted)
                 .Where(_ => _.AgentId == id && !_.IsDeleted)
                 .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
@@ -90,9 +92,77 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Agent)
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
+                .Where(_ => !_.IsDeleted)
                 .Where(_ => _.Client.ToLower().Contains(client.ToLower()))
                 .OrderBy(_ => _.Client);
             return result.ToList();
+        }
+
+        public decimal GetAccountBalance(int year, int month)
+        {
+            var result = this.Context.ApprovalTransactions
+                .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
+                .Where(_ => !_.IsDeleted)
+                .Sum(_ => _.Amount);
+            return result;
+        }
+
+        public decimal GetTotalApprovals(int year, int month)
+        {
+            var result = this.Context.ApprovalTransactions
+                .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
+                .Where(_ => !_.IsDeleted)
+                .Count();
+            return result;
+        }
+
+        public Dictionary<string, decimal> GetApprovalsByBank(int year, int month)
+        {
+            var result = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
+                .OrderBy(_ => _.Description)
+                .ToDictionary(_ => _.Description, _ => 0m);
+
+            var query = this.Context.ApprovalTransactions
+                .Include(_ => _.Bank)
+                .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
+                .Where(_ => !_.IsDeleted)
+                .GroupBy(_ => _.BankId)
+                .Select(_ => new { Bank = _.FirstOrDefault().Bank.Description, Approvals = _.Sum(t => t.Units) })
+                .ToList();
+
+            query.ForEach(_ => {
+                result[_.Bank] = _.Approvals;
+            });
+
+            return result;
+        }
+
+        public Dictionary<string, decimal> GetApprovalsByCategory(int year, int month)
+        {
+            var result = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
+                .OrderBy(_ => _.Description)
+                .ToDictionary(_ => _.Description, _ => 0m);
+
+            var query = this.Context.ApprovalTransactions
+                .Include(_ => _.CardCategory)
+                .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
+                .Where(_ => !_.IsDeleted)
+                .GroupBy(_ => _.CardCategoryId)
+                .Select(_ => new { CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
+                .ToList();
+
+            query.ForEach(_ => {
+                result[_.CardCategory] = _.Approvals;
+            });
+
+            return result;
+        }
+
+        public IEnumerable<ApprovalPerformance> GetYearlyPerformance(int year)
+        {
+            throw new NotImplementedException();
         }
     }
 }

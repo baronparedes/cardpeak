@@ -37,9 +37,9 @@ namespace CardPeak.Service
                 Accounts = this.AccountRepository.FindByAgent(agentId),
                 ApprovalTransactions = this.ApprovalTransactionRepository.FindByAgent(agentId, startDate, endDate),
                 DebitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate),
-                AccountBalance = this.ApprovalTransactionRepository.AccountBalanceByAgent(agentId) + this.DebitCreditTransactionRepository.AccountBalanceByAgent(agentId),
-                SavingsBalance = this.DebitCreditTransactionRepository.SavingsBalanceByAgent(agentId),
-                TotalApprovals = this.ApprovalTransactionRepository.TotalApprovalsByAgent(agentId),
+                AccountBalance = this.ApprovalTransactionRepository.GetAccountBalanceByAgent(agentId) + this.DebitCreditTransactionRepository.GetAccountBalanceByAgent(agentId),
+                SavingsBalance = this.DebitCreditTransactionRepository.GetSavingsBalanceByAgent(agentId),
+                TotalApprovals = this.ApprovalTransactionRepository.GetTotalApprovalsByAgent(agentId),
                 Performance = this.ApprovalTransactionRepository.GetAgentPerformance(agentId)
             };
         }

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using CardPeak.Domain;
+using System.Collections.Generic;
 
 namespace CardPeak.Core.Service
 {
     public interface ITransactionService : IUnitOfWork
     {
-        IEnumerable<CardPeak.Domain.ApprovalTransaction> GetTransactions(string clientName);
+        IEnumerable<ApprovalTransaction> GetTransactions(string clientName);
     }
 }

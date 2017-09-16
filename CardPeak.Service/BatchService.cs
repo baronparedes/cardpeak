@@ -113,10 +113,5 @@ namespace CardPeak.Service
             this.Complete();
             return result;
         }
-
-        public IEnumerable<BatchUpload> GetLatestProcessed()
-        {
-            return this.BatchUploadRepository.GetLatestProcessed();
-        }
     }
 }

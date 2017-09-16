@@ -40,7 +40,8 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Bank)
                 .Where(_ => _.ProcessStartDateTime != null)
                 .OrderByDescending(_ => _.BatchId)
-                .Take(5);
+                .Take(5)
+                .ToList();
             return result;
         }
     }

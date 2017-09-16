@@ -44,6 +44,11 @@
 
     export interface DashboardModel {
         latestProcessedBatch?: CardPeak.Entities.BatchUpload[];
+        accountBalance?: number;
+        totalApprovals?: number;
+        approvalsByBank?: CardPeak.Entities.Metric[];
+        approvalsByCategory?: CardPeak.Entities.Metric[];
+        performance?: CardPeak.Entities.ApprovalPerformance[];
         refreshing?: boolean;
     }
 }

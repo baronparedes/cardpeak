@@ -22,12 +22,12 @@ namespace CardPeak.Repository.EF
                 .FirstOrDefault();
         }
 
-        public decimal AccountBalanceByAgent(int id)
+        public decimal GetAccountBalanceByAgent(int id)
         {
             return this.GetBalanceByAgent(id, (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
         }
 
-        public decimal SavingsBalanceByAgent(int id)
+        public decimal GetSavingsBalanceByAgent(int id)
         {
             return this.GetBalanceByAgent(id, (int)CardPeak.Domain.Enums.TransactionTypeEnum.SavingsTransaction);
         }
@@ -46,6 +46,14 @@ namespace CardPeak.Repository.EF
             }
 
             return result.ToList();
+        }
+
+        public decimal GetAccountBalance(int year, int month)
+        {
+            return this.Context.DebitCreditTransactions
+                .Where(_ => _.TransactionDateTime.Year == year && _.TransactionDateTime.Month == month)
+                .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction && !_.IsDeleted)
+                .Sum(_ => _.Amount);
         }
     }
 }

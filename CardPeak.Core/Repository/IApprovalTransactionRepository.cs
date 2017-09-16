@@ -9,7 +9,12 @@ namespace CardPeak.Core.Repository
         IEnumerable<ApprovalTransaction> FindByClient(string clientName);
         IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate);
         IEnumerable<ApprovalPerformance> GetAgentPerformance(int id);
-        decimal AccountBalanceByAgent(int id);
-        decimal TotalApprovalsByAgent(int agentId);
+        decimal GetAccountBalanceByAgent(int id);
+        decimal GetTotalApprovalsByAgent(int agentId);
+        decimal GetAccountBalance(int year, int month);
+        decimal GetTotalApprovals(int year, int month);
+        Dictionary<string, decimal> GetApprovalsByBank(int year, int month);
+        Dictionary<string, decimal> GetApprovalsByCategory(int year, int month);
+        IEnumerable<ApprovalPerformance> GetYearlyPerformance(int year);
     }
 }

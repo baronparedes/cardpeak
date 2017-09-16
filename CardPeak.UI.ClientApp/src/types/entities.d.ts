@@ -131,4 +131,9 @@
         public cardCountColumn?: number;
         public bank?: Reference;
     }
+
+    export class Metric {
+        public key: string;
+        public value: number;
+    }
 }
