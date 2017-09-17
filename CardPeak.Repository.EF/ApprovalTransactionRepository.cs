@@ -183,7 +183,31 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetYearlyPerformance(int year)
         {
-            return null;
+            var result = new Dictionary<string, decimal>();
+            for (int i = 1; i <= 12; i++)
+            {
+                result.Add(new DateTime(year, i, 1).ToString("MMM"), 0);
+            }
+
+            var startDate = new DateTime(year, 1, 1);
+            var endDate = new DateTime(year, 12, 31);
+
+            var query = this.Context.ApprovalTransactions
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
+                .GroupBy(_ => _.ApprovalDate.Month)
+                .Select(_ => new
+                {
+                    Month = _.FirstOrDefault().ApprovalDate.Month,
+                    Approvals = _.Sum(approvals => approvals.Units)
+                })
+                .ToList();
+
+            query.ForEach(_ => {
+                result[new DateTime(year, _.Month, 1).ToString("MMM")] = _.Approvals;
+            });
+
+            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
         }
 
         public IEnumerable<ApprovalMetric<Agent>> GetTopAgents(int year, int month)
