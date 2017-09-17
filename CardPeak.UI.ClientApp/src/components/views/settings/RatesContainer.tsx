@@ -21,6 +21,7 @@ interface RatesContainerState {
     bankId: number,
     cardCategoryId: number,
     amount: number,
+    savingsAmount: number,
     errors: {
         [error: string]: string,
     },
@@ -34,6 +35,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
             bankId: 0,
             cardCategoryId: 0,
             amount: 0,
+            savingsAmount: 0,
             errors: {
                 amount: '',
                 bankId: '',
@@ -67,6 +69,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
             bankId: parseInt(this.state.bankId.toString()),
             cardCategoryId: parseInt(this.state.cardCategoryId.toString()),
             amount: this.state.amount,
+            savingsAmount: this.state.savingsAmount,
             bank: this.props.banks.filter(_ => _.referenceId == this.state.bankId)[0],
             cardCategory: this.props.cardCategories.filter(_ => _.referenceId == this.state.cardCategoryId)[0]
         };
@@ -153,6 +156,14 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                     error={this.state.errors.amount}
                                     value={this.state.amount}
                                     isRequired
+                                    onFocus={this.handleFocus}
+                                    onChange={this.handleOnChange} />
+                                <FormFieldInput
+                                    controlId="form-rate-savings-amount"
+                                    type="number"
+                                    label="Savings"
+                                    name="savingsAmount"
+                                    value={this.state.savingsAmount}
                                     onFocus={this.handleFocus}
                                     onChange={this.handleOnChange} />
                                 <FormGroup>

@@ -42,6 +42,7 @@ namespace CardPeak.Repository.EF
                 if (item != null)
                 {
                     _.Amount = item.Amount;
+                    _.SavingsAmount = item.SavingsAmount;
                     this.Context.Entry(_).State = EntityState.Modified;
                 }
                 else

@@ -31,11 +31,14 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
                 <Col md={4} lg={4} sm={4} xs={4}>
                     {this.props.isHeader ? "bank" : this.props.rate.bank.description}
                 </Col>
-                <Col md={4} lg={4} sm={3} xs={3}>
+                <Col md={3} lg={3} sm={3} xs={3}>
                     {this.props.isHeader ? "category" : this.props.rate.cardCategory.description}
                 </Col>
-                <Col md={3} lg={3} sm={3} xs={3}>
+                <Col md={2} lg={2} sm={2} xs={2}>
                     {this.props.isHeader ? "amount" : <HighlightedSpan className="currency" value={this.props.rate.amount} />}
+                </Col>
+                <Col md={2} lg={2} sm={2} xs={2}>
+                    {this.props.isHeader ? "savings" : <HighlightedSpan className="currency" value={this.props.rate.savingsAmount} />}
                 </Col>
                 <Col md={1} lg={1} sm={1} xs={1}>
                     {

@@ -70,6 +70,7 @@
         public bankId: number;
         public cardCategoryId: number;
         public agentId: number;
+        public savingsAmount: number;
         public agent?: Agent;
         public bank?: Reference;
         public cardCategory?: Reference;

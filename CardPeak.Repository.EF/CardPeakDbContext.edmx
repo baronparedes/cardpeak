@@ -99,6 +99,7 @@
           <Property Name="BankId" Type="int" Nullable="false" />
           <Property Name="CardCategoryId" Type="int" Nullable="false" />
           <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="SavingsAmount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="Reference">
           <Key>
@@ -483,6 +484,7 @@
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Rate" ToRole="Agent" />
           <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_Rate_Reference_BankId" FromRole="Rate" ToRole="Reference" />
           <NavigationProperty Name="CardCategory" Relationship="CardPeakModel.FK_Rate_Reference_CardCategoryId" FromRole="Rate" ToRole="Reference" />
+          <Property Name="SavingsAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="Reference">
           <Key>
@@ -754,6 +756,7 @@
           <EntitySetMapping Name="Rates">
             <EntityTypeMapping TypeName="CardPeakModel.Rate">
               <MappingFragment StoreEntitySet="Rate">
+                <ScalarProperty Name="SavingsAmount" ColumnName="SavingsAmount" />
                 <ScalarProperty Name="AgentId" ColumnName="AgentId" />
                 <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
