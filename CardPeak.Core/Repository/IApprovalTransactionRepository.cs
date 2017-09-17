@@ -16,5 +16,6 @@ namespace CardPeak.Core.Repository
         IEnumerable<ApprovalMetric<string>> GetApprovalsByBank(int year, int month);
         IEnumerable<ApprovalMetric<string>> GetApprovalsByCategory(int year, int month);
         IEnumerable<ApprovalMetric<string>> GetYearlyPerformance(int year);
+        IEnumerable<ApprovalMetric<Agent>> GetTopAgents(int year, int month);
     }
 }
