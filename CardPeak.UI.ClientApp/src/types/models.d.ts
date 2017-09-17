@@ -46,9 +46,9 @@
         latestProcessedBatch?: CardPeak.Entities.BatchUpload[];
         accountBalance?: number;
         totalApprovals?: number;
-        approvalsByBank?: CardPeak.Entities.Metric[];
-        approvalsByCategory?: CardPeak.Entities.Metric[];
-        performance?: CardPeak.Entities.Metric[];
+        approvalsByBank?: CardPeak.Entities.ApprovalMetric[];
+        approvalsByCategory?: CardPeak.Entities.ApprovalMetric[];
+        performance?: CardPeak.Entities.ApprovalMetric[];
         refreshing?: boolean;
     }
 }

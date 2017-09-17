@@ -51,7 +51,7 @@ namespace CardPeak.Repository.EF
                 .Sum();
         }
 
-        public IEnumerable<Metric> GetAgentPerformance(int id)
+        public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int id)
         {
             var result = new Dictionary<string, decimal>
             {
@@ -80,7 +80,7 @@ namespace CardPeak.Repository.EF
                 result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString("MMM")] = _.Approvals;
             });
 
-            return result.Select(_ => new Metric { Key = _.Key, Value = _.Value });
+            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
         }
 
         public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
@@ -137,7 +137,7 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public IEnumerable<Metric> GetApprovalsByBank(int year, int month)
+        public IEnumerable<ApprovalMetric<string>> GetApprovalsByBank(int year, int month)
         {
             var result = this.Context.References
                 .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
@@ -156,10 +156,10 @@ namespace CardPeak.Repository.EF
                 result[_.Bank] = _.Approvals;
             });
 
-            return result.Select(_ => new Metric { Key = _.Key, Value = _.Value });
+            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
         }
 
-        public IEnumerable<Metric> GetApprovalsByCategory(int year, int month)
+        public IEnumerable<ApprovalMetric<string>> GetApprovalsByCategory(int year, int month)
         {
             var result = this.Context.References
                 .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
@@ -178,10 +178,10 @@ namespace CardPeak.Repository.EF
                 result[_.CardCategory] = _.Approvals;
             });
 
-            return result.Select(_ => new Metric { Key = _.Key, Value = _.Value });
+            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
         }
 
-        public IEnumerable<Metric> GetYearlyPerformance(int year)
+        public IEnumerable<ApprovalMetric<string>> GetYearlyPerformance(int year)
         {
             throw new NotImplementedException();
         }

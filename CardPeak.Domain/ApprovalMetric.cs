@@ -1,8 +1,8 @@
 ﻿namespace CardPeak.Domain
 {
-    public sealed class Metric
+    public sealed class ApprovalMetric<TKey>
     {
-        public string Key { get; set; }
+        public TKey Key { get; set; }
         public decimal Value { get; set; }
     }
 }

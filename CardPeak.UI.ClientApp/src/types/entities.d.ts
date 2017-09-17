@@ -54,7 +54,7 @@
         public accounts?: Account[];
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
-        public performance?: Metric[];
+        public performance?: ApprovalMetric[];
     }
 
     export class Reference 
@@ -127,8 +127,8 @@
         public bank?: Reference;
     }
 
-    export class Metric {
-        public key: string;
+    export class ApprovalMetric {
+        public key: any;
         public value: number;
     }
 }

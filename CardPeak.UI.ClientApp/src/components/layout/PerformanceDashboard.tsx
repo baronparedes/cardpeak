@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
 
-const Performance = (props: { perf: CardPeak.Entities.Metric, compareUnits: number }) => {
+const Performance = (props: { perf: CardPeak.Entities.ApprovalMetric, compareUnits: number }) => {
     let caret = null;
     if (props.compareUnits > props.perf.value) {
         caret = <i className="perf-down fa fa-caret-down spacer-left"></i>
@@ -23,7 +23,7 @@ const Performance = (props: { perf: CardPeak.Entities.Metric, compareUnits: numb
     )
 }
 
-export const PerformanceDashboard = (props: { performance: CardPeak.Entities.Metric[] }) => {
+export const PerformanceDashboard = (props: { performance: CardPeak.Entities.ApprovalMetric[] }) => {
     return (
         <Grid fluid>
             <Row>

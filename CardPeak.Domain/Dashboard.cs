@@ -7,8 +7,8 @@ namespace CardPeak.Domain
         public IEnumerable<BatchUpload> LatestProcessedBatch { get; set; }
         public decimal AccountBalance { get; set; }
         public decimal TotalApprovals { get; set; }
-        public IEnumerable<Metric> ApprovalsByBank { get; set; }
-        public IEnumerable<Metric> ApprovalsByCategory { get; set; }
-        public IEnumerable<Metric> Performance { get; set; }
+        public IEnumerable<ApprovalMetric<string>> ApprovalsByBank { get; set; }
+        public IEnumerable<ApprovalMetric<string>> ApprovalsByCategory { get; set; }
+        public IEnumerable<ApprovalMetric<string>> Performance { get; set; }
     }
 }
