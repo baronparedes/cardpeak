@@ -22,67 +22,7 @@ namespace CardPeak.Repository.EF
                 .Where(predicate);
         }
 
-        public override void Add(ApprovalTransaction transaction)
-        {
-            this.Context.Entry(transaction).State = EntityState.Added;
-            if (transaction.CardCategory != null)
-            {
-                this.Context.Entry(transaction.CardCategory).State = EntityState.Unchanged;
-            }
-            this.Context.ApprovalTransactions.Add(transaction);
-        }
-
-        public decimal GetAccountBalanceByAgent(int id)
-        {
-            return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == id && !_.IsDeleted)
-                .GroupBy(_ => _.AgentId)
-                .Select(balance => balance.Sum(_ => _.Amount))
-                .FirstOrDefault();
-        }
-
-        public decimal GetTotalApprovalsByAgent(int id)
-        {
-            return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == id && !_.IsDeleted)
-                .Select(_ => _.Units)
-                .DefaultIfEmpty(0)
-                .Sum();
-        }
-
-        public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int id)
-        {
-            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-3);
-            var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
-            var result = new Dictionary<string, decimal>
-            {
-                { DateTime.Now.ToString(Configurations.MonthFormat), 0 },
-                { DateTime.Now.AddMonths(-1).ToString(Configurations.MonthFormat), 0 },
-                { DateTime.Now.AddMonths(-2).ToString(Configurations.MonthFormat), 0 },
-                { DateTime.Now.AddMonths(-3).ToString(Configurations.MonthFormat), 0 }
-            };
-
-
-            var query = this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == id)
-                .Where(_ => !_.IsDeleted)
-                .Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
-                .GroupBy(_ => _.ApprovalDate.Month)
-                .Select(_ => new
-                {
-                    Month = _.FirstOrDefault().ApprovalDate.Month,
-                    Approvals = _.Sum(approvals => approvals.Units)
-                })
-                .ToList();
-
-            query.ForEach(_ => {
-                result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = _.Approvals;
-            });
-
-            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
-        }
-
-        public IEnumerable<ApprovalTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
+        public IEnumerable<ApprovalTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate)
         {
             var result = this.Context
                 .ApprovalTransactions
@@ -90,7 +30,7 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
                 .Where(_ => !_.IsDeleted)
-                .Where(_ => _.AgentId == id && !_.IsDeleted)
+                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
                 .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
             if (endDate != null && startDate.Date <= endDate.Value.Date)
@@ -116,6 +56,76 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.Client.ToLower().Contains(client.ToLower()))
                 .OrderBy(_ => _.Client);
             return result.ToList();
+        }
+
+        public override void Add(ApprovalTransaction transaction)
+        {
+            this.Context.Entry(transaction).State = EntityState.Added;
+            if (transaction.CardCategory != null)
+            {
+                this.Context.Entry(transaction.CardCategory).State = EntityState.Unchanged;
+            }
+            this.Context.ApprovalTransactions.Add(transaction);
+        }
+
+        public decimal GetAgentAccountBalance(int agentId)
+        {
+            return this.Context.ApprovalTransactions
+                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
+                .GroupBy(_ => _.AgentId)
+                .Select(balance => balance.Sum(_ => _.Amount))
+                .FirstOrDefault();
+        }
+
+        public decimal GetAgentTotalApprovals(int agentId)
+        {
+            return this.Context.ApprovalTransactions
+                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
+                .Select(_ => _.Units)
+                .DefaultIfEmpty(0)
+                .Sum();
+        }
+
+        public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId)
+        {
+            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-3);
+            var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
+            var result = new Dictionary<string, decimal>
+            {
+                { DateTime.Now.ToString(Configurations.MonthFormat), 0 },
+                { DateTime.Now.AddMonths(-1).ToString(Configurations.MonthFormat), 0 },
+                { DateTime.Now.AddMonths(-2).ToString(Configurations.MonthFormat), 0 },
+                { DateTime.Now.AddMonths(-3).ToString(Configurations.MonthFormat), 0 }
+            };
+
+
+            var query = this.Context.ApprovalTransactions
+                .Where(_ => _.AgentId == agentId)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
+                .GroupBy(_ => _.ApprovalDate.Month)
+                .Select(_ => new
+                {
+                    Month = _.FirstOrDefault().ApprovalDate.Month,
+                    Approvals = _.Sum(approvals => approvals.Units)
+                })
+                .ToList();
+
+            query.ForEach(_ => {
+                result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = _.Approvals;
+            });
+
+            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
+        }
+
+        public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, int year, int month)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByCategory(int agentId, int year, int month)
+        {
+            throw new NotImplementedException();
         }
 
         public decimal GetAccountBalance(int year, int month)

@@ -6,9 +6,9 @@ namespace CardPeak.Core.Repository
 {
     public interface IDebitCreditTransactionRepository : IRepository<DebitCreditTransaction>
     {
-        IEnumerable<DebitCreditTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate);
-        decimal GetAccountBalanceByAgent(int id);
-        decimal GetSavingsBalanceByAgent(int id);
+        IEnumerable<DebitCreditTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate);
+        decimal GetAgentAccountBalance(int agentId);
+        decimal GetAgentSavingsBalance(int agentId);
         decimal GetAccountBalance(int year, int month);
     }
 }

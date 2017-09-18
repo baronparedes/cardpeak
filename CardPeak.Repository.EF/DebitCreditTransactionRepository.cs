@@ -13,30 +13,30 @@ namespace CardPeak.Repository.EF
         {
         }
 
-        private decimal GetBalanceByAgent(int id, int type)
+        private decimal GetBalanceByAgent(int agentId, int type)
         {
             return this.Context.DebitCreditTransactions
-                .Where(_ => _.TransactionTypeId == type && _.AgentId == id && !_.IsDeleted)
+                .Where(_ => _.TransactionTypeId == type && _.AgentId == agentId && !_.IsDeleted)
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
                 .FirstOrDefault();
         }
 
-        public decimal GetAccountBalanceByAgent(int id)
+        public decimal GetAgentAccountBalance(int agentId)
         {
-            return this.GetBalanceByAgent(id, (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+            return this.GetBalanceByAgent(agentId, (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
         }
 
-        public decimal GetSavingsBalanceByAgent(int id)
+        public decimal GetAgentSavingsBalance(int agentId)
         {
-            return this.GetBalanceByAgent(id, (int)CardPeak.Domain.Enums.TransactionTypeEnum.SavingsTransaction);
+            return this.GetBalanceByAgent(agentId, (int)CardPeak.Domain.Enums.TransactionTypeEnum.SavingsTransaction);
         }
 
-        public IEnumerable<DebitCreditTransaction> FindByAgent(int id, DateTime startDate, DateTime? endDate)
+        public IEnumerable<DebitCreditTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate)
         {
             var result = this.Context
                 .DebitCreditTransactions
-                .Where(_ => _.AgentId == id && !_.IsDeleted)
+                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
                 .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
                 .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) >= startDate.Date);
 

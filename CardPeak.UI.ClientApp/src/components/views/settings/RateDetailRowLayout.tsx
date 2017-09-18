@@ -28,19 +28,29 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
     render() {
         return (
             <Row className="agent-item">
-                <Col md={4} lg={4} sm={4} xs={4}>
+                <Col mdHidden
+                    lgHidden
+                    smHidden
+                    xsHidden={!this.props.isHeader}>
+                    <span className="text-center spacer-left">Rates</span>
+                </Col>
+                <Col sm={3} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "bank" : this.props.rate.bank.description}
                 </Col>
-                <Col md={3} lg={3} sm={3} xs={3}>
+                <Col sm={3} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "category" : this.props.rate.cardCategory.description}
                 </Col>
-                <Col md={2} lg={2} sm={2} xs={2}>
+                <Col sm={2} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "amount" : <HighlightedSpan className="currency" value={this.props.rate.amount} />}
                 </Col>
-                <Col md={2} lg={2} sm={2} xs={2}>
+                <Col sm={2} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "savings" : <HighlightedSpan className="currency" value={this.props.rate.savingsAmount} />}
                 </Col>
-                <Col md={1} lg={1} sm={1} xs={1}>
+                <Col sm={2}
+                    lgHidden={!this.props.isHeader && this.props.rate.agentId === 0}
+                    mdHidden={!this.props.isHeader && this.props.rate.agentId === 0}
+                    smHidden={!this.props.isHeader && this.props.rate.agentId === 0}
+                    xsHidden={this.props.isHeader || this.props.rate.agentId === 0}>
                     {
                         this.props.isHeader ? "" : this.renderButton()
                     }

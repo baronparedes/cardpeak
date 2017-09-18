@@ -21,7 +21,7 @@ interface RatesContainerState {
     bankId: number,
     cardCategoryId: number,
     amount: number,
-    savingsAmount: number,
+    savingsAmount?: number,
     errors: {
         [error: string]: string,
     },
@@ -69,7 +69,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
             bankId: parseInt(this.state.bankId.toString()),
             cardCategoryId: parseInt(this.state.cardCategoryId.toString()),
             amount: this.state.amount,
-            savingsAmount: this.state.savingsAmount,
+            savingsAmount: this.state.savingsAmount ? this.state.savingsAmount : 0,
             bank: this.props.banks.filter(_ => _.referenceId == this.state.bankId)[0],
             cardCategory: this.props.cardCategories.filter(_ => _.referenceId == this.state.cardCategoryId)[0]
         };
