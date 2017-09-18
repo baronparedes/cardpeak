@@ -7,7 +7,7 @@ export class Footer extends React.Component<{}, undefined> {
                 <div className="container">
                     <hr />
                     <p className="text-muted">
-                        Cardpeak 2017
+                        Cardpeak &copy; 2017 v1.0
                     </p>
                 </div>
             </footer>
