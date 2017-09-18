@@ -1,5 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -40,8 +41,9 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Bank)
                 .Where(_ => _.ProcessStartDateTime != null)
                 .OrderByDescending(_ => _.BatchId)
-                .Take(5)
+                .Take(Configurations.LatestProcessedBatchCount)
                 .ToList();
+
             return result;
         }
     }

@@ -80,7 +80,7 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("create/")]
+        [Route("create")]
         public IHttpActionResult Create(Agent agent)
         {
             var result = this.AgentService.Create(agent);

@@ -4,6 +4,6 @@ namespace CardPeak.Core.Service
 {
     public interface IDashboardService : IUnitOfWork
     {
-        Dashboard GetDashboard();
+        Dashboard GetDashboard(int? year = null, int? month = null);
     }
 }

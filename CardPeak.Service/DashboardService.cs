@@ -19,25 +19,21 @@ namespace CardPeak.Service
             this.DebitCreditTransactionRepository = new DebitCreditTransactionRepository(context);
         }
 
-        public Dashboard GetDashboard()
+        public Dashboard GetDashboard(int? year = null, int? month = null)
         {
-            return this.GetDashboard(DateTime.Now.Year, DateTime.Now.Month);
-        }
+            year = year ?? DateTime.Now.Year;
+            month = month ?? DateTime.Now.Month;
 
-        public Dashboard GetDashboard(int year, int month)
-        {
-            //var startDate = new DateTime(year, month, 1);
-            //var endDate = new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
             var result = new Dashboard
             {
                 LatestProcessedBatch = this.BatchUploadRepository.GetLatestProcessed(),
-                ApprovalsByBank = this.ApprovalTransactionRepository.GetApprovalsByBank(year, month),
-                ApprovalsByCategory = this.ApprovalTransactionRepository.GetApprovalsByCategory(year, month),
-                AccountBalance = this.ApprovalTransactionRepository.GetAccountBalance(year, month) 
-                    + this.DebitCreditTransactionRepository.GetAccountBalance(year, month),
-                TotalApprovals = this.ApprovalTransactionRepository.GetTotalApprovals(year, month),
-                Performance = this.ApprovalTransactionRepository.GetYearlyPerformance(year),
-                TopAgents = this.ApprovalTransactionRepository.GetTopAgents(year, month)
+                ApprovalsByBank = this.ApprovalTransactionRepository.GetApprovalsByBank(year.Value, month.Value),
+                ApprovalsByCategory = this.ApprovalTransactionRepository.GetApprovalsByCategory(year.Value, month.Value),
+                AccountBalance = this.ApprovalTransactionRepository.GetAccountBalance(year.Value, month.Value)
+                    + this.DebitCreditTransactionRepository.GetAccountBalance(year.Value, month.Value),
+                TotalApprovals = this.ApprovalTransactionRepository.GetTotalApprovals(year.Value, month.Value),
+                Performance = this.ApprovalTransactionRepository.GetYearlyPerformance(year.Value),
+                TopAgents = this.ApprovalTransactionRepository.GetTopAgents(year.Value, month.Value)
             };
 
             return result;

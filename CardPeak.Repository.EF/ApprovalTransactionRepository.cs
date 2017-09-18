@@ -1,5 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,9 +11,7 @@ namespace CardPeak.Repository.EF
 {
     public sealed class ApprovalTransactionRepository : Repository<ApprovalTransaction, CardPeakDbContext>, IApprovalTransactionRepository
     {
-        public ApprovalTransactionRepository(CardPeakDbContext context) : base(context)
-        {
-        }
+        public ApprovalTransactionRepository(CardPeakDbContext context) : base(context) { }
 
         public override IEnumerable<ApprovalTransaction> Find(Expression<Func<ApprovalTransaction, bool>> predicate)
         {
@@ -53,16 +52,16 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int id)
         {
-            var result = new Dictionary<string, decimal>
-            {
-                { DateTime.Now.ToString("MMM"), 0 },
-                { DateTime.Now.AddMonths(-1).ToString("MMM"), 0 },
-                { DateTime.Now.AddMonths(-2).ToString("MMM"), 0 },
-                { DateTime.Now.AddMonths(-3).ToString("MMM"), 0 }
-            };
-
             var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-3);
             var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
+            var result = new Dictionary<string, decimal>
+            {
+                { DateTime.Now.ToString(Configurations.MonthFormat), 0 },
+                { DateTime.Now.AddMonths(-1).ToString(Configurations.MonthFormat), 0 },
+                { DateTime.Now.AddMonths(-2).ToString(Configurations.MonthFormat), 0 },
+                { DateTime.Now.AddMonths(-3).ToString(Configurations.MonthFormat), 0 }
+            };
+
 
             var query = this.Context.ApprovalTransactions
                 .Where(_ => _.AgentId == id)
@@ -77,7 +76,7 @@ namespace CardPeak.Repository.EF
                 .ToList();
 
             query.ForEach(_ => {
-                result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString("MMM")] = _.Approvals;
+                result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = _.Approvals;
             });
 
             return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
@@ -186,14 +185,14 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetYearlyPerformance(int year)
         {
-            var result = new Dictionary<string, decimal>();
-            for (int i = 1; i <= 12; i++)
-            {
-                result.Add(new DateTime(year, i, 1).ToString("MMM"), 0);
-            }
-
             var startDate = new DateTime(year, 1, 1);
             var endDate = new DateTime(year, 12, 31);
+            var result = new Dictionary<string, decimal>();
+
+            for (int i = 1; i <= 12; i++)
+            {
+                result.Add(new DateTime(year, i, 1).ToString(Configurations.MonthFormat), 0);
+            }
 
             var query = this.Context.ApprovalTransactions
                 .Where(_ => !_.IsDeleted)
@@ -207,7 +206,7 @@ namespace CardPeak.Repository.EF
                 .ToList();
 
             query.ForEach(_ => {
-                result[new DateTime(year, _.Month, 1).ToString("MMM")] = _.Approvals;
+                result[new DateTime(year, _.Month, 1).ToString(Configurations.MonthFormat)] = _.Approvals;
             });
 
             return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
@@ -221,7 +220,7 @@ namespace CardPeak.Repository.EF
                 .Where(_ => !_.IsDeleted)
                 .GroupBy(_ => _.AgentId)
                 .OrderByDescending(_ => _.Sum(t => t.Units))
-                .Take(10)
+                .Take(Configurations.TopAgentCount)
                 .Select(_ => new ApprovalMetric<Agent> { Key = _.FirstOrDefault().Agent, Value = _.Sum(t => t.Units) })
                 .ToList();
 
