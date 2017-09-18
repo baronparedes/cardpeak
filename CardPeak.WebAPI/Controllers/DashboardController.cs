@@ -16,7 +16,14 @@ namespace CardPeak.WebAPI.Controllers
 
         public IHttpActionResult Get()
         {
-            var result = this.DashboardService.GetDashboard();
+            return this.RefreshDashboard(null, null);
+        }
+
+        [HttpGet]
+        [Route("refresh")]
+        public IHttpActionResult RefreshDashboard([FromUri]int? year = null, [FromUri]int? month = null)
+        {
+            var result = this.DashboardService.GetDashboard(year, month);
             if (result == null)
             {
                 return this.NotFound();

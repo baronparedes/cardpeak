@@ -35,7 +35,7 @@ export const TopAgentList = (props: TopAgentListProps) => {
     let rank: number = 0;
     return (
         <div>
-            <Col sm={12} xsHidden={true} className="text-center spacer-bottom"><label className="text-muted">Top Agents</label></Col>
+            <Col sm={12} xsHidden={true} className="text-center spacer-top spacer-bottom"><label className="text-muted">Top Agents</label></Col>
             <GridList header={<TopAgentListRowLayout isHeader={true} />}>
                 {
                     props.data && props.data.length > 0 ?

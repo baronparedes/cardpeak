@@ -30,6 +30,9 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
         }
     }
     handleOnRefreshDashboard = () => {
+        if (this.hasErrors()) {
+            return;
+        }
         this.props.onRefresh(this.state.year, this.state.month);
     }
     handleOnChange = (e: any) => {
@@ -69,7 +72,8 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
                                 value={this.state.year}
                                 isRequired
                                 onChange={this.handleOnChange} >
-                                <option key={0} value={0}>Select...</option>
+                                <option key={1} value={2016}>2016</option>
+                                <option key={2} value={2017}>2017</option>
                             </FormFieldDropdown>
                         </Col>
                         <Col sm={6}>
@@ -81,7 +85,18 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
                                 value={this.state.month}
                                 isRequired
                                 onChange={this.handleOnChange} >
-                                <option key={0} value={0}>Select...</option>
+                                <option key={1} value={1}>Jan</option>
+                                <option key={2} value={2}>Feb</option>
+                                <option key={3} value={3}>Mar</option>
+                                <option key={4} value={4}>Apr</option>
+                                <option key={5} value={5}>May</option>
+                                <option key={6} value={6}>Jun</option>
+                                <option key={7} value={7}>Jul</option>
+                                <option key={8} value={8}>Aug</option>
+                                <option key={9} value={9}>Sep</option>
+                                <option key={10} value={10}>Oct</option>
+                                <option key={11} value={11}>Nov</option>
+                                <option key={12} value={12}>Dec</option>
                             </FormFieldDropdown>
                         </Col>
                     </Row>

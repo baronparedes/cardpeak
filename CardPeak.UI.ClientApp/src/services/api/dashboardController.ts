@@ -2,6 +2,7 @@
 
 const API = {
     GET_DASHBOARD: '/dashboard',
+    REFRESH_DASHBOARD: '/dashboard/refresh',
 }
 
 export function getDashboard(
@@ -10,7 +11,27 @@ export function getDashboard(
 
     axios.get(API.GET_DASHBOARD)
         .then((r) => {
-            successCallback(r.data as CardPeak.Entities.AgentDashboard);
+            successCallback(r.data as CardPeak.Models.DashboardModel);
+        }).catch((reason) => {
+            if (errorCallback) {
+                errorCallback(reason.message);
+            }
+        });
+}
+
+export function refreshDashboard(year: number, month: number,
+    successCallback: (data: CardPeak.Models.DashboardModel) => void,
+    errorCallback?: (error: string) => void) {
+
+    axios.get(API.REFRESH_DASHBOARD, ({
+            params: {
+                year,
+                month
+            }
+        })).then((r) => {
+            if (successCallback) {
+                successCallback(r.data as CardPeak.Models.DashboardModel);
+            }
         }).catch((reason) => {
             if (errorCallback) {
                 errorCallback(reason.message);

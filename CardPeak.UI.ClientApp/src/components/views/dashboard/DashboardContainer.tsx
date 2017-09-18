@@ -74,7 +74,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
     render() {
         return (
             <div>
-                <DashboardActions refreshing={this.props.refreshing} />
+                <DashboardActions refreshing={this.props.refreshing} onRefresh={this.props.actions.refreshDashboardStart} />
                 { this.props.refreshing ? <SpinnerBlock /> : this.renderMetrics() }
             </div>
         )

@@ -1,11 +1,11 @@
 ﻿import * as moment from 'moment'
 
 export const currentMonth = () => {
-    return new Date().getMonth();
+    return parseInt(moment(new Date()).format("MM"));
 }
 
 export const currentYear = () => {
-    return new Date().getFullYear();
+    return parseInt(moment(new Date()).format("YYYY"));
 }
 
 export const dateFormat = (date: Date) => {
