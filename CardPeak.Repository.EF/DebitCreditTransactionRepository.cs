@@ -53,7 +53,9 @@ namespace CardPeak.Repository.EF
             return this.Context.DebitCreditTransactions
                 .Where(_ => _.TransactionDateTime.Year == year && _.TransactionDateTime.Month == month)
                 .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction && !_.IsDeleted)
-                .Sum(_ => _.Amount);
+                .Select(_ => _.Amount)
+                .DefaultIfEmpty(0)
+                .Sum();
         }
     }
 }

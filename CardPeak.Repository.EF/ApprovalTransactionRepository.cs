@@ -124,7 +124,10 @@ namespace CardPeak.Repository.EF
             var result = this.Context.ApprovalTransactions
                 .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
                 .Where(_ => !_.IsDeleted)
-                .Sum(_ => _.Amount);
+                .Select(_ => _.Amount)
+                .DefaultIfEmpty(0)
+                .Sum();
+
             return result;
         }
 

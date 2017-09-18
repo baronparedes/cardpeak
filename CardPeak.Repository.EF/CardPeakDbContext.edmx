@@ -43,6 +43,7 @@
           <Property Name="ApprovalDate" Type="date" Nullable="false" />
           <Property Name="BatchId" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="ProcessId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="BatchFileConfiguration">
           <Key>
@@ -442,6 +443,7 @@
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="ApprovalTransaction" ToRole="Agent" />
           <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" FromRole="ApprovalTransaction" ToRole="Reference" />
           <NavigationProperty Name="CardCategory" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" FromRole="ApprovalTransaction" ToRole="Reference" />
+          <Property Name="ProcessId" Type="Guid" />
         </EntityType>
         <EntityType Name="BatchUpload">
           <Key>
@@ -711,6 +713,7 @@
           <EntitySetMapping Name="ApprovalTransactions">
             <EntityTypeMapping TypeName="CardPeakModel.ApprovalTransaction">
               <MappingFragment StoreEntitySet="ApprovalTransaction">
+                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
                 <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />

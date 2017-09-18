@@ -27,6 +27,7 @@ namespace CardPeak.Domain
         public System.DateTime ApprovalDate { get; set; }
         public Nullable<int> BatchId { get; set; }
         public bool IsDeleted { get; set; }
+        public Nullable<System.Guid> ProcessId { get; set; }
     
         public virtual Agent Agent { get; set; }
         public virtual Reference Bank { get; set; }

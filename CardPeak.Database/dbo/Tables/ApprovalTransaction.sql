@@ -13,6 +13,7 @@
     [ApprovalDate] DATE NOT NULL, 
     [BatchId] INT NULL, 
     [IsDeleted] BIT NOT NULL DEFAULT 0, 
+    [ProcessId] UNIQUEIDENTIFIER NULL, 
     CONSTRAINT [FK_ApprovalTransaction_Agent] FOREIGN KEY ([AgentId]) REFERENCES [Agent]([AgentId]), 
     CONSTRAINT [FK_ApprovalTransaction_Reference_BankId] FOREIGN KEY ([BankId]) REFERENCES [Reference]([ReferenceId]),
     CONSTRAINT [FK_ApprovalTransaction_Reference_CardCategoryId] FOREIGN KEY ([CardCategoryId]) REFERENCES [Reference]([ReferenceId])

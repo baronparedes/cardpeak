@@ -19,6 +19,7 @@ namespace CardPeak.Service
         private IProcessorService ProcessorService;
         private IBatchFileConfigurationRepository BatchFileConfigurationRepository;
         private IApprovalTransactionRepository ApprovalTransactionRepository;
+        private IDebitCreditTransactionRepository DebitCreditTransactionRepository;
 
         public BatchService(CardPeakDbContext context) : base(context)
         {
@@ -27,6 +28,7 @@ namespace CardPeak.Service
             this.ProcessorService = new ProcessorService(context);
             this.BatchFileConfigurationRepository = new BatchFileConfigurationRepository(context);
             this.ApprovalTransactionRepository = new ApprovalTransactionRepository(context);
+            this.DebitCreditTransactionRepository = new DebitCreditTransactionRepository(context);
             this.Processor = new CardPeak.Processor.Excel.Processor(this.ProcessorService);
         }
 
@@ -81,6 +83,10 @@ namespace CardPeak.Service
                     foreach (var item in processedApprovalTransactions)
                     {
                         this.ApprovalTransactionRepository.Add(item.Transaction);
+                        if (item.SavingsTransaction != null)
+                        {
+                            this.DebitCreditTransactionRepository.Add(item.SavingsTransaction);
+                        }
                     }
                 }
             }
