@@ -32,7 +32,7 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
                     lgHidden
                     smHidden
                     xsHidden={!this.props.isHeader}>
-                    <span className="text-center spacer-left">Rates</span>
+                    <span className="grid-label text-center spacer-left">Rates</span>
                 </Col>
                 <Col sm={3} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "bank" : this.props.rate.bank.description}

@@ -47,7 +47,7 @@ class BatchUploadErrorDetailRowLayout extends React.Component<BatchUploadErrorDe
                     lgHidden
                     smHidden
                     xsHidden={!this.props.isHeader}>
-                    <span className="text-center spacer-left">Processed Transactions</span>
+                    <span className="grid-label text-center spacer-left">Processed Transactions</span>
                 </Col>
                 <Col lg={1} md={1} sm={1} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "row" : this.props.processedItem.row}

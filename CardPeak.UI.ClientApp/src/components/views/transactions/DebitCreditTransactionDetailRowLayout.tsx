@@ -18,7 +18,7 @@ const DebitCreditTransactionDetailRowLayout = (props: DebitCreditTransactionDeta
                 lgHidden
                 smHidden
                 xsHidden={!props.isHeader}>
-                <span className="text-center spacer-left">Debit/Credit Transactions</span>
+                <span className="grid-label text-center spacer-left">Debit/Credit Transactions</span>
             </Col>
             <Col md={8} lg={8} sm={8} xsHidden={props.isHeader}>
                 {props.isHeader ? "remarks" : props.transaction.remarks}

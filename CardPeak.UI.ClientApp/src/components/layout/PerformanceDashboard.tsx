@@ -1,9 +1,10 @@
 ﻿import * as React from 'react'
 import { Grid, Row, Col } from 'react-bootstrap'
+import { DashboardLabel } from './'
 
 const Performance = (props: { perf: CardPeak.Entities.ApprovalMetric<string>, compareUnits: number }) => {
     let caret = null;
-    if (props.compareUnits > props.perf.value) {
+    if (props.compareUnits > props.perf.value && props.perf.value !== 0) {
         caret = <i className="perf-down fa fa-caret-down spacer-left"></i>
     }
     else if (props.compareUnits < props.perf.value) {
@@ -11,36 +12,28 @@ const Performance = (props: { perf: CardPeak.Entities.ApprovalMetric<string>, co
     }
 
     return (
-        <div>
-            <label className="text-label text-muted spacer-right">
-                {props.perf.key}
-            </label>
-            <span className="text-highlight">
-                {props.perf.value}
-                {caret}
-            </span>
-        </div>
+        <DashboardLabel label={props.perf.key} metrics={props.perf.value} addOn={caret} />
     )
 }
 
-export const PerformanceDashboard = (props: { performance: CardPeak.Entities.ApprovalMetric<string>[] }) => {
+export const PerformanceDashboard = (props: { performance?: CardPeak.Entities.ApprovalMetric<string>[] }) => {
+    let row = 0;
+    if (!props.performance) {
+        return null;
+    }
     return (
         <Grid fluid>
             <Row>
-                <Col className="text-center">
-                    <Performance perf={props.performance[0]} compareUnits={props.performance[1].value} />
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={6} sm={4}>
-                    <Performance perf={props.performance[1]} compareUnits={props.performance[2].value} />
-                </Col>
-                <Col xs={6} sm={4}>
-                    <Performance perf={props.performance[2]} compareUnits={props.performance[3].value} />
-                </Col>
-                <Col xsHidden sm={4}>
-                    <Performance perf={props.performance[3]} compareUnits={props.performance[3].value} />
-                </Col>
+                {
+                    props.performance.map(_ => {
+                        const compareRow = row === 0 ? 0 : row - 1;
+                        let perf = <Performance perf={props.performance[row]} compareUnits={props.performance[compareRow].value} />
+                        row++
+                        return (
+                            <Col sm={4} xs={6} key={row} className="no-padding">{perf}</Col>    
+                        );
+                    })
+                }
             </Row>
         </Grid>
     )

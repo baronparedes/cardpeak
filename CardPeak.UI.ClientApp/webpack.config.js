@@ -12,7 +12,7 @@ const sourcePath = path.join(__dirname, "./src");
 const imagePath = path.join(__dirname, "./src/content");
 const buildPath = path.join(__dirname, "./build");
 
-console.log("isProduction: " + isProduction)
+console.log("isProduction: " + isProduction);
 
 const extractLess = new ExtractTextPlugin({
     filename: "app-[hash].css",
@@ -30,18 +30,18 @@ const plugins = [
     new HtmlWebpackPlugin({
         template: path.join(sourcePath, 'index.html'),
         path: buildPath,
-        filename: 'index.html',
+        filename: 'index.html'
         //favicon: "img/favicon.ico"
     }),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks: Infinity,
-        filename: 'vendor-[hash].js',
+        filename: 'vendor-[hash].js'
     }),
     new webpack.DefinePlugin({
         'process.env': {
-            NODE_ENV: JSON.stringify(nodeEnv),
-        },
+            NODE_ENV: JSON.stringify(nodeEnv)
+        }
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({
@@ -50,12 +50,12 @@ const plugins = [
                 autoprefixer({
                     browsers: [
                         'last 3 version',
-                        'ie >= 10',
-                    ],
-                }),
+                        'ie >= 10'
+                    ]
+                })
             ],
-            context: sourcePath,
-        },
+            context: sourcePath
+        }
     }),
     extractCSS,
     extractLess
@@ -66,8 +66,8 @@ const loaders = [
         test: /\.(ts|tsx)$/,
         exclude: /(node_modules)/,
         use: [
-            'ts-loader',
-        ],
+            'ts-loader'
+        ]
     },
     {
         test: /\.js?$/,
@@ -109,14 +109,14 @@ const loaders = [
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: 'url-loader?limit=10000&mimetype=image/svg+xml'
     }
-]
+];
 
 if (isProduction) {
     // PROD plugins
     plugins.push(
         new webpack.LoaderOptionsPlugin({
             minimize: true,
-            debug: false,
+            debug: false
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
@@ -129,11 +129,11 @@ if (isProduction) {
                 dead_code: true,
                 evaluate: true,
                 if_return: true,
-                join_vars: true,
+                join_vars: true
             },
             output: {
-                comments: false,
-            },
+                comments: false
+            }
         })
     );
 }
@@ -151,7 +151,7 @@ module.exports = {
         js: './index.tsx',
         vendor: [
             'axios',
-            'classnames',     
+            'classnames',
             'moment',
             'react',               
             'react-bootstrap',
@@ -164,22 +164,22 @@ module.exports = {
             'redux-actions',        
             'redux-logger',
             'redux-thunk'
-        ],
+        ]
     },
     output: {
         path: buildPath,
         publicPath: '',
-        filename: 'app-[hash].js',
+        filename: 'app-[hash].js'
     },
     module: {
-        loaders,
+        loaders
     },
     resolve: {
         extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.ts', '.tsx', '.css', '.less', '.js'],
         modules: [
             path.resolve(__dirname, 'node_modules'),
-            sourcePath,
-        ],
+            sourcePath
+        ]
     },
     plugins,
     devServer: {
@@ -201,8 +201,8 @@ module.exports = {
             version: false,
             warnings: true,
             colors: {
-                green: '\u001b[32m',
-            },
-        },
-    },
+                green: '\u001b[32m'
+            }
+        }
+    }
 };

@@ -15,18 +15,18 @@ const LatestProcessedBatchRowLayout = (props: LatestProcessedBatchProps) => {
                 lgHidden
                 smHidden
                 xsHidden={!props.isHeader}>
-                <span className="text-center spacer-left">Latest Uploads</span>
+                <span className="grid-label text-center spacer-left">latest uploads</span>
             </Col>
-            <Col md={2} lg={2} sm={2}>
-                {props.isHeader ? "id" : props.batchUpload.batchId}
+            <Col sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "batch id" : props.batchUpload.batchId}
             </Col>
-            <Col md={4} lg={4} sm={4}>
+            <Col sm={4} xsHidden={props.isHeader}>
                 {props.isHeader ? "bank" : props.batchUpload.bank.description}
             </Col>
-            <Col md={3} lg={3} sm={3}>
+            <Col sm={3} xsHidden={props.isHeader}>
                 {props.isHeader ? "rows" : props.batchUpload.processedRecords ? props.batchUpload.processedRecords : null}
             </Col>
-            <Col md={3} lg={3} sm={3}>
+            <Col sm={3} xsHidden={props.isHeader}>
                 {props.isHeader ? "completed" : null}
                 {!props.isHeader && props.batchUpload.hasErrors === true ? <span className="text-highlight text-danger">No</span> : null}
                 {!props.isHeader && props.batchUpload.hasErrors === false ? <span className="text-highlight text-success">Yes</span> : null}
@@ -39,6 +39,7 @@ const LatestProcessedBatchRowLayout = (props: LatestProcessedBatchProps) => {
 export const LatestProcessedBatchList = (props: LatestProcessedBatchProps) => {
     return (
         <div>
+            <Col sm={12} xsHidden={true} className="text-center"><label className="text-muted">Latest Uploads</label></Col>
             <GridList header={<LatestProcessedBatchRowLayout isHeader={true} />}>
                 {
                     props.data && props.data.length > 0 ?

@@ -16,7 +16,7 @@ const ApprovalTransactionDetailRowLayout = (props: ApprovalTransactionDetailRowL
                 lgHidden
                 smHidden
                 xsHidden={!props.isHeader}>
-                <span className="text-center spacer-left">Approval Transactions</span>
+                <span className="grid-label text-center spacer-left">Approval Transactions</span>
             </Col>
             <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "bank" : props.transaction.bank.description}

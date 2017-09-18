@@ -98,10 +98,9 @@ namespace CardPeak.Repository.EF
             var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
             var result = new Dictionary<string, decimal>
             {
-                { DateTime.Now.ToString(Configurations.MonthFormat), 0 },
-                { DateTime.Now.AddMonths(-1).ToString(Configurations.MonthFormat), 0 },
                 { DateTime.Now.AddMonths(-2).ToString(Configurations.MonthFormat), 0 },
-                { DateTime.Now.AddMonths(-3).ToString(Configurations.MonthFormat), 0 }
+                { DateTime.Now.AddMonths(-1).ToString(Configurations.MonthFormat), 0 },
+                { DateTime.Now.ToString(Configurations.MonthFormat), 0 }
             };
 
 

@@ -55,6 +55,9 @@
     <Content Include="src\components\layout\ConfirmButton.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\DashboardLabel.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\DatePicker.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -95,9 +98,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\layout\Spinner.tsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\views\agentDashboard\metrics\AgentDashboardLabel.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agentDashboard\metrics\AgentAccountBalanceMetrics.tsx">
@@ -154,6 +154,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\dashboard\metrics\LatestProcessedBatchList.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\dashboard\metrics\TopAgentList.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\TransactionsContainer.tsx">

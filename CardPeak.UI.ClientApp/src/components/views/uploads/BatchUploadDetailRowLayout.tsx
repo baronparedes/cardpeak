@@ -14,7 +14,7 @@ const BatchUploadDetailRowLayout = (props: BatchUploadDetailRowLayoutProps) => {
                 lgHidden
                 smHidden
                 xsHidden={!props.isHeader}>
-                <span className="text-center spacer-left">Batch Details</span>
+                <span className="grid-label text-center spacer-left">Batch Details</span>
             </Col>
             <Col md={1} lg={1} sm={1} xsHidden={props.isHeader}>
                 {props.isHeader ? "id" : props.batchUpload.batchId}

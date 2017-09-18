@@ -5,10 +5,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
-import { Grid, Row, Col } from 'react-bootstrap'
-import { SpinnerBlock } from '../../layout'
+import { Panel, Grid, Row, Col } from 'react-bootstrap'
+import { SpinnerBlock, PerformanceDashboard, DashboardLabel } from '../../layout'
 
 import { LatestProcessedBatchList } from './metrics'
+import { TopAgentList } from './metrics'
 
 interface DashboardContainerDispatchProps {
     actions?: typeof DashboardActions
@@ -23,9 +24,47 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
     }
     renderMetrics() {
         return (
-            <div>
-                <LatestProcessedBatchList data={this.props.latestProcessedBatch} />
-            </div>
+            <Grid fluid>
+                <Row>
+                    <Col sm={8}>
+                        <Panel>
+                            <PerformanceDashboard performance={this.props.performance} />
+                        </Panel>
+                    </Col>
+                    <Col sm={4}>
+                        <Panel>
+                            <DashboardLabel className="pull-right" label="approvals" metrics={this.props.totalApprovals} />
+                        </Panel>
+                        <Panel>
+                            <DashboardLabel className="pull-right" label="balance" metrics={this.props.accountBalance} isCurrency />
+                        </Panel>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={8}>
+                        <Panel>
+                            Banks
+                        </Panel>
+                    </Col>
+                    <Col sm={4}>
+                        <Panel>
+                            Card Categories
+                        </Panel>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={7}>
+                        <Panel>
+                            <TopAgentList data={this.props.topAgents} />
+                        </Panel>
+                    </Col>
+                    <Col sm={5}>
+                        <Panel>
+                            <LatestProcessedBatchList data={this.props.latestProcessedBatch} />
+                        </Panel>
+                    </Col>
+                </Row>
+            </Grid>
         )
     }
     render() {
