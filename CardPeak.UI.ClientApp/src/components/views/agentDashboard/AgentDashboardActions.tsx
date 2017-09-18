@@ -20,7 +20,6 @@ interface AgentDashboardActionsState {
 export default class AgentDashboardActions extends React.Component<AgentDashboardActionsProps, AgentDashboardActionsState> {
     constructor(props: AgentDashboardActionsProps) {
         super(props);
-        super(props);
         this.state = {
             showModal: false,
             transaction: "Credit",

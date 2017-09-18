@@ -269,5 +269,77 @@ namespace CardPeak.Repository.EF
 
             return result;
         }
+
+        public IDictionary<string, IEnumerable<ApprovalMetric<string>>> GetApprovalsByBankDetails(int year, int month)
+        {
+            var banks = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
+                .OrderBy(_ => _.Description)
+                .ToList();
+
+            var categories = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
+                .OrderBy(_ => _.Description)
+                .ToList();
+
+            var query = this.Context.ApprovalTransactions
+                .Include(_ => _.Bank)
+                .Include(_ => _.CardCategory)
+                .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
+                .Where(_ => !_.IsDeleted)
+                .GroupBy(_ => new { _.BankId, _.CardCategoryId })
+                .Select(_ => new { BankId = _.FirstOrDefault().Bank.ReferenceId, CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
+                .ToList();
+
+            var result = new Dictionary<string, IEnumerable<ApprovalMetric<string>>>();
+
+            foreach (var item in banks)
+            {
+                var metrics = categories.ToDictionary(_ => _.Description, _ => 0m);
+                query.Where(_ => _.BankId == item.ReferenceId)
+                    .ToList()
+                    .ForEach(_ => {
+                        metrics[_.CardCategory] = _.Approvals;
+                    });
+
+                result.Add(item.Description, metrics.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value }));
+            }
+
+            return result;
+        }
+
+        public IDictionary<string, IEnumerable<ApprovalMetric<string>>> GetAgentApprovalsByBankDetails(int agentId, DateTime startDate, DateTime? endDate)
+        {
+            var banks = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
+                .OrderBy(_ => _.Description)
+                .ToList();
+
+            var categories = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
+                .OrderBy(_ => _.Description)
+                .ToList();
+
+            var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
+                .GroupBy(_ => new { _.BankId, _.CardCategoryId })
+                .Select(_ => new { BankId = _.FirstOrDefault().Bank.ReferenceId, CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
+                .ToList();
+
+            var result = new Dictionary<string, IEnumerable<ApprovalMetric<string>>>();
+
+            foreach (var item in banks)
+            {
+                var metrics = categories.ToDictionary(_ => _.Description, _ => 0m);
+                query.Where(_ => _.BankId == item.ReferenceId)
+                    .ToList()
+                    .ForEach(_ => {
+                        metrics[_.CardCategory] = _.Approvals;
+                    });
+
+                result.Add(item.Description, metrics.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value }));
+            }
+
+            return result;
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace CardPeak.Domain
         public IEnumerable<ApprovalMetric<string>> Performance { get; set; }
         public IEnumerable<ApprovalMetric<string>> ApprovalsByBank { get; set; }
         public IEnumerable<ApprovalMetric<string>> ApprovalsByCategory { get; set; }
+        public IDictionary<string, IEnumerable<ApprovalMetric<string>>> ApprovalsByBankDetails { get; set; }
     }
 }

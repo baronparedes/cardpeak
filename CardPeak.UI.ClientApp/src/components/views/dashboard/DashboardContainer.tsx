@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import * as DashboardActions from '../../../services/actions/dashboardActions'
+import * as Actions from '../../../services/actions/dashboardActions'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -7,15 +7,14 @@ import { RootState } from '../../../services/reducers'
 
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import {
-    SpinnerBlock, PerformanceDashboard, DashboardLabel,
-    ApprovalMetricsPieChart, ApprovalMetricsBarChart, ApprovalMetricsLineChart
+    SpinnerBlock, PerformanceDashboard, DashboardLabel, ApprovalMetrics, ApprovalMetricsLineChart
 } from '../../layout'
 
-import { LatestProcessedBatchList } from './metrics'
-import { TopAgentList } from './metrics'
+import { LatestProcessedBatchList, TopAgentList } from './metrics'
+import DashboardActions from './DashboardActions'
 
 interface DashboardContainerDispatchProps {
-    actions?: typeof DashboardActions
+    actions?: typeof Actions
 }
 
 class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel & DashboardContainerDispatchProps, undefined> {
@@ -53,18 +52,10 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
                         </Panel>
                     </Col>
                 </Row>
-                <Row>
-                    <Col sm={6}>
-                        <Panel>
-                            <ApprovalMetricsBarChart metrics={this.props.approvalsByBank} label="approval by banks" />
-                        </Panel>
-                    </Col>
-                    <Col sm={6}>
-                        <Panel>
-                            <ApprovalMetricsPieChart metrics={this.props.approvalsByCategory} label="approval by categories" />
-                        </Panel>
-                    </Col>
-                </Row>
+                <ApprovalMetrics
+                    approvalsByBankDetails={this.props.approvalsByBankDetails}
+                    approvalsByBank={this.props.approvalsByBank}
+                    approvalsByCategory={this.props.approvalsByCategory} />
                 <Row>
                     <Col sm={6}>
                         <Panel>
@@ -83,6 +74,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
     render() {
         return (
             <div>
+                <DashboardActions refreshing={this.props.refreshing} />
                 { this.props.refreshing ? <SpinnerBlock /> : this.renderMetrics() }
             </div>
         )
@@ -95,7 +87,7 @@ const mapStateToProps = (state: RootState): CardPeak.Models.DashboardModel => ({
 
 const mapDispatchToProps = (dispatch: any): DashboardContainerDispatchProps => {
     return {
-        actions: bindActionCreators(DashboardActions as any, dispatch)
+        actions: bindActionCreators(Actions as any, dispatch)
     }
 };
 

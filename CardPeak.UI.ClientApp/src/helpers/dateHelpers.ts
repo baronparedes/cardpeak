@@ -1,5 +1,13 @@
 ﻿import * as moment from 'moment'
 
+export const currentMonth = () => {
+    return new Date().getMonth();
+}
+
+export const currentYear = () => {
+    return new Date().getFullYear();
+}
+
 export const dateFormat = (date: Date) => {
     return moment(date).format("MMM-DD-YYYY")
 }

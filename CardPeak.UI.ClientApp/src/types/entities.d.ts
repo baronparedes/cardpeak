@@ -57,6 +57,7 @@
         public performance?: ApprovalMetric<string>[];
         public approvalsByBank?: ApprovalMetric<string>[];
         public approvalsByCategory?: ApprovalMetric<string>[];
+        public approvalsByBankDetails?: any;
     }
 
     export class Reference 
