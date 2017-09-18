@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { PerformanceDashboard } from '../../layout'
-import { TotalApprovedMetrics, AgentPerformanceMetrics, AgentAccountBalanceMetrics } from './metrics'
+import { TotalApprovedMetrics, AgentPerformanceMetrics, AgentAccountBalanceMetrics, AgentApprovalMetrics } from './metrics'
 import * as classNames from 'classnames'
 
 interface AgentDashboardSummaryProps {
@@ -27,6 +27,9 @@ const AgentDashboardSummary = (props: AgentDashboardSummaryProps) => {
                             savingsBalance={props.agentDashboard.savingsBalance} />
                     </Col>
                 </Row>
+                <AgentApprovalMetrics
+                    approvalsByBank={props.agentDashboard.approvalsByBank}
+                    approvalsByCategory={props.agentDashboard.approvalsByCategory} />
             </Grid>
         </div>
     )

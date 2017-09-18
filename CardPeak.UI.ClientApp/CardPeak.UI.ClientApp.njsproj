@@ -49,6 +49,9 @@
     <Content Include="src\components\AppRouter.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\Charts.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\ButtonLoading.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -309,6 +312,9 @@
     <Folder Include="src\styles\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\components\views\agentDashboard\metrics\AgentApprovalMetrics.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\dashboard\metrics\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -316,6 +322,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\constants\actions.ts" />
+    <TypeScriptCompile Include="src\constants\colorScale.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\helpers\dateHelpers.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -39,7 +39,7 @@ const LatestProcessedBatchRowLayout = (props: LatestProcessedBatchProps) => {
 export const LatestProcessedBatchList = (props: LatestProcessedBatchProps) => {
     return (
         <div>
-            <Col sm={12} xsHidden={true} className="text-center"><label className="text-muted">Latest Uploads</label></Col>
+            <Col sm={12} xsHidden={true} className="text-center spacer-bottom"><label className="text-muted">Latest Uploads</label></Col>
             <GridList header={<LatestProcessedBatchRowLayout isHeader={true} />}>
                 {
                     props.data && props.data.length > 0 ?

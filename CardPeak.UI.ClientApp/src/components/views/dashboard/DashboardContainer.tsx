@@ -6,7 +6,10 @@ import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { SpinnerBlock, PerformanceDashboard, DashboardLabel } from '../../layout'
+import {
+    SpinnerBlock, PerformanceDashboard, DashboardLabel,
+    ApprovalMetricsPieChart, ApprovalMetricsBarChart, ApprovalMetricsLineChart
+} from '../../layout'
 
 import { LatestProcessedBatchList } from './metrics'
 import { TopAgentList } from './metrics'
@@ -26,39 +29,49 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
         return (
             <Grid fluid>
                 <Row>
-                    <Col sm={8}>
-                        <Panel>
-                            <PerformanceDashboard performance={this.props.performance} />
-                        </Panel>
-                    </Col>
-                    <Col sm={4}>
+                    <Col sm={6}>
                         <Panel>
                             <DashboardLabel className="pull-right" label="approvals" metrics={this.props.totalApprovals} />
                         </Panel>
+                    </Col>
+                    <Col sm={6}>
                         <Panel>
                             <DashboardLabel className="pull-right" label="balance" metrics={this.props.accountBalance} isCurrency />
                         </Panel>
                     </Col>
                 </Row>
                 <Row>
-                    <Col sm={8}>
+                    <Col sm={12}>
                         <Panel>
-                            Banks
-                        </Panel>
-                    </Col>
-                    <Col sm={4}>
-                        <Panel>
-                            Card Categories
+                            <Col>
+                                <PerformanceDashboard performance={this.props.performance} />
+                            </Col>
+                            <Col xsHidden smHidden>
+                                <br />
+                                <ApprovalMetricsLineChart metrics={this.props.performance} label="yearly performance" />
+                            </Col>
                         </Panel>
                     </Col>
                 </Row>
                 <Row>
-                    <Col sm={7}>
+                    <Col sm={6}>
+                        <Panel>
+                            <ApprovalMetricsBarChart metrics={this.props.approvalsByBank} label="approval by banks" />
+                        </Panel>
+                    </Col>
+                    <Col sm={6}>
+                        <Panel>
+                            <ApprovalMetricsPieChart metrics={this.props.approvalsByCategory} label="approval by categories" />
+                        </Panel>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col sm={6}>
                         <Panel>
                             <TopAgentList data={this.props.topAgents} />
                         </Panel>
                     </Col>
-                    <Col sm={5}>
+                    <Col sm={6}>
                         <Panel>
                             <LatestProcessedBatchList data={this.props.latestProcessedBatch} />
                         </Panel>

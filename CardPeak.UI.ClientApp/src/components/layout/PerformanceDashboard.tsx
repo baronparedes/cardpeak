@@ -30,7 +30,7 @@ export const PerformanceDashboard = (props: { performance?: CardPeak.Entities.Ap
                         let perf = <Performance perf={props.performance[row]} compareUnits={props.performance[compareRow].value} />
                         row++
                         return (
-                            <Col sm={4} xs={6} key={row} className="no-padding">{perf}</Col>    
+                            <Col sm={4} key={row} className="no-padding">{perf}</Col>    
                         );
                     })
                 }

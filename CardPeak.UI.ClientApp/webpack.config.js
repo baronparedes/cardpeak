@@ -151,11 +151,13 @@ module.exports = {
         js: './index.tsx',
         vendor: [
             'axios',
+            'chart.js',
             'classnames',
             'moment',
             'react',               
             'react-bootstrap',
             'react-bootstrap-date-picker',
+            'react-chartjs-2',
             'react-dom',       
             'react-redux',       
             'react-router',        

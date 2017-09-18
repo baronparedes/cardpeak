@@ -4,15 +4,17 @@ import { DashboardLabel } from '../../../layout'
 
 export const AgentAccountBalanceMetrics = (props: { accountBalance: number, savingsBalance: number }) => {
     return (
-        <Panel className="text-right panel-agent-dashboard">
+        <Panel className="panel-agent-dashboard">
             <DashboardLabel
+                className="pull-right"
+                label="Account Balance"
+                metrics={props.accountBalance}
+                isCurrency={true} />
+            <DashboardLabel
+                className="pull-right"
                 label="Savings"
                 metrics={props.savingsBalance}
                 noCurrencyColor
-                isCurrency={true} />
-            <DashboardLabel
-                label="Account Balance"
-                metrics={props.accountBalance}
                 isCurrency={true} />
         </Panel>
     )
