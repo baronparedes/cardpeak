@@ -341,5 +341,24 @@ namespace CardPeak.Repository.EF
 
             return result;
         }
+
+        public IEnumerable<ApprovalMetric<int>> GetAvailableYears()
+        {
+            var result = this.Context.ApprovalTransactions
+                .Where(_ => !_.IsDeleted)
+                .GroupBy(_ => _.ApprovalDate.Year)
+                .Select(_ => new ApprovalMetric<int> {
+                    Key = _.FirstOrDefault().ApprovalDate.Year,
+                    Value = _.Sum(t => t.Units)
+                })
+                .ToList();
+
+            if (!result.Any(_ => _.Key == DateTime.Now.Year))
+            {
+                result.Add(new ApprovalMetric<int> { Key = DateTime.Now.Year, Value = 0m });
+            }
+
+            return result.OrderBy(_ => _.Key);
+        }
     }
 }

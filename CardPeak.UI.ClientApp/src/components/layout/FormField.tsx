@@ -17,7 +17,8 @@ interface FormFieldProps {
     isRequired?: boolean,
     ref?: (control: any) => void,
     accept?: string,
-    block?: boolean
+    block?: boolean,
+    disabled?: boolean
 }
 
 export const FormFieldGroup: React.StatelessComponent<FormFieldProps> = (props) => {
@@ -155,6 +156,7 @@ export const FormFieldDropdown: React.StatelessComponent<FormFieldProps> = (prop
     return (
         <FormField {...props}>
             <FormControl
+                disabled={props.disabled}
                 componentClass="select"
                 placeholder={props.label}
                 name={props.name}

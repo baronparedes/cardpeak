@@ -34,7 +34,8 @@ namespace CardPeak.Service
                 TotalApprovals = this.ApprovalTransactionRepository.GetTotalApprovals(year.Value, month.Value),
                 Performance = this.ApprovalTransactionRepository.GetYearlyPerformance(year.Value),
                 TopAgents = this.ApprovalTransactionRepository.GetTopAgents(year.Value, month.Value),
-                ApprovalsByBankDetails = this.ApprovalTransactionRepository.GetApprovalsByBankDetails(year.Value, month.Value)
+                ApprovalsByBankDetails = this.ApprovalTransactionRepository.GetApprovalsByBankDetails(year.Value, month.Value),
+                AvailableYears = this.ApprovalTransactionRepository.GetAvailableYears()
             };
 
             return result;
