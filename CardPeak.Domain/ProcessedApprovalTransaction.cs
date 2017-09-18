@@ -4,7 +4,7 @@ namespace CardPeak.Domain
 {
     public sealed class ProcessedApprovalTransaction
     {
-        public ApprovalTransaction Transaction { get; set; }
+        public ApprovalTransaction ApprovalTransaction { get; set; }
         public DebitCreditTransaction SavingsTransaction { get; set; }
         public string Alias { get; set; }
         public int Row { get; set; }

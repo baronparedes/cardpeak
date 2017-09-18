@@ -40,13 +40,13 @@ namespace CardPeak.PlayPen
             Console.WriteLine("Errors");
             foreach (var item in result.Where(_ => _.HasErrors))
             {
-                Console.WriteLine(item.Transaction.ReferenceNumber1);
+                Console.WriteLine(item.ApprovalTransaction.ReferenceNumber1);
             }
 
             Console.WriteLine("Processed");
             foreach (var item in result.Where(_ => !_.HasErrors))
             {
-                Console.WriteLine(item.Transaction.ReferenceNumber1);
+                Console.WriteLine(item.ApprovalTransaction.ReferenceNumber1);
             }
 
             Console.ReadLine();

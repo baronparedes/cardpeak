@@ -96,7 +96,7 @@
     }
 
     export class ProcessedApprovalTransaction {
-        public transaction: ApprovalTransaction;
+        public approvalTransaction: ApprovalTransaction;
         public row: number;
         public alias: string;
         public hasErrors: boolean ;

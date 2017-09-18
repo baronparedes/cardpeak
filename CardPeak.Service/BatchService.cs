@@ -82,7 +82,7 @@ namespace CardPeak.Service
                 {
                     foreach (var item in processedApprovalTransactions)
                     {
-                        this.ApprovalTransactionRepository.Add(item.Transaction);
+                        this.ApprovalTransactionRepository.Add(item.ApprovalTransaction);
                         if (item.SavingsTransaction != null)
                         {
                             this.DebitCreditTransactionRepository.Add(item.SavingsTransaction);

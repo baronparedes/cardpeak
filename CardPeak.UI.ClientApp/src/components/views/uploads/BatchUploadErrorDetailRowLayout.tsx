@@ -53,13 +53,13 @@ class BatchUploadErrorDetailRowLayout extends React.Component<BatchUploadErrorDe
                     {this.props.isHeader ? "row" : this.props.processedItem.row}
                 </Col>
                 <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "card category" : this.props.processedItem.transaction.cardCategory.description}
+                    {this.props.isHeader ? "card category" : this.props.processedItem.approvalTransaction.cardCategory.description}
                 </Col>
                 <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "product" : this.props.processedItem.transaction.productType}
+                    {this.props.isHeader ? "product" : this.props.processedItem.approvalTransaction.productType}
                 </Col>
                 <Col lg={4} md={4} sm={3} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "client" : this.props.processedItem.transaction.client}
+                    {this.props.isHeader ? "client" : this.props.processedItem.approvalTransaction.client}
                 </Col>
                 <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "alias" : this.props.processedItem.alias}
