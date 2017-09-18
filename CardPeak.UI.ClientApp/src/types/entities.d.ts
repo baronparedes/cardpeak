@@ -54,7 +54,9 @@
         public accounts?: Account[];
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
-        public performance?: ApprovalMetric[];
+        public performance?: ApprovalMetric<string>[];
+        public approvalsByBank?: ApprovalMetric<string>[];
+        public approvalsByCategory?: ApprovalMetric<string>[];
     }
 
     export class Reference 
@@ -77,9 +79,9 @@
     }
 
     export class Settings {
-        public banks: CardPeak.Entities.Reference[];
-        public cardCategories: CardPeak.Entities.Reference[];
-        public rates: CardPeak.Entities.Rate[];
+        public banks: Reference[];
+        public cardCategories: Reference[];
+        public rates: Rate[];
         public bankReferenceTypeId: number;
         public cardCategoryReferenceTypeId: number;
     }
@@ -128,8 +130,8 @@
         public bank?: Reference;
     }
 
-    export class ApprovalMetric {
-        public key: any;
+    export class ApprovalMetric<TKey> {
+        public key: TKey;
         public value: number;
     }
 }

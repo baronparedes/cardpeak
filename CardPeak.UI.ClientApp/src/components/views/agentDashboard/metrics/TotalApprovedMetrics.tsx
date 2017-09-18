@@ -8,7 +8,7 @@ export const TotalApprovedMetrics = (props: { totalApprovals: number }) => {
                 <Row>
                     <Col>
                         <label className="text-label text-muted spacer-right">
-                            Total Approval Record
+                            Total Approvals to Date
                         </label>
                     </Col>
                     <Col>

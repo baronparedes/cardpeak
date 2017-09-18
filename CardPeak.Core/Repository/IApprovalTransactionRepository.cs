@@ -9,8 +9,8 @@ namespace CardPeak.Core.Repository
         IEnumerable<ApprovalTransaction> FindByClient(string clientName);
         IEnumerable<ApprovalTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate);
         IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId);
-        IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, int year, int month);
-        IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByCategory(int agentId, int year, int month);
+        IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, DateTime startDate, DateTime? endDate);
+        IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByCategory(int agentId, DateTime startDate, DateTime? endDate);
         decimal GetAgentAccountBalance(int agentId);
         decimal GetAgentTotalApprovals(int agentId);
         decimal GetAccountBalance(int year, int month);
