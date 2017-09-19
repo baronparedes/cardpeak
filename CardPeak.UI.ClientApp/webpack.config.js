@@ -5,24 +5,41 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-const nodeEnv = process.env.NODE_ENV || 'development';
+const nodeEnv = process.env.NODE_ENV || 'dev';
 const isProduction = nodeEnv === 'production';
 
 const sourcePath = path.join(__dirname, "./src");
 const imagePath = path.join(__dirname, "./src/content");
 const buildPath = path.join(__dirname, "./build");
 
-console.log("isProduction: " + isProduction);
+const packageJson = require('./package.json');
+
+const setApiHost = function () {
+    switch (nodeEnv) {
+        case "production":
+            return "api";
+        default:
+            return "http://localhost:3001/api";
+    }
+};
+
+const apiHost = setApiHost();
+
+
+console.log("bundling...");
+console.log(nodeEnv);
+console.log(packageJson.version);
+console.log(apiHost);
 
 const extractLess = new ExtractTextPlugin({
     filename: "app-[hash].css",
-    disable: process.env.NODE_ENV === "development",
+    disable: process.env.NODE_ENV === "dev",
     allChunks: true
 });
 
 const extractCSS = new ExtractTextPlugin({
     filename: "vendor-[hash].css",
-    disable: process.env.NODE_ENV === "development",
+    disable: process.env.NODE_ENV === "dev",
     allChunks: true
 });
 
@@ -30,8 +47,8 @@ const plugins = [
     new HtmlWebpackPlugin({
         template: path.join(sourcePath, 'index.html'),
         path: buildPath,
-        filename: 'index.html'
-        //favicon: "img/favicon.ico"
+        filename: 'index.html',
+        favicon: "img/favicon.ico"
     }),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
@@ -41,7 +58,10 @@ const plugins = [
     new webpack.DefinePlugin({
         'process.env': {
             NODE_ENV: JSON.stringify(nodeEnv)
-        }
+        },
+        __NODE_ENV__: JSON.stringify(nodeEnv),
+        __API_BASE_URL__: JSON.stringify(apiHost),
+        __VERSION__: JSON.stringify(packageJson.version + '.' + Date.now())
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({
@@ -154,16 +174,16 @@ module.exports = {
             'chart.js',
             'classnames',
             'moment',
-            'react',               
+            'react',
             'react-bootstrap',
             'react-bootstrap-date-picker',
             'react-chartjs-2',
-            'react-dom',       
-            'react-redux',       
-            'react-router',        
-            'react-router-bootstrap',   
-            'react-router-dom',    
-            'redux-actions',        
+            'react-dom',
+            'react-redux',
+            'react-router',
+            'react-router-bootstrap',
+            'react-router-dom',
+            'redux-actions',
             'redux-logger',
             'redux-thunk'
         ]
@@ -183,28 +203,5 @@ module.exports = {
             sourcePath
         ]
     },
-    plugins,
-    devServer: {
-        contentBase: isProduction ? './build' : './src',
-        port: 3000,
-        compress: isProduction,
-        inline: !isProduction,
-        hot: !isProduction,
-        host: 'localhost',
-        historyApiFallback: true,
-        stats: {
-            assets: true,
-            children: false,
-            chunks: false,
-            hash: false,
-            modules: false,
-            publicPath: false,
-            timings: true,
-            version: false,
-            warnings: true,
-            colors: {
-                green: '\u001b[32m'
-            }
-        }
-    }
+    plugins
 };
