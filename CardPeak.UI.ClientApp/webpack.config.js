@@ -19,7 +19,7 @@ let apiHost = "http://localhost:3001/api";
 let buildPath = path.join(__dirname, "./build");
 
 if (isProduction) {
-    apiHost = "api";
+    apiHost = "/api";
     buildPath = path.join(__dirname, "./release/", version);
 }
 
