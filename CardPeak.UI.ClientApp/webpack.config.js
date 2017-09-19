@@ -14,27 +14,20 @@ const isProduction = nodeEnv === 'production';
 
 const sourcePath = path.join(__dirname, "./src");
 const imagePath = path.join(__dirname, "./src/img");
+
+let apiHost = "http://localhost:3001/api";
 let buildPath = path.join(__dirname, "./build");
 
 if (isProduction) {
+    apiHost = "api";
     buildPath = path.join(__dirname, "./release/", version);
 }
 
-let apiHost = "api";
-const setApiHost = function () {
-    if (nodeEnv === 'production') {
-        apiHost = "api";
-    }
-    else if (nodeEnv === 'dev') {
-        apiHost = "http://localhost:3001/api";
-    }
-};
-setApiHost();
-
-console.log("bundling...");
+console.log("build path: " + buildPath);
 console.log("environment: " + nodeEnv);
 console.log("version: " + version);
-console.log("api: " + apiHost);
+console.log("apiHost: " + apiHost);
+console.log("bundling...");
 
 const extractLess = new ExtractTextPlugin({
     filename: "app-[hash].css",

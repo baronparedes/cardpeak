@@ -9,6 +9,7 @@
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <ToolsVersionPromptShown>0.0</ToolsVersionPromptShown>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <NameOfLastUsedPublishProfile>release</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -40,9 +41,10 @@
     <Compile Include="webpack.config.js">
       <SubType>Code</SubType>
     </Compile>
-    <Content Include=".gitignore">
+    <None Include=".gitignore">
       <SubType>Code</SubType>
-    </Content>
+    </None>
+    <None Include="release.pubxml" />
     <Content Include="src\components\App.tsx">
       <SubType>Code</SubType>
     </Content>
