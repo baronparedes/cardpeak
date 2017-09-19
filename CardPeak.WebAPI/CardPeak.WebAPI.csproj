@@ -15,7 +15,7 @@
     <RootNamespace>CardPeak.WebAPI</RootNamespace>
     <AssemblyName>CardPeak.WebAPI</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -98,6 +98,7 @@
     <None Include=".gitignore" />
     <Content Include="App_Data\uploads\deploy.txt" />
     <Content Include="Global.asax" />
+    <None Include=".wpp.targets" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +164,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>24544</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3001/</IISUrl>
+          <IISUrl>http://localhost:8000</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:8000/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

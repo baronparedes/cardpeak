@@ -18,8 +18,6 @@ namespace CardPeak.WebAPI.Controllers
     public class BatchUploadController : ApiController
     {
         private static readonly string Root = HttpContext.Current.Server.MapPath("~/App_Data/uploads");
-        private static readonly string Staging = HttpContext.Current.Server.MapPath("~/App_Data/staging");
-        private static readonly string Processed = HttpContext.Current.Server.MapPath("~/App_Data/Processed");
 
         private IBatchService BatchService { get; set; }
 
@@ -82,11 +80,6 @@ namespace CardPeak.WebAPI.Controllers
 
             try
             {
-                if (!System.IO.Directory.Exists(BatchUploadController.Root))
-                {
-                    System.IO.Directory.CreateDirectory(BatchUploadController.Root);
-                }
-
                 var provider = new BatchUploadMultipartFormDataStreamProvider(BatchUploadController.Root);
                 await Request.Content.ReadAsMultipartAsync(provider);
                 var uploadedFile = new FileInfo(provider.FileData.First().LocalFileName);
