@@ -9,7 +9,7 @@ namespace CardPeak.WebAPI.Controllers
     [RoutePrefix("api/settings")]
     public sealed class SettingsController : ApiController
     {
-        public ISettingsService SettingsService { get; set; }
+        private ISettingsService SettingsService { get; set; }
 
         public SettingsController()
         {

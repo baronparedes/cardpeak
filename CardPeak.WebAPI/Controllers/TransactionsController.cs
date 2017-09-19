@@ -7,7 +7,7 @@ namespace CardPeak.WebAPI.Controllers
     [RoutePrefix("api/transactions")]
     public sealed class TransactionsController : ApiController
     {
-        public ITransactionService TransactionService { get; set; }
+        private ITransactionService TransactionService { get; set; }
 
         public TransactionsController()
         {

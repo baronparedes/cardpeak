@@ -10,7 +10,7 @@ namespace CardPeak.WebAPI.Controllers
     [RoutePrefix("api/agents")]
     public sealed class AgentsController : ApiController
     {
-        public IAgentService AgentService { get; set; }
+        private IAgentService AgentService { get; set; }
 
         public AgentsController()
         {

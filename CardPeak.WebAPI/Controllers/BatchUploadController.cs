@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Security.AccessControl;
 
 namespace CardPeak.WebAPI.Controllers
 {
@@ -20,7 +21,7 @@ namespace CardPeak.WebAPI.Controllers
         private static readonly string Staging = HttpContext.Current.Server.MapPath("~/App_Data/staging");
         private static readonly string Processed = HttpContext.Current.Server.MapPath("~/App_Data/Processed");
 
-        public IBatchService BatchService { get; set; }
+        private IBatchService BatchService { get; set; }
 
         public BatchUploadController()
         {
@@ -81,6 +82,11 @@ namespace CardPeak.WebAPI.Controllers
 
             try
             {
+                if (!System.IO.Directory.Exists(BatchUploadController.Root))
+                {
+                    System.IO.Directory.CreateDirectory(BatchUploadController.Root);
+                }
+
                 var provider = new BatchUploadMultipartFormDataStreamProvider(BatchUploadController.Root);
                 await Request.Content.ReadAsMultipartAsync(provider);
                 var uploadedFile = new FileInfo(provider.FileData.First().LocalFileName);
