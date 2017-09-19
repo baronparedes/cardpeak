@@ -296,7 +296,6 @@
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="build\" />
     <Folder Include="src\" />
     <Folder Include="src\components\" />
     <Folder Include="src\components\layout\" />

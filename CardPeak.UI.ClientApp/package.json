@@ -9,9 +9,9 @@
   "repository": "https://github.com/baronparedes/cardpeak/tree/master/CardPeak.UI.ClientApp",
   "license": "MIT",
   "scripts": {
-    "publish": "webpack --config ./webpack.config.js --progress --colors",
-    "publishProd": "NODE_ENV=production npm run publish",
-    "publishDev": "NODE_ENV=dev npm run publish"
+    "build": "webpack --config ./webpack.config.js --progress --colors",
+    "buildprod": "SET NODE_ENV=production & npm run build",
+    "builddev": "SET NODE_ENV=dev & npm run build"
   },
   "devDependencies": {
     "@types/chart.js": "^2.6.4",

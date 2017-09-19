@@ -1,6 +1,10 @@
 ﻿const webpack = require('webpack');
 const path = require('path');
 
+const buildNumber = Date.now();
+const packageJson = require('./package.json');
+const version = packageJson.version + "." + buildNumber;
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
@@ -9,27 +13,28 @@ const nodeEnv = process.env.NODE_ENV || 'dev';
 const isProduction = nodeEnv === 'production';
 
 const sourcePath = path.join(__dirname, "./src");
-const imagePath = path.join(__dirname, "./src/content");
-const buildPath = path.join(__dirname, "./build");
+const imagePath = path.join(__dirname, "./src/img");
+let buildPath = path.join(__dirname, "./build");
 
-const packageJson = require('./package.json');
+if (isProduction) {
+    buildPath = path.join(__dirname, "./release/", version);
+}
 
+let apiHost = "api";
 const setApiHost = function () {
-    switch (nodeEnv) {
-        case "production":
-            return "api";
-        default:
-            return "http://localhost:3001/api";
+    if (nodeEnv === 'production') {
+        apiHost = "api";
+    }
+    else if (nodeEnv === 'dev') {
+        apiHost = "http://localhost:3001/api";
     }
 };
-
-const apiHost = setApiHost();
-
+setApiHost();
 
 console.log("bundling...");
-console.log(nodeEnv);
-console.log(packageJson.version);
-console.log(apiHost);
+console.log("environment: " + nodeEnv);
+console.log("version: " + version);
+console.log("api: " + apiHost);
 
 const extractLess = new ExtractTextPlugin({
     filename: "app-[hash].css",
@@ -61,7 +66,7 @@ const plugins = [
         },
         __NODE_ENV__: JSON.stringify(nodeEnv),
         __API_BASE_URL__: JSON.stringify(apiHost),
-        __VERSION__: JSON.stringify(packageJson.version + '.' + Date.now())
+        __VERSION__: JSON.stringify(version)
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.LoaderOptionsPlugin({
