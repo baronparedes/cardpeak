@@ -53,12 +53,11 @@ namespace CardPeak.WebAPI.Controllers
 
         [HttpPost]
         [Route("batch/{id}")]
-        public async Task<IHttpActionResult> ProcessBatch(int id)
+        public IHttpActionResult ProcessBatch(int id)
         {
             try
             {
-                ProcessedBatchUpload result = null;
-                result = await this.BatchService.ProcessAsync(id);
+                var result = this.BatchService.Process(id);
                 result.ProcessedApprovalTransactions = result.ProcessedApprovalTransactions.Where(_ => _.HasErrors);
                 return this.Ok(result);
             }

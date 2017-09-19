@@ -62,7 +62,7 @@ namespace CardPeak.Service
             return batch;
         }
 
-        public async Task<ProcessedBatchUpload> ProcessAsync(int id)
+        public ProcessedBatchUpload Process(int id)
         {
             IEnumerable<ProcessedApprovalTransaction> processedApprovalTransactions = null;
             var batch = this.BatchUploadRepository.Get(id);
@@ -72,10 +72,7 @@ namespace CardPeak.Service
 
             try
             {
-                await Task.Run(() => {
-                    processedApprovalTransactions = this.Processor.Process(new FileInfo(batch.FileName), batch, config);
-                });
-
+                processedApprovalTransactions = this.Processor.Process(new FileInfo(batch.FileName), batch, config);
                 batch.HasErrors = processedApprovalTransactions.Any(_ => _.HasErrors);
                 batch.ProcessedRecords = processedApprovalTransactions.Select(_ => _.Row).Distinct().Count();
                 if (!batch.HasErrors.Value)
