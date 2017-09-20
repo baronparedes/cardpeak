@@ -99,9 +99,9 @@ class TransactionsContainer extends React.Component<TransactionContainerDispatch
                             onSearchBarClick={this.handleOnGetTransactions}
                             onSearchBarChange={this.handleOnSearchBarChange} />
                     </FormGroup>
-                    <span className="text-danger">
+                    <label className="text-danger">
                         { this.state.loadingError ? this.state.loadingError : null }
-                    </span>
+                    </label>
                 </Panel>
                 {
                     this.state.isLoading ? <SpinnerBlock /> :

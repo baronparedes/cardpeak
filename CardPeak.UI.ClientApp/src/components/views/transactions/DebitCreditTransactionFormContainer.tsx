@@ -146,10 +146,10 @@ class DebitCreditTransactionFormContainer extends React.Component<
                                     <p className="text-right">Do you wish to continue?</p>
                                 </ModalConfirm>
                             </Col>
-                            <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                            <Col sm={12} xs={12} md={12} lg={12}>
                                 {
                                     this.state.postingTransactionError ?
-                                        this.state.postingTransactionError
+                                        <label className="text-danger">{this.state.postingTransactionError}</label>
                                         : null
                                 }
                             </Col>

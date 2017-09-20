@@ -136,10 +136,10 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                         isLoading={this.props.isSaving}
                         disabled={this.props.isSaving} />
                 </Col>
-                <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                <Col sm={12} xs={12} md={12} lg={12}>
                     {
                         this.state.onSaveAgentErrorMessage ?
-                            this.state.onSaveAgentErrorMessage
+                            <label className="text-danger">{this.state.onSaveAgentErrorMessage}</label>
                             : null
                     }
                 </Col>

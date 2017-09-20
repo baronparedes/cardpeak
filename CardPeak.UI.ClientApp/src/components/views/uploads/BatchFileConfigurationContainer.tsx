@@ -78,7 +78,7 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
                     }
                     {
                         this.state.loadingBatchFileConfigError ?
-                            <span className="text-danger">{this.state.loadingBatchFileConfigError}</span>
+                            <label className="text-danger">{this.state.loadingBatchFileConfigError}</label>
                                 : null
                     }
                 </Panel>

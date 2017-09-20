@@ -108,10 +108,10 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
                         isLoading={this.props.isSaving}
                         disabled={this.props.isSaving} />
                 </Col>
-                <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                <Col sm={12} xs={12} md={12} lg={12}>
                     {
                         this.state.onSaveErrorMessage ?
-                            this.state.onSaveErrorMessage
+                            <label className="text-danger">{this.state.onSaveErrorMessage}</label>
                             : null
                     }
                 </Col>

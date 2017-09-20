@@ -201,10 +201,10 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                             disabled={this.props.postingRates || this.props.loadingRates}
                             isLoading={this.props.postingRates || this.props.loadingRates}/>
                     </Col>
-                    <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                    <Col sm={12} xs={12} md={12} lg={12}>
                         {
                             this.state.postingRatesError ?
-                                this.state.postingRatesError
+                                <label className="text-danger">{this.state.postingRatesError}</label>
                                 : null
                         }
                     </Col>

@@ -109,10 +109,10 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                                         disabled={this.props.uploadingFile}
                                         buttonLabel="Upload" />
                                 </Col>
-                                <Col sm={12} xs={12} md={12} lg={12} className="text-danger">
+                                <Col sm={12} xs={12} md={12} lg={12}>
                                     {
                                         this.state.onUploadError ?
-                                            this.state.onUploadError
+                                            <label className="text-danger">{this.state.onUploadError}</label>
                                             : null
                                     }
                                 </Col>
