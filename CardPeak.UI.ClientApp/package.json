@@ -1,6 +1,6 @@
 {
   "name": "card-peak.ui.client-app",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "CardPeak.UI.ClientApp",
   "main": "server.js",
   "author": {
