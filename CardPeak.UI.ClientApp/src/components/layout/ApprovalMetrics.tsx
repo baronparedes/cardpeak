@@ -60,7 +60,7 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
                                 this.props.approvalsByBank ? this.props.approvalsByBank.map((bank) => {
                                     return (
                                         <option key={bank.key} value={bank.key}>
-                                            {bank.key}
+                                            {bank.key + " (" + bank.value + ")"}
                                         </option>
                                     )
                                 }) : null

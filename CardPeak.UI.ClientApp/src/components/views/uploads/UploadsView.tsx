@@ -6,7 +6,7 @@ import BatchFileConfigurationView from './BatchFileConfigurationView'
 const SettingsView: React.StatelessComponent<{ match: any }> = (props) => {
     return (
         <div>
-            <Route path={props.match.url + "/batch"} component={BatchUploadView} />
+            <Route exact path={props.match.url} component={BatchUploadView} />
             <Route path={props.match.url + "/config"} component={BatchFileConfigurationView} />
         </div>
     )

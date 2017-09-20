@@ -27,10 +27,6 @@
     }
 }
 
-.navbar-brand {
-    .brand-font;
-}
-
 .navbar-default {
     background: none;
     background-color: @nav-inverse-bg-color;
@@ -54,6 +50,11 @@
 .navbar {
     .navbar-brand {
         color: @nav-text-color;
+        .brand-font;
+
+        &:hover {
+            color: @nav-hover-bg-color;
+        }
     }
 
     .navbar-nav > li {
@@ -62,7 +63,7 @@
 
     .dropdown {
         &.open > a {
-           .li-active
+            .li-active
         }
     }
 }
