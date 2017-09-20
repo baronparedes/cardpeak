@@ -16,7 +16,7 @@ namespace CardPeak.Processor.Excel
         private const string DefaultEmptyColumnPrefix = "Column";
         private const string InvalidConfigurationErrorMessageFormat = "No configuration for {0} has been found.";
         private const string NotFoundErrorMessageFormat = "{0} not found.";
-        private const string InvalidConfiguratioNotFoundErrorMessage = "No configuration has been found.";
+        private const string InvalidConfiguratioNotFoundErrorMessageFormat = "No configuration has been found for {0}.";
         private const string NoAccountsFoundErrorMessageFormat = "Accounts were not found for the alias '{0}'.";
         private const string RateNotFoundErrorMessageFormat = "Unable to find any rates for '{0}'. [{1}, {2}]";
         private const string FullNameFormat = "{0}, {1} {2}";
@@ -224,9 +224,9 @@ namespace CardPeak.Processor.Excel
                         }
 
                         var rate = this.ProcessorService.GetRate(
-                            transaction.ApprovalTransaction.AgentId, 
-                            transaction.ApprovalTransaction.CardCategoryId, 
-                            transaction.ApprovalTransaction.BankId);
+                            splitTransaction.ApprovalTransaction.AgentId,
+                            splitTransaction.ApprovalTransaction.CardCategoryId,
+                            splitTransaction.ApprovalTransaction.BankId);
 
                         if (rate == null)
                         {
@@ -303,9 +303,10 @@ namespace CardPeak.Processor.Excel
                 throw new FileNotFoundException(string.Format(Processor.NotFoundErrorMessageFormat, Path.GetFileName(file.FullName)));
             }
 
-            if (configuration == null)
+            if (configuration.BatchFileConfigurationId == 0)
             {
-                throw new ArgumentNullException(Processor.InvalidConfiguratioNotFoundErrorMessage);
+                throw new ArgumentException(
+                    string.Format(Processor.InvalidConfiguratioNotFoundErrorMessageFormat, batch.Bank.Description));
             }
 
             var row = 0;

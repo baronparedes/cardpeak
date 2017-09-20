@@ -42,7 +42,12 @@ export function processBatch(id: number,
             successCallback(r.data as CardPeak.Entities.ProcessedBatchUpload);
         })
         .catch((reason) => {
-            errorCallback(reason.message);
+            try {
+                errorCallback(reason.response.data.exceptionMessage)
+            }
+            catch (e) {
+                errorCallback(reason.message);
+            }
         });
 }
 
@@ -54,7 +59,14 @@ export function getBatchFileConfig(bankId: number,
             successCallback(r.data as CardPeak.Entities.BatchFileConfiguration);
         })
         .catch((reason) => {
-            errorCallback(reason.message);
+            if (errorCallback) {
+                try {
+                    errorCallback(reason.response.data.exceptionMessage)
+                }
+                catch (e) {
+                    errorCallback(reason.message);
+                }
+            }
         });
 }
 
@@ -67,6 +79,11 @@ export function postBatchFileConfig(batchFileConfiguration: CardPeak.Entities.Ba
             successCallback(r.data as CardPeak.Entities.BatchFileConfiguration);
         })
         .catch((reason) => {
-            errorCallback(reason.message);
+            try {
+                errorCallback(reason.response.data.exceptionMessage)
+            }
+            catch (e) {
+                errorCallback(reason.message);
+            }
         })
 }

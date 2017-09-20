@@ -76,7 +76,7 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                 <div>
                     {
                         this.state.onProcessError ?
-                            this.state.onProcessError
+                            <label className="text-danger">{this.state.onProcessError}</label>
                             : null
                     }
                 </div>

@@ -4,19 +4,19 @@ GO
 ;WITH BatchFileConfiguration_CTE(
 	BatchFileConfigurationId,
 	BankId,
-    HasHeader,
-    SkipNumberOfRows,
-    AliasColumn,
-    ProductTypeColumn,
-    Ref1Column,
-    Ref2Column,
-    ClientFullNameColumn,
-    ClientFirstNameColumn,
-    ClientMiddleNameColumn,
-    ClientLastNameColumn,
-    ApprovalDateColumn,
-    CardCategoryColumn,
-    CardCountColumn)
+	HasHeader,
+	SkipNumberOfRows,
+	AliasColumn,
+	ProductTypeColumn,
+	Ref1Column,
+	Ref2Column,
+	ClientFullNameColumn,
+	ClientFirstNameColumn,
+	ClientMiddleNameColumn,
+	ClientLastNameColumn,
+	ApprovalDateColumn,
+	CardCategoryColumn,
+	CardCountColumn)
 AS
 (
 	SELECT 1, 1, 1, NULL,	11,		7,		0,	NULL,	NULL,	4,		5,		3,		2,		13,		10		UNION ALL
