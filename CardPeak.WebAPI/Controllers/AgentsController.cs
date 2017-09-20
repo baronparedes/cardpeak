@@ -66,7 +66,7 @@ namespace CardPeak.WebAPI.Controllers
             return this.Ok(result);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("{id}/update")]
         public IHttpActionResult Update(Agent agent)
         {

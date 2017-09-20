@@ -35,7 +35,7 @@ export function getAccounts(agentId: number, successCallback:(data: CardPeak.Ent
 export function postAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(postAgent());
-        agentsController.postAgent(agent, (agent: CardPeak.Entities.Agent) => {
+        agentsController.createAgent(agent, (agent: CardPeak.Entities.Agent) => {
             dispatch(postAgentComplete(agent));
             if (successCallback) {
                 successCallback();
@@ -52,7 +52,7 @@ export function postAgentStart(agent: CardPeak.Entities.Agent, successCallback?:
 export function putAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(putAgent());
-        agentsController.putAgent(agent, (agent: CardPeak.Entities.Agent) => {
+        agentsController.updateAgent(agent, (agent: CardPeak.Entities.Agent) => {
             dispatch(putAgentComplete(agent));
             if (successCallback) {
                 successCallback();
