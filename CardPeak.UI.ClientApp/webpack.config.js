@@ -15,6 +15,15 @@ const isProduction = nodeEnv === 'production';
 const sourcePath = path.join(__dirname, "./src");
 const imagePath = path.join(__dirname, "./src/img");
 
+const appJs = "app-[hash].js";
+const appCss = "app-[hash].css";
+const vendorJs = "vendor-[hash].js";
+const vendorCss = "vendor-[hash].css";
+
+const assetsCss = 'assets/css';
+const assetsJs = 'assets/script';
+const assetsContent = 'assets/content';
+
 let apiHost = "http://localhost:3001/api";
 let buildPath = path.join(__dirname, "./build");
 
@@ -30,13 +39,13 @@ console.log("apiHost: " + apiHost);
 console.log("bundling...");
 
 const extractLess = new ExtractTextPlugin({
-    filename: "app-[hash].css",
+    filename: path.join(assetsCss, appCss),
     disable: process.env.NODE_ENV === "dev",
     allChunks: true
 });
 
 const extractCSS = new ExtractTextPlugin({
-    filename: "vendor-[hash].css",
+    filename: path.join(assetsCss, vendorCss),
     disable: process.env.NODE_ENV === "dev",
     allChunks: true
 });
@@ -51,7 +60,7 @@ const plugins = [
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks: Infinity,
-        filename: 'vendor-[hash].js'
+        filename: path.join(assetsJs, vendorJs)
     }),
     new webpack.DefinePlugin({
         'process.env': {
@@ -109,23 +118,18 @@ const loaders = [
     },
     {
         test: /\.(jpg|png)$/,
-        use: "file-loader"
+        use: 'file-loader?name=' + path.join(assetsContent, '[hash].[ext]')
     },
     {
-        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'url-loader?limit=10000&mimetype=application/font-woff'
-    },
-    {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'url-loader?limit=10000&mimetype=application/octet-stream'
-    },
-    {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader'
-    },
-    {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'url-loader?limit=10000&mimetype=image/svg+xml'
+        test: /\.(woff|woff2|eot|ttf|svg|gif)$/,
+        use: [
+            {
+                loader: 'url-loader',
+                options: {
+                    limit: 50000,
+                    outputPath: assetsContent + '/'
+                }
+            }]
     }
 ];
 
@@ -188,8 +192,8 @@ module.exports = {
     },
     output: {
         path: buildPath,
-        publicPath: '',
-        filename: 'app-[hash].js'
+        publicPath: '/',
+        filename: path.join(assetsJs, appJs)
     },
     module: {
         loaders
