@@ -23,6 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Core", "CardPeak.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardPeak.Processor.Excel", "CardPeak.Processor.Excel\CardPeak.Processor.Excel.csproj", "{6B88189E-0CE5-4712-86E3-DBAB05F7267C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1A49FCE7-1FF7-4046-9F15-EA76C7829BCA}"
+	ProjectSection(SolutionItems) = preProject
+		AppVersion.cs = AppVersion.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

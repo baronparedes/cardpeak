@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AppVersion.cs">
+      <Link>Properties\AppVersion.cs</Link>
+    </Compile>
     <Compile Include="AgentDashboard.cs" />
     <Compile Include="Constants\ApprovalFileFields.cs" />
     <Compile Include="Constants\CardCategory.cs" />

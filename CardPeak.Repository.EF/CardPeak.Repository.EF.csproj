@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AppVersion.cs">
+      <Link>Properties\AppVersion.cs</Link>
+    </Compile>
     <Compile Include="AccountRepository.cs" />
     <Compile Include="AgentRepository.cs" />
     <Compile Include="ApprovalTransactionRepository.cs" />

@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AppVersion.cs">
+      <Link>Properties\AppVersion.cs</Link>
+    </Compile>
     <Compile Include="AgentService.cs" />
     <Compile Include="BatchService.cs" />
     <Compile Include="DashboardService.cs" />
