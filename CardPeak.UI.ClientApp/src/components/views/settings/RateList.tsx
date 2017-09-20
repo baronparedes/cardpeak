@@ -8,7 +8,8 @@ interface RateListProps {
     agentId?: number,
     isLoading?: boolean,
     rates?: CardPeak.Entities.Rate[],
-    onDeleteRate?: (rate: CardPeak.Entities.Rate) => void
+    onDeleteRate?: (rate: CardPeak.Entities.Rate) => void,
+    onSelectRate?: (rate: CardPeak.Entities.Rate) => void,
 }
 
 const RateListItems = (props: RateListProps) => {
@@ -22,7 +23,7 @@ const RateListItems = (props: RateListProps) => {
                         props.rates.map((rate) => {
                             key++;
                             return (
-                                <RateDetail rate={rate} key={key} onDeleteRate={props.onDeleteRate} />
+                                <RateDetail rate={rate} key={key} onDeleteRate={props.onDeleteRate} onSelectRate={props.onSelectRate} />
                             )
                         }) : <ListNoRecordsRow />
             }
@@ -36,6 +37,7 @@ const RateList = (props: RateListProps) => {
             <RateListItems
                 isLoading={props.isLoading}
                 rates={props.rates}
+                onSelectRate={props.onSelectRate}
                 onDeleteRate={props.onDeleteRate} />
         </div>
     )

@@ -1,11 +1,12 @@
 ﻿import * as React from 'react'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
 import { HighlightedSpan } from '../../layout'
 import { currencyFormat } from '../../../helpers/currencyHelper'
 
 interface RateDetailRowLayoutProps {
     rate?: CardPeak.Entities.Rate,
     onDeleteRate?: (rate: CardPeak.Entities.Rate) => void;
+    onSelectRate?: (rate: CardPeak.Entities.Rate) => void;
     isHeader: boolean
 }
 
@@ -13,17 +14,33 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
     constructor(props: RateDetailRowLayoutProps) {
         super(props);
     }
-    handleOnClick = () => {
-        this.props.onDeleteRate(this.props.rate);
+    handleOnDeleteRate = () => {
+        if (this.props.onDeleteRate) {
+            this.props.onDeleteRate(this.props.rate);
+        }
+    }
+    handleOnSelectRate = () => {
+        console.log(this.props.rate);
+        if (this.props.onSelectRate) {
+            this.props.onSelectRate(this.props.rate);
+        }
     }
     renderButton = () => {
-        if (this.props.rate.agentId === 0) {
-            return null;
-        }
-        return (
-            <Button onClick={this.handleOnClick} bsStyle="danger" bsSize="sm">
+        let deleteButton = (
+            <Button onClick={this.handleOnDeleteRate} bsStyle="danger" bsSize="sm">
                 <i className="fa fa-lg fa-trash-o"></i>
             </Button>
+        );
+        if (this.props.rate.agentId === 0) {
+            deleteButton = null;
+        }
+        return (
+            <ButtonGroup>
+                <Button onClick={this.handleOnSelectRate} bsStyle="primary" bsSize="sm">
+                    <i className="fa fa-lg fa-hand-pointer-o"></i>
+                </Button>
+                {deleteButton}
+            </ButtonGroup>
         )
     }
     render() {
@@ -47,11 +64,7 @@ export default class RateDetailRowLayout extends React.Component<RateDetailRowLa
                 <Col sm={2} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "savings" : <HighlightedSpan className="currency" value={currencyFormat(this.props.rate.savingsAmount)} />}
                 </Col>
-                <Col sm={2}
-                    lgHidden={!this.props.isHeader && this.props.rate.agentId === 0}
-                    mdHidden={!this.props.isHeader && this.props.rate.agentId === 0}
-                    smHidden={!this.props.isHeader && this.props.rate.agentId === 0}
-                    xsHidden={this.props.isHeader || this.props.rate.agentId === 0}>
+                <Col sm={2}>
                     {
                         this.props.isHeader ? "" : this.renderButton()
                     }

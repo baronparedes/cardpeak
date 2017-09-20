@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { Grid, Row, Col, Form, FormGroup, Button } from 'react-bootstrap'
+import { Grid, Row, Col, Form, FormGroup, Button, ButtonGroup } from 'react-bootstrap'
 import { FormFieldInput, FormFieldDropdown, ConfirmButton } from '../../layout'
 import RateList from './RateList'
 
@@ -75,6 +75,19 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
         };
         this.props.actions.addRate(rate);
     }
+    handleOnClearRate = () => {
+        this.setState({
+            bankId: 0,
+            cardCategoryId: 0,
+            amount: 0,
+            savingsAmount: 0,
+            errors: {
+                amount: '',
+                bankId: '',
+                cardCategoryId: ''
+            }
+        });
+    }
     handleOnChange = (e: any) => {
         this.setState({ postingRatesError: undefined });
         let errors = this.state.errors;
@@ -89,6 +102,15 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
     }
     handleOnDeleteRate = (data: CardPeak.Entities.Rate) => {
         this.props.actions.deleteRate(data);
+    }
+    handleOnSelectRate = (data: CardPeak.Entities.Rate) => {
+        this.setState({
+            ...this.state,
+            bankId: data.bankId,
+            cardCategoryId: data.cardCategoryId,
+            amount: data.amount,
+            savingsAmount: data.savingsAmount,
+        });
     }
     handleOnClickSaveRates = () => {
         this.props.actions.postRatesStart(this.props.agentId, this.props.rates, null, (e) => {
@@ -168,13 +190,20 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                     onChange={this.handleOnChange} />
                                 <FormGroup>
                                     <Col sm={12} className="text-right">
-                                        <Button
-                                            type="button"
-                                            bsStyle="primary"
-                                            onClick={this.handleOnClickAddRate}
-                                            disabled={this.props.postingRates || this.props.loadingRates}>
-                                            <i className="fa fa-lg fa-pencil-square-o"></i>
-                                        </Button> 
+                                        <ButtonGroup disabled={this.props.postingRates || this.props.loadingRates}>
+                                            <Button
+                                                type="button"
+                                                bsStyle="warning"
+                                                onClick={this.handleOnClearRate}>
+                                                <i className="fa fa-lg fa-eraser"></i>
+                                            </Button> 
+                                            <Button
+                                                type="button"
+                                                bsStyle="primary"
+                                                onClick={this.handleOnClickAddRate}>
+                                                <i className="fa fa-lg fa-pencil-square-o"></i>
+                                            </Button> 
+                                        </ButtonGroup>
                                     </Col>
                                 </FormGroup>
                             </fieldset>
@@ -185,6 +214,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                             agentId={this.props.agentId}
                             rates={this.props.rates}
                             isLoading={this.props.loadingRates}
+                            onSelectRate={this.handleOnSelectRate}
                             onDeleteRate={this.handleOnDeleteRate} />
                     </Col>
                 </Row>

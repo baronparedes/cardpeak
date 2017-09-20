@@ -5,6 +5,7 @@ import RateDetailRowLayout from './RateDetailRowLayout'
 interface RateDetailProps {
     rate: CardPeak.Entities.Rate;
     onDeleteRate: (rate: CardPeak.Entities.Rate) => void;
+    onSelectRate: (rate: CardPeak.Entities.Rate) => void;
 }
 
 const RateDetail = (props: RateDetailProps) => {
@@ -13,6 +14,7 @@ const RateDetail = (props: RateDetailProps) => {
             <RateDetailRowLayout
                 rate={props.rate}
                 onDeleteRate={props.onDeleteRate}
+                onSelectRate={props.onSelectRate}
                 isHeader={false} />
         </Panel>
     )
