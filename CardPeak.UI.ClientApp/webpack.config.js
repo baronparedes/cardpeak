@@ -1,4 +1,6 @@
-﻿const webpack = require('webpack');
+﻿require('babel-polyfill');
+
+const webpack = require('webpack');
 const path = require('path');
 
 const buildNumber = Date.now();
@@ -173,6 +175,7 @@ module.exports = {
         js: './index.tsx',
         vendor: [
             'axios',
+            'babel-polyfill',
             'chart.js',
             'classnames',
             'moment',
