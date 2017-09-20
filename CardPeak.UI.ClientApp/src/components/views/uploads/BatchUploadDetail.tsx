@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Button } from 'react-bootstrap'
-import { SpinnerBlock, ConfirmButtonLoading, GridList } from '../../layout'
+import { SpinnerBlock, ConfirmButton, GridList } from '../../layout'
 
 import BatchUploadDetailRowLayout from './BatchUploadDetailRowLayout'
 
@@ -55,7 +55,8 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                 <div className="text-right">
                     {
                         this.props.processingComplete ? null :
-                            <ConfirmButtonLoading
+                            <ConfirmButton
+                                useButtonLoading
                                 bsStyle="success"
                                 onToggleConfirm={this.handleOnToggleModal}
                                 onConfirm={this.handleOnConfirm}

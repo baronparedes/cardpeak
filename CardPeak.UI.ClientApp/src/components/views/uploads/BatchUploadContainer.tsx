@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { FormFieldFile, ConfirmButtonLoading, ButtonLoadingText } from '../../layout'
+import { FormFieldFile, ConfirmButton } from '../../layout'
 import { Panel, Form, FormGroup, Button, Col } from 'react-bootstrap'
 
 import BatchUploadDetail from './BatchUploadDetail'
@@ -99,7 +99,8 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                                 controlId="form-batch-upload" />
                             <FormGroup>
                                 <Col sm={12} className="text-right">
-                                    <ConfirmButtonLoading
+                                    <ConfirmButton
+                                        useButtonLoading
                                         bsStyle="success"
                                         onPreventToggle={this.handleOnPreventToggle}
                                         onConfirm={this.handleOnConfirm}

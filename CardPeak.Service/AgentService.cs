@@ -51,6 +51,11 @@ namespace CardPeak.Service
         {
             try
             {
+                if (amount <= 0)
+                {
+                    throw new ArgumentNullException("Amount cannot be 0");
+                }
+
                 var transactionAmount = (isDebit) ? Math.Abs(amount) * -1 : Math.Abs(amount);
                 var transaction = new DebitCreditTransaction
                 {

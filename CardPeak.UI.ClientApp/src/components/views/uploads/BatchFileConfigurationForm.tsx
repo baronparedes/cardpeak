@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Form, Row, Col, FormGroup } from 'react-bootstrap'
-import { ConfirmButtonLoading, FormFieldInput, FormFieldDropdown, FormFieldBoolean } from '../../layout'
+import { ConfirmButton, FormFieldInput, FormFieldDropdown, FormFieldBoolean } from '../../layout'
 
 interface BatchFileConfigurationFormProps {
     batchFileConfiguration: CardPeak.Entities.BatchFileConfiguration,
@@ -97,7 +97,8 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
         return (
             <FormGroup>
                 <Col sm={12} className="text-right">
-                    <ConfirmButtonLoading
+                    <ConfirmButton
+                        useButtonLoading
                         bsStyle="success"
                         buttonLabel="Save"
                         confirmTitle="save batch file configuration details"

@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, ModalConfirm, ButtonLoadingText, Currency }from '../../layout'
+import { FormFieldInput, ModalConfirm, ButtonLoadingText, Currency, ConfirmButton }from '../../layout'
 
 interface DebitCreditTransactionFormState {
     showConfirmModal: boolean;
@@ -49,18 +49,15 @@ class DebitCreditTransactionFormContainer extends React.Component<
     }
     handleErrors = () => {
         let errors = this.state.errors;
-        if (this.state.amount === 0) errors.amount = "*";
+        if (!this.state.amount || this.state.amount <= 0) errors.amount = "*";
         if (this.state.remarks === '') errors.remarks = "*";
         this.setState({ errors });
         return errors;
     }
     handleOnConfirm = () => {
-        this.handleErrors();
-        if (!!this.state.errors.remarks && !!this.state.errors.amount) {
+        if (this.hasErrors()) {
             return;
         }
-        this.handleOnToggleModal();
-
         this.props.actions.postAgentTransactionStart({
             agentId: this.props.agent.agentId,
             amount: this.state.amount,
@@ -76,13 +73,17 @@ class DebitCreditTransactionFormContainer extends React.Component<
     handleOnTransactionSubmittedError = (message: string) => {
         this.setState({ postingTransactionError: message });
     }
-    handleOnToggleModal = () => {
-        this.setState({ postingTransactionError: undefined });
+    hasErrors: () => boolean = () => {
         this.handleErrors();
-        if (!!this.state.errors.remarks && !!this.state.errors.amount) {
-            return;
+        let result: boolean = false;
+        if (!!this.state.errors.amount || !!this.state.errors.remarks) {
+            result = true;
+            this.setState({ postingTransactionError: undefined });
         }
-        this.setState({ showConfirmModal: !this.state.showConfirmModal });
+        return result;
+    }
+    handleOnPreventToggle = () => {
+        return this.hasErrors();
     }
     handleFocus = (e: any) => {
         e.target.select();
@@ -124,29 +125,27 @@ class DebitCreditTransactionFormContainer extends React.Component<
                             onChange={this.handleChange} />
                         <FormGroup>
                             <Col sm={12} className="text-right">
-                                <Button
-                                    type="button"
+                                <ConfirmButton
+                                    useButtonLoading
                                     bsStyle={buttonClass}
-                                    onClick={this.handleOnToggleModal}
-                                    disabled={this.props.postingTransaction}>
-                                    <ButtonLoadingText isLoading={this.props.postingTransaction} label={this.props.transaction} />
-                                </Button>
-                                <ModalConfirm
-                                    title="confirm transaction"
-                                    showModal={this.state.showConfirmModal}
+                                    onPreventToggle={this.handleOnPreventToggle}
                                     onConfirm={this.handleOnConfirm}
-                                    onToggleModal={this.handleOnToggleModal}>
+                                    confirmTitle="confirm transaction"
+                                    isLoading={this.props.postingTransaction}
+                                    disabled={this.props.postingTransaction}
+                                    buttonLabel={this.props.transaction}>
+
                                     <p>
                                         You are about to <strong>{this.props.transaction} </strong>
                                         <br />
                                         <span className="text-muted spacer-right">amount:</span>
                                         <Currency noCurrencyColor className={(isDebit) ? "amount-debit" : "amount-credit"} currency={this.state.amount} />
-                                        <br/>
+                                        <br />
                                         <span className="text-muted spacer-right">account:</span>
                                         <strong className="text-highlight">{this.props.agent.firstName + " " + this.props.agent.lastName}</strong>
                                     </p>
                                     <p className="text-right">Do you wish to continue?</p>
-                                </ModalConfirm>
+                                </ConfirmButton>
                             </Col>
                             <Col sm={12} xs={12} md={12} lg={12}>
                                 {

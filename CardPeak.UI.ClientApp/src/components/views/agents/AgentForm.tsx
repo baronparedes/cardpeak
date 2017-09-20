@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButtonLoading } from '../../layout'
+import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButton } from '../../layout'
 
 import AgentAccountList from './AgentAccountList'
 
@@ -125,7 +125,8 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
         return (
             <FormGroup>
                 <Col sm={12} className="text-right">
-                    <ConfirmButtonLoading
+                    <ConfirmButton
+                        useButtonLoading
                         bsStyle="success"
                         buttonLabel="Save"
                         confirmTitle="save agent details"

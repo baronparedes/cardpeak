@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Grid, Row, Col, Form, FormGroup, Button } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDropdown, ConfirmButtonLoading } from '../../layout'
+import { FormFieldInput, FormFieldDropdown, ConfirmButton } from '../../layout'
 import RateList from './RateList'
 
 interface RatesContainerProps {
@@ -191,7 +191,8 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                 <Row>
                     <Col className="text-right container-fluid">
                         <br />
-                        <ConfirmButtonLoading
+                        <ConfirmButton
+                            useButtonLoading
                             bsStyle="success"
                             buttonLabel="Save"
                             confirmTitle="save rates"
