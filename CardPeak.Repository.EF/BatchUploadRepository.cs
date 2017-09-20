@@ -39,7 +39,7 @@ namespace CardPeak.Repository.EF
         {
             var result = this.Context.BatchUploads
                 .Include(_ => _.Bank)
-                .Where(_ => _.ProcessStartDateTime != null)
+                .Where(_ => _.ProcessEndDateTime != null)
                 .OrderByDescending(_ => _.BatchId)
                 .Take(Configurations.LatestProcessedBatchCount)
                 .ToList();

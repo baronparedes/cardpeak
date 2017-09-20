@@ -30,7 +30,6 @@ const LatestProcessedBatchRowLayout = (props: LatestProcessedBatchProps) => {
                 {props.isHeader ? "completed" : null}
                 {!props.isHeader && props.batchUpload.hasErrors === true ? <span className="text-highlight text-danger">No</span> : null}
                 {!props.isHeader && props.batchUpload.hasErrors === false ? <span className="text-highlight text-success">Yes</span> : null}
-                {!props.isHeader && props.batchUpload.processStartDateTime && !props.batchUpload.processEndDateTime ? <span className="text-highlight">Processing</span> : null}
             </Col>
         </Row>
     )

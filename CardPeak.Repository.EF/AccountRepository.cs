@@ -2,6 +2,9 @@
 using CardPeak.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Linq.Expressions;
+using System.Data.Entity;
 
 namespace CardPeak.Repository.EF
 {
@@ -18,7 +21,10 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<Account> FindByAlias(string alias)
         {
-            return this.Find(_ => _.Alias.ToLower() == alias.ToLower()).ToList();
+            return this.Context.Accounts
+                .Include(_ => _.Agent)
+                .Where(_ => _.Alias.ToLower() == alias.ToLower())
+                .ToList();
         }
     }
 }
