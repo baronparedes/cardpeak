@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, ModalConfirm, ButtonLoadingText }from '../../layout'
+import { FormFieldInput, ModalConfirm, ButtonLoadingText, Currency }from '../../layout'
 
 interface DebitCreditTransactionFormState {
     showConfirmModal: boolean;
@@ -139,9 +139,11 @@ class DebitCreditTransactionFormContainer extends React.Component<
                                     <p>
                                         You are about to <strong>{this.props.transaction} </strong>
                                         <br />
-                                        <span className="text-muted spacer-right">amount:</span><strong className={(isDebit) ? "text-highlight perf-down" : "text-highlight perf-up"}>{this.state.amount}</strong>
+                                        <span className="text-muted spacer-right">amount:</span>
+                                        <Currency noCurrencyColor className={(isDebit) ? "amount-debit" : "amount-credit"} currency={this.state.amount} />
                                         <br/>
-                                        <span className="text-muted spacer-right">account:</span><strong className="text-highlight">{this.props.agent.firstName + " " + this.props.agent.lastName}</strong>
+                                        <span className="text-muted spacer-right">account:</span>
+                                        <strong className="text-highlight">{this.props.agent.firstName + " " + this.props.agent.lastName}</strong>
                                     </p>
                                     <p className="text-right">Do you wish to continue?</p>
                                 </ModalConfirm>

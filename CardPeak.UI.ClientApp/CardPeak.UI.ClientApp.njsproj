@@ -63,6 +63,9 @@
     <Content Include="src\components\layout\ConfirmButton.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\Currency.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\DashboardLabel.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -329,6 +332,9 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\constants\actions.ts" />
     <TypeScriptCompile Include="src\constants\colorScale.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\helpers\currencyHelper.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\helpers\dateHelpers.ts">

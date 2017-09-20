@@ -1,6 +1,7 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 import { dateFormat } from '../../../helpers/dateHelpers'
+import { Currency } from '../../layout'
 
 interface DebitCreditTransactionDetailRowLayoutProps {
     transaction?: CardPeak.Entities.DebitCreditTransaction,
@@ -8,10 +9,6 @@ interface DebitCreditTransactionDetailRowLayoutProps {
 }
 
 const DebitCreditTransactionDetailRowLayout = (props: DebitCreditTransactionDetailRowLayoutProps) => {
-    let amountClassNames = "row-amount currency text-highlight";
-    if (!props.isHeader) {
-        amountClassNames += (props.transaction.amount > 0) ? " amount-credit" : " amount-debit";
-    }
     return (
         <Row>
             <Col mdHidden
@@ -27,7 +24,7 @@ const DebitCreditTransactionDetailRowLayout = (props: DebitCreditTransactionDeta
                 {props.isHeader ? "transaction date" : dateFormat(props.transaction.transactionDateTime)}
             </Col>
             <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "amount" : <span className={amountClassNames}>{props.transaction.amount}</span>}
+                {props.isHeader ? "amount" : <Currency className="row-amount" currency={props.transaction.amount} />}
             </Col>
         </Row>
     )
