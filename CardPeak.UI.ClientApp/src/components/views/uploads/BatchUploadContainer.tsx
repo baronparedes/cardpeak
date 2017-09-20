@@ -84,7 +84,7 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
     }
     render() {
         return (
-            <div className="container-fluid">
+            <div>
                 <Panel className="container-fluid">
                     <Form horizontal onSubmit={(e: any) => { e.preventDetfault() }}>
                         <fieldset disabled={this.props.uploadingFile || this.props.processing}>

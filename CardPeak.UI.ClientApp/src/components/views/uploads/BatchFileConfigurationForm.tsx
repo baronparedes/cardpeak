@@ -120,7 +120,7 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
     }
     render() {
         return (
-            <div className="container-fluid">
+            <div>
                 <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
                     <fieldset disabled={this.props.isSaving}>
                         <Col lg={6} md={6}>

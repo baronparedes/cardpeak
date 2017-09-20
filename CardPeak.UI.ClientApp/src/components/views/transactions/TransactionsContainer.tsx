@@ -87,7 +87,7 @@ class TransactionsContainer extends React.Component<TransactionContainerDispatch
     }
     render() {
         return (
-            <div className="container-fluid">
+            <div>
                 <Panel>
                     <FormGroup validationState={!!this.state.errors.clientName && this.state.errors.clientName != "" ? "error" : null}>
                         <SearchBar
