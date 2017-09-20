@@ -1,13 +1,17 @@
 ﻿import * as React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
+import { NotFound } from '../../layout'
 import DefaultRatesView from './DefaultRatesView'
 import ReferencesView from './ReferencesView'
 
 const SettingsView: React.StatelessComponent<{ match: any }> = (props) => {
     return (
         <div>
-            <Route exact path={props.match.url} component={ReferencesView} />
-            <Route path={props.match.url + "/rates"} component={DefaultRatesView} />
+            <Switch>
+                <Route exact path={props.match.url} component={ReferencesView} />
+                <Route path={props.match.url + "/rates"} component={DefaultRatesView} />
+                <Route component={NotFound} />
+            </Switch>
         </div>
     )
 }

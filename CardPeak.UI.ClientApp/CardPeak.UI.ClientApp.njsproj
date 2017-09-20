@@ -99,6 +99,9 @@
     <Content Include="src\components\layout\NavigationBar.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\NotFound.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\PerformanceDashboard.tsx">
       <SubType>Code</SubType>
     </Content>
