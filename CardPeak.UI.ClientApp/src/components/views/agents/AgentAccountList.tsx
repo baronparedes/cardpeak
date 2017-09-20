@@ -116,7 +116,7 @@ class AgentAccountList extends React.Component<AgentAccountListProps, AgentAccou
                                 bsStyle="primary"
                                 onClick={this.handleOnClickAddAccount}
                                 disabled={this.props.isSaving}>
-                                <i className="fa fa-lg fa-save"></i>
+                                <i className="fa fa-lg fa-pencil-square-o"></i>
                             </Button>
                         </InputGroup.Button>
                     </InputGroup>

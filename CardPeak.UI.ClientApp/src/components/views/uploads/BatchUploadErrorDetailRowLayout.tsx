@@ -28,7 +28,7 @@ class BatchUploadErrorDetailRowLayout extends React.Component<BatchUploadErrorDe
         }
         return (
             <div>
-                <Button bsStyle="warning" bsSize="sm" onClick={this.handleOnToggleModal}>
+                <Button bsStyle="danger" bsSize="sm" onClick={this.handleOnToggleModal}>
                     <i className="fa fa-lg fa-exclamation-circle"></i>
                 </Button>
                 <ModalPanel title={"Errors found on row # " + this.props.processedItem.row} onToggleModal={this.handleOnToggleModal} showModal={this.state.showModal}>

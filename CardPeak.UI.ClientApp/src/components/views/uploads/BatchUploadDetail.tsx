@@ -68,9 +68,12 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                     }
                     {
                         !this.props.processingComplete ? null : 
-                            <Button type="button" bsStyle="primary" onClick={this.props.onClickClear} className="spacer-right">
-                                Clear
-                            </Button>
+                            <ConfirmButton
+                                bsStyle="warning"
+                                onConfirm={this.props.onClickClear}
+                                confirmTitle="clear batch upload"
+                                confirmMessage="Continue?"
+                                buttonLabel="Clear" />
                     }
                 </div>
                 <div>

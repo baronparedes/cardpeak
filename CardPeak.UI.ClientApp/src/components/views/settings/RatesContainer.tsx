@@ -173,7 +173,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                                             bsStyle="primary"
                                             onClick={this.handleOnClickAddRate}
                                             disabled={this.props.postingRates || this.props.loadingRates}>
-                                            <i className="fa fa-lg fa-save"></i>
+                                            <i className="fa fa-lg fa-pencil-square-o"></i>
                                         </Button> 
                                     </Col>
                                 </FormGroup>

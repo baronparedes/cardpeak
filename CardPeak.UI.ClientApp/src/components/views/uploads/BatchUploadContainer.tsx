@@ -101,7 +101,7 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                                 <Col sm={12} className="text-right">
                                     <ConfirmButton
                                         useButtonLoading
-                                        bsStyle="success"
+                                        bsStyle="primary"
                                         onPreventToggle={this.handleOnPreventToggle}
                                         onConfirm={this.handleOnConfirm}
                                         confirmTitle="upload file"
