@@ -60,7 +60,8 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.CardCategory)
                 .Where(_ => !_.IsDeleted)
                 .Where(_ => _.Client.ToLower().Contains(client.ToLower()))
-                .OrderBy(_ => _.Client);
+                .OrderBy(_ => _.Client)
+                .Take(Configurations.MaxTransactionsQuery);
             return result.ToList();
         }
 

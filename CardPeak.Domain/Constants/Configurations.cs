@@ -31,5 +31,13 @@ namespace CardPeak.Domain.Constants
                 return "MMM";
             }
         }
+
+        public static int MaxTransactionsQuery
+        {
+            get
+            {
+                return 200;
+            }
+        }
     }
 }
