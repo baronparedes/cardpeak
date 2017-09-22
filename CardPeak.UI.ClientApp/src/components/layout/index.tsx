@@ -21,3 +21,4 @@ export { ApprovalMetricsPieChart, ApprovalMetricsBarChart, ApprovalMetricsLineCh
 export { ApprovalMetrics } from './ApprovalMetrics'
 export { Currency } from './Currency'
 export { NotFound } from './NotFound'
+export { DataList, DataListProps, DataItemProps } from './DataList'

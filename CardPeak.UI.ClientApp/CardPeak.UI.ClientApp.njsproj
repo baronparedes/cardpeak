@@ -69,6 +69,9 @@
     <Content Include="src\components\layout\DashboardLabel.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\DataList.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\DatePicker.tsx">
       <SubType>Code</SubType>
     </Content>

@@ -1,14 +1,17 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import { ListNoRecordsRow, GridList, SpinnerBlock } from '../../../layout'
+import { DataList, DataListProps, DataItemProps } from '../../../layout'
 
-interface LatestProcessedBatchProps {
-    isHeader?: boolean
-    data?: CardPeak.Entities.BatchUpload[]
-    batchUpload?: CardPeak.Entities.BatchUpload
+type LatestProcessedBatchDataList = new () => DataList<CardPeak.Entities.BatchUpload>;
+const LatestProcessedBatchDataList = DataList as LatestProcessedBatchDataList;
+
+interface LatestProcessedBatchListProps {
+    data: CardPeak.Entities.BatchUpload[]
 }
 
-const LatestProcessedBatchRowLayout = (props: LatestProcessedBatchProps) => {
+const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.BatchUpload>) => {
+    console.log(props);
     return (
         <Row>
             <Col mdHidden
@@ -18,39 +21,36 @@ const LatestProcessedBatchRowLayout = (props: LatestProcessedBatchProps) => {
                 <span className="grid-label text-center spacer-left">latest uploads</span>
             </Col>
             <Col sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "batch id" : props.batchUpload.batchId}
+                {props.isHeader ? "batch id" : props.item.batchId}
             </Col>
             <Col sm={4} xsHidden={props.isHeader}>
-                {props.isHeader ? "bank" : props.batchUpload.bank.description}
+                {props.isHeader ? "bank" : props.item.bank.description}
             </Col>
             <Col sm={3} xsHidden={props.isHeader}>
-                {props.isHeader ? "rows" : props.batchUpload.processedRecords ? props.batchUpload.processedRecords : null}
+                {props.isHeader ? "rows" : props.item.processedRecords ? props.item.processedRecords : null}
             </Col>
             <Col sm={3} xsHidden={props.isHeader}>
                 {props.isHeader ? "completed" : null}
-                {!props.isHeader && props.batchUpload.hasErrors === true ? <span className="text-highlight text-danger">No</span> : null}
-                {!props.isHeader && props.batchUpload.hasErrors === false ? <span className="text-highlight text-success">Yes</span> : null}
+                {!props.isHeader && props.item.hasErrors === true ? <span className="text-highlight text-danger">No</span> : null}
+                {!props.isHeader && props.item.hasErrors === false ? <span className="text-highlight text-success">Yes</span> : null}
             </Col>
         </Row>
     )
 }
 
-export const LatestProcessedBatchList = (props: LatestProcessedBatchProps) => {
+export const LatestProcessedBatchList = (props: LatestProcessedBatchListProps) => {
+    console.log(props.data);
     return (
         <div>
-            <Col sm={12} xsHidden={true} className="text-center spacer-top spacer-bottom"><label className="text-muted">Latest Uploads</label></Col>
-            <GridList header={<LatestProcessedBatchRowLayout isHeader={true} />}>
-                {
-                    props.data && props.data.length > 0 ?
-                        props.data.map((item) => {
-                            return (
-                                <Panel className="panel-row" key={item.batchId}>
-                                    <LatestProcessedBatchRowLayout batchUpload={item} />
-                                </Panel>
-                            )
-                        }) : <ListNoRecordsRow />
+            <LatestProcessedBatchDataList
+                addOn={
+                    <Col sm={12} xsHidden={true} className="text-center spacer-top spacer-bottom">
+                        <label className="text-muted">Latest Uploads</label>
+                    </Col>
                 }
-            </GridList>
+                onGetKey={(item) => item.batchId}
+                rowLayout={LatestProcessedBatchRowLayout}
+                data={props.data} />
         </div>
     )
 }
