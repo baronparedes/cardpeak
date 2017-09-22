@@ -47,6 +47,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAccountRepository.cs" />
     <Compile Include="Repository\IAgentRepository.cs" />
+    <Compile Include="Repository\IApprovalTransactionAgentRepository.cs" />
+    <Compile Include="Repository\IApprovalTransactionDashboardRepository.cs" />
     <Compile Include="Repository\IApprovalTransactionRepository.cs" />
     <Compile Include="Repository\IBatchFileConfigurationRepository.cs" />
     <Compile Include="Repository\IBatchUploadRepository.cs" />

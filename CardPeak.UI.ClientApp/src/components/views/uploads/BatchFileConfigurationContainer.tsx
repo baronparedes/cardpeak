@@ -33,12 +33,13 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
     constructor(props: BatchFileConfigurationContainerProps & BatchFileConfigurationContainerDispatchProps) {
         super(props);
         this.state = {
-            loadingBatchFileConfigError: undefined
+            loadingBatchFileConfigError: undefined,
         }
     }
     handleOnBankChange = (e: any) => {
-        if (e.target.value != 0) {
-            this.props.uploadActions.getBatchFileConfigStart(e.target.value, (error: string) => {
+        const bankId = e.target.value;
+        if (bankId != 0) {
+            this.props.uploadActions.getBatchFileConfigStart(bankId, (error: string) => {
                 this.setState({ loadingBatchFileConfigError: error });
             });
         }
@@ -48,6 +49,9 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
     }
     componentDidMount() {
         this.props.settingsActions.loadReferencesStart();
+    }
+    componentWillUnmount() {
+        this.props.uploadActions.clearBatchFileConfig();
     }
     render() {
         return (
@@ -62,6 +66,7 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
                                     label="Bank"
                                     name="bankId"
                                     isRequired
+                                    value={this.props.selectedBatchFileConfig ? this.props.selectedBatchFileConfig.bankId : 0}
                                     onChange={this.handleOnBankChange} >
                                     <option key={0} value={0}>Select...</option>
                                     {

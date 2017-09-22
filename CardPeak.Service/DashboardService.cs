@@ -9,13 +9,13 @@ namespace CardPeak.Service
     public sealed class DashboardService : UnitOfWork, IDashboardService
     {
         private IBatchUploadRepository BatchUploadRepository;
-        private IApprovalTransactionRepository ApprovalTransactionRepository;
+        private IApprovalTransactionDashboardRepository ApprovalTransactionDashboardRepository;
         private IDebitCreditTransactionRepository DebitCreditTransactionRepository;
 
         public DashboardService(CardPeakDbContext context) : base(context)
         {
             this.BatchUploadRepository = new BatchUploadRepository(context);
-            this.ApprovalTransactionRepository = new ApprovalTransactionRepository(context);
+            this.ApprovalTransactionDashboardRepository = new ApprovalTransactionDashboardRepository(context);
             this.DebitCreditTransactionRepository = new DebitCreditTransactionRepository(context);
         }
 
@@ -27,15 +27,15 @@ namespace CardPeak.Service
             var result = new Dashboard
             {
                 LatestProcessedBatch = this.BatchUploadRepository.GetLatestProcessed(),
-                ApprovalsByBank = this.ApprovalTransactionRepository.GetApprovalsByBank(year.Value, month.Value),
-                ApprovalsByCategory = this.ApprovalTransactionRepository.GetApprovalsByCategory(year.Value, month.Value),
-                AccountBalance = this.ApprovalTransactionRepository.GetAccountBalance(year.Value, month.Value)
+                ApprovalsByBank = this.ApprovalTransactionDashboardRepository.GetApprovalsByBank(year.Value, month.Value),
+                ApprovalsByCategory = this.ApprovalTransactionDashboardRepository.GetApprovalsByCategory(year.Value, month.Value),
+                AccountBalance = this.ApprovalTransactionDashboardRepository.GetAccountBalance(year.Value, month.Value)
                     + this.DebitCreditTransactionRepository.GetAccountBalance(year.Value, month.Value),
-                TotalApprovals = this.ApprovalTransactionRepository.GetTotalApprovals(year.Value, month.Value),
-                Performance = this.ApprovalTransactionRepository.GetYearlyPerformance(year.Value),
-                TopAgents = this.ApprovalTransactionRepository.GetTopAgents(year.Value, month.Value),
-                ApprovalsByBankDetails = this.ApprovalTransactionRepository.GetApprovalsByBankDetails(year.Value, month.Value),
-                AvailableYears = this.ApprovalTransactionRepository.GetAvailableYears()
+                TotalApprovals = this.ApprovalTransactionDashboardRepository.GetTotalApprovals(year.Value, month.Value),
+                Performance = this.ApprovalTransactionDashboardRepository.GetYearlyPerformance(year.Value),
+                TopAgents = this.ApprovalTransactionDashboardRepository.GetTopAgents(year.Value, month.Value),
+                ApprovalsByBankDetails = this.ApprovalTransactionDashboardRepository.GetApprovalsByBankDetails(year.Value, month.Value),
+                AvailableYears = this.ApprovalTransactionDashboardRepository.GetAvailableYears()
             };
 
             return result;

@@ -54,6 +54,8 @@
     </Compile>
     <Compile Include="AccountRepository.cs" />
     <Compile Include="AgentRepository.cs" />
+    <Compile Include="ApprovalTransactionAgentRepository.cs" />
+    <Compile Include="ApprovalTransactionDashboardRepository.cs" />
     <Compile Include="ApprovalTransactionRepository.cs" />
     <Compile Include="BatchFileConfigurationRepository.cs" />
     <Compile Include="BatchUploadRepository.cs" />

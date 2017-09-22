@@ -1,6 +1,5 @@
 ﻿using CardPeak.Domain;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace CardPeak.Core.Service
 {

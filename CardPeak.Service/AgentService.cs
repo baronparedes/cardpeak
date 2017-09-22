@@ -12,7 +12,7 @@ namespace CardPeak.Service
     {
         private IAgentRepository AgentRepository;
         private IAccountRepository AccountRepository;
-        private IApprovalTransactionRepository ApprovalTransactionRepository;
+        private IApprovalTransactionAgentRepository ApprovalTransactionAgentRepository;
         private IDebitCreditTransactionRepository DebitCreditTransactionRepository;
 
         public AgentService(CardPeakDbContext context) 
@@ -20,7 +20,7 @@ namespace CardPeak.Service
         {
             this.AgentRepository = new AgentRepository(context);
             this.AccountRepository = new AccountRepository(context);
-            this.ApprovalTransactionRepository = new ApprovalTransactionRepository(context);
+            this.ApprovalTransactionAgentRepository = new ApprovalTransactionAgentRepository(context);
             this.DebitCreditTransactionRepository = new DebitCreditTransactionRepository(context);
         }
 
@@ -35,15 +35,15 @@ namespace CardPeak.Service
             {
                 Agent = this.AgentRepository.Find(_ => _.AgentId == agentId).SingleOrDefault(),
                 Accounts = this.AccountRepository.FindByAgent(agentId),
-                ApprovalTransactions = this.ApprovalTransactionRepository.FindByAgent(agentId, startDate, endDate),
+                ApprovalTransactions = this.ApprovalTransactionAgentRepository.FindByAgent(agentId, startDate, endDate),
                 DebitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate),
-                AccountBalance = this.ApprovalTransactionRepository.GetAgentAccountBalance(agentId) + this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId),
+                AccountBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId) + this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId),
                 SavingsBalance = this.DebitCreditTransactionRepository.GetAgentSavingsBalance(agentId),
-                TotalApprovals = this.ApprovalTransactionRepository.GetAgentTotalApprovals(agentId),
-                Performance = this.ApprovalTransactionRepository.GetAgentPerformance(agentId),
-                ApprovalsByBank = this.ApprovalTransactionRepository.GetAgentApprovalsByBank(agentId, startDate, endDate),
-                ApprovalsByCategory = this.ApprovalTransactionRepository.GetAgentApprovalsByCategory(agentId, startDate, endDate),
-                ApprovalsByBankDetails = this.ApprovalTransactionRepository.GetAgentApprovalsByBankDetails(agentId, startDate, endDate)
+                TotalApprovals = this.ApprovalTransactionAgentRepository.GetAgentTotalApprovals(agentId),
+                Performance = this.ApprovalTransactionAgentRepository.GetAgentPerformance(agentId),
+                ApprovalsByBank = this.ApprovalTransactionAgentRepository.GetAgentApprovalsByBank(agentId, startDate, endDate),
+                ApprovalsByCategory = this.ApprovalTransactionAgentRepository.GetAgentApprovalsByCategory(agentId, startDate, endDate),
+                ApprovalsByBankDetails = this.ApprovalTransactionAgentRepository.GetAgentApprovalsByBankDetails(agentId, startDate, endDate)
             };
         }
 
@@ -53,7 +53,7 @@ namespace CardPeak.Service
             {
                 if (amount <= 0)
                 {
-                    throw new ArgumentNullException("Amount cannot be 0");
+                    throw new ArgumentNullException("Amount cannot be 0 or less.");
                 }
 
                 var transactionAmount = (isDebit) ? Math.Abs(amount) * -1 : Math.Abs(amount);

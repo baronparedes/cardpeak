@@ -95,6 +95,7 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
                                 value={this.state.month}
                                 isRequired
                                 onChange={this.handleOnChange} >
+                                <option value={0}>All</option>
                                 <option value={1}>Jan</option>
                                 <option value={2}>Feb</option>
                                 <option value={3}>Mar</option>
