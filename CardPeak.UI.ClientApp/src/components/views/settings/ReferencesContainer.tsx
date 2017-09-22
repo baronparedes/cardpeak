@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Panel } from 'react-bootstrap'
 
 import ReferenceList from './ReferenceList'
 
@@ -35,7 +35,7 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
     }
     render() {
         return (
-            <div>
+            <Panel>
                 <Grid fluid>
                     <Row>
                         <Col lg={6} md={6} sm={12} xs={12}>
@@ -56,7 +56,7 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
                         </Col>
                     </Row>
                 </Grid>
-            </div>
+            </Panel>
         )
     }
 }

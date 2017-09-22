@@ -26,7 +26,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
     }
     renderMetrics() {
         return (
-            <Grid fluid>
+            <Grid className="no-padding">
                 <Row>
                     <Col sm={6}>
                         <Panel>
@@ -78,6 +78,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
                     availableYears={this.props.availableYears}
                     refreshing={this.props.refreshing}
                     onRefresh={this.props.actions.refreshDashboardStart} />
+                <br/>
                 { this.props.refreshing ? <SpinnerBlock /> : this.renderMetrics() }
             </div>
         )

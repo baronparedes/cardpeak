@@ -32,9 +32,7 @@ namespace CardPeak.Repository.EF
 
         public decimal GetAccountBalance(int year, int month)
         {
-            var result = this.Context.ApprovalTransactions
-                .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
-                .Where(_ => !_.IsDeleted)
+            var result = this.QueryDashboard(year, month)
                 .Select(_ => _.Amount)
                 .DefaultIfEmpty(0)
                 .Sum();
@@ -44,18 +42,16 @@ namespace CardPeak.Repository.EF
 
         public decimal GetTotalApprovals(int year, int month)
         {
-            var result = this.Context.ApprovalTransactions
-                .Where(_ => _.ApprovalDate.Year == year && _.ApprovalDate.Month == month)
-                .Where(_ => !_.IsDeleted)
-                .Count();
+            var result = this.QueryDashboard(year, month)
+                .Select(_ => _.Units)
+                .DefaultIfEmpty(0)
+                .Sum();
             return result;
         }
 
         public IEnumerable<ApprovalMetric<string>> GetApprovalsByBank(int year, int month)
         {
-            var result = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
-                .OrderBy(_ => _.Description)
+            var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
                 .ToDictionary(_ => _.Description, _ => 0m);
 
             var query = this.QueryDashboard(year, month)
@@ -72,9 +68,7 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetApprovalsByCategory(int year, int month)
         {
-            var result = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
-                .OrderBy(_ => _.Description)
+            var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory)
                 .ToDictionary(_ => _.Description, _ => 0m);
 
             var query = this.QueryDashboard(year, month)
@@ -133,19 +127,16 @@ namespace CardPeak.Repository.EF
 
         public IDictionary<string, IEnumerable<ApprovalMetric<string>>> GetApprovalsByBankDetails(int year, int month)
         {
-            var banks = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
-                .OrderBy(_ => _.Description)
-                .ToList();
-
-            var categories = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
-                .OrderBy(_ => _.Description)
-                .ToList();
+            var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank).ToList();
+            var categories = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory).ToList();
 
             var query = this.QueryDashboard(year, month)
                 .GroupBy(_ => new { _.BankId, _.CardCategoryId })
-                .Select(_ => new { BankId = _.FirstOrDefault().Bank.ReferenceId, CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
+                .Select(_ => new {
+                    BankId = _.FirstOrDefault().Bank.ReferenceId,
+                    CardCategory = _.FirstOrDefault().CardCategory.Description,
+                    Approvals = _.Sum(t => t.Units)
+                })
                 .ToList();
 
             var result = new Dictionary<string, IEnumerable<ApprovalMetric<string>>>();

@@ -57,5 +57,14 @@ namespace CardPeak.Repository.EF
             }
             this.Context.ApprovalTransactions.Add(transaction);
         }
+
+        protected IQueryable<Reference> QueryReference(Domain.Enums.ReferenceTypeEnum referenceType)
+        {
+            var query = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)referenceType)
+                .OrderBy(_ => _.Description);
+
+            return query;
+        }
     }
 }

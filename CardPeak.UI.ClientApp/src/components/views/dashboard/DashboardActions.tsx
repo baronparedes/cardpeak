@@ -23,10 +23,9 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
         super(props);
         this.state = {
             year: dateHelpers.currentYear(),
-            month: dateHelpers.currentMonth(),
+            month: 0,
             errors: {
-                year: '',
-                month: '',
+                year: ''
             }
         }
     }
@@ -46,8 +45,7 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
     }
     hasErrors = () => {
         this.handleErrors();
-        if (!!this.state.errors.year ||
-            !!this.state.errors.month) {
+        if (!!this.state.errors.year) { 
             return true;
         }
         return false;
@@ -55,7 +53,6 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
     handleErrors = () => {
         let errors = this.state.errors;
         if (!this.state.year || this.state.year == 0) errors.year = "*";
-        if (!this.state.month || this.state.month == 0) errors.month = "*";
         this.setState({ errors });
         return errors;
     }
@@ -91,9 +88,7 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
                                 controlId="form-month"
                                 label="month"
                                 name="month"
-                                error={this.state.errors.month}
                                 value={this.state.month}
-                                isRequired
                                 onChange={this.handleOnChange} >
                                 <option value={0}>All</option>
                                 <option value={1}>Jan</option>
@@ -129,7 +124,7 @@ export default class AgentDashboardActions extends React.Component<DashboardActi
     }
     render() {
         return (
-            <Grid fluid className="spacer-bottom">
+            <Grid className="spacer-bottom no-padding">
                 <Row>
                     {this.renderDateFilters()}
                     {this.renderButtons()}

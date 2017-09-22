@@ -95,9 +95,7 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
-                .OrderBy(_ => _.Description)
+            var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
                 .ToDictionary(_ => _.Description, _ => 0m);
 
             var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
@@ -114,9 +112,7 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByCategory(int agentId, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
-                .OrderBy(_ => _.Description)
+            var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory)
                 .ToDictionary(_ => _.Description, _ => 0m);
 
             var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
@@ -133,15 +129,8 @@ namespace CardPeak.Repository.EF
 
         public IDictionary<string, IEnumerable<ApprovalMetric<string>>> GetAgentApprovalsByBankDetails(int agentId, DateTime startDate, DateTime? endDate)
         {
-            var banks = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
-                .OrderBy(_ => _.Description)
-                .ToList();
-
-            var categories = this.Context.References
-                .Where(_ => _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.CardCategory)
-                .OrderBy(_ => _.Description)
-                .ToList();
+            var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank).ToList();
+            var categories = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory).ToList();
 
             var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
                 .GroupBy(_ => new { _.BankId, _.CardCategoryId })

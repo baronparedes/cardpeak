@@ -22,7 +22,7 @@ namespace CardPeak.Service
         public Dashboard GetDashboard(int? year = null, int? month = null)
         {
             year = year ?? DateTime.Now.Year;
-            month = month ?? DateTime.Now.Month;
+            month = month ?? 0;
 
             var result = new Dashboard
             {
