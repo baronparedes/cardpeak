@@ -5,11 +5,11 @@ import { DataListFiltered, DataListProps, DataItemProps, InjectProps } from '../
 type AgentDataList = new () => DataListFiltered<CardPeak.Entities.Agent>;
 const AgentDataList = DataListFiltered as AgentDataList;
 
-interface AgentListEventProps {
+interface AgentListProps {
     onSelectAgent: (data: CardPeak.Entities.Agent) => void;
 }
 
-const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & AgentListEventProps) => {
+const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & AgentListProps) => {
     return (
         <Row className="agent-item">
             <Col md={5} lg={5} sm={5} xs={4}>
@@ -25,7 +25,7 @@ const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & Agen
     )
 }
 
-const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListEventProps) => {
+const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListProps) => {
     return (
         <div>
             <AgentDataList
@@ -36,7 +36,7 @@ const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListEven
                 }}
                 onGetKey={(item) => item.agentId}
                 isLoading={props.isLoading}
-                rowLayout={InjectProps(AgentListRowLayout, props as AgentListEventProps)}
+                rowLayout={InjectProps(AgentListRowLayout, props as AgentListProps)}
                 data={props.data} />
         </div>
     )

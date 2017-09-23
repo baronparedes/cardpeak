@@ -15,8 +15,6 @@ export class DataListFiltered<T> extends React.Component<DataListProps<T> & Data
         this.state = {
             filteredData: props.data
         }
-
-        console.log(props.data);
     }
     componentWillReceiveProps(nextProps: DataListProps<T>) {
         if (this.props.data != nextProps.data) {
@@ -36,8 +34,6 @@ export class DataListFiltered<T> extends React.Component<DataListProps<T> & Data
             }
             return false;
         })
-
-        console.log(filteredData);
 
         this.setState({ filteredData });
     }

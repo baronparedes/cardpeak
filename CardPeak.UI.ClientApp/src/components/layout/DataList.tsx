@@ -33,7 +33,8 @@ export class DataList<T> extends React.Component<DataListProps<T> & DataListDisp
                         this.props.isLoading ? <SpinnerBlock /> :
                             this.props.data && this.props.data.length > 0 ?
                                 this.props.data.map((item) => {
-                                    const key = this.props.onGetKey ? this.props.onGetKey(item) : (row + 1);
+                                    row++;
+                                    const key = this.props.onGetKey ? this.props.onGetKey(item) : row;
                                     const newProps: DataItemProps<T> = {
                                         isHeader: false,
                                         item: item
@@ -41,7 +42,7 @@ export class DataList<T> extends React.Component<DataListProps<T> & DataListDisp
                                     const DataRowLayout = InjectProps<DataItemProps<T>>(this.props.rowLayout, newProps);
                                     return (
                                         <Panel className="panel-row" key={key}>
-                                            <DataRowLayout />
+                                            <DataRowLayout key={key} />
                                         </Panel>
                                     )
                                 }) : <ListNoRecordsRow />

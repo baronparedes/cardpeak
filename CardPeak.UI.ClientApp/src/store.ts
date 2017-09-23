@@ -3,5 +3,11 @@ import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import reducers, { RootState } from './services/reducers'
 
-const middleware = applyMiddleware(thunk, createLogger());
+let middleware;
+if (__NODE_ENV__ === 'dev') {
+    middleware = applyMiddleware(thunk);
+}
+else {
+    middleware = applyMiddleware(thunk, createLogger());
+}
 export const store: Store<RootState> = createStore(reducers, middleware);
