@@ -2,8 +2,8 @@
 import { Row, Col, Button } from 'react-bootstrap'
 import { DataListFiltered, DataListProps, DataItemProps } from '../../layout'
 
-type AgentDataList = new () => DataListFiltered<CardPeak.Entities.Agent>;
-const AgentDataList = DataListFiltered as AgentDataList;
+type AgentDataListFiltered = new () => DataListFiltered<CardPeak.Entities.Agent>;
+const AgentDataListFiltered = DataListFiltered as AgentDataListFiltered;
 
 interface AgentListProps {
     onSelectAgent?: (data: CardPeak.Entities.Agent) => void;
@@ -28,7 +28,7 @@ const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & Agen
 const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListProps) => {
     return (
         <div>
-            <AgentDataList
+            <AgentDataListFiltered
                 predicate={(agent, searchString) => {
                     const firstNameMatch = agent.firstName.toLowerCase().indexOf(searchString) >= 0;
                     const lastNameMatch = agent.lastName.toLowerCase().indexOf(searchString) >= 0;
