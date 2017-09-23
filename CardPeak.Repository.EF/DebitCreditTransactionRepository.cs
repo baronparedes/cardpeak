@@ -48,14 +48,31 @@ namespace CardPeak.Repository.EF
             return result.ToList();
         }
 
-        public decimal GetAccountBalance(int year, int month)
+        private decimal QueryBalance(int year, int month, Domain.Enums.TransactionTypeEnum transactionType)
         {
-            return this.Context.DebitCreditTransactions
-                .Where(_ => _.TransactionDateTime.Year == year && _.TransactionDateTime.Month == month)
-                .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction && !_.IsDeleted)
-                .Select(_ => _.Amount)
+            var query = this.Context.DebitCreditTransactions
+                .Where(_ => _.TransactionDateTime.Year == year)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.TransactionTypeId == (int)transactionType);
+
+            if (month != 0)
+            {
+                query = query.Where(_ => _.TransactionDateTime.Month == month);
+            }
+
+            return query.Select(_ => _.Amount)
                 .DefaultIfEmpty(0)
                 .Sum();
+        }
+
+        public decimal GetAccountBalance(int year, int month)
+        {
+            return this.QueryBalance(year, month, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+        }
+
+        public decimal GetSavingsBalance(int year, int month)
+        {
+            return this.QueryBalance(year, month, Domain.Enums.TransactionTypeEnum.SavingsTransaction);
         }
     }
 }

@@ -10,5 +10,6 @@ namespace CardPeak.Core.Repository
         decimal GetAgentAccountBalance(int agentId);
         decimal GetAgentSavingsBalance(int agentId);
         decimal GetAccountBalance(int year, int month);
+        decimal GetSavingsBalance(int year, int month);
     }
 }

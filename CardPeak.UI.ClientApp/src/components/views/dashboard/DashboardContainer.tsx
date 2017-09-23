@@ -36,6 +36,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
                     <Col sm={6}>
                         <Panel>
                             <DashboardLabel className="pull-right" label="balance" metrics={this.props.accountBalance} isCurrency />
+                            <DashboardLabel className="pull-right" label="savings" metrics={this.props.savingsBalance} isCurrency />
                         </Panel>
                     </Col>
                 </Row>
