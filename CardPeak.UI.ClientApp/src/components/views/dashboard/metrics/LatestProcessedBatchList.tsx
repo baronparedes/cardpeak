@@ -5,10 +5,6 @@ import { DataList, DataListProps, DataItemProps } from '../../../layout'
 type LatestProcessedBatchDataList = new () => DataList<CardPeak.Entities.BatchUpload>;
 const LatestProcessedBatchDataList = DataList as LatestProcessedBatchDataList;
 
-interface LatestProcessedBatchListProps {
-    data: CardPeak.Entities.BatchUpload[]
-}
-
 const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.BatchUpload>) => {
     return (
         <Row>
@@ -36,8 +32,7 @@ const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.Ba
     )
 }
 
-export const LatestProcessedBatchList = (props: LatestProcessedBatchListProps) => {
-    console.log(props.data);
+export const LatestProcessedBatchList = (props: DataListProps<CardPeak.Entities.BatchUpload>) => {
     return (
         <div>
             <LatestProcessedBatchDataList

@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 import { dateFormat } from '../../../helpers/dateHelpers'
-import * as classNames from 'classnames'
+import * as concat from 'classnames'
 import { Currency } from '../../layout'
 
 interface ApprovalTransactionDetailRowLayoutProps {
@@ -41,7 +41,7 @@ const ApprovalTransactionDetailRowLayout = (props: ApprovalTransactionDetailRowL
                 !props.showAgent || props.isHeader ? null :
                     <Col md={12} lg={12} sm={12} xs={12}>
                         <label className="text-muted text-small spacer-right">credited to</label>
-                        <span className="text-highlight text-small">{classNames(props.transaction.agent.lastName, ", ", props.transaction.agent.firstName)}</span>
+                        <span className="text-highlight text-small">{concat(props.transaction.agent.lastName, ", ", props.transaction.agent.firstName)}</span>
                     </Col>
             }
         </Row>

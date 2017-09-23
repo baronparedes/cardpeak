@@ -6,10 +6,6 @@ import { DataList, DataListProps, DataItemProps, InjectProps } from '../../../la
 type TopAgentDataList = new () => DataList<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>;
 const TopAgentDataList = DataList as TopAgentDataList;
 
-interface TopAgentListProps {
-    data: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[];
-}
-
 interface TopAgentRowLayoutProps {
     rank?: number;
 }
@@ -38,7 +34,7 @@ const TopAgentRowLayout: React.StatelessComponent<DataItemProps<
     )
 }
 
-export const TopAgentList = (props: TopAgentListProps) => {
+export const TopAgentList = (props: DataListProps<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>) => {
     let rank: number = 0;
     return (
         <div>

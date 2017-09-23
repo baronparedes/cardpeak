@@ -2,10 +2,13 @@
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import { ListNoRecordsRow, GridList, SpinnerBlock, InjectProps } from './'
 
-export interface DataListProps<T> {
-    data: T[];
+export interface DataListDisplayProps {
     rowLayout: any;
     addOn?: React.ReactNode;
+}
+
+export interface DataListProps<T> {
+    data: T[];
     onGetKey?: (item: T) => number | string;
     isLoading?: boolean;
 }
@@ -15,8 +18,8 @@ export interface DataItemProps<T> {
     isHeader?: boolean;
 }
 
-export class DataList<T> extends React.Component<DataListProps<T>>{
-    constructor(props: DataListProps<T>) {
+export class DataList<T> extends React.Component<DataListProps<T> & DataListDisplayProps>{
+    constructor(props: DataListProps<T> & DataListDisplayProps) {
         super(props);
     }
     render() {
