@@ -43,7 +43,9 @@
           <Property Name="ApprovalDate" Type="date" Nullable="false" />
           <Property Name="BatchId" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="ProcessId" Type="uniqueidentifier" />
+          <Property Name="TransactionId" Type="uniqueidentifier" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="200" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="BatchFileConfiguration">
           <Key>
@@ -76,6 +78,8 @@
           <Property Name="ProcessStartDateTime" Type="datetime" />
           <Property Name="ProcessEndDateTime" Type="datetime" />
           <Property Name="ProcessedRecords" Type="int" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="200" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
           <Key>
@@ -88,6 +92,9 @@
           <Property Name="TransactionTypeId" Type="int" Nullable="false" />
           <Property Name="TransactionDateTime" Type="datetime" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="TransactionId" Type="uniqueidentifier" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="200" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -443,7 +450,9 @@
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="ApprovalTransaction" ToRole="Agent" />
           <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_BankId" FromRole="ApprovalTransaction" ToRole="Reference" />
           <NavigationProperty Name="CardCategory" Relationship="CardPeakModel.FK_ApprovalTransaction_Reference_CardCategoryId" FromRole="ApprovalTransaction" ToRole="Reference" />
-          <Property Name="ProcessId" Type="Guid" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TransactionId" Type="Guid" />
         </EntityType>
         <EntityType Name="BatchUpload">
           <Key>
@@ -457,6 +466,8 @@
           <Property Name="ProcessStartDateTime" Type="DateTime" Precision="3" />
           <Property Name="ProcessEndDateTime" Type="DateTime" Precision="3" />
           <Property Name="ProcessedRecords" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
           <Key>
@@ -471,6 +482,9 @@
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="DebitCreditTransaction" ToRole="Agent" />
           <NavigationProperty Name="TransactionType" Relationship="CardPeakModel.FK_DebitCreditTransaction_Reference" FromRole="DebitCreditTransaction" ToRole="Reference" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TransactionId" Type="Guid" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -713,7 +727,9 @@
           <EntitySetMapping Name="ApprovalTransactions">
             <EntityTypeMapping TypeName="CardPeakModel.ApprovalTransaction">
               <MappingFragment StoreEntitySet="ApprovalTransaction">
-                <ScalarProperty Name="ProcessId" ColumnName="ProcessId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="BatchId" ColumnName="BatchId" />
                 <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
@@ -733,6 +749,8 @@
           <EntitySetMapping Name="BatchUploads">
             <EntityTypeMapping TypeName="CardPeakModel.BatchUpload">
               <MappingFragment StoreEntitySet="BatchUpload">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ProcessedRecords" ColumnName="ProcessedRecords" />
                 <ScalarProperty Name="ProcessEndDateTime" ColumnName="ProcessEndDateTime" />
                 <ScalarProperty Name="ProcessStartDateTime" ColumnName="ProcessStartDateTime" />
@@ -746,6 +764,9 @@
           <EntitySetMapping Name="DebitCreditTransactions">
             <EntityTypeMapping TypeName="CardPeakModel.DebitCreditTransaction">
               <MappingFragment StoreEntitySet="DebitCreditTransaction">
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="TransactionDateTime" ColumnName="TransactionDateTime" />
                 <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />

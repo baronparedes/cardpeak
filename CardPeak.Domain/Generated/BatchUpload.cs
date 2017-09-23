@@ -21,6 +21,8 @@ namespace CardPeak.Domain
         public Nullable<System.DateTime> ProcessStartDateTime { get; set; }
         public Nullable<System.DateTime> ProcessEndDateTime { get; set; }
         public Nullable<int> ProcessedRecords { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
     
         public virtual Reference Bank { get; set; }
     }

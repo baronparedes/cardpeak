@@ -79,7 +79,7 @@ const BatchUploadErrorList = (props: DataListProps<CardPeak.Entities.ProcessedAp
         <div>
             <BatchUploadErrorDataList
                 isLoading={props.isLoading}
-                renderHeader={() => { return <BatchUploadErrorRowLayout isHeader={false} /> }}
+                renderHeader={() => { return <BatchUploadErrorRowLayout isHeader /> }}
                 renderItem={(item, key) => { return <BatchUploadErrorRowLayout item={item} key={key} /> }}
                 data={props.data} />
         </div>

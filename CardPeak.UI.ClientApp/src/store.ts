@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 import reducers, { RootState } from './services/reducers'
 
 let middleware;
-if (__NODE_ENV__ === 'dev') {
+if (__NODE_ENV__ === 'prod') {
     middleware = applyMiddleware(thunk);
 }
 else {

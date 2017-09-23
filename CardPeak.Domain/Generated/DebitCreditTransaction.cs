@@ -21,6 +21,9 @@ namespace CardPeak.Domain
         public int TransactionTypeId { get; set; }
         public System.DateTime TransactionDateTime { get; set; }
         public bool IsDeleted { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public Nullable<System.Guid> TransactionId { get; set; }
     
         public virtual Agent Agent { get; set; }
         public virtual Reference TransactionType { get; set; }

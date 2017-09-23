@@ -203,4 +203,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="BatchFileConfigurationId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="43f6d07a-2e8b-4c2d-8586-ecf6f5faf331" ChangeDateTime="09/23/2017 14:01:21">
+    <Property Name="ElementName" Value="[dbo].[ApprovalTransaction].[ProcessId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ApprovalTransaction]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TransactionId" />
+  </Operation>
 </Operations>

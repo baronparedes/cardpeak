@@ -8,7 +8,7 @@
     <ProfileVersionNumber>1</ProfileVersionNumber>
     <BlockOnPossibleDataLoss>True</BlockOnPossibleDataLoss>
     <DropObjectsNotInSource>True</DropObjectsNotInSource>
-    <CreateNewDatabase>False</CreateNewDatabase>
+    <CreateNewDatabase>True</CreateNewDatabase>
     <DeployDatabaseInSingleUserMode>False</DeployDatabaseInSingleUserMode>
   </PropertyGroup>
   <ItemGroup>
