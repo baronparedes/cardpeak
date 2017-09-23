@@ -1,48 +1,44 @@
 ﻿import * as React from 'react'
-import { Grid, Row, Col } from 'react-bootstrap'
-import { GridList, SpinnerRow, ListNoRecordsRow } from '../../layout'
-import ReferenceDetail from './ReferenceDetail'
-import ReferenceDetailRowLayout from './ReferenceDetailRowLayout'
+import { Row, Col, Button, Panel } from 'react-bootstrap'
+import { DataList, DataListProps, DataItemProps } from '../../layout'
+
+type ReferenceDataList = new () => DataList<CardPeak.Entities.Reference>;
+const ReferenceDataList = DataList as ReferenceDataList;
 
 interface ReferenceListProps {
+    title?: string;
+    onSaveReference?: (item: CardPeak.Entities.Reference) => void;
     referenceTypeId?: number;
-    isLoading?: boolean;
-    references?: CardPeak.Entities.Reference[];
-    onSaveReference?: (reference: CardPeak.Entities.Reference) => void;
 }
 
-const ReferenceListItems = (props: ReferenceListProps) => {
+const ReferenceRowLayout = (props: DataItemProps<CardPeak.Entities.Reference> & ReferenceListProps) => {
     return (
-        <GridList header={<ReferenceDetailRowLayout isHeader={true} />}>
-            {
-                props.isLoading ?
-                    <SpinnerRow /> :
-                    props.references && props.references.length > 0 ?
-                        props.references.map((reference) => {
-                            return (
-                                <ReferenceDetail
-                                    isLoading={props.isLoading}
-                                    referenceTypeId={props.referenceTypeId}
-                                    reference={reference}
-                                    key={reference.referenceId}
-                                    onSaveReference={props.onSaveReference} />
-                            )
-                        }) : <ListNoRecordsRow />
-            }
-        </GridList>
+        <Row>
+            <Col md={2} lg={2} sm={3} xs={3}>
+                {props.isHeader ? "id" : props.item.referenceId}
+            </Col>
+            <Col md={8} lg={8} sm={7} xs={7}>
+                {props.isHeader ? "description" : props.item.description}
+            </Col>
+        </Row>
     )
 }
 
-const ReferenceList = (props: ReferenceListProps) => {
+const ReferenceList = (props: DataListProps<CardPeak.Entities.Reference> & ReferenceListProps) => {
     return (
         <div>
-            <ReferenceListItems
-                referenceTypeId={props.referenceTypeId}
-                isLoading={props.isLoading}
-                references={props.references}
-                onSaveReference={props.onSaveReference} />
+            <ReferenceDataList
+                addOn={
+                    <Col sm={12} xsHidden={true} className="text-center spacer-top spacer-bottom">
+                        <label className="text-muted">{props.title}</label>
+                    </Col>
+                }
+                onGetKey={(item) => item.referenceId}
+                renderHeader={() => { return <ReferenceRowLayout isHeader /> }}
+                renderItem={(item, key) => { return <ReferenceRowLayout item={item} key={key} onSaveReference={props.onSaveReference} /> }}
+                data={props.data} />
         </div>
     )
 }
 
-export default ReferenceList
+export default ReferenceList;

@@ -39,18 +39,18 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
                 <Grid fluid>
                     <Row>
                         <Col lg={6} md={6} sm={12} xs={12}>
-                            <h4>Banks</h4>
                             <ReferenceList
+                                title="banks"
                                 onSaveReference={this.handleOnSaveBank}
-                                references={this.props.banks}
+                                data={this.props.banks}
                                 referenceTypeId={this.props.bankReferenceTypeId}
                                 isLoading={this.props.loadingBanks} />
                         </Col>
                         <Col lg={6} md={6} sm={12} xs={12}>
-                            <h4>Categories</h4>
                             <ReferenceList
+                                title="card categories"
                                 onSaveReference={this.handleOnSaveCardCategory}
-                                references={this.props.cardCategories}
+                                data={this.props.cardCategories}
                                 referenceTypeId={this.props.cardCategoryReferenceTypeId}
                                 isLoading={this.props.loadingCardCategories} />
                         </Col>

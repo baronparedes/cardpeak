@@ -1,9 +1,10 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
-import { ListNoRecordsRow, GridList, SpinnerBlock, InjectProps } from './'
+import { ListNoRecordsRow, GridList, SpinnerBlock } from './'
 
-export interface DataListDisplayProps {
-    rowLayout: any;
+export interface DataListDisplayProps<T> {
+    renderItem: (item: T, key: number | string) => React.ReactNode;
+    renderHeader: () => React.ReactNode;
     addOn?: React.ReactNode;
 }
 
@@ -18,31 +19,25 @@ export interface DataItemProps<T> {
     isHeader?: boolean;
 }
 
-export class DataList<T> extends React.Component<DataListProps<T> & DataListDisplayProps>{
-    constructor(props: DataListProps<T> & DataListDisplayProps) {
+export class DataList<T> extends React.Component<DataListProps<T> & DataListDisplayProps<T>>{
+    constructor(props: DataListProps<T> & DataListDisplayProps<T>) {
         super(props);
     }
     render() {
         let row: number = 0;
-        const HeaderDataRowLayout = InjectProps<DataItemProps<T>>(this.props.rowLayout, { isHeader: true });
         return (
             <div>
                 {this.props.addOn}
-                <GridList header={<HeaderDataRowLayout />}>
+                <GridList header={this.props.renderHeader()}>
                     {
                         this.props.isLoading ? <SpinnerBlock /> :
                             this.props.data && this.props.data.length > 0 ?
                                 this.props.data.map((item) => {
                                     row++;
                                     const key = this.props.onGetKey ? this.props.onGetKey(item) : row;
-                                    const newProps: DataItemProps<T> = {
-                                        isHeader: false,
-                                        item: item
-                                    }
-                                    const DataRowLayout = InjectProps<DataItemProps<T>>(this.props.rowLayout, newProps);
                                     return (
                                         <Panel className="panel-row" key={key}>
-                                            <DataRowLayout key={key} />
+                                            {this.props.renderItem(item, key)}
                                         </Panel>
                                     )
                                 }) : <ListNoRecordsRow />

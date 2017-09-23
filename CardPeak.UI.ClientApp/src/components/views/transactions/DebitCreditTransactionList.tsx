@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import * as concat from 'classnames'
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps, InjectProps, HighlightedSpan } from '../../layout'
+import { DataList, DataListProps, DataItemProps } from '../../layout'
 import { dateFormat } from '../../../helpers/dateHelpers'
 import { Currency } from '../../layout'
 
@@ -35,7 +35,8 @@ const DebitCreditTransactionList = (props: DataListProps<CardPeak.Entities.Debit
         <div>
             <DebitCreditTransactionDataList
                 isLoading={props.isLoading}
-                rowLayout={DebitCreditTransactionListRowLayout}
+                renderHeader={() => { return <DebitCreditTransactionListRowLayout isHeader /> }}
+                renderItem={(item, key) => { return <DebitCreditTransactionListRowLayout item={item} key={key} /> }}
                 data={props.data} />
         </div>
     )

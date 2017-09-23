@@ -42,7 +42,8 @@ export const LatestProcessedBatchList = (props: DataListProps<CardPeak.Entities.
                     </Col>
                 }
                 onGetKey={(item) => item.batchId}
-                rowLayout={LatestProcessedBatchRowLayout}
+                renderHeader={() => { return <LatestProcessedBatchRowLayout isHeader /> }}
+                renderItem={(item, key) => { return <LatestProcessedBatchRowLayout item={item} key={key} /> }}
                 data={props.data} />
         </div>
     )

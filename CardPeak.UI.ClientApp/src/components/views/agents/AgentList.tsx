@@ -1,12 +1,12 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
-import { DataListFiltered, DataListProps, DataItemProps, InjectProps } from '../../layout'
+import { DataListFiltered, DataListProps, DataItemProps } from '../../layout'
 
 type AgentDataList = new () => DataListFiltered<CardPeak.Entities.Agent>;
 const AgentDataList = DataListFiltered as AgentDataList;
 
 interface AgentListProps {
-    onSelectAgent: (data: CardPeak.Entities.Agent) => void;
+    onSelectAgent?: (data: CardPeak.Entities.Agent) => void;
 }
 
 const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & AgentListProps) => {
@@ -36,7 +36,8 @@ const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListProp
                 }}
                 onGetKey={(item) => item.agentId}
                 isLoading={props.isLoading}
-                rowLayout={InjectProps(AgentListRowLayout, props as AgentListProps)}
+                renderHeader={() => { return <AgentListRowLayout isHeader/> }}
+                renderItem={(item, key) => { return <AgentListRowLayout item={item} key={key} onSelectAgent={props.onSelectAgent} /> }}
                 data={props.data} />
         </div>
     )

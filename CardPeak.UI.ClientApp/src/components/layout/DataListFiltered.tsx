@@ -9,8 +9,8 @@ interface DataListFilteredState<T> {
     filteredData?: T[];
 }
 
-export class DataListFiltered<T> extends React.Component<DataListProps<T> & DataListDisplayProps & DataListFilteredProps<T>, DataListFilteredState<T>> {
-    constructor(props: DataListProps<T> & DataListDisplayProps & DataListFilteredProps<T>) {
+export class DataListFiltered<T> extends React.Component<DataListProps<T> & DataListDisplayProps<T> & DataListFilteredProps<T>, DataListFilteredState<T>> {
+    constructor(props: DataListProps<T> & DataListDisplayProps<T> & DataListFilteredProps<T>) {
         super(props);
         this.state = {
             filteredData: props.data

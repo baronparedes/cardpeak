@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import { ListNoRecordsRow, GridList, SpinnerBlock } from '../../../layout'
-import { DataList, DataListProps, DataItemProps, InjectProps } from '../../../layout'
+import { DataList, DataListProps, DataItemProps } from '../../../layout'
 
 type TopAgentDataList = new () => DataList<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>;
 const TopAgentDataList = DataList as TopAgentDataList;
@@ -45,7 +45,8 @@ export const TopAgentList = (props: DataListProps<CardPeak.Entities.ApprovalMetr
                     </Col>
                 }
                 onGetKey={(item) => item.key.agentId}
-                rowLayout={TopAgentRowLayout}
+                renderHeader={() => { return <TopAgentRowLayout isHeader /> }}
+                renderItem={(item, key) => { return <TopAgentRowLayout item={item} key={key} /> }}
                 data={props.data} />
         </div>
     )

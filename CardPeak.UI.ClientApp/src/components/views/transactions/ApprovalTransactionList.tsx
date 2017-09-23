@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import * as concat from 'classnames'
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps, InjectProps, HighlightedSpan } from '../../layout'
+import { DataList, DataListProps, DataItemProps } from '../../layout'
 import { dateFormat } from '../../../helpers/dateHelpers'
 import { Currency } from '../../layout'
 
@@ -55,7 +55,8 @@ const ApprovalTransactionList = (props: DataListProps<CardPeak.Entities.Approval
         <div>
             <ApprovalTransactionDataList
                 isLoading={props.isLoading}
-                rowLayout={InjectProps(ApprovalTransactionListRowLayout, props as ApprovalTransactionListProps)}
+                renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader /> }}
+                renderItem={(item, key) => { return <ApprovalTransactionListRowLayout item={item} key={key} showAgent={props.showAgent} /> }}
                 data={props.data} />
         </div>
     )
