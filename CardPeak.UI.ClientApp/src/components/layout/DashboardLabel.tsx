@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import * as classNames from 'classnames'
+import * as concat from 'classnames'
 import { Currency } from './'
 
 interface DashboardLabelProps {
@@ -22,7 +22,7 @@ export const DashboardLabel: React.StatelessComponent<DashboardLabelProps> = (pr
                     <Currency noCurrencyColor={props.noCurrencyColor} className={props.className} currency={props.metrics}>
                         {props.addOn}
                     </Currency> :
-                    <span className={classNames("text-highlight", props.className)}>
+                    <span className={concat("text-highlight", props.className)}>
                         {props.metrics ? props.metrics : 0}
                         {props.addOn}
                     </span>

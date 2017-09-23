@@ -1,6 +1,5 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
-import { ListNoRecordsRow, GridList, SpinnerBlock } from '../../../layout'
 import { DataList, DataListProps, DataItemProps } from '../../../layout'
 
 type LatestProcessedBatchDataList = new () => DataList<CardPeak.Entities.BatchUpload>;
@@ -11,7 +10,6 @@ interface LatestProcessedBatchListProps {
 }
 
 const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.BatchUpload>) => {
-    console.log(props);
     return (
         <Row>
             <Col mdHidden

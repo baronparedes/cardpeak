@@ -2,7 +2,6 @@
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { PerformanceDashboard, ApprovalMetrics } from '../../layout'
 import { TotalApprovedMetrics, AgentPerformanceMetrics, AgentAccountBalanceMetrics } from './metrics'
-import * as classNames from 'classnames'
 
 interface AgentDashboardSummaryProps {
     agentDashboard: CardPeak.Entities.AgentDashboard

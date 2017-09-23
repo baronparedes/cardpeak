@@ -1,15 +1,22 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import { ListNoRecordsRow, GridList, SpinnerBlock } from '../../../layout'
+import { DataList, DataListProps, DataItemProps, InjectProps } from '../../../layout'
+
+type TopAgentDataList = new () => DataList<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>;
+const TopAgentDataList = DataList as TopAgentDataList;
 
 interface TopAgentListProps {
-    isHeader?: boolean;
-    data?: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[];
-    metric?: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>;
+    data: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[];
+}
+
+interface TopAgentRowLayoutProps {
     rank?: number;
 }
 
-const TopAgentListRowLayout = (props: TopAgentListProps) => {
+const TopAgentRowLayout: React.StatelessComponent<DataItemProps<
+    CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>> &
+    TopAgentRowLayoutProps> = (props) => {
     return (
         <Row>
             <Col mdHidden
@@ -22,10 +29,10 @@ const TopAgentListRowLayout = (props: TopAgentListProps) => {
                 {props.isHeader ? "rank" : props.rank}
             </Col>
             <Col sm={7} xsHidden={props.isHeader}>
-                {props.isHeader ? "agent" : props.metric.key.firstName + " " + props.metric.key.lastName}
+                {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
             </Col>
             <Col sm={3} xsHidden={props.isHeader}>
-                {props.isHeader ? "approvals" : props.metric.value}
+                {props.isHeader ? "approvals" : props.item.value}
             </Col>
         </Row>
     )
@@ -35,20 +42,15 @@ export const TopAgentList = (props: TopAgentListProps) => {
     let rank: number = 0;
     return (
         <div>
-            <Col sm={12} xsHidden={true} className="text-center spacer-top spacer-bottom"><label className="text-muted">Top Agents</label></Col>
-            <GridList header={<TopAgentListRowLayout isHeader={true} />}>
-                {
-                    props.data && props.data.length > 0 ?
-                        props.data.map((item) => {
-                            rank++;
-                            return (
-                                <Panel className="panel-row" key={item.key.agentId}>
-                                    <TopAgentListRowLayout metric={item} rank={rank} />
-                                </Panel>
-                            )
-                        }) : <ListNoRecordsRow />
+            <TopAgentDataList
+                addOn={
+                    <Col sm={12} xsHidden={true} className="text-center spacer-top spacer-bottom">
+                        <label className="text-muted">Top Agents</label>
+                    </Col>
                 }
-            </GridList>
+                onGetKey={(item) => item.key.agentId}
+                rowLayout={TopAgentRowLayout}
+                data={props.data} />
         </div>
     )
 }

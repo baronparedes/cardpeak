@@ -1,70 +1,50 @@
 ﻿import * as React from 'react'
-import { SearchBar, SpinnerRow, ListNoRecordsRow, GridList } from '../../layout'
-import { Grid, Row, Col, Panel } from 'react-bootstrap'
-import AgentDetail from './AgentDetail'
-import AgentDetailRowLayout from './AgentDetailRowLayout'
+import { Row, Col, Button } from 'react-bootstrap'
+import { DataListFiltered, DataListProps, DataItemProps, InjectProps } from '../../layout'
+
+type AgentDataList = new () => DataListFiltered<CardPeak.Entities.Agent>;
+const AgentDataList = DataListFiltered as AgentDataList;
 
 interface AgentListProps {
-    agents?: CardPeak.Entities.Agent[],
-    onSelectAgent: (agent: CardPeak.Entities.Agent) => void,
-    isLoading?: boolean
+    data: CardPeak.Entities.Agent[];
+    isLoading: boolean;
 }
 
-interface AgentListState {
-    filteredAgents?: CardPeak.Entities.Agent[]
+interface AgentListEventProps {
+    onSelectAgent: (data: CardPeak.Entities.Agent) => void;
 }
 
-const AgentListItems = (props: AgentListProps) => {
+const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & AgentListEventProps) => {
     return (
-        <GridList header={<AgentDetailRowLayout isHeader={true} />}>
-            {
-                props.isLoading ?
-                    <SpinnerRow /> :
-                    props.agents && props.agents.length > 0 ?
-                        props.agents.map((agent) => {
-                            return (
-                                <AgentDetail agent={agent} key={agent.agentId} onSelectAgent={props.onSelectAgent} />
-                            )
-                        }) : <ListNoRecordsRow />
-            }
-        </GridList>
+        <Row className="agent-item">
+            <Col md={5} lg={5} sm={5} xs={4}>
+                {props.isHeader ? "first name" : props.item.firstName}
+            </Col>
+            <Col md={5} lg={5} sm={5} xs={4}>
+                {props.isHeader ? "last name" : props.item.lastName}
+            </Col>
+            <Col md={2} lg={2} sm={2} xs={1}>
+                {props.isHeader ? "" : <Button onClick={() => { props.onSelectAgent(props.item) }} bsStyle="primary" bsSize="sm">Select</Button>}
+            </Col>
+        </Row>
     )
 }
 
-export default class AgentList extends React.Component<AgentListProps, AgentListState> {
-    constructor(props: AgentListProps) {
-        super(props);
-        this.state = {
-            filteredAgents: props.agents
-        }
-    }
-    componentWillReceiveProps(nextProps: AgentListProps) {
-        if (this.state.filteredAgents != nextProps.agents) {
-            this.setState({ filteredAgents: nextProps.agents });
-        }
-    }
-    handleOnSearchBarChange = (e: React.FormEvent<HTMLInputElement>) => {
-        let searchString = e.currentTarget.value.toLowerCase();
-        if (searchString === '') {
-            this.setState({ filteredAgents: this.props.agents });
-            return;
-        }
-
-        let filteredAgents = this.props.agents.filter((agent) => {
-            return agent.firstName.toLowerCase().indexOf(searchString) >= 0 ||
-                agent.lastName.toLowerCase().indexOf(searchString) >= 0;
-        })
-        this.setState({ filteredAgents });
-    }
-    render() {
-        return (
-            <div>
-                <SearchBar hidden={this.props.isLoading} onSearchBarChange={this.handleOnSearchBarChange} />
-                <AgentListItems
-                    isLoading={this.props.isLoading}
-                    agents={this.state.filteredAgents}
-                    onSelectAgent={this.props.onSelectAgent} />
-            </div>
-        )
-    }
+const AgentList = (props: AgentListProps & AgentListEventProps) => {
+    return (
+        <div>
+            <AgentDataList
+                predicate={(agent, searchString) => {
+                    const firstNameMatch = agent.firstName.toLowerCase().indexOf(searchString) >= 0;
+                    const lastNameMatch = agent.lastName.toLowerCase().indexOf(searchString) >= 0;
+                    return firstNameMatch || lastNameMatch;
+                }}
+                onGetKey={(item) => item.agentId}
+                isLoading={props.isLoading}
+                rowLayout={InjectProps(AgentListRowLayout, props as AgentListEventProps)}
+                data={props.data} />
+        </div>
+    )
 }
+
+export default AgentList;
