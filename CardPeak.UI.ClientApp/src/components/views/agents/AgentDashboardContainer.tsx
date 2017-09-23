@@ -41,7 +41,6 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashb
         this.props.actions.selectAgentDashboardStart();;
     }
     render() {
-        console.log('rates container rendering');
         return (
             <div>
                 <h2>Agent Dashboard</h2>

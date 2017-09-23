@@ -54,6 +54,7 @@ const ApprovalTransactionList = (props: DataListProps<CardPeak.Entities.Approval
     return (
         <div>
             <ApprovalTransactionDataList
+                paged
                 isLoading={props.isLoading}
                 renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader /> }}
                 renderItem={(item, key) => { return <ApprovalTransactionListRowLayout item={item} key={key} showAgent={props.showAgent} /> }}
