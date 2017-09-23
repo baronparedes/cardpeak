@@ -1,8 +1,8 @@
 ﻿import * as React from 'react'
 import { Panel, Button } from 'react-bootstrap'
-import { SpinnerBlock, ConfirmButton, GridList } from '../../layout'
+import { ConfirmButton, SpinnerBlock } from '../../layout'
 
-import BatchUploadDetailRowLayout from './BatchUploadDetailRowLayout'
+import BatchUploadDetailInfo from './BatchUploadDetailInfo'
 
 interface BatchUploadDetailProps {
     uploadingFile: boolean,
@@ -37,6 +37,34 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
             this.setState({ onProcessError: e });
         });
     }
+    renderActions() {
+        return (
+            <div className="text-right">
+                {
+                    this.props.processingComplete ? null :
+                        <ConfirmButton
+                            useButtonLoading
+                            bsStyle="success"
+                            onToggleConfirm={this.handleOnToggleModal}
+                            onConfirm={this.handleOnConfirm}
+                            confirmTitle="start processing"
+                            confirmMessage="Do you want to begin processing?"
+                            isLoading={this.props.processing}
+                            disabled={this.props.processing || this.props.processingComplete}
+                            buttonLabel="Process" />
+                }
+                {
+                    !this.props.processingComplete ? null :
+                        <ConfirmButton
+                            bsStyle="warning"
+                            onConfirm={this.props.onClickClear}
+                            confirmTitle="clear batch upload"
+                            confirmMessage="Continue?"
+                            buttonLabel="Clear" />
+                }
+            </div>
+        )
+    }
     render() {
         if (this.props.uploadingFile) {
             return <SpinnerBlock />
@@ -46,36 +74,9 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
         }
         return (
             <Panel className="container-fluid">
-                <GridList header={<BatchUploadDetailRowLayout isHeader={true} />}>
-                    <Panel className="panel-row">
-                        <BatchUploadDetailRowLayout batchUpload={this.props.batchUpload} isHeader={false} />
-                    </Panel>
-                </GridList>
+                <BatchUploadDetailInfo batchUpload={this.props.batchUpload} />
                 <br />
-                <div className="text-right">
-                    {
-                        this.props.processingComplete ? null :
-                            <ConfirmButton
-                                useButtonLoading
-                                bsStyle="success"
-                                onToggleConfirm={this.handleOnToggleModal}
-                                onConfirm={this.handleOnConfirm}
-                                confirmTitle="start processing"
-                                confirmMessage="Do you want to begin processing?"
-                                isLoading={this.props.processing}
-                                disabled={this.props.processing || this.props.processingComplete}
-                                buttonLabel="Process" />
-                    }
-                    {
-                        !this.props.processingComplete ? null : 
-                            <ConfirmButton
-                                bsStyle="warning"
-                                onConfirm={this.props.onClickClear}
-                                confirmTitle="clear batch upload"
-                                confirmMessage="Continue?"
-                                buttonLabel="Clear" />
-                    }
-                </div>
+                {this.renderActions()}
                 <div>
                     {
                         this.state.onProcessError ?

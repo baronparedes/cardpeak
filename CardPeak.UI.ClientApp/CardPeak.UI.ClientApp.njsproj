@@ -215,19 +215,7 @@
     <Content Include="src\components\views\settings\ReferencesView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\transactions\ApprovalTransactionDetail.tsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\views\transactions\ApprovalTransactionDetailRowLayout.tsx">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\views\transactions\ApprovalTransactionList.tsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\views\transactions\DebitCreditTransactionDetail.tsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\views\transactions\DebitCreditTransactionDetailRowLayout.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\DebitCreditTransactionFormContainer.tsx">
@@ -257,19 +245,13 @@
     <Content Include="src\components\views\uploads\BatchFileConfigurationView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\uploads\BatchUploadDetailRowLayout.tsx">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\views\uploads\BatchUploadContainer.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\uploads\BatchUploadErrorDetail.tsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\views\uploads\BatchUploadErrorDetailRowLayout.tsx">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\views\uploads\BatchUploadErrorList.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\BatchUploadDetailInfo.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\uploads\BatchUploadView.tsx">

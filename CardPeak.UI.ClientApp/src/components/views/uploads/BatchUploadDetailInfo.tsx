@@ -1,13 +1,14 @@
 ﻿import * as React from 'react'
-import { Row, Col, Button } from 'react-bootstrap'
 import { dateTimeFormat } from '../../../helpers/dateHelpers'
+import { GridList } from '../../layout'
+import { Panel, Row, Col } from 'react-bootstrap'
 
-interface BatchUploadDetailRowLayoutProps {
+interface BatchUploadDetailInfoProps {
     batchUpload?: CardPeak.Entities.BatchUpload,
-    isHeader: boolean
+    isHeader?: boolean
 }
 
-const BatchUploadDetailRowLayout = (props: BatchUploadDetailRowLayoutProps) => {
+const BatchUploadDetailInfoLayout = (props: BatchUploadDetailInfoProps) => {
     return (
         <Row>
             <Col mdHidden
@@ -43,4 +44,14 @@ const BatchUploadDetailRowLayout = (props: BatchUploadDetailRowLayoutProps) => {
     )
 }
 
-export default BatchUploadDetailRowLayout;
+const BatchUploadDetailInfo = (props: BatchUploadDetailInfoProps) => {
+    return (
+        <GridList header={<BatchUploadDetailInfoLayout isHeader={true} />}>
+            <Panel className="panel-row">
+                <BatchUploadDetailInfoLayout batchUpload={props.batchUpload} isHeader={false} />
+            </Panel>
+        </GridList>
+    )
+}
+
+export default BatchUploadDetailInfo;

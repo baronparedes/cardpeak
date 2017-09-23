@@ -105,7 +105,7 @@ class TransactionsContainer extends React.Component<TransactionContainerDispatch
                 </Panel>
                 {
                     this.state.isLoading ? <SpinnerBlock /> :
-                        <ApprovalTransactionList transactions={this.state.transactions} showAgent={true} />
+                        <ApprovalTransactionList data={this.state.transactions} showAgent={true} />
                 }
             </div>
         )

@@ -1,33 +1,64 @@
 ﻿import * as React from 'react'
-import { Grid, Row, Col, Panel } from 'react-bootstrap'
-import { ListNoRecordsRow, GridList } from '../../layout'
+import * as concat from 'classnames'
+import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
+import { DataList, DataListProps, DataItemProps, InjectProps, HighlightedSpan } from '../../layout'
+import { dateFormat } from '../../../helpers/dateHelpers'
+import { Currency } from '../../layout'
 
-import ApprovalTransactionDetail from './ApprovalTransactionDetail'
-import ApprovalTransactionDetailRowLayout from './ApprovalTransactionDetailRowLayout'
+type ApprovalTransactionDataList = new () => DataList<CardPeak.Entities.ApprovalTransaction>;
+const ApprovalTransactionDataList = DataList as ApprovalTransactionDataList;
 
 interface ApprovalTransactionListProps {
-    transactions?: CardPeak.Entities.ApprovalTransaction[],
-    showAgent?: boolean
+    showAgent?: boolean;
 }
 
-export default class ApprovalTransactionList extends React.Component<ApprovalTransactionListProps, undefined> {
-    constructor(props: ApprovalTransactionListProps) {
-        super(props)
-    }
-    render() {
-        return (
-            <div>
-                <GridList header={<ApprovalTransactionDetailRowLayout isHeader={true} />}>
-                    {
-                        this.props.transactions && this.props.transactions.length > 0 ?
-                            this.props.transactions.map((transaction) => {
-                                return (
-                                    <ApprovalTransactionDetail transaction={transaction} key={transaction.id} showAgent={this.props.showAgent} />
-                                )
-                            }) : <ListNoRecordsRow />
-                    }
-                </GridList>
-            </div>    
-        )
-    }
+const ApprovalTransactionListRowLayout = (props: DataItemProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps) => {
+    return (
+        <Row>
+            <Col mdHidden
+                lgHidden
+                smHidden
+                xsHidden={!props.isHeader}>
+                <span className="grid-label text-center spacer-left">Approval Transactions</span>
+            </Col>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "bank" : props.item.bank.description}
+            </Col>
+            <Col md={1} lg={1} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "card category" : props.item.cardCategory.description}
+            </Col>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "product" : props.item.productType}
+            </Col>
+            <Col md={3} lg={3} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "client" : props.item.client}
+            </Col>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "approval date" : dateFormat(props.item.approvalDate)}
+            </Col>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "amount" : <Currency className="row-amount" noCurrencyColor currency={props.item.amount} />}
+            </Col>
+            {
+                !props.showAgent || props.isHeader ? null :
+                    <Col md={12} lg={12} sm={12} xs={12}>
+                        <label className="text-muted text-small spacer-right">credited to</label>
+                        <span className="text-highlight text-small">{concat(props.item.agent.lastName, ", ", props.item.agent.firstName)}</span>
+                    </Col>
+            }
+        </Row>
+    )
 }
+
+const ApprovalTransactionList = (props: DataListProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps) => {
+    return (
+        <div>
+            <ApprovalTransactionDataList
+                isLoading={props.isLoading}
+                rowLayout={InjectProps(ApprovalTransactionListRowLayout, props as ApprovalTransactionListProps)}
+                data={props.data} />
+        </div>
+    )
+}
+
+export default ApprovalTransactionList
