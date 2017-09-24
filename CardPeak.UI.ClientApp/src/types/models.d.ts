@@ -55,4 +55,10 @@
         availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
         refreshing?: boolean;
     }
+
+    export interface MetricsModel {
+        availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
+        loadingAgentMetrics?: boolean;
+        agentMetrics?: CardPeak.Entities.AgentApprovalMetric[];
+    }
 }

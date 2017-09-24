@@ -5,6 +5,6 @@ namespace CardPeak.Core.Repository
 {
     public interface IMetricsRepository
     {
-        IEnumerable<AgentApprovalMetric> ApprovalsByAgent(int year, int month);
+        IEnumerable<AgentApprovalMetric> GetApprovalsByAgent(int year, int month);
     }
 }

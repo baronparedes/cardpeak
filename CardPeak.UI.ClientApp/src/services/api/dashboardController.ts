@@ -3,6 +3,7 @@
 const API = {
     GET_DASHBOARD: '/dashboard',
     REFRESH_DASHBOARD: '/dashboard/refresh',
+    GET_YEARS: '/dashboard/years'
 }
 
 export function getDashboard(
@@ -37,4 +38,13 @@ export function refreshDashboard(year: number, month: number,
                 errorCallback(reason.message);
             }
         });
+}
+
+export function getAvailableYears(successCallback: (data: CardPeak.Entities.ApprovalMetric<number>[]) => void) {
+    axios.get(API.GET_YEARS, ({
+    })).then((r) => {
+        if (successCallback) {
+            successCallback(r.data as CardPeak.Entities.ApprovalMetric<number>[]);
+        }
+    });
 }

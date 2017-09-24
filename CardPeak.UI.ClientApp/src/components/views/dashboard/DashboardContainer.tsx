@@ -7,11 +7,12 @@ import { RootState } from '../../../services/reducers'
 
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import {
-    SpinnerBlock, PerformanceDashboard, DashboardLabel, ApprovalMetrics, ApprovalMetricsLineChart
+    YearMonthAction,
+    SpinnerBlock, PerformanceDashboard, DashboardLabel,
+    ApprovalMetrics, ApprovalMetricsLineChart
 } from '../../layout'
 
 import { LatestProcessedBatchList, TopAgentList } from './metrics'
-import DashboardActions from './DashboardActions'
 
 interface DashboardContainerDispatchProps {
     actions?: typeof Actions
@@ -75,7 +76,8 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
     render() {
         return (
             <div>
-                <DashboardActions
+                <YearMonthAction
+                    label="dashboard"
                     availableYears={this.props.availableYears}
                     refreshing={this.props.refreshing}
                     onRefresh={this.props.actions.refreshDashboardStart} />

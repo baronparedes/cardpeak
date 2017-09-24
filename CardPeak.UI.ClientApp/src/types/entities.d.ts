@@ -135,4 +135,12 @@
         public key: TKey;
         public value: number;
     }
+
+    export class AgentApprovalMetric {
+        public key: Agent;
+        public value: number;
+        public accountBalance: number;
+        public savingsBalance: number;
+
+    }
 }

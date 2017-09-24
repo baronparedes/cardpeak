@@ -1,11 +1,12 @@
-﻿using CardPeak.Domain;
+﻿using CardPeak.Core.Repository;
+using CardPeak.Domain;
 using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-    public sealed class MetricsRepository : ContextBase<CardPeakDbContext>
+    public sealed class MetricsRepository : ContextBase<CardPeakDbContext>, IMetricsRepository
     {
         public MetricsRepository(CardPeakDbContext context) : base(context)
         {
@@ -43,19 +44,36 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public IEnumerable<AgentApprovalMetric> ApprovalsByAgent(int year, int month)
+        public IEnumerable<AgentApprovalMetric> GetApprovalsByAgent(int year, int month)
         {
             var result = this.Context.Agents
+                .OrderBy(_ => _.FirstName)
+                .ThenBy(_ => _.LastName)
+                .ToList()
                 .Select(_ => new AgentApprovalMetric
                 {
                     Key = _,
-                    Value = this.QueryApprovalTransactionsByYearMonth(year, month).Where(at => at.AgentId == _.AgentId).Sum(at => at.Units),
-                    AccountBalance = this.QueryApprovalTransactionsByYearMonth(year, month).Where(at => at.AgentId == _.AgentId).Sum(at => at.Amount) +
+                    Value = this.QueryApprovalTransactionsByYearMonth(year, month)
+                        .Where(at => at.AgentId == _.AgentId)
+                        .Select(at => at.Units)
+                        .DefaultIfEmpty(0)
+                        .Sum(),
+                    AccountBalance = this.QueryApprovalTransactionsByYearMonth(year, month)
+                            .Where(at => at.AgentId == _.AgentId)
+                            .Select(at => at.Amount)
+                            .DefaultIfEmpty(0)
+                            .Sum() +
                         this.QueryDebitCreditTransactionByYearMonth(year, month, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
-                            .Where(dct => dct.AgentId == _.AgentId).Sum(dct => dct.Amount),
+                            .Where(dct => dct.AgentId == _.AgentId)
+                            .Select(at => at.Amount)
+                            .DefaultIfEmpty(0)
+                            .Sum(),
                     SavingsBalance =
                         this.QueryDebitCreditTransactionByYearMonth(year, month, Domain.Enums.TransactionTypeEnum.SavingsTransaction)
-                            .Where(dct => dct.AgentId == _.AgentId).Sum(dct => dct.Amount),
+                            .Where(dct => dct.AgentId == _.AgentId)
+                            .Select(at => at.Amount)
+                            .DefaultIfEmpty(0)
+                            .Sum(),
                 });
 
             return result;

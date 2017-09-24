@@ -10,11 +10,11 @@ import { SearchBar, SpinnerBlock } from '../../layout'
 
 import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
 
-interface TransactionContainerDispatchProps {
+interface FindTransactionContainerDispatchProps {
     actions?: typeof Actions
 }
 
-interface TransactionContainerState {
+interface FindTransactionsContainerState {
     transactions?: CardPeak.Entities.ApprovalTransaction[];
     isLoading?: boolean;
     loadingError?: string;
@@ -24,8 +24,8 @@ interface TransactionContainerState {
     };
 }
 
-class TransactionsContainer extends React.Component<TransactionContainerDispatchProps, TransactionContainerState> {
-    constructor(props: TransactionContainerDispatchProps) {
+class FindTransactionsContainer extends React.Component<FindTransactionContainerDispatchProps, FindTransactionsContainerState> {
+    constructor(props: FindTransactionContainerDispatchProps) {
         super(props);
         this.state = {
             transactions: [],
@@ -115,10 +115,10 @@ class TransactionsContainer extends React.Component<TransactionContainerDispatch
 const mapStateToProps = (state: RootState): {} => ({
 });
 
-const mapDispatchToProps = (dispatch: any): TransactionContainerDispatchProps => {
+const mapDispatchToProps = (dispatch: any): FindTransactionContainerDispatchProps => {
     return {
         actions: bindActionCreators(Actions as any, dispatch)
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(FindTransactionsContainer);

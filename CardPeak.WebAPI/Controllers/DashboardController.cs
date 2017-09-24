@@ -30,5 +30,17 @@ namespace CardPeak.WebAPI.Controllers
             }
             return this.Ok(result);
         }
+
+        [HttpGet]
+        [Route("years")]
+        public IHttpActionResult GetAvailableYears()
+        {
+            var result = this.DashboardService.GetAvailableYears();
+            if (result == null)
+            {
+                return this.NotFound();
+            }
+            return this.Ok(result);
+        }
     }
 }

@@ -3,6 +3,7 @@ using CardPeak.Core.Service;
 using CardPeak.Domain;
 using CardPeak.Repository.EF;
 using System;
+using System.Collections.Generic;
 
 namespace CardPeak.Service
 {
@@ -17,6 +18,11 @@ namespace CardPeak.Service
             this.BatchUploadRepository = new BatchUploadRepository(context);
             this.ApprovalTransactionDashboardRepository = new ApprovalTransactionDashboardRepository(context);
             this.DebitCreditTransactionRepository = new DebitCreditTransactionRepository(context);
+        }
+
+        public IEnumerable<ApprovalMetric<int>> GetAvailableYears()
+        {
+            return this.ApprovalTransactionDashboardRepository.GetAvailableYears();
         }
 
         public Dashboard GetDashboard(int? year = null, int? month = null)

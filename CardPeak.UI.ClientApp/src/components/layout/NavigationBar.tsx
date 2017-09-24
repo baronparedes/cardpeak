@@ -81,6 +81,19 @@ export class NavigationBar extends React.Component<{}, undefined> {
             </LinkContainer>
         )
     }
+    renderMetrics() {
+        return (
+            <LinkContainer to="/metrics" onClick={(e) => e.preventDefault()}>
+                <NavDropdown
+                    title={<NavLinkText text="Metrics" fa="fa-bar-chart" />}
+                    id="metrics-nav-dropdown">
+                    <MenuItemLinkContainer exact to="/metrics/agents" text="Agents" fa="fa-users" />
+                    <MenuItem divider />
+                    <MenuItemLinkContainer exact to="/metrics/history" text="Find Transactions" fa="fa-search" />
+                </NavDropdown>
+            </LinkContainer>
+        )
+    }
     render() {
         return (
             <Navbar collapseOnSelect id="main-nav" role="navigation" staticTop>
@@ -88,7 +101,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                 <Navbar.Collapse>
                     <Nav pullRight>
                         <NavItemLinkContainer exact to="/" text="Dashboard" fa="fa-area-chart" />
-                        <NavItemLinkContainer exact to="/transactions" text="Transactions" fa="fa-credit-card" />
+                        {this.renderMetrics()}
                         {this.renderAgents()}
                         {this.renderUploads()}
                         {this.renderSettings()}

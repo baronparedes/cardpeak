@@ -53,6 +53,7 @@
     <Compile Include="AgentService.cs" />
     <Compile Include="BatchService.cs" />
     <Compile Include="DashboardService.cs" />
+    <Compile Include="MetricsService.cs" />
     <Compile Include="ProcessorService.cs" />
     <Compile Include="SettingsService.cs" />
     <Compile Include="TransactionService.cs" />

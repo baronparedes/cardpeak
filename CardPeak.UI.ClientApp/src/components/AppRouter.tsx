@@ -4,7 +4,7 @@ import { App } from './App'
 import { NotFound } from './layout'
 
 import DashboardView from './views/dashboard/DashboardView'
-import TransactionsView from './views/transactions/TransactionsView'
+import MetricsView from './views/metrics/MetricsView'
 import AgentsView from './views/agents/AgentsView'
 import SettingsView from './views/settings/SettingsView'
 import UploadsView from './views/uploads/UploadsView'
@@ -19,7 +19,7 @@ export class AppRouter extends React.Component {
                 <App>
                     <Switch>
                         <Route exact path="/" component={DashboardView} />
-                        <Route exact path="/transactions" component={TransactionsView} />
+                        <Route path="/metrics" component={MetricsView} />
                         <Route path="/agents" component={AgentsView} />
                         <Route path="/uploads" component={UploadsView} />
                         <Route path="/settings" component={SettingsView} />

@@ -4,6 +4,7 @@ import settingsReducer from './settingsReducer'
 import ratesReducer from './ratesReducer'
 import uploadReducer from './uploadReducer'
 import dashboardReducer from './dashboardReducer'
+import metricsReducer from './metricsReducer'
 
 export interface RootState {
     agentDashboardModel: CardPeak.Models.AgentDashboardModel;
@@ -11,6 +12,7 @@ export interface RootState {
     settingsModel: CardPeak.Models.SettingsModel;
     batchUploadModel: CardPeak.Models.BatchUploadModel;
     dashboardModel: CardPeak.Models.DashboardModel;
+    metricsModel: CardPeak.Models.MetricsModel;
 }
 
 export default combineReducers<RootState>({
@@ -18,5 +20,6 @@ export default combineReducers<RootState>({
     ratesModel: ratesReducer,
     settingsModel: settingsReducer,
     batchUploadModel: uploadReducer,
-    dashboardModel: dashboardReducer
+    dashboardModel: dashboardReducer,
+    metricsModel: metricsReducer
 });
