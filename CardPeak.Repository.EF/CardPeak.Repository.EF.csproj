@@ -69,11 +69,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CardPeakDbContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Core\ContextBase.cs" />
     <Compile Include="DebitCreditTransactionRepository.cs" />
+    <Compile Include="MetricsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RateRepository.cs" />
     <Compile Include="ReferenceRepository.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="Core\RepositoryBase.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

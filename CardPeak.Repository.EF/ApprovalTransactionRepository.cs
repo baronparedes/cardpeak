@@ -1,6 +1,7 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
 using CardPeak.Domain.Constants;
+using CardPeak.Repository.EF.Core;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace CardPeak.Repository.EF
 {
-    public class ApprovalTransactionRepository : Repository<ApprovalTransaction, CardPeakDbContext>, IApprovalTransactionRepository
+    public class ApprovalTransactionRepository : RepositoryBase<ApprovalTransaction, CardPeakDbContext>, IApprovalTransactionRepository
     {
         public ApprovalTransactionRepository(CardPeakDbContext context) : base(context) { }
 

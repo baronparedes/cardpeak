@@ -53,6 +53,7 @@
     <Compile Include="Repository\IBatchFileConfigurationRepository.cs" />
     <Compile Include="Repository\IBatchUploadRepository.cs" />
     <Compile Include="Repository\IDebitCreditTransactionRepository.cs" />
+    <Compile Include="Repository\IMetricsRepository.cs" />
     <Compile Include="Repository\IRateRepository.cs" />
     <Compile Include="Repository\IReferenceRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />

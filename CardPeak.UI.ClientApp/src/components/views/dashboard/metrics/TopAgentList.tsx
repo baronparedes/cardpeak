@@ -46,7 +46,10 @@ export const TopAgentList = (props: DataListProps<CardPeak.Entities.ApprovalMetr
                 }
                 onGetKey={(item) => item.key.agentId}
                 renderHeader={() => { return <TopAgentRowLayout isHeader /> }}
-                renderItem={(item, key) => { return <TopAgentRowLayout item={item} key={key} /> }}
+                renderItem={(item, key) => {
+                    rank++;
+                    return <TopAgentRowLayout item={item} key={key} rank={rank} />
+                }}
                 data={props.data} />
         </div>
     )

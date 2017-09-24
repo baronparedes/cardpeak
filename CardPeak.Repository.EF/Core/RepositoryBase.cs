@@ -5,17 +5,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace CardPeak.Repository.EF
+namespace CardPeak.Repository.EF.Core
 {
-    public abstract class Repository<TEntity, TDBContext> : IRepository<TEntity> 
+    public abstract class RepositoryBase<TEntity, TDbContext> : ContextBase<TDbContext>, IRepository<TEntity> 
         where TEntity : class
-        where TDBContext : DbContext
+        where TDbContext : DbContext
     {
-        protected readonly TDBContext Context;
-
-        public Repository(TDBContext context)
+        public RepositoryBase(TDbContext context) : base(context)
         {
-            this.Context = context;
         }
 
         public virtual TEntity Get(int id)

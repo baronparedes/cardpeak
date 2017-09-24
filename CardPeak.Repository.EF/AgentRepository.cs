@@ -1,12 +1,13 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-    public sealed class AgentRepository : Repository<Agent, CardPeakDbContext>, IAgentRepository
+    public sealed class AgentRepository : RepositoryBase<Agent, CardPeakDbContext>, IAgentRepository
     {
         public AgentRepository(CardPeakDbContext context) : base(context)
         {

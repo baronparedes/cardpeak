@@ -1,5 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Repository.EF.Core;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-    public sealed class DebitCreditTransactionRepository : Repository<DebitCreditTransaction, CardPeakDbContext>, IDebitCreditTransactionRepository
+    public sealed class DebitCreditTransactionRepository : RepositoryBase<DebitCreditTransaction, CardPeakDbContext>, IDebitCreditTransactionRepository
     {
         public DebitCreditTransactionRepository(CardPeakDbContext context) : base(context)
         {

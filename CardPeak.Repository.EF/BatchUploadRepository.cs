@@ -1,6 +1,7 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
 using CardPeak.Domain.Constants;
+using CardPeak.Repository.EF.Core;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-    public sealed class BatchUploadRepository : Repository<BatchUpload, CardPeakDbContext>, IBatchUploadRepository
+    public sealed class BatchUploadRepository : RepositoryBase<BatchUpload, CardPeakDbContext>, IBatchUploadRepository
     {
         public BatchUploadRepository(CardPeakDbContext context) : base(context)
         {

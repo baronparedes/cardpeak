@@ -1,12 +1,13 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-    public sealed class RateRepository : Repository<Rate, CardPeakDbContext>, IRateRepository
+    public sealed class RateRepository : RepositoryBase<Rate, CardPeakDbContext>, IRateRepository
     {
         public RateRepository(CardPeakDbContext context) : base(context)
         {

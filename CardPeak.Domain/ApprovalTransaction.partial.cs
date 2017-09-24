@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CardPeak.Domain
+﻿namespace CardPeak.Domain
 {
-	public partial class ApprovalTransaction
+    public partial class ApprovalTransaction
 	{
 		public override int GetHashCode()
 		{

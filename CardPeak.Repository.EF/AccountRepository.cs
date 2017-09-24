@@ -1,14 +1,13 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
-using System.Linq;
-using System;
-using System.Linq.Expressions;
 using System.Data.Entity;
+using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-    public sealed class AccountRepository : Repository<Account, CardPeakDbContext>, IAccountRepository
+    public sealed class AccountRepository : RepositoryBase<Account, CardPeakDbContext>, IAccountRepository
     {
         public AccountRepository(CardPeakDbContext context) : base(context)
         {
