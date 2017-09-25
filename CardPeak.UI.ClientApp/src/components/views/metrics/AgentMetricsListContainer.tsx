@@ -76,6 +76,7 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                             renderItem={(item, key) => {
                                 return <AgentMetricsRowLayout item={item} key={key} />
                             }}
+                            isLoading={this.props.loadingAgentMetrics}
                             data={this.props.agentMetrics} />
                     </Row>
                 </Grid>

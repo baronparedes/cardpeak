@@ -46,6 +46,7 @@ namespace CardPeak.Repository.EF
         public IEnumerable<AgentApprovalMetric> GetApprovalsByAgent(int year, int month)
         {
             var agents = this.Context.Agents
+                .Where(_ => !_.IsDeleted)
                 .OrderBy(_ => _.FirstName)
                 .ThenBy(_ => _.LastName)
                 .ToList();

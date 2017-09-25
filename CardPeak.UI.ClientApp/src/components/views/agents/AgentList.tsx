@@ -12,13 +12,10 @@ interface AgentListProps {
 const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & AgentListProps) => {
     return (
         <Row className="agent-item">
-            <Col md={5} lg={5} sm={5} xs={4}>
-                {props.isHeader ? "first name" : props.item.firstName}
+            <Col sm={10}>
+                {props.isHeader ? "agent" : props.item.firstName + " " + props.item.lastName}
             </Col>
-            <Col md={5} lg={5} sm={5} xs={4}>
-                {props.isHeader ? "last name" : props.item.lastName}
-            </Col>
-            <Col md={2} lg={2} sm={2} xs={1}>
+            <Col sm={2}>
                 {props.isHeader ? "" : <Button onClick={() => { props.onSelectAgent(props.item) }} bsStyle="primary" bsSize="sm">Select</Button>}
             </Col>
         </Row>
