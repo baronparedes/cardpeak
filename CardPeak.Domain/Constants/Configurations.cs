@@ -33,5 +33,13 @@
                 return 200;
             }
         }
+
+        public static string DateTimeFormat
+        {
+            get
+            {
+                return "MM/dd/yyyy";
+            }
+        }
     }
 }

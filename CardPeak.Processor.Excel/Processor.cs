@@ -105,11 +105,13 @@ namespace CardPeak.Processor.Excel
                 this.SetError(result, ApprovalFileFields.CardCategory);
             }
 
-            if (DateTime.TryParse(fields[ApprovalFileFields.ApprovalDate], out DateTime approvalDate))
+            try
             {
+                var dateString = fields[ApprovalFileFields.ApprovalDate];
+                var approvalDate = DateTime.ParseExact(dateString, Configurations.DateTimeFormat, null);
                 result.ApprovalTransaction.ApprovalDate = approvalDate;
             }
-            else
+            catch
             {
                 this.SetError(result, ApprovalFileFields.ApprovalDate);
             }
@@ -325,8 +327,21 @@ namespace CardPeak.Processor.Excel
                     {
                         row++;
                         var dataDictionary = this.ConvertItem(item as DataRow, configuration);
-                        var transaction = this.ConvertItem(dataDictionary, batch, row);
-                        convertedExcelData.Add(transaction);
+                        try
+                        {
+                            var transaction = this.ConvertItem(dataDictionary, batch, row);
+                            convertedExcelData.Add(transaction);
+                        }
+                        catch (Exception ex)
+                        {
+                            var transaction = new ProcessedApprovalTransaction
+                            {
+                                Row = row,
+                                HasErrors = true,
+                                ErrorMessages = new List<string> { ex.ToString(), dataDictionary.ToString() }
+                            };
+                            convertedExcelData.Add(transaction);
+                        }
 
                     }
                 }

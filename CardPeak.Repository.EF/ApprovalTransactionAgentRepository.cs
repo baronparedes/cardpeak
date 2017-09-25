@@ -21,6 +21,7 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Agent)
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
+                .Where(_ => _.AgentId == agentId)
                 .Where(_ => !_.IsDeleted)
                 .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
