@@ -32,6 +32,34 @@ namespace CardPeak.Processor.Excel
             this.ProcessorService = service;
         }
 
+        private void SetError(ProcessedApprovalTransaction result, string columnName)
+        {
+            result.HasErrors = true;
+            result.ErrorMessages.Add(string.Format(Processor.NotFoundErrorMessageFormat, columnName));
+        }
+
+        private string GetClientName(Dictionary<string, string> fields)
+        {
+            fields.TryGetValue(ApprovalFileFields.ClientFirstName, out string firstName);
+            fields.TryGetValue(ApprovalFileFields.ClientMiddleName, out string middleName);
+            fields.TryGetValue(ApprovalFileFields.ClientLastName, out string lastName);
+            fields.TryGetValue(ApprovalFileFields.ClientFullName, out string fullName);
+
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                if (string.IsNullOrEmpty(fullName))
+                {
+                    return string.Empty;
+                }
+            }
+            else
+            {
+                return string.Format(Processor.FullNameFormat, lastName, firstName, middleName).Trim();
+            }
+
+            return fullName;
+        }
+
         private void GetColumn(DataRow item, int? configurationColumn, string columnName, Dictionary<string, string> fields)
         {
             try
@@ -42,12 +70,6 @@ namespace CardPeak.Processor.Excel
             {
                 fields.Add(columnName, null);
             }
-        }
-
-        private void SetError(ProcessedApprovalTransaction result, string columnName)
-        {
-            result.HasErrors = true;
-            result.ErrorMessages.Add(string.Format(Processor.NotFoundErrorMessageFormat, columnName));
         }
 
         private Dictionary<string, string> ConvertItem(DataRow item, BatchFileConfiguration configuration)
@@ -107,8 +129,9 @@ namespace CardPeak.Processor.Excel
 
             try
             {
+                var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
                 var dateString = fields[ApprovalFileFields.ApprovalDate];
-                var approvalDate = DateTime.ParseExact(dateString, Configurations.DateTimeFormat, null);
+                var approvalDate = DateTime.ParseExact(dateString, Configurations.DateTimeFormat, cultureInfo);
                 result.ApprovalTransaction.ApprovalDate = approvalDate;
             }
             catch
@@ -134,28 +157,6 @@ namespace CardPeak.Processor.Excel
             }
 
             return result;
-        }
-
-        private string GetClientName(Dictionary<string, string> fields)
-        {
-            fields.TryGetValue(ApprovalFileFields.ClientFirstName, out string firstName);
-            fields.TryGetValue(ApprovalFileFields.ClientMiddleName, out string middleName);
-            fields.TryGetValue(ApprovalFileFields.ClientLastName, out string lastName);
-            fields.TryGetValue(ApprovalFileFields.ClientFullName, out string fullName);
-
-            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
-            {
-                if (string.IsNullOrEmpty(fullName))
-                {
-                    return string.Empty;
-                }
-            }
-            else
-            {
-                return string.Format(Processor.FullNameFormat, lastName, firstName, middleName).Trim();
-            }
-
-            return fullName;
         }
 
         private List<ProcessedApprovalTransaction> ProcessItem(ProcessedApprovalTransaction transaction)
