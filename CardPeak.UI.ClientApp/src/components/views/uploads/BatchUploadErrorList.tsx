@@ -41,6 +41,14 @@ class BatchUploadErrorRowLayout extends React.Component<DataItemProps<CardPeak.E
             </div>
         )
     }
+    renderCardCategoryDescription() {
+        if (this.props.item.approvalTransaction) {
+            if (this.props.item.approvalTransaction.cardCategory) {
+                return this.props.item.approvalTransaction.cardCategory.description;
+            }
+        }
+        return null;
+    }
     render() {
         return (
             <Row>
@@ -54,7 +62,7 @@ class BatchUploadErrorRowLayout extends React.Component<DataItemProps<CardPeak.E
                     {this.props.isHeader ? "row" : this.props.item.row}
                 </Col>
                 <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "card category" : this.props.item.approvalTransaction.cardCategory.description}
+                    {this.props.isHeader ? "card category" : this.renderCardCategoryDescription()}
                 </Col>
                 <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
                     {this.props.isHeader ? "product" : this.props.item.approvalTransaction.productType}

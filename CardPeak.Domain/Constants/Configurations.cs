@@ -34,11 +34,12 @@
             }
         }
 
-        public static string DateTimeFormat
+        public static string[] DateTimeFormats
         {
             get
             {
-                return "MM/dd/yyyy";
+                var formats = new[] { "dd/MM/yyyy", "MM/dd/yyyy" };
+                return formats;
             }
         }
     }

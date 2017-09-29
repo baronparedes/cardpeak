@@ -35,7 +35,10 @@ namespace CardPeak.Service
         public Reference GetCardCategoryByCode(string code)
         {
             var codes = CardCategory.Codes;
-            var description = codes[code.ToUpper()];
+            if (!codes.TryGetValue(code.ToUpper(), out string description))
+            {
+                return null;
+            }
             return this.ReferenceRepository.GetCardCategoryByDescription(description);
         }
 

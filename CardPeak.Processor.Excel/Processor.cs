@@ -6,6 +6,7 @@ using ExcelDataReader;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -15,7 +16,7 @@ namespace CardPeak.Processor.Excel
     {
         private const string DefaultEmptyColumnPrefix = "Column";
         private const string InvalidConfigurationErrorMessageFormat = "No configuration for {0} has been found.";
-        private const string NotFoundErrorMessageFormat = "{0} not found.";
+        private const string ParseErrorMessageFormat = "Error parsing the value '{0}' for column {1}.";
         private const string InvalidConfiguratioNotFoundErrorMessageFormat = "No configuration has been found for {0}.";
         private const string NoAccountsFoundErrorMessageFormat = "Accounts were not found for the alias '{0}'.";
         private const string RateNotFoundErrorMessageFormat = "Unable to find any rates for '{0}'. [{1}, {2}]";
@@ -32,10 +33,10 @@ namespace CardPeak.Processor.Excel
             this.ProcessorService = service;
         }
 
-        private void SetError(ProcessedApprovalTransaction result, string columnName)
+        private void SetError(ProcessedApprovalTransaction result, string columnName, string value)
         {
             result.HasErrors = true;
-            result.ErrorMessages.Add(string.Format(Processor.NotFoundErrorMessageFormat, columnName));
+            result.ErrorMessages.Add(string.Format(Processor.ParseErrorMessageFormat, value, columnName));
         }
 
         private string GetClientName(Dictionary<string, string> fields)
@@ -113,42 +114,51 @@ namespace CardPeak.Processor.Excel
 
             if (string.IsNullOrEmpty(fields[ApprovalFileFields.Alias]))
             {
-                this.SetError(result, ApprovalFileFields.Alias);
+                this.SetError(result, ApprovalFileFields.Alias, fields[ApprovalFileFields.Alias]);
             }
 
-            var cardCategory = this.ProcessorService.GetCardCategoryByCode(fields[ApprovalFileFields.CardCategory]);
-            if (cardCategory != null)
+            if (string.IsNullOrEmpty(fields[ApprovalFileFields.CardCategory]))
             {
-                result.ApprovalTransaction.CardCategoryId = cardCategory.ReferenceId;
-                result.ApprovalTransaction.CardCategory = cardCategory;
+                this.SetError(result, ApprovalFileFields.CardCategory, fields[ApprovalFileFields.CardCategory]);
             }
             else
             {
-                this.SetError(result, ApprovalFileFields.CardCategory);
+                var cardCategory = this.ProcessorService.GetCardCategoryByCode(fields[ApprovalFileFields.CardCategory]);
+                if (cardCategory != null)
+                {
+                    result.ApprovalTransaction.CardCategoryId = cardCategory.ReferenceId;
+                    result.ApprovalTransaction.CardCategory = cardCategory;
+                }
+                else
+                {
+                    this.SetError(result, ApprovalFileFields.CardCategory, fields[ApprovalFileFields.CardCategory]);
+                }
             }
 
             try
             {
-                var cultureInfo = System.Globalization.CultureInfo.CurrentCulture;
+                var cultureInfo = CultureInfo.CurrentCulture;
+                var formats = Configurations.DateTimeFormats
+                        .Union(cultureInfo.DateTimeFormat.GetAllDateTimePatterns()).ToArray();
                 var dateString = fields[ApprovalFileFields.ApprovalDate];
-                var approvalDate = DateTime.ParseExact(dateString, Configurations.DateTimeFormat, cultureInfo);
+                var approvalDate = DateTime.ParseExact(dateString, formats, cultureInfo, DateTimeStyles.AssumeLocal);
                 result.ApprovalTransaction.ApprovalDate = approvalDate;
             }
             catch
             {
-                this.SetError(result, ApprovalFileFields.ApprovalDate);
+                this.SetError(result, ApprovalFileFields.ApprovalDate, fields[ApprovalFileFields.ApprovalDate]);
             }
 
             result.ApprovalTransaction.Client = this.GetClientName(fields);
             if (string.IsNullOrEmpty(result.ApprovalTransaction.Client))
             {
-                this.SetError(result, ApprovalFileFields.ClientFullName);
+                this.SetError(result, ApprovalFileFields.ClientFullName, fields[ApprovalFileFields.ClientFullName]);
             }
 
             result.ApprovalTransaction.ProductType = fields[ApprovalFileFields.ProductType];
             if (string.IsNullOrEmpty(result.ApprovalTransaction.ProductType))
             {
-                this.SetError(result, ApprovalFileFields.ProductType);
+                this.SetError(result, ApprovalFileFields.ProductType, fields[ApprovalFileFields.ProductType]);
             }
 
             if (int.TryParse(fields[ApprovalFileFields.CardCount], out int cardCount))
@@ -305,7 +315,7 @@ namespace CardPeak.Processor.Excel
         {
             if (!File.Exists(file.FullName))
             {
-                throw new FileNotFoundException(string.Format(Processor.NotFoundErrorMessageFormat, Path.GetFileName(file.FullName)));
+                throw new FileNotFoundException(string.Format(Processor.ParseErrorMessageFormat, Path.GetFileName(file.FullName)));
             }
 
             if (configuration.BatchFileConfigurationId == 0)
@@ -353,6 +363,11 @@ namespace CardPeak.Processor.Excel
 
         private IEnumerable<ProcessedApprovalTransaction> Process(List<ProcessedApprovalTransaction> convertedExcelData)
         {
+            if (convertedExcelData.Any(_ => _.HasErrors))
+            {
+                return convertedExcelData;
+            }
+
             var hashSet = new HashSet<ApprovalTransaction>();
             foreach (var item in convertedExcelData)
             {
