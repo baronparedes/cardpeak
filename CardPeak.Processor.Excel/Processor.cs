@@ -73,6 +73,15 @@ namespace CardPeak.Processor.Excel
             }
         }
 
+        private bool ColumnIsEmpty(Dictionary<string, string> fields)
+        {
+            if (fields == null)
+            {
+                return true;
+            }
+            return fields.All(_ => string.IsNullOrEmpty(_.Value));
+        }
+
         private Dictionary<string, string> ConvertItem(DataRow item, BatchFileConfiguration configuration)
         {
             var fields = new Dictionary<string, string>();
@@ -310,57 +319,7 @@ namespace CardPeak.Processor.Excel
 
             return config;
         }
-
-        public IEnumerable<ProcessedApprovalTransaction> Process(FileInfo file, BatchUpload batch, BatchFileConfiguration configuration)
-        {
-            if (!File.Exists(file.FullName))
-            {
-                throw new FileNotFoundException(string.Format(Processor.ParseErrorMessageFormat, Path.GetFileName(file.FullName)));
-            }
-
-            if (configuration.BatchFileConfigurationId == 0)
-            {
-                throw new ArgumentException(
-                    string.Format(Processor.InvalidConfiguratioNotFoundErrorMessageFormat, batch.Bank.Description));
-            }
-
-            var row = 0;
-            var convertedExcelData = new List<ProcessedApprovalTransaction>();
-
-            using (var stream = File.Open(file.FullName, FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = ExcelReaderFactory.CreateReader(stream))
-                {
-                    var approvals = new List<ApprovalTransaction>();
-                    var dataSet = reader.AsDataSet(this.DataSetConfiguration(configuration));
-                    var dataTable = dataSet.Tables[0];
-                    foreach (var item in dataTable.Rows)
-                    {
-                        row++;
-                        var dataDictionary = this.ConvertItem(item as DataRow, configuration);
-                        try
-                        {
-                            var transaction = this.ConvertItem(dataDictionary, batch, row);
-                            convertedExcelData.Add(transaction);
-                        }
-                        catch (Exception ex)
-                        {
-                            var transaction = new ProcessedApprovalTransaction
-                            {
-                                Row = row,
-                                HasErrors = true,
-                                ErrorMessages = new List<string> { ex.ToString(), dataDictionary.ToString() }
-                            };
-                            convertedExcelData.Add(transaction);
-                        }
-
-                    }
-                }
-            }
-
-            return this.Process(convertedExcelData);
-        }
-
+        
         private IEnumerable<ProcessedApprovalTransaction> Process(List<ProcessedApprovalTransaction> convertedExcelData)
         {
             if (convertedExcelData.Any(_ => _.HasErrors))
@@ -394,6 +353,59 @@ namespace CardPeak.Processor.Excel
             }
 
             return result;
+        }
+
+        public IEnumerable<ProcessedApprovalTransaction> Process(FileInfo file, BatchUpload batch, BatchFileConfiguration configuration)
+        {
+            if (!File.Exists(file.FullName))
+            {
+                throw new FileNotFoundException(string.Format(Processor.ParseErrorMessageFormat, Path.GetFileName(file.FullName)));
+            }
+
+            if (configuration.BatchFileConfigurationId == 0)
+            {
+                throw new ArgumentException(
+                    string.Format(Processor.InvalidConfiguratioNotFoundErrorMessageFormat, batch.Bank.Description));
+            }
+
+            var convertedExcelData = new List<ProcessedApprovalTransaction>();
+
+            using (var stream = File.Open(file.FullName, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    var rowNumber = 0;
+                    var dataSet = reader.AsDataSet(this.DataSetConfiguration(configuration));
+                    var dataTable = dataSet.Tables[0];
+                    foreach (var item in dataTable.Rows)
+                    {
+                        var dataDictionary = this.ConvertItem(item as DataRow, configuration);
+                        if (this.ColumnIsEmpty(dataDictionary))
+                        {
+                            continue;
+                        }
+
+                        try
+                        {
+                            rowNumber++;
+                            var transaction = this.ConvertItem(dataDictionary, batch, rowNumber);
+                            convertedExcelData.Add(transaction);
+                        }
+                        catch (Exception ex)
+                        {
+                            var transaction = new ProcessedApprovalTransaction
+                            {
+                                Row = rowNumber,
+                                HasErrors = true,
+                                ErrorMessages = new List<string> { ex.ToString(), dataDictionary.ToString() }
+                            };
+                            convertedExcelData.Add(transaction);
+                        }
+                    }
+                }
+            }
+
+            return this.Process(convertedExcelData);
         }
     }
 }

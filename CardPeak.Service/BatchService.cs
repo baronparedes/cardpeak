@@ -36,7 +36,7 @@ namespace CardPeak.Service
             var fileName = Path.GetFileNameWithoutExtension(file.FullName);
             var bank = this.ReferenceRepository
                 .Find(_ => fileName.ToLower().Contains(_.Description.ToLower()) && 
-                    _.ReferenceTypeId == (int)CardPeak.Domain.Enums.ReferenceTypeEnum.Bank)
+                    _.ReferenceTypeId == (int)Domain.Enums.ReferenceTypeEnum.Bank)
                 .FirstOrDefault();
 
             if (bank == null)
