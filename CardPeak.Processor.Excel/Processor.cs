@@ -65,7 +65,7 @@ namespace CardPeak.Processor.Excel
         {
             try
             {
-                fields.Add(columnName, item[configurationColumn.Value].ToString());
+                fields.Add(columnName, item[configurationColumn.Value].ToString().Trim());
             }
             catch
             {
