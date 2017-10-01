@@ -73,7 +73,7 @@ namespace CardPeak.Processor.Excel
             }
         }
 
-        private bool ColumnIsEmpty(Dictionary<string, string> fields)
+        private bool RowIsEmpty(Dictionary<string, string> fields)
         {
             if (fields == null)
             {
@@ -380,7 +380,7 @@ namespace CardPeak.Processor.Excel
                     foreach (var item in dataTable.Rows)
                     {
                         var dataDictionary = this.ConvertItem(item as DataRow, configuration);
-                        if (this.ColumnIsEmpty(dataDictionary))
+                        if (this.RowIsEmpty(dataDictionary))
                         {
                             continue;
                         }
