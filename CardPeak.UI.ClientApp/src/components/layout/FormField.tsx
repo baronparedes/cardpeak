@@ -143,6 +143,7 @@ export const FormFieldFile: React.StatelessComponent<FormFieldProps> = (props) =
         <FormFieldInline {...props }>
             <FormControl
                 onChange={props.onChange}
+                value={props.value}
                 type="file"
                 placeholder={props.label}
                 multiple={false}

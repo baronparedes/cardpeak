@@ -73,6 +73,10 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
         this.props.actions.clearBatch();
     }
     handleOnUpload = () => {
+        if (!this.state.files) {
+            return;
+        }
+
         let formData = new FormData();
         formData.append('file', this.state.files[0]);
         this.props.actions.uploadFileStart(formData, () => {

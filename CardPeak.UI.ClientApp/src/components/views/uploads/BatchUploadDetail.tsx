@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import { Panel, Button } from 'react-bootstrap'
+import { Panel, ButtonGroup } from 'react-bootstrap'
 import { ConfirmButton, SpinnerBlock } from '../../layout'
 
 import BatchUploadDetailInfo from './BatchUploadDetailInfo'
@@ -42,16 +42,26 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
             <div className="text-right">
                 {
                     this.props.processingComplete ? null :
-                        <ConfirmButton
-                            useButtonLoading
-                            bsStyle="success"
-                            onToggleConfirm={this.handleOnToggleModal}
-                            onConfirm={this.handleOnConfirm}
-                            confirmTitle="start processing"
-                            confirmMessage="Do you want to begin processing?"
-                            isLoading={this.props.processing}
-                            disabled={this.props.processing || this.props.processingComplete}
-                            buttonLabel="Process" />
+                        <div className="container-fluid">
+                            <ConfirmButton
+                                useButtonLoading
+                                bsStyle="success"
+                                onToggleConfirm={this.handleOnToggleModal}
+                                onConfirm={this.handleOnConfirm}
+                                confirmTitle="start processing"
+                                confirmMessage="Do you want to begin processing?"
+                                isLoading={this.props.processing}
+                                disabled={this.props.processing || this.props.processingComplete}
+                                buttonLabel="Process" />
+                            <span className="spacer-right" />
+                            <ConfirmButton
+                                bsStyle="warning"
+                                onConfirm={this.props.onClickClear}
+                                confirmTitle="cancel batch upload"
+                                confirmMessage="Continue?"
+                                buttonLabel="cancel" />
+                        </div>
+
                 }
                 {
                     !this.props.processingComplete ? null :

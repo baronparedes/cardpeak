@@ -47,7 +47,7 @@ export class ConfirmButton extends React.Component<ConfirmButtonProps, ConfirmBu
     }
     render() {
         return (
-            <div>
+            <div className="confirm-button">
                 {
                     this.props.useButtonLoading ?
                         <ButtonLoading
