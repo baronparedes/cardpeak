@@ -35,28 +35,26 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
     }
     render() {
         return (
-            <Panel>
-                <Grid fluid>
-                    <Row>
-                        <Col lg={6} md={6} sm={12} xs={12}>
-                            <ReferenceList
-                                title="banks"
-                                onSaveReference={this.handleOnSaveBank}
-                                data={this.props.banks}
-                                referenceTypeId={this.props.bankReferenceTypeId}
-                                isLoading={this.props.loadingBanks} />
-                        </Col>
-                        <Col lg={6} md={6} sm={12} xs={12}>
-                            <ReferenceList
-                                title="card categories"
-                                onSaveReference={this.handleOnSaveCardCategory}
-                                data={this.props.cardCategories}
-                                referenceTypeId={this.props.cardCategoryReferenceTypeId}
-                                isLoading={this.props.loadingCardCategories} />
-                        </Col>
-                    </Row>
-                </Grid>
-            </Panel>
+            <Grid fluid>
+                <Row>
+                    <Col lg={6} md={6} sm={12} xs={12}>
+                        <ReferenceList
+                            title="banks"
+                            onSaveReference={this.handleOnSaveBank}
+                            data={this.props.banks}
+                            referenceTypeId={this.props.bankReferenceTypeId}
+                            isLoading={this.props.loadingBanks} />
+                    </Col>
+                    <Col lg={6} md={6} sm={12} xs={12}>
+                        <ReferenceList
+                            title="card categories"
+                            onSaveReference={this.handleOnSaveCardCategory}
+                            data={this.props.cardCategories}
+                            referenceTypeId={this.props.cardCategoryReferenceTypeId}
+                            isLoading={this.props.loadingCardCategories} />
+                    </Col>
+                </Row>
+            </Grid>
         )
     }
 }

@@ -1,11 +1,14 @@
 ﻿import * as React from 'react'
 import RatesContainer from './RatesContainer'
+import { Panel } from 'react-bootstrap'
 
 const DefaultRatesView = () => {
     return (
         <div>
             <h2>Default Rates</h2>
-            <RatesContainer selectedAgentId={0} />
+            <Panel>
+                <RatesContainer selectedAgentId={0} />
+            </Panel>
         </div>
     )
 }
