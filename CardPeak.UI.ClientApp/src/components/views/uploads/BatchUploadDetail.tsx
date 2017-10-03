@@ -59,6 +59,7 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                                 onConfirm={this.props.onClear}
                                 confirmTitle="cancel batch upload"
                                 confirmMessage="Continue?"
+                                disabled={this.props.processing || this.props.processingComplete}
                                 buttonLabel="cancel" />
                         </div>
 
@@ -70,7 +71,6 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                             onConfirm={this.props.onClear}
                             confirmTitle="clear batch upload"
                             confirmMessage="Continue?"
-                            disabled={this.props.processing || this.props.processingComplete}
                             buttonLabel="Clear" />
                 }
             </div>
