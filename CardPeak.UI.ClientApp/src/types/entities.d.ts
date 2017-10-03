@@ -129,6 +129,7 @@
         public cardCategoryColumn: number;
         public cardCountColumn?: number;
         public bank?: Reference;
+        public approvalDateFormat?: string;
     }
 
     export class ApprovalMetric<TKey> {

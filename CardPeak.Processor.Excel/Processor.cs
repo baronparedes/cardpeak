@@ -25,6 +25,7 @@ namespace CardPeak.Processor.Excel
         private const string ComputingErrorMessageFormat = "Error computing amount: {0}";
         private const string TransactionExistsErrorMessageFormat = "This transaction already exists on {0}'s account.";
         private const string BatchDuplicateErrorMessage = "This transaction has duplicates in this batch.";
+        private const string DateParseErrorMessageFormat = "Error parsing the value '{0}' using DateTimeFormat of {1}";
 
         private IProcessorService ProcessorService;
 
@@ -33,10 +34,15 @@ namespace CardPeak.Processor.Excel
             this.ProcessorService = service;
         }
 
-        private void SetError(ProcessedApprovalTransaction result, string columnName, string value)
+        private void SetError(ProcessedApprovalTransaction transaction, string columnName, string value)
         {
-            result.HasErrors = true;
-            result.ErrorMessages.Add(string.Format(Processor.ParseErrorMessageFormat, value, columnName));
+            this.SetError(transaction, string.Format(Processor.ParseErrorMessageFormat, value, columnName));
+        }
+
+        private void SetError(ProcessedApprovalTransaction transaction, string errorMessage)
+        {
+            transaction.HasErrors = true;
+            transaction.ErrorMessages.Add(errorMessage);
         }
 
         private string GetClientName(Dictionary<string, string> fields)
@@ -99,7 +105,7 @@ namespace CardPeak.Processor.Excel
             return fields;
         }
 
-        private ProcessedApprovalTransaction ConvertItem(Dictionary<string, string> fields, BatchUpload batch, int rowNumber)
+        private ProcessedApprovalTransaction ConvertItem(Dictionary<string, string> fields, BatchUpload batch, int rowNumber, string dateTimeFormat)
         {
             var result = new ProcessedApprovalTransaction
             {
@@ -147,14 +153,16 @@ namespace CardPeak.Processor.Excel
             try
             {
                 var cultureInfo = CultureInfo.CurrentCulture;
-                var formats = Configurations.DateTimeFormats
-                        .Union(cultureInfo.DateTimeFormat.GetAllDateTimePatterns()).ToArray();
                 var dateString = fields[ApprovalFileFields.ApprovalDate];
+                var formats = new[] { dateTimeFormat }
+                    .Union(cultureInfo.DateTimeFormat.GetAllDateTimePatterns()).ToArray();
                 var approvalDate = DateTime.ParseExact(dateString, formats, cultureInfo, DateTimeStyles.AssumeLocal);
                 result.ApprovalTransaction.ApprovalDate = approvalDate;
             }
-            catch
+            catch (Exception ex)
             {
+                this.SetError(result, ex.Message);
+                this.SetError(result, string.Format(Processor.DateParseErrorMessageFormat, fields[ApprovalFileFields.ApprovalDate], dateTimeFormat));
                 this.SetError(result, ApprovalFileFields.ApprovalDate, fields[ApprovalFileFields.ApprovalDate]);
             }
 
@@ -388,7 +396,7 @@ namespace CardPeak.Processor.Excel
                         try
                         {
                             rowNumber++;
-                            var transaction = this.ConvertItem(dataDictionary, batch, rowNumber);
+                            var transaction = this.ConvertItem(dataDictionary, batch, rowNumber, configuration.ApprovalDateFormat);
                             convertedExcelData.Add(transaction);
                         }
                         catch (Exception ex)

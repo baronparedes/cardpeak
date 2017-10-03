@@ -29,6 +29,7 @@ namespace CardPeak.Domain
         public int ApprovalDateColumn { get; set; }
         public int CardCategoryColumn { get; set; }
         public Nullable<int> CardCountColumn { get; set; }
+        public string ApprovalDateFormat { get; set; }
     
         public virtual Reference Bank { get; set; }
     }
