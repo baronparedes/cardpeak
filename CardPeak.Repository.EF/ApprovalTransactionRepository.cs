@@ -24,6 +24,7 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.Client == transaction.Client)
                 .Where(_ => _.ReferenceNumber1 == transaction.ReferenceNumber1)
                 .Where(_ => _.ReferenceNumber2 == transaction.ReferenceNumber2)
+                .Where(_ => !_.IsDeleted)
                 .Any();
         }
 
