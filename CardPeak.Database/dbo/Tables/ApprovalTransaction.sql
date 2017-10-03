@@ -16,8 +16,11 @@
 	[TransactionId] UNIQUEIDENTIFIER NULL, 
 	[CreatedBy] VARCHAR(200) NOT NULL DEFAULT SYSTEM_USER, 
 	[CreatedDate] DATETIME NOT NULL DEFAULT GETDATE(), 
-	CONSTRAINT [CK_ApprovalTransaction_UniqueTransaction] UNIQUE(BankId, CardCategoryId, AgentId, ProductType, ReferenceNumber1, ReferenceNumber2, Client), 
 	CONSTRAINT [FK_ApprovalTransaction_Agent] FOREIGN KEY ([AgentId]) REFERENCES [Agent]([AgentId]), 
 	CONSTRAINT [FK_ApprovalTransaction_Reference_BankId] FOREIGN KEY ([BankId]) REFERENCES [Reference]([ReferenceId]),
 	CONSTRAINT [FK_ApprovalTransaction_Reference_CardCategoryId] FOREIGN KEY ([CardCategoryId]) REFERENCES [Reference]([ReferenceId])
 )
+GO
+
+CREATE INDEX [IX_ApprovalTransaction_CheckDuplicate] ON [dbo].[ApprovalTransaction] (BankId, CardCategoryId, AgentId, ProductType, ReferenceNumber1, ReferenceNumber2, Client, IsDeleted)
+GO
