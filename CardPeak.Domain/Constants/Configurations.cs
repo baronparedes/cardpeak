@@ -33,14 +33,5 @@
                 return 200;
             }
         }
-
-        public static string[] DateTimeFormats
-        {
-            get
-            {
-                var formats = new[] { "dd/MM/yyyy", "MM/dd/yyyy" };
-                return formats;
-            }
-        }
     }
 }

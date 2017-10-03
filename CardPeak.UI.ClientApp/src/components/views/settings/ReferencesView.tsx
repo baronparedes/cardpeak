@@ -1,11 +1,14 @@
 ﻿import * as React from 'react'
 import ReferencesContainer from './ReferencesContainer'
+import { Panel } from 'react-bootstrap'
 
 const ReferencesView = () => {
     return (
         <div>
             <h2>References</h2>
-            <ReferencesContainer />
+            <Panel>
+                <ReferencesContainer />
+            </Panel>
         </div>
     )
 }

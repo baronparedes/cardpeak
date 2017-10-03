@@ -66,6 +66,7 @@
           <Property Name="ApprovalDateColumn" Type="int" Nullable="false" />
           <Property Name="CardCategoryColumn" Type="int" Nullable="false" />
           <Property Name="CardCountColumn" Type="int" />
+          <Property Name="ApprovalDateFormat" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="BatchUpload">
           <Key>
@@ -683,6 +684,7 @@
           <Property Name="CardCategoryColumn" Type="Int32" Nullable="false" />
           <Property Name="CardCountColumn" Type="Int32" />
           <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_BatchFileConfiguration_Reference_BankId" FromRole="BatchFileConfiguration" ToRole="Reference" />
+          <Property Name="ApprovalDateFormat" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_BatchFileConfiguration_Reference_BankId">
           <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
@@ -822,6 +824,7 @@
           <EntitySetMapping Name="BatchFileConfiguration">
             <EntityTypeMapping TypeName="CardPeakModel.BatchFileConfiguration">
               <MappingFragment StoreEntitySet="BatchFileConfiguration">
+                <ScalarProperty Name="ApprovalDateFormat" ColumnName="ApprovalDateFormat" />
                 <ScalarProperty Name="CardCountColumn" ColumnName="CardCountColumn" />
                 <ScalarProperty Name="CardCategoryColumn" ColumnName="CardCategoryColumn" />
                 <ScalarProperty Name="ApprovalDateColumn" ColumnName="ApprovalDateColumn" />

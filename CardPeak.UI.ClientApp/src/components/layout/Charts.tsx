@@ -6,6 +6,7 @@ import * as colorScale from '../../constants/colorScale'
 interface ChartProps {
     metrics?: CardPeak.Entities.ApprovalMetric<string>[];
     label?: string;
+    onClick?: (e: any) => void;
 }
 
 function getLineData(props: ChartProps) {
@@ -102,7 +103,7 @@ export const ApprovalMetricsBarChart = (props: ChartProps) => {
 
     return (
         <div>
-            <HorizontalBar data={data} legend={data.legendOpts} height={200} />
+            <HorizontalBar data={data} legend={data.legendOpts} height={200} onElementsClick={props.onClick} />
         </div>
     )
 }

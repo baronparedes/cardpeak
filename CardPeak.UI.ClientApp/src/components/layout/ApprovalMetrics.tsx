@@ -9,41 +9,63 @@ interface ApprovalMetricsProps {
 }
 
 interface ApprovalMetricsState {
-    approvalsByCategoryFiltered?: CardPeak.Entities.ApprovalMetric<string>[]
+    approvalsByCategoryFiltered?: CardPeak.Entities.ApprovalMetric<string>[];
+    selectedCategoryFilter?: string;
 }
 
 export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, ApprovalMetricsState> {
     constructor(props: ApprovalMetricsProps) {
         super(props);
         this.state = {
-            approvalsByCategoryFiltered: this.props.approvalsByCategory
+            approvalsByCategoryFiltered: this.props.approvalsByCategory,
+            selectedCategoryFilter: ""
         }
     }
     componentWillReceiveProps(nextProps: ApprovalMetricsProps) {
         this.setState({ approvalsByCategoryFiltered: nextProps.approvalsByCategory })
     }
-    handleOnCategoryFilter = (e: any) => {
-        let target: string = e.target.value;
+    handleOnCategoryFilter = (target: string) => {
+        let metrics: CardPeak.Entities.ApprovalMetric<string>[]
         if (target === "") {
-            this.setState({ approvalsByCategoryFiltered: this.props.approvalsByCategory })
+            metrics = this.props.approvalsByCategory;
         }
         else {
             if (this.props.approvalsByBankDetails) {
-                target = target.charAt(0).toLowerCase() + target.slice(1);
-                let metrics: CardPeak.Entities.ApprovalMetric<string>[] = this.props.approvalsByBankDetails[target];
+                const bankKey: string = target.charAt(0).toLowerCase() + target.slice(1);
+                metrics = this.props.approvalsByBankDetails[bankKey];
                 if (!metrics) {
-                    metrics = this.props.approvalsByBankDetails[target.toLowerCase()];
+                    metrics = this.props.approvalsByBankDetails[bankKey.toLowerCase()];
                 }
-                this.setState({ approvalsByCategoryFiltered: metrics })
             }
         }
+
+        this.setState({
+            approvalsByCategoryFiltered: metrics,
+            selectedCategoryFilter: target
+        })
+
+    }
+    handleOnClick = (e: any) => {
+        const label: string = e[0]._view.label;
+        let target: string = "";
+        this.props.approvalsByBank.forEach(_ => {
+            if (label.startsWith(_.key)) {
+                target = _.key;
+                return;
+            }
+        });
+        this.handleOnCategoryFilter(target);
+    }
+    handleOnCategoryFilterChange = (e: any) => {
+        let target: string = e.target.value;
+        this.handleOnCategoryFilter(target);
     }
     render() {
         return (
             <Row>
                 <Col sm={6}>
                     <Panel>
-                        <ApprovalMetricsBarChart metrics={this.props.approvalsByBank} label="approval by banks" />
+                        <ApprovalMetricsBarChart metrics={this.props.approvalsByBank} label="approval by banks" onClick={this.handleOnClick} />
                     </Panel>
                 </Col>
                 <Col sm={6}>
@@ -51,8 +73,9 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
                         <ApprovalMetricsPieChart metrics={this.state.approvalsByCategoryFiltered} label="approval by categories" />
                         <br />
                         <FormFieldDropdown
-                            onChange={this.handleOnCategoryFilter}
+                            onChange={this.handleOnCategoryFilterChange}
                             controlId="form-filter"
+                            value={this.state.selectedCategoryFilter}
                             label="filter"
                             name="filter">
                             <option key={0} value={""}>All</option>

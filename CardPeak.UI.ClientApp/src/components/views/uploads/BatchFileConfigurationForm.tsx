@@ -129,6 +129,7 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
                                 controlId="form-hasHeader"
                                 label="has header"
                                 name="hasHeader"
+                                isRequired
                                 value={this.state.batchFileConfiguration.hasHeader ? "true" : "false"}
                                 onChange={this.handleOnChangeBoolean} >
                                 <option value="true">
@@ -181,6 +182,20 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
                                 error={this.state.errors.approvalDateColumn}
                                 value={this.state.batchFileConfiguration.approvalDateColumn}
                                 onChange={this.handleOnChangeNumber} />
+                            <FormFieldDropdown
+                                controlId="form-dateFormat"
+                                label="date fromat"
+                                name="approvalDateFormat"
+                                isRequired
+                                value={this.state.batchFileConfiguration.approvalDateFormat}
+                                onChange={this.handleOnChange} >
+                                <option value="MM/dd/yyyy">
+                                    MM/dd/yyyy
+                                </option>
+                                <option value="dd/MM/yyyy">
+                                    dd/MM/yyyy
+                                </option>
+                            </FormFieldDropdown>
                         </Col>
                         <Col lg={6} md={6}>
                             <FormFieldInput
