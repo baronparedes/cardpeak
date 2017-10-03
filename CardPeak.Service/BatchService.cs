@@ -12,6 +12,8 @@ namespace CardPeak.Service
 {
     public sealed class BatchService : UnitOfWork, IBatchService
     {
+        private const string UnrecognizedFileErrorMessage = "Unrecognized file";
+
         private IProcessor Processor;
         private IReferenceRepository ReferenceRepository;
         private IBatchUploadRepository BatchUploadRepository;
@@ -41,7 +43,7 @@ namespace CardPeak.Service
 
             if (bank == null)
             {
-                throw new Exception("Unrecognized file");
+                throw new Exception(BatchService.UnrecognizedFileErrorMessage);
             }
 
             return bank;

@@ -10,7 +10,7 @@ interface BatchUploadDetailProps {
     processing: boolean
     onProcess: (batchId: number, errorCallback: (e: string) => void) => void,
     processingComplete: boolean,
-    onClickClear: () => void
+    onClear: () => void
 }
 
 interface BatchUploadDetailState {
@@ -56,7 +56,7 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                             <span className="spacer-right" />
                             <ConfirmButton
                                 bsStyle="warning"
-                                onConfirm={this.props.onClickClear}
+                                onConfirm={this.props.onClear}
                                 confirmTitle="cancel batch upload"
                                 confirmMessage="Continue?"
                                 buttonLabel="cancel" />
@@ -67,7 +67,7 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                     !this.props.processingComplete ? null :
                         <ConfirmButton
                             bsStyle="warning"
-                            onConfirm={this.props.onClickClear}
+                            onConfirm={this.props.onClear}
                             confirmTitle="clear batch upload"
                             confirmMessage="Continue?"
                             buttonLabel="Clear" />

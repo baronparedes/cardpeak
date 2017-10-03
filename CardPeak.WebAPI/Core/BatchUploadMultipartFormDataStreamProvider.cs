@@ -6,6 +6,8 @@ namespace CardPeak.WebAPI.Core
 {
     public sealed class BatchUploadMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
     {
+        public string OriginalFileName { get; private set; }
+
         public BatchUploadMultipartFormDataStreamProvider(string path) : base(path)
         { }
 
@@ -16,14 +18,13 @@ namespace CardPeak.WebAPI.Core
                 return Guid.NewGuid().ToString();
             }
 
-            var fileName = headers.ContentDisposition.FileName;
-            fileName = fileName.Replace("\"", string.Empty);
-            fileName = string.Format("{0}-{1}{2}", 
+            var fileName = headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+            var result = string.Format("{0}.{1}{2}", 
                 Path.GetFileNameWithoutExtension(fileName), 
                 Guid.NewGuid().ToString(),
                 Path.GetExtension(fileName));
-
-            return fileName;
+            this.OriginalFileName = fileName;
+            return result;
         }
     }
 }

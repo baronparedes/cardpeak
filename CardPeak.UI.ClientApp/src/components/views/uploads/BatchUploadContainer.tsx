@@ -81,12 +81,17 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
         formData.append('file', this.state.files[0]);
         this.props.actions.uploadFileStart(formData, () => {
             this.setState({
-                fileName: undefined,
+                fileName: "",
                 files: undefined
             });
         }, (e: string) => {
             this.setState({ onUploadError: e });
         })
+    }
+    clearErrors = () => {
+        this.setState({
+            onUploadError: undefined
+        });
     }
     render() {
         return (
@@ -132,7 +137,7 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                     batchUpload={this.props.selectedBatchUpload}
                     processing={this.props.processing}
                     processingComplete={this.props.processingCompleted}
-                    onClickClear={this.props.actions.clearBatch}
+                    onClear={this.props.actions.clearBatch}
                     onProcess={this.props.actions.processBatchStart} />
                 {
                     !this.props.processingCompleted || !this.props.selectedBatchUpload.hasErrors ? null :

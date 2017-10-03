@@ -10,6 +10,7 @@ const ApprovalTransactionDataList = DataList as ApprovalTransactionDataList;
 
 interface ApprovalTransactionListProps {
     showAgent?: boolean;
+    hideAmount?: boolean;
 }
 
 const ApprovalTransactionListRowLayout = (props: DataItemProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps) => {
@@ -36,14 +37,17 @@ const ApprovalTransactionListRowLayout = (props: DataItemProps<CardPeak.Entities
             <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "approval date" : dateFormat(props.item.approvalDate)}
             </Col>
-            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "amount" : <Currency className="row-amount" noCurrencyColor currency={props.item.amount} />}
-            </Col>
+            {
+                props.hideAmount ? null :
+                    <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
+                        {props.isHeader ? "amount" : <Currency className="row-amount" noCurrencyColor currency={props.item.amount} />}
+                    </Col>
+            }
             {
                 !props.showAgent || props.isHeader ? null :
                     <Col md={12} lg={12} sm={12} xs={12}>
                         <label className="text-muted text-small spacer-right">credited to</label>
-                        <span className="text-highlight text-small">{concat(props.item.agent.lastName, ", ", props.item.agent.firstName)}</span>
+                        <span className="text-highlight text-small">{concat(props.item.agent.firstName, " ", props.item.agent.lastName)}</span>
                     </Col>
             }
         </Row>
@@ -56,8 +60,8 @@ const ApprovalTransactionList = (props: DataListProps<CardPeak.Entities.Approval
             <ApprovalTransactionDataList
                 paged
                 isLoading={props.isLoading}
-                renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader /> }}
-                renderItem={(item, key) => { return <ApprovalTransactionListRowLayout item={item} key={key} showAgent={props.showAgent} /> }}
+                renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader hideAmount={props.hideAmount} /> }}
+                renderItem={(item, key) => { return <ApprovalTransactionListRowLayout item={item} key={key} showAgent={props.showAgent} hideAmount={props.hideAmount} /> }}
                 data={props.data} />
         </div>
     )
