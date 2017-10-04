@@ -53,10 +53,9 @@ namespace CardPeak.Repository.EF
                 .FirstOrDefault();
         }
 
-        public decimal GetAgentTotalApprovals(int agentId)
+        public decimal GetAgentTotalApprovals(int agentId, DateTime startDate, DateTime? endDate)
         {
-            return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
+            return this.QueryByAgentAndDateRange(agentId, startDate, endDate)
                 .Select(_ => _.Units)
                 .DefaultIfEmpty(0)
                 .Sum();
@@ -64,15 +63,15 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId)
         {
-            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-3);
+            var months = 6;
+            var previousMonthsExcludingCurrentMonth = (months - 1) * -1;
+            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(previousMonthsExcludingCurrentMonth);
             var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
-            var result = new Dictionary<string, decimal>
+            var result = new Dictionary<string, decimal>();
+            for (int i = previousMonthsExcludingCurrentMonth; i < 1; i++)
             {
-                { DateTime.Now.AddMonths(-2).ToString(Configurations.MonthFormat), 0 },
-                { DateTime.Now.AddMonths(-1).ToString(Configurations.MonthFormat), 0 },
-                { DateTime.Now.ToString(Configurations.MonthFormat), 0 }
-            };
-
+                result.Add(DateTime.Now.AddMonths(i).ToString(Configurations.MonthFormat), 0);
+            }
 
             var query = this.Context.ApprovalTransactions
                 .Where(_ => _.AgentId == agentId)
