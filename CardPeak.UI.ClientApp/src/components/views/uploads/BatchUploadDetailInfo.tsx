@@ -24,7 +24,7 @@ const BatchUploadDetailInfoLayout = (props: BatchUploadDetailInfoProps) => {
                 {props.isHeader ? "bank" : props.batchUpload.bank.description}
             </Col>
             <Col md={4} lg={4} sm={5} xsHidden={props.isHeader}>
-                {props.isHeader ? "file" : props.batchUpload.fileName.split('\\').pop().split('/').pop()}
+                {props.isHeader ? "file" : props.batchUpload.originalFileName}
             </Col>
             <Col mdHidden lg={1} smHidden xsHidden={props.isHeader}>
                 {props.isHeader ? "start" : props.batchUpload.processStartDateTime ? dateTimeFormat(props.batchUpload.processStartDateTime) : null}

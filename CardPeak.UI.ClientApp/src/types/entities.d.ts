@@ -96,6 +96,7 @@
         public processEndDateTime?: Date;
         public processedRecords?: number;
         public bank?: Reference;
+        public originalFileName?: string;
     }
 
     export class ProcessedApprovalTransaction {
