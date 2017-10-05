@@ -8,6 +8,7 @@ interface YearMonthActionsProps {
     refreshing?: boolean
     availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
     label?: string;
+    addOnActions?: React.ReactNode;
 }
 
 interface YearMonthActionsState {
@@ -83,14 +84,17 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
     renderButtons() {
         return (
             <Col sm={4} className="text-right">
-                <Button
-                    onClick={this.handleOnRefresh}
-                    bsStyle="primary"
-                    disabled={this.props.refreshing}>
-                    <ButtonLoadingText
-                        isLoading={this.props.refreshing}
-                        label={"refresh" + (this.props.label ? (" " + this.props.label) : "")} />
-                </Button>
+                <ButtonGroup>
+                    <Button
+                        onClick={this.handleOnRefresh}
+                        bsStyle="primary"
+                        disabled={this.props.refreshing}>
+                        <ButtonLoadingText
+                            isLoading={this.props.refreshing}
+                            label={"refresh" + (this.props.label ? (" " + this.props.label) : "")} />
+                    </Button>
+                    {this.props.addOnActions}
+                </ButtonGroup>
             </Col >
         )
     }

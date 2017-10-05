@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="AgentApprovalMetric.cs" />
     <Compile Include="AgentDashboard.cs" />
+    <Compile Include="AgentMetrics.cs" />
     <Compile Include="BatchUpload.partial.cs" />
     <Compile Include="Constants\ApprovalFileFields.cs" />
     <Compile Include="Constants\CardCategory.cs" />

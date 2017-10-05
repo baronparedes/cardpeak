@@ -7,7 +7,7 @@ import * as dashboardController from '../api/dashboardController'
 
 export const getYears = createAction<CardPeak.Entities.ApprovalMetric<number>[]>(METRIC_ACTIONS.GET_YEARS);
 export const getAgentMetrics = createAction(METRIC_ACTIONS.GET_AGENT_METRICS);
-export const getAgentMetricsComplete = createAction<CardPeak.Entities.AgentApprovalMetric[]>(METRIC_ACTIONS.GET_AGENT_METRICS_COMPLETE);
+export const getAgentMetricsComplete = createAction<CardPeak.Entities.AgentMetrics>(METRIC_ACTIONS.GET_AGENT_METRICS_COMPLETE);
 export const getAgentMetricsError = createAction(METRIC_ACTIONS.GET_AGENT_METRICS_ERROR);
 
 export function getAgentMetricsStart(year: number, month: number,
@@ -15,7 +15,7 @@ export function getAgentMetricsStart(year: number, month: number,
 
     return (dispatch: (e: any) => void) => {
         dispatch(getAgentMetrics());
-        metricsController.getAgentMetrics(year, month, (data: CardPeak.Entities.AgentApprovalMetric[]) => {
+        metricsController.getAgentMetrics(year, month, (data: CardPeak.Entities.AgentMetrics) => {
             dispatch(getAgentMetricsComplete(data));
         }, (error: string) => {
             dispatch(getAgentMetricsError());

@@ -5,7 +5,7 @@ const API = {
 }
 
 export function getAgentMetrics(year: number, month?: number,
-    successCallback?: (data: CardPeak.Entities.AgentApprovalMetric[]) => void,
+    successCallback?: (data: CardPeak.Entities.AgentMetrics) => void,
     errorCallback?: (error: string) => void) {
 
     axios.get(API.GET_AGENT_METRICS, ({
@@ -15,7 +15,7 @@ export function getAgentMetrics(year: number, month?: number,
         }
     })).then((r) => {
         if (successCallback) {
-            successCallback(r.data as CardPeak.Entities.AgentApprovalMetric[]);
+            successCallback(r.data as CardPeak.Entities.AgentMetrics);
         }
     }).catch((reason) => {
         if (errorCallback) {

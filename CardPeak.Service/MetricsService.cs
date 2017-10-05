@@ -16,11 +16,14 @@ namespace CardPeak.Service
             this.MetricsRepository = new MetricsRepository(context);
         }
 
-        public IEnumerable<AgentApprovalMetric> GetAgentApprovalMetrics(int? year, int? month)
+        public AgentMetrics GetAgentApprovalMetrics(int? year, int? month)
         {
             year = year ?? DateTime.Now.Year;
             month = month ?? 0;
-            return this.MetricsRepository.GetApprovalsByAgent(year.Value, month.Value);
+            return new AgentMetrics()
+            {
+                AgentApprovalMetrics = this.MetricsRepository.GetApprovalsByAgent(year.Value, month.Value)
+            };
         }
     }
 }

@@ -5,6 +5,6 @@ namespace CardPeak.Core.Service
 {
     public interface IMetricsService : IUnitOfWork
     {
-        IEnumerable<AgentApprovalMetric> GetAgentApprovalMetrics(int? year, int? month);
+        AgentMetrics GetAgentApprovalMetrics(int? year, int? month);
     }
 }

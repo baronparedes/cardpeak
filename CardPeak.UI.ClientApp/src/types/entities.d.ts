@@ -143,6 +143,12 @@
         public value: number;
         public accountBalance: number;
         public savingsBalance: number;
+    }
 
+    export class AgentMetrics {
+        public agentApprovalMetrics?: CardPeak.Entities.AgentApprovalMetric[];
+        public totalApproved?: number;
+        public totalBalance?: number;
+        public totalSavings?: number;
     }
 }

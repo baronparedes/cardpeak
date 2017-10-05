@@ -6,9 +6,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
-import { Col, Row, Grid, Panel } from 'react-bootstrap'
+import { Col, Row, Grid, Panel, Button, DropdownButton, MenuItem } from 'react-bootstrap'
 import {
-    YearMonthAction, DataListFiltered, DataListProps, DataItemProps, Currency
+    YearMonthAction, DataListFiltered, DataListProps, DataItemProps, Currency,
+    DashboardLabel
 } from '../../layout'
 
 type AgentMetricsDataListFiltered = new () => DataListFiltered<CardPeak.Entities.AgentApprovalMetric>;
@@ -42,7 +43,25 @@ const AgentMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Ent
                 </Col>
             </Row>
         )
-    }
+}
+
+const AgentMetricsTotals: React.StatelessComponent<CardPeak.Models.MetricsModel> = (props) => {
+    return (
+        <Row>
+            <Col sm={6}>
+                <Panel className="panel-label-dashboard">
+                    <DashboardLabel className="pull-right" label="approvals" metrics={props.agentMetrics.totalApproved} />
+                </Panel>
+            </Col>
+            <Col sm={6}>
+                <Panel className="panel-label-dashboard">
+                    <DashboardLabel className="pull-right" label="balance" metrics={props.agentMetrics.totalBalance} isCurrency />
+                    <DashboardLabel className="pull-right" label="savings" metrics={props.agentMetrics.totalSavings} isCurrency />
+                </Panel>
+            </Col>
+        </Row>
+    )
+}
 
 class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsModel & AgentMetricsListContainerDispatchProps, undefined> {
     constructor(props: CardPeak.Models.MetricsModel & AgentMetricsListContainerDispatchProps) {
@@ -62,6 +81,7 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                     onRefresh={this.props.actions.getAgentMetricsStart} />
                 <br />
                 <Grid className="no-padding">
+                    <AgentMetricsTotals agentMetrics={this.props.agentMetrics} />
                     <Row>
                         <AgentMetricsDataListFiltered
                             predicate={(agent, searchString) => {
@@ -75,7 +95,7 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                                 return <AgentMetricsRowLayout item={item} key={key} />
                             }}
                             isLoading={this.props.loadingAgentMetrics}
-                            data={this.props.agentMetrics} />
+                            data={this.props.agentMetrics.agentApprovalMetrics} />
                     </Row>
                 </Grid>
             </div>
