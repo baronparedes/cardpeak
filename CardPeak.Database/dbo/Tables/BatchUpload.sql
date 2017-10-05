@@ -7,7 +7,8 @@
 	[ProcessStartDateTime] DATETIME NULL, 
 	[ProcessEndDateTime] DATETIME NULL, 
 	[ProcessedRecords] INT NULL, 
+	[IsDeleted] BIT NOT NULL DEFAULT 0,
 	[CreatedBy] VARCHAR(200) NOT NULL DEFAULT SYSTEM_USER, 
-	[CreatedDate] DATETIME NOT NULL DEFAULT GETDATE(), 
+	[CreatedDate] DATETIME NOT NULL DEFAULT GETDATE()
 	CONSTRAINT [FK_BatchUpload_Bank] FOREIGN KEY (BankId) REFERENCES [Reference]([ReferenceId])
 )

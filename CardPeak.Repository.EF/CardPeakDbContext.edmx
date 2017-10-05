@@ -81,6 +81,7 @@
           <Property Name="ProcessedRecords" Type="int" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="200" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
           <Key>
@@ -96,6 +97,7 @@
           <Property Name="TransactionId" Type="uniqueidentifier" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="200" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="BatchId" Type="int" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -469,6 +471,7 @@
           <Property Name="ProcessedRecords" Type="Int32" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="DebitCreditTransaction">
           <Key>
@@ -486,6 +489,7 @@
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="TransactionId" Type="Guid" />
+          <Property Name="BatchId" Type="Int32" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -751,6 +755,7 @@
           <EntitySetMapping Name="BatchUploads">
             <EntityTypeMapping TypeName="CardPeakModel.BatchUpload">
               <MappingFragment StoreEntitySet="BatchUpload">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ProcessedRecords" ColumnName="ProcessedRecords" />
@@ -766,6 +771,7 @@
           <EntitySetMapping Name="DebitCreditTransactions">
             <EntityTypeMapping TypeName="CardPeakModel.DebitCreditTransaction">
               <MappingFragment StoreEntitySet="DebitCreditTransaction">
+                <ScalarProperty Name="BatchId" ColumnName="BatchId" />
                 <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

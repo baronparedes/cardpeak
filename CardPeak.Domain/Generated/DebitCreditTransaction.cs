@@ -24,6 +24,7 @@ namespace CardPeak.Domain
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.Guid> TransactionId { get; set; }
+        public Nullable<int> BatchId { get; set; }
     
         public virtual Agent Agent { get; set; }
         public virtual Reference TransactionType { get; set; }

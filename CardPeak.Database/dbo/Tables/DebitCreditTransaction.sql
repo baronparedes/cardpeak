@@ -8,6 +8,7 @@
 	[TransactionDateTime] DATETIME NOT NULL DEFAULT GETDATE(), 
 	[IsDeleted] BIT NOT NULL DEFAULT 0, 
 	[TransactionId] UNIQUEIDENTIFIER NULL, 
+	[BatchId] INT NULL,
 	[CreatedBy] VARCHAR(200) NOT NULL DEFAULT SYSTEM_USER, 
 	[CreatedDate] DATETIME NOT NULL DEFAULT GETDATE(), 
 	CONSTRAINT [FK_DebitCreditTransaction_Agent] FOREIGN KEY ([AgentId]) REFERENCES [Agent]([AgentId]), 
