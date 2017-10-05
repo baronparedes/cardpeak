@@ -42,9 +42,9 @@ namespace CardPeak.WebAPI.Controllers
 
         [HttpGet]
         [Route("batch/{id}")]
-        public IHttpActionResult GetTransactionsByBatch(int batchId)
+        public IHttpActionResult GetTransactionsByBatch(int id)
         {
-            var result = this.TransactionService.GetTransactionsByBatch(batchId);
+            var result = this.TransactionService.GetTransactionsByBatch(id);
             if (result == null)
             {
                 this.NotFound();

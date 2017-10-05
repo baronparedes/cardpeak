@@ -22,7 +22,7 @@ export function deleteTransaciton(id: number,
     }
 }
 
-export function getTransactionsStart(client: string,
+export function getTransactionsByClientStart(client: string,
     successCallback: (data: CardPeak.Entities.ApprovalTransaction[]) => void,
     errorCallback?: (e: string) => void) {
 

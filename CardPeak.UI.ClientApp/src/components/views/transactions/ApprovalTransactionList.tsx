@@ -1,15 +1,16 @@
 ﻿import * as React from 'react'
 import * as concat from 'classnames'
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps, ConfirmButton, Currency } from '../../layout'
+import { DataListFiltered, DataListProps, DataItemProps, ConfirmButton, Currency } from '../../layout'
 import { dateFormat } from '../../../helpers/dateHelpers'
 
-type ApprovalTransactionDataList = new () => DataList<CardPeak.Entities.ApprovalTransaction>;
-const ApprovalTransactionDataList = DataList as ApprovalTransactionDataList;
+type ApprovalTransactionDataList = new () => DataListFiltered<CardPeak.Entities.ApprovalTransaction>;
+const ApprovalTransactionDataList = DataListFiltered as ApprovalTransactionDataList;
 
 interface ApprovalTransactionListProps {
     showAgent?: boolean;
     hideAmount?: boolean;
+    hideSearchBar?: boolean;
     onDeleteComplete?: (id: number) => void;
     onDeleteError?: (e: string) => void;
     onDelete?: (id: number,
@@ -132,6 +133,11 @@ class ApprovalTransactionList extends React.Component<DataListProps<CardPeak.Ent
             data: this.props.data
         }
     }
+    componentWillReceiveProps(nextProps: DataListProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps) {
+        if (this.state.data != nextProps.data) {
+            this.setState({ data: nextProps.data });
+        }
+    }
     handleOnDeleteComplete = (id: number) => {
         this.setState({
             data: this.state.data.filter(_ => _.id != id)
@@ -141,6 +147,12 @@ class ApprovalTransactionList extends React.Component<DataListProps<CardPeak.Ent
         return (
             <div>
                 <ApprovalTransactionDataList
+                    predicate={(_, searchString) => {
+                        const clientMatched = _.client.toLowerCase().indexOf(searchString) >= 0;
+                        const productMatched = _.cardCategory.description.toLowerCase().startsWith(searchString);
+                        return clientMatched || productMatched;
+                    }}
+                    hideSearchBar={this.props.hideSearchBar}
                     paged
                     isLoading={this.props.isLoading}
                     renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader hideAmount={this.props.hideAmount} /> }}

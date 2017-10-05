@@ -37,7 +37,8 @@ namespace CardPeak.Repository.EF
                 .Where(_ => !_.IsDeleted)
                 .Where(_ => _.Client.ToLower().Contains(client.ToLower()))
                 .OrderBy(_ => _.Client)
-                .Take(Configurations.MaxTransactionsQuery);
+                .Take(Configurations.MaxTransactionsQuery)
+                .AsNoTracking();
             return result.ToList();
         }
 
@@ -50,7 +51,8 @@ namespace CardPeak.Repository.EF
                 .Where(_ => !_.IsDeleted)
                 .Where(_ => _.BatchId == batchId)
                 .OrderBy(_ => _.Client)
-                .Take(Configurations.MaxTransactionsQuery);
+                .Take(Configurations.MaxTransactionsQuery)
+                .AsNoTracking();
             return result.ToList();
         }
 
