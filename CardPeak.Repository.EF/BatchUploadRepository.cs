@@ -69,7 +69,39 @@ namespace CardPeak.Repository.EF
 
         public bool DeleteBatchUpload(int batchId)
         {
-            return true;
+            try
+            {
+                //TODO: Move this into a stored procedure.
+                var batch = this.Context.BatchUploads
+                    .Single(_ => _.BatchId == batchId);
+
+                var transactions = this.Context.ApprovalTransactions
+                    .Where(_ => _.BatchId == batchId);
+
+                var savings = this.Context.DebitCreditTransactions
+                    .Where(_ => _.BatchId == batchId);
+
+                foreach (var item in transactions)
+                {
+                    item.IsDeleted = true;
+                    this.Context.Entry(item).State = EntityState.Modified;
+                }
+
+                foreach (var item in savings)
+                {
+                    item.IsDeleted = true;
+                    this.Context.Entry(item).State = EntityState.Modified;
+                }
+
+                batch.IsDeleted = true;
+                this.Context.Entry(batch).State = EntityState.Modified;
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
