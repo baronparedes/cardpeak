@@ -182,10 +182,10 @@
     <Content Include="src\components\views\metrics\AgentMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\FindTransactionsContainer.tsx">
+    <Content Include="src\components\views\transactions\FindTransactionsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\FindTransactionsView.tsx">
+    <Content Include="src\components\views\transactions\FindTransactionsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\metrics\MetricsView.tsx">
@@ -254,6 +254,9 @@
     <Content Include="src\components\views\uploads\BatchUploadView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\uploads\BatchListContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\uploads\ManageUploadsActions.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -263,7 +266,7 @@
     <Content Include="src\components\views\uploads\ManageUploadsView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\uploads\UploadsView.tsx">
+    <Content Include="src\components\views\uploads\TransactionsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\img\favicon.ico" />

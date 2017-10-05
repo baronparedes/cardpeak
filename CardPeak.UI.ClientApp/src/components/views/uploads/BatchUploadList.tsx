@@ -1,4 +1,5 @@
 ﻿import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Col, Button, ButtonGroup, Panel } from 'react-bootstrap'
 import { DataListFiltered, DataListProps, DataItemProps, ConfirmButton } from '../../layout'
 
@@ -59,9 +60,13 @@ class BatchUploadRowLayout extends React.Component<DataItemProps<CardPeak.Entiti
                     {
                         this.props.isHeader ? "actions" :
                             <ButtonGroup>
-                                <Button bsStyle="primary">
-                                    <i className="fa fa-table"></i>
-                                </Button>
+                                <ButtonGroup>
+                                    <Link to={"/transactions/batch/" + this.props.item.batchId}>
+                                        <Button bsStyle="primary">
+                                            <i className="fa fa-table"></i>
+                                        </Button>
+                                    </Link>
+                                </ButtonGroup>
                                 <ConfirmButton
                                     useButtonLoading
                                     noButtonLoadingText

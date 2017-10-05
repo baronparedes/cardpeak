@@ -14,11 +14,37 @@ namespace CardPeak.WebAPI.Controllers
             this.TransactionService = new TransactionService(new Repository.EF.CardPeakDbContext());
         }
 
-        [HttpGet]
-        [Route("{clientName}")]
-        public IHttpActionResult GetTransactions(string clientName)
+        [HttpPost]
+        [Route("delete/{id}")]
+        public IHttpActionResult Delete(int id)
         {
-            var result = this.TransactionService.GetTransactions(clientName);
+            var result = this.TransactionService.DeleteTransaction(id);
+            if (!result)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(id);
+        }
+
+        [HttpGet]
+        [Route("client/{clientName}")]
+        public IHttpActionResult GetTransactionsByClient(string clientName)
+        {
+            var result = this.TransactionService.GetTransactionsByClient(clientName);
+            if (result == null)
+            {
+                this.NotFound();
+            }
+
+            return this.Ok(result);
+        }
+
+        [HttpGet]
+        [Route("batch/{id}")]
+        public IHttpActionResult GetTransactionsByBatch(int batchId)
+        {
+            var result = this.TransactionService.GetTransactionsByBatch(batchId);
             if (result == null)
             {
                 this.NotFound();

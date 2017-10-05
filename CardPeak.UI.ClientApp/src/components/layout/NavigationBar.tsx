@@ -56,16 +56,18 @@ export class NavigationBar extends React.Component<{}, undefined> {
             </LinkContainer>
         )
     }
-    renderUploads() {
+    renderTransactions() {
         return (
-            <LinkContainer to="/uploads" onClick={(e) => e.preventDefault()}>
+            <LinkContainer to="/transactions" onClick={(e) => e.preventDefault()}>
                 <NavDropdown
-                    title={<NavLinkText text="Uploads" fa="fa-upload" />}
+                    title={<NavLinkText text="Transactions" fa="fa-upload" />}
                     id="settings-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/uploads" text="Batch Upload" fa="fa-table" />
+                    <MenuItemLinkContainer exact to="/transactions/upload" text="Batch Upload" fa="fa-table" />
                     <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/uploads/manage" text="Manage" fa="fa-tasks" />
-                    <MenuItemLinkContainer exact to="/uploads/config" text="Configure" fa="fa-wrench" />
+                    <MenuItemLinkContainer exact to="/transactions/history" text="Find Transactions" fa="fa-search" />
+                    <MenuItemLinkContainer exact to="/transactions/batch" text="Manage Batch" fa="fa-tasks" />
+                    <MenuItem divider />
+                    <MenuItemLinkContainer exact to="/transactions/upload/config" text="Configure" fa="fa-wrench" />
                 </NavDropdown>
             </LinkContainer>
         )
@@ -89,8 +91,6 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     title={<NavLinkText text="Metrics" fa="fa-bar-chart" />}
                     id="metrics-nav-dropdown">
                     <MenuItemLinkContainer exact to="/metrics/agents" text="Agents" fa="fa-users" />
-                    <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/metrics/history" text="Find Transactions" fa="fa-search" />
                 </NavDropdown>
             </LinkContainer>
         )
@@ -104,7 +104,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                         <NavItemLinkContainer exact to="/" text="Dashboard" fa="fa-area-chart" />
                         {this.renderMetrics()}
                         {this.renderAgents()}
-                        {this.renderUploads()}
+                        {this.renderTransactions()}
                         {this.renderSettings()}
                     </Nav>
                 </Navbar.Collapse>

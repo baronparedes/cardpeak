@@ -5,6 +5,8 @@ namespace CardPeak.Core.Service
 {
     public interface ITransactionService : IUnitOfWork
     {
-        IEnumerable<ApprovalTransaction> GetTransactions(string clientName);
+        IEnumerable<ApprovalTransaction> GetTransactionsByClient(string clientName);
+        IEnumerable<ApprovalTransaction> GetTransactionsByBatch(int batchId);
+        bool DeleteTransaction(int id);
     }
 }

@@ -105,7 +105,7 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
                 </Panel>
                 {
                     this.state.isLoading ? <SpinnerBlock /> :
-                        <ApprovalTransactionList data={this.state.transactions} showAgent hideAmount />
+                        <ApprovalTransactionList data={this.state.transactions} showAgent hideAmount onDelete={this.props.actions.deleteTransaciton} />
                 }
             </div>
         )

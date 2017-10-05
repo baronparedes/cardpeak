@@ -41,6 +41,19 @@ namespace CardPeak.Repository.EF
             return result.ToList();
         }
 
+        public IEnumerable<ApprovalTransaction> FindByBatch(int batchId)
+        {
+            var result = this.Context.ApprovalTransactions
+                .Include(_ => _.Agent)
+                .Include(_ => _.Bank)
+                .Include(_ => _.CardCategory)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.BatchId == batchId)
+                .OrderBy(_ => _.Client)
+                .Take(Configurations.MaxTransactionsQuery);
+            return result.ToList();
+        }
+
         public override IEnumerable<ApprovalTransaction> Find(Expression<Func<ApprovalTransaction, bool>> predicate)
         {
             return this.Context.Set<ApprovalTransaction>()
@@ -67,6 +80,31 @@ namespace CardPeak.Repository.EF
                 .OrderBy(_ => _.Description);
 
             return query;
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                var transaction = this.Context.ApprovalTransactions.Single(_ => _.Id == id);
+                if (transaction.TransactionId != null)
+                {
+                    var savings = this.Context.DebitCreditTransactions
+                        .Single(_ => _.TransactionId == transaction.TransactionId);
+
+                    savings.IsDeleted = true;
+                    this.Context.Entry(savings).State = EntityState.Modified;
+                }
+
+                transaction.IsDeleted = true;
+                this.Context.Entry(transaction).State = EntityState.Modified;
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

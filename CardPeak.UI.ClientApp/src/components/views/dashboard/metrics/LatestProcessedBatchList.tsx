@@ -1,4 +1,5 @@
 ﻿import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import { DataList, DataListProps, DataItemProps } from '../../../layout'
 
@@ -29,9 +30,11 @@ const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.Ba
                 {
                     props.isHeader ? null :
                         props.item.hasErrors ? null :
-                            <Button bsStyle="primary">
-                                <i className="fa fa-table"></i>
-                            </Button>
+                            <Link to={"/transactions/batch/" + props.item.batchId}>
+                                <Button bsStyle="primary">
+                                    <i className="fa fa-table"></i>
+                                </Button>
+                            </Link>
                 }
             </Col>
         </Row>
