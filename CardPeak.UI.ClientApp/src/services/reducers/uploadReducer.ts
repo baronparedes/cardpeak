@@ -2,6 +2,11 @@
 import { UPLOAD_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.BatchUploadModel = {
+    batchUploads: []
+}
+
+function removeBatch(data: CardPeak.Entities.BatchUpload[], id: number): CardPeak.Entities.BatchUpload[] {
+    return data.filter(_ => _.batchId != id);
 }
 
 export default handleActions<CardPeak.Models.BatchUploadModel, any>({
@@ -105,6 +110,44 @@ export default handleActions<CardPeak.Models.BatchUploadModel, any>({
             ...state,
             postingBatchFileConfiguration: undefined,
             selectedBatchFileConfiguration: action.payload
+        }
+    },
+    [UPLOAD_ACTIONS.MANAGE_UPLOADS]: (state, action) => {
+        return {
+            ...state,
+            loadingBatchUploads: true
+        }
+    },
+    [UPLOAD_ACTIONS.MANAGE_UPLOADS_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            batchUploads: action.payload,
+            loadingBatchUploads: undefined
+        }
+    },
+    [UPLOAD_ACTIONS.MANAGE_UPLOADS_ERROR]: (state, action) => {
+        return {
+            ...state,
+            loadingBatchUploads: undefined
+        }
+    },
+    [UPLOAD_ACTIONS.DELETE_BATCH]: (state, action) => {
+        return {
+            ...state,
+            deletingBatch: true
+        }
+    },
+    [UPLOAD_ACTIONS.DELETE_BATCH_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            deletingBatch: undefined,
+            batchUploads: removeBatch(state.batchUploads, action.payload)
+        }
+    },
+    [UPLOAD_ACTIONS.DELETE_BATCH_ERROR]: (state, action) => {
+        return {
+            ...state,
+            deletingBatch: undefined
         }
     }
 }, initialState);

@@ -40,6 +40,9 @@
         selectedBatchFileConfiguration?: CardPeak.Entities.BatchFileConfiguration;
         loadingBatchFileConfiguration?: boolean;
         postingBatchFileConfiguration?: boolean;
+        batchUploads?: CardPeak.Entities.BatchUpload[];
+        loadingBatchUploads?: boolean;
+        deletingBatch?: boolean;
     }
 
     export interface DashboardModel {

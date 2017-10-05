@@ -24,6 +24,42 @@ export const postBatchFileConfig = createAction(UPLOAD_ACTIONS.POST_BATCH_FILE_C
 export const postBatchFileConfigComplete = createAction<CardPeak.Entities.BatchFileConfiguration>(UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG_COMPLETE);
 export const postBatchFileConfigError = createAction(UPLOAD_ACTIONS.POST_BATCH_FILE_CONFIG_ERROR);
 
+export const manageUploads = createAction(UPLOAD_ACTIONS.MANAGE_UPLOADS);
+export const manageUploadsComplete = createAction<CardPeak.Entities.BatchUpload[]>(UPLOAD_ACTIONS.MANAGE_UPLOADS_COMPLETE);
+export const manageUploadsError = createAction<string>(UPLOAD_ACTIONS.MANAGE_UPLOADS_ERROR);
+
+export const deleteBatch = createAction(UPLOAD_ACTIONS.DELETE_BATCH);
+export const deleteBatchComplete = createAction<number>(UPLOAD_ACTIONS.DELETE_BATCH_COMPLETE);
+export const deleteBatchError = createAction(UPLOAD_ACTIONS.DELETE_BATCH_ERROR);
+
+export function deleteBatchStart(id: number, deleteComplete: () => void) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(deleteBatch());
+        uploadController.deleteBatch(id,
+            (data: number) => {
+                dispatch(deleteBatchComplete(data));
+                deleteComplete();
+            },
+            (e: string) => {
+                dispatch(deleteBatchError());
+                deleteComplete();
+            });
+    }
+}
+
+export function manageUploadsStart(startDate: string, endDate?: string) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(manageUploads());
+        uploadController.manageUploads(startDate, endDate,
+        (data: CardPeak.Entities.BatchUpload[]) => {
+            dispatch(manageUploadsComplete(data));
+        },
+        (e: string) => {
+            dispatch(manageUploadsError(e));
+        });
+    }
+}
+
 export function postBatchFileConfigStart(data: CardPeak.Entities.BatchFileConfiguration, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(postBatchFileConfig());

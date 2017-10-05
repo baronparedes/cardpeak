@@ -281,6 +281,7 @@ namespace CardPeak.Processor.Excel
                                 Agent = null,
                                 TransactionType = null,
                                 AgentId = splitTransaction.ApprovalTransaction.AgentId,
+                                BatchId = splitTransaction.ApprovalTransaction.BatchId,
                                 Amount = rate.SavingsAmount,
                                 TransactionDateTime = DateTime.Now,
                                 TransactionTypeId = (int)Domain.Enums.TransactionTypeEnum.SavingsTransaction,

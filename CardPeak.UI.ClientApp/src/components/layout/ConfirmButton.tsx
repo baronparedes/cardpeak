@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ButtonGroup } from 'react-bootstrap'
 import { ModalConfirm, ButtonLoading } from '.'
 
 interface ConfirmButtonProps {
@@ -14,6 +14,7 @@ interface ConfirmButtonProps {
     disabled?: boolean;
     className?: string;
     useButtonLoading?: boolean;
+    noButtonLoadingText?: boolean;
 }
 
 interface ConfirmButtonState {
@@ -46,26 +47,32 @@ export class ConfirmButton extends React.Component<ConfirmButtonProps, ConfirmBu
         }
     }
     render() {
+        let button = null;
+        if (this.props.useButtonLoading) {
+            button = <ButtonLoading
+                className={this.props.className}
+                noText={this.props.noButtonLoadingText}
+                bsStyle={this.props.bsStyle}
+                disabled={this.props.disabled}
+                isLoading={this.props.isLoading}
+                label={this.props.buttonLabel}
+                onClick={this.handleOnToggleModal}>
+            </ButtonLoading>;
+        }
+        else {
+            button = <Button
+                disabled={this.props.disabled}
+                className={this.props.className}
+                type="button"
+                bsStyle={this.props.bsStyle}
+                onClick={this.handleOnToggleModal}>
+                {this.props.buttonLabel}
+            </Button>;
+        }
+
         return (
-            <div className="confirm-button">
-                {
-                    this.props.useButtonLoading ?
-                        <ButtonLoading
-                            className={this.props.className}
-                            bsStyle={this.props.bsStyle}
-                            disabled={this.props.disabled}
-                            isLoading={this.props.isLoading}
-                            label={this.props.buttonLabel}
-                            onClick={this.handleOnToggleModal} /> :
-                        <Button
-                            disabled={this.props.disabled}
-                            className={this.props.className}
-                            type="button"
-                            bsStyle={this.props.bsStyle}
-                            onClick={this.handleOnToggleModal}>
-                            {this.props.buttonLabel}
-                        </Button>
-                }
+            <ButtonGroup>
+                {button}
                 <ModalConfirm
                     title={this.props.confirmTitle}
                     showModal={this.state.showConfirmModal}
@@ -74,7 +81,7 @@ export class ConfirmButton extends React.Component<ConfirmButtonProps, ConfirmBu
 
                     {this.props.confirmMessage ? this.props.confirmMessage : this.props.children}
                 </ModalConfirm>
-            </div>
-        )
+            </ButtonGroup>
+        );
     }
 }

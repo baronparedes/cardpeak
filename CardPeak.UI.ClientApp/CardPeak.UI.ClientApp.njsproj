@@ -248,7 +248,19 @@
     <Content Include="src\components\views\uploads\BatchUploadDetailInfo.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\uploads\BatchUploadList.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\uploads\BatchUploadView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\ManageUploadsActions.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\ManageUploadsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\ManageUploadsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\uploads\UploadsView.tsx">

@@ -117,5 +117,20 @@ namespace CardPeak.Service
             this.Complete();
             return result;
         }
+
+        public IEnumerable<BatchUpload> GetProcessedBatchUploads(DateTime startDate, DateTime? endDate)
+        {
+            return this.BatchUploadRepository.GetProcessedBatchUploads(startDate, endDate);
+        }
+
+        public bool Delete(int id)
+        {
+            var result = this.BatchUploadRepository.DeleteBatchUpload(id);
+            if (result)
+            {
+                this.Complete();
+            }
+            return result;
+        }
     }
 }
