@@ -59,6 +59,9 @@ class BatchUploadRowLayout extends React.Component<DataItemProps<CardPeak.Entiti
                     {
                         this.props.isHeader ? "actions" :
                             <ButtonGroup>
+                                <Button bsStyle="primary">
+                                    <i className="fa fa-table"></i>
+                                </Button>
                                 <ConfirmButton
                                     useButtonLoading
                                     noButtonLoadingText

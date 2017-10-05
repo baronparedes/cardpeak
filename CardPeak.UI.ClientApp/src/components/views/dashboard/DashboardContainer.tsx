@@ -61,7 +61,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
                 <Row>
                     <Col sm={6}>
                         <Panel>
-                            <TopAgentList data={this.props.topAgents} />
+                            <TopAgentList data={this.props.topAgents} allAgents={this.props.allAgents} />
                         </Panel>
                     </Col>
                     <Col sm={6}>

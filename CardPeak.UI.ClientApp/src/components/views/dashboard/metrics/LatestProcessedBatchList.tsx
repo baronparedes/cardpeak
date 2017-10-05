@@ -15,18 +15,24 @@ const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.Ba
                 <span className="grid-label text-center spacer-left">latest uploads</span>
             </Col>
             <Col sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "batch id" : props.item.batchId}
+                {props.isHeader ? "id" : props.item.batchId}
             </Col>
-            <Col sm={4} xsHidden={props.isHeader}>
-                {props.isHeader ? "bank" : props.item.bank.description}
+            <Col sm={6} xsHidden={props.isHeader}>
+                {props.isHeader ? "file" : props.item.originalFileName}
             </Col>
-            <Col sm={3} xsHidden={props.isHeader}>
-                {props.isHeader ? "rows" : props.item.processedRecords ? props.item.processedRecords : null}
-            </Col>
-            <Col sm={3} xsHidden={props.isHeader}>
+            <Col sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "completed" : null}
                 {!props.isHeader && props.item.hasErrors === true ? <span className="text-highlight text-danger">No</span> : null}
                 {!props.isHeader && props.item.hasErrors === false ? <span className="text-highlight text-success">Yes</span> : null}
+            </Col>
+            <Col sm={2} xsHidden={props.isHeader}>
+                {
+                    props.isHeader ? null :
+                        props.item.hasErrors ? null :
+                            <Button bsStyle="primary">
+                                <i className="fa fa-table"></i>
+                            </Button>
+                }
             </Col>
         </Row>
     )

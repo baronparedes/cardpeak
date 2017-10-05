@@ -69,8 +69,6 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                                 const lastNameMatch = agent.key.lastName.toLowerCase().indexOf(searchString) >= 0;
                                 return firstNameMatch || lastNameMatch;
                             }}
-                            paged
-                            pageSize={20}
                             onGetKey={(item) => item.key.agentId}
                             renderHeader={() => { return <AgentMetricsRowLayout isHeader /> }}
                             renderItem={(item, key) => {

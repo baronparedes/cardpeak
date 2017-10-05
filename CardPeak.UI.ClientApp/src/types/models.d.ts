@@ -54,6 +54,7 @@
         approvalsByCategory?: CardPeak.Entities.ApprovalMetric<string>[];
         performance?: CardPeak.Entities.ApprovalMetric<string>[];
         topAgents?: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[];
+        allAgents?: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[];
         approvalsByBankDetails?: any;
         availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
         refreshing?: boolean;

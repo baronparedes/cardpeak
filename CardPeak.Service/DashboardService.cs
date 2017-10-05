@@ -1,9 +1,11 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Core.Service;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
 using CardPeak.Repository.EF;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CardPeak.Service
 {
@@ -30,6 +32,7 @@ namespace CardPeak.Service
             year = year ?? DateTime.Now.Year;
             month = month ?? 0;
 
+            var agents = this.ApprovalTransactionDashboardRepository.GetTopAgents(year.Value, month.Value);
             var result = new Dashboard
             {
                 LatestProcessedBatch = this.BatchUploadRepository.GetLatestProcessed(),
@@ -40,7 +43,8 @@ namespace CardPeak.Service
                 SavingsBalance = this.DebitCreditTransactionRepository.GetSavingsBalance(year.Value, month.Value),
                 TotalApprovals = this.ApprovalTransactionDashboardRepository.GetTotalApprovals(year.Value, month.Value),
                 Performance = this.ApprovalTransactionDashboardRepository.GetYearlyPerformance(year.Value),
-                TopAgents = this.ApprovalTransactionDashboardRepository.GetTopAgents(year.Value, month.Value),
+                TopAgents = agents.Take(Configurations.TopAgentCount),
+                AllAgents = agents,
                 ApprovalsByBankDetails = this.ApprovalTransactionDashboardRepository.GetApprovalsByBankDetails(year.Value, month.Value),
                 AvailableYears = this.ApprovalTransactionDashboardRepository.GetAvailableYears()
             };
