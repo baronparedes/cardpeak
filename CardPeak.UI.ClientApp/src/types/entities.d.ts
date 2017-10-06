@@ -146,6 +146,7 @@
     }
 
     export class AgentRankMetric {
+        public rank: number;
         public key: Agent;
         public value: number;
         public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];

@@ -15,8 +15,7 @@ import {
 type AgentMetricsDataListFiltered = new () => DataListFiltered<CardPeak.Entities.AgentApprovalMetric>;
 const AgentMetricsDataListFiltered = DataListFiltered as AgentMetricsDataListFiltered;
 
-
-interface AgentMetricsListContainerDispatchProps {
+interface AgentMetricsContainerDispatchProps {
     actions?: typeof Actions
 }
 
@@ -63,8 +62,8 @@ const AgentMetricsTotals: React.StatelessComponent<CardPeak.Models.MetricsModel>
     )
 }
 
-class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsModel & AgentMetricsListContainerDispatchProps, undefined> {
-    constructor(props: CardPeak.Models.MetricsModel & AgentMetricsListContainerDispatchProps) {
+class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentMetricsContainerDispatchProps, undefined> {
+    constructor(props: CardPeak.Models.MetricsModel & AgentMetricsContainerDispatchProps) {
         super(props);
     }
     componentDidMount() {
@@ -77,7 +76,7 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                 <YearMonthAction
                     label="agent metrics"
                     availableYears={this.props.availableYears}
-                    refreshing={this.props.loadingAgentMetrics}
+                    refreshing={this.props.loadingMetrics}
                     onRefresh={this.props.actions.getAgentMetricsStart} />
                 <br />
                 <Grid className="no-padding">
@@ -94,7 +93,7 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                             renderItem={(item, key) => {
                                 return <AgentMetricsRowLayout item={item} key={key} />
                             }}
-                            isLoading={this.props.loadingAgentMetrics}
+                            isLoading={this.props.loadingMetrics}
                             data={this.props.agentMetrics.agentApprovalMetrics} />
                     </Row>
                 </Grid>
@@ -107,10 +106,10 @@ const mapStateToProps = (state: RootState): CardPeak.Models.MetricsModel => ({
     ...state.metricsModel,
 })
 
-const mapDispatchToProps = (dispatch: any): AgentMetricsListContainerDispatchProps => {
+const mapDispatchToProps = (dispatch: any): AgentMetricsContainerDispatchProps => {
     return {
         actions: bindActionCreators(Actions as any, dispatch)
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgentMetricsListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AgentMetricsContainer);

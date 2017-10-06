@@ -112,7 +112,7 @@ export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCr
     }
 }
 
-export function getAllAgentsStart(completedCallback: (data: CardPeak.Entities.Agent[]) => void = null) {
+export function getAllAgentsStart(completedCallback?: (data: CardPeak.Entities.Agent[]) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(getAllAgents());
         agentsController.getAll((data: CardPeak.Entities.Agent[]) => {

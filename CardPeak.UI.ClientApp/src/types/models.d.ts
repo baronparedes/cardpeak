@@ -61,7 +61,8 @@
 
     export interface MetricsModel {
         availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
-        loadingAgentMetrics?: boolean;
+        loadingMetrics?: boolean;
         agentMetrics?: CardPeak.Entities.AgentMetrics;
+        agentRankingMetrics?: CardPeak.Entities.AgentRankMetric[];
     }
 }

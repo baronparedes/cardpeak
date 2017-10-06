@@ -13,11 +13,18 @@ namespace CardPeak.Repository.EF
         {
         }
 
+        private IQueryable<Reference> QueryReference(Domain.Enums.ReferenceTypeEnum referenceType)
+        {
+            var query = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)referenceType)
+                .OrderBy(_ => _.Description);
+
+            return query;
+        }
+
         private IQueryable<ApprovalTransaction> QueryDashboard(int year, int month)
         {
             var query = this.Context.ApprovalTransactions
-                .Include(_ => _.Bank)
-                .Include(_ => _.CardCategory)
                 .Where(_ => _.ApprovalDate.Year == year)
                 .Where(_ => !_.IsDeleted);
 
@@ -121,15 +128,44 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<AgentRankMetric> GetAgentRankings(int year, int month)
         {
-            return new List<AgentRankMetric> { new AgentRankMetric() };
-            //var result = this.QueryDashboard(year, month)
-            //    .Include(_ => _.Agent)
-            //    .GroupBy(_ => _.AgentId)
-            //    .OrderByDescending(_ => _.Sum(t => t.Units))
-            //    .Select(_ => new ApprovalMetric<Agent> { Key = _.FirstOrDefault().Agent, Value = _.Sum(t => t.Units) })
-            //    .ToList();
+            var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
+                .AsNoTracking()
+                .ToList();
 
-            //return result;
+            var metrics = this.QueryDashboard(year, month)
+                .Include(_ => _.Bank)
+                .Include(_ => _.Agent)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .OrderByDescending(_ => _.Sum(t => t.Units))
+                .ToList();
+
+            var rank = 1;
+            var result = new List<AgentRankMetric>();
+            foreach (var agent in metrics)
+            {
+                var approvalsByBank = banks.ToDictionary(_ => _.Description, _ => 0m);
+                agent.GroupBy(_ => _.BankId)
+                    .Select(_ => new
+                    {
+                        BankId = _.FirstOrDefault().BankId,
+                        Approvals = _.Sum(t => t.Units)
+                    }).ToList().ForEach(bank => {
+                        var bankName = banks.Single(_ => _.ReferenceId == bank.BankId).Description;
+                        approvalsByBank[bankName] = bank.Approvals;
+                    });
+
+                var agentRankMetric = new AgentRankMetric()
+                {
+                    Rank = rank++,
+                    Key = agent.FirstOrDefault().Agent,
+                    Value = agent.Sum(_ => _.Units),
+                    ApprovalsByBank = approvalsByBank.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
+                };
+
+                result.Add(agentRankMetric);
+            }
+
+            return result;
         }
     }
 }

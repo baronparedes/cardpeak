@@ -182,6 +182,9 @@
     <Content Include="src\components\views\metrics\AgentMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\metrics\AgentRankingMetricsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\metrics\AgentRankingMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -328,7 +331,7 @@
     <TypeScriptCompile Include="src\components\views\dashboard\metrics\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\components\views\metrics\AgentMetricsListContainer.tsx">
+    <TypeScriptCompile Include="src\components\views\metrics\AgentMetricsContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\uploads\BatchUploadDetail.tsx">

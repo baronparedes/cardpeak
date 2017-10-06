@@ -8,6 +8,7 @@ namespace CardPeak.Domain
 {
     public sealed class AgentRankMetric : ApprovalMetric<Agent>
     {
+        public int Rank { get; set; }
         public IEnumerable<ApprovalMetric<string>> ApprovalsByBank { get; set; }
     }
 }
