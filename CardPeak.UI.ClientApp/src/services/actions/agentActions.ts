@@ -20,6 +20,23 @@ export const postAgent = createAction(AGENT_ACTIONS.POST_AGENT);
 export const postAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.POST_AGENT_COMPLETE);
 export const postAgentError = createAction(AGENT_ACTIONS.POST_AGENT_ERROR);
 
+export function selectAgentById(id: number, successCallback: (agent: CardPeak.Entities.Agent) => void) {
+    return (dispatch: (e: any) => void, getState: () => RootState) => {
+        let agent: CardPeak.Entities.Agent = undefined;
+        const agents = getState().agentDashboardModel.agents;
+        if (!agents) {
+            dispatch(getAllAgentsStart((data: CardPeak.Entities.Agent[]) => {
+                agent = data.filter(_ => _.agentId == id)[0];
+                successCallback(agent);
+            }));
+        }
+        else {
+            agent = agents.filter(_ => _.agentId == id)[0];
+            successCallback(agent);
+        }
+    }
+}
+
 export function getAccounts(agentId: number, successCallback:(data: CardPeak.Entities.Account[]) => void) {
     return (dispatch: (e: any) => void) => {
         let selectAgentAction = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.SELECT_AGENT);
@@ -95,11 +112,14 @@ export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCr
     }
 }
 
-export function getAllAgentsStart() {
+export function getAllAgentsStart(completedCallback: (data: CardPeak.Entities.Agent[]) => void = null) {
     return (dispatch: (e: any) => void) => {
         dispatch(getAllAgents());
         agentsController.getAll((data: CardPeak.Entities.Agent[]) => {
             dispatch(getAllAgentsComplete(data));
+            if (completedCallback) {
+                completedCallback(data);
+            }
         });
     }
 }

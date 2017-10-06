@@ -19,11 +19,19 @@ interface AgentDashboardContainerState {
     showModal: boolean;
 }
 
-class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps, AgentDashboardContainerState>{
-    constructor(props: CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps) {
+class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & { match: any, history: any }, AgentDashboardContainerState>{
+    constructor(props: CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & { match: any, history: any },) {
         super(props);
         this.state = {
             showModal: false
+        }
+    }
+    componentDidMount() {
+        if (this.props.match.params.id) {
+            this.props.actions.selectAgentById(this.props.match.params.id, (agent: CardPeak.Entities.Agent) => {
+                this.props.actions.selectAgent(agent);
+                this.props.actions.selectAgentDashboardStart();
+            });;
         }
     }
     handleToggleModal = () => {
@@ -37,8 +45,11 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashb
     }
     handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
         this.handleToggleModal();
+        if (this.props.history) {
+            this.props.history.push("/agents/" + agent.agentId);
+        }
         this.props.actions.selectAgent(agent);
-        this.props.actions.selectAgentDashboardStart();;
+        this.props.actions.selectAgentDashboardStart();
     }
     render() {
         return (

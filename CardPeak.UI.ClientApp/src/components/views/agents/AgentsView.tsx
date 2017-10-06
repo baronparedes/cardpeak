@@ -9,9 +9,10 @@ const AgentsView: React.StatelessComponent<{ match: any }> = (props) => {
     return (
         <div>
             <Switch>
+                <Route exact path={props.match.url + "/update"} component={UpdateAgentView} />
+                <Route exact path={props.match.url + "/create"} component={AddAgentView} />
                 <Route exact path={props.match.url} component={AgentDashboardContainer} />
-                <Route path={props.match.url + "/update"} component={UpdateAgentView} />
-                <Route path={props.match.url + "/create"} component={AddAgentView} />
+                <Route exact path={props.match.url + "/:id"} component={AgentDashboardContainer} />
                 <Route component={NotFound} />
             </Switch>
         </div>
