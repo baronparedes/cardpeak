@@ -14,11 +14,14 @@ interface ReferenceListProps {
 const ReferenceRowLayout = (props: DataItemProps<CardPeak.Entities.Reference> & ReferenceListProps) => {
     return (
         <Row>
-            <Col md={2} lg={2} sm={3} xs={3}>
+            <Col sm={3}>
                 {props.isHeader ? "id" : props.item.referenceId}
             </Col>
-            <Col md={8} lg={8} sm={7} xs={7}>
+            <Col sm={6}>
                 {props.isHeader ? "description" : props.item.description}
+            </Col>
+            <Col sm={3}>
+                {props.isHeader ? "" : props.item.shortDescription}
             </Col>
         </Row>
     )

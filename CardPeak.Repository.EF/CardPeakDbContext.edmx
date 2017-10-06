@@ -119,6 +119,7 @@
           <Property Name="ReferenceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ReferenceTypeId" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="ReferenceType">
           <Key>
@@ -515,6 +516,7 @@
           <Property Name="ReferenceTypeId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ReferenceType" Relationship="CardPeakModel.FK_Reference_ReferenceType" FromRole="Reference" ToRole="ReferenceType" />
+          <Property Name="ShortDescription" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ReferenceType">
           <Key>
@@ -800,6 +802,7 @@
           <EntitySetMapping Name="References">
             <EntityTypeMapping TypeName="CardPeakModel.Reference">
               <MappingFragment StoreEntitySet="Reference">
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ReferenceTypeId" ColumnName="ReferenceTypeId" />
                 <ScalarProperty Name="ReferenceId" ColumnName="ReferenceId" />

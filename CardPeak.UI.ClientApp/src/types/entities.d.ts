@@ -65,6 +65,7 @@
         public referenceId: number;
         public referenceTypeId: number;
         public description: string;
+        public shortDescription: string;
     }
 
     export class Rate {

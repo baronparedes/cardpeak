@@ -55,7 +55,6 @@
     <Compile Include="AgentRankMetric.cs" />
     <Compile Include="BatchUpload.partial.cs" />
     <Compile Include="Constants\ApprovalFileFields.cs" />
-    <Compile Include="Constants\CardCategory.cs" />
     <Compile Include="Constants\Configurations.cs" />
     <Compile Include="Dashboard.cs" />
     <Compile Include="Enums\ReferenceTypeEnum.cs" />

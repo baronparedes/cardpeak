@@ -9,10 +9,11 @@
 
 namespace CardPeak.Repository.EF
 {
-    using CardPeak.Domain;
+    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    using CardPeak.Domain;
+    
     public partial class CardPeakDbContext : DbContext
     {
         public CardPeakDbContext()

@@ -143,14 +143,14 @@ namespace CardPeak.Repository.EF
             var result = new List<AgentRankMetric>();
             foreach (var agent in metrics)
             {
-                var approvalsByBank = banks.ToDictionary(_ => _.Description, _ => 0m);
+                var approvalsByBank = banks.ToDictionary(_ => _.ShortDescription, _ => 0m);
                 agent.GroupBy(_ => _.BankId)
                     .Select(_ => new
                     {
                         BankId = _.FirstOrDefault().BankId,
                         Approvals = _.Sum(t => t.Units)
                     }).ToList().ForEach(bank => {
-                        var bankName = banks.Single(_ => _.ReferenceId == bank.BankId).Description;
+                        var bankName = banks.Single(_ => _.ReferenceId == bank.BankId).ShortDescription;
                         approvalsByBank[bankName] = bank.Approvals;
                     });
 

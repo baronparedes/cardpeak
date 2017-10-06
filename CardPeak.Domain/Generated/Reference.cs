@@ -17,6 +17,7 @@ namespace CardPeak.Domain
         public int ReferenceId { get; set; }
         public int ReferenceTypeId { get; set; }
         public string Description { get; set; }
+        public string ShortDescription { get; set; }
     
         public virtual ReferenceType ReferenceType { get; set; }
     }
