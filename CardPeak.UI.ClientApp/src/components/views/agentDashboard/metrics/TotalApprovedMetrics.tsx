@@ -1,23 +1,11 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
+import { DashboardLabel } from '../../../layout'
 
 export const TotalApprovedMetrics = (props: { totalApprovals: number }) => {
     return (
-        <Panel className="text-center panel-agent-dashboard">
-            <Grid fluid>
-                <Row>
-                    <Col>
-                        <label className="text-label text-muted spacer-right">
-                            Total Approvals to Date
-                        </label>
-                    </Col>
-                    <Col>
-                        <span className="text-highlight">
-                            {props.totalApprovals}
-                        </span>
-                    </Col>
-                </Row>
-            </Grid>
+        <Panel className="panel-label-dashboard">
+            <DashboardLabel className="pull-right" label="approvals" metrics={props.totalApprovals} />
         </Panel>
     )
 }

@@ -1,4 +1,5 @@
 ﻿using CardPeak.Domain;
+using System;
 using System.Collections.Generic;
 
 namespace CardPeak.Core.Repository
@@ -8,5 +9,7 @@ namespace CardPeak.Core.Repository
         void StartBatchProcess(BatchUpload batch);
         void EndBatchProcess(BatchUpload batch);
         IEnumerable<BatchUpload> GetLatestProcessed();
+        bool DeleteBatchUpload(int batchId);
+        IEnumerable<BatchUpload> GetProcessedBatchUploads(DateTime startDate, DateTime? endDate);
     }
 }

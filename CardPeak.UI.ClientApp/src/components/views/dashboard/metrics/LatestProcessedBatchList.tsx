@@ -1,6 +1,7 @@
 ﻿import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps } from '../../../layout'
+import { DataList, DataListProps, DataItemProps, BatchLinkButton, ManageBatchLinkButton } from '../../../layout'
 
 type LatestProcessedBatchDataList = new () => DataList<CardPeak.Entities.BatchUpload>;
 const LatestProcessedBatchDataList = DataList as LatestProcessedBatchDataList;
@@ -15,18 +16,22 @@ const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.Ba
                 <span className="grid-label text-center spacer-left">latest uploads</span>
             </Col>
             <Col sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "batch id" : props.item.batchId}
+                {props.isHeader ? "id" : props.item.batchId}
             </Col>
-            <Col sm={4} xsHidden={props.isHeader}>
-                {props.isHeader ? "bank" : props.item.bank.description}
+            <Col sm={6} xsHidden={props.isHeader}>
+                {props.isHeader ? "file" : props.item.originalFileName}
             </Col>
-            <Col sm={3} xsHidden={props.isHeader}>
-                {props.isHeader ? "rows" : props.item.processedRecords ? props.item.processedRecords : null}
-            </Col>
-            <Col sm={3} xsHidden={props.isHeader}>
+            <Col sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "completed" : null}
                 {!props.isHeader && props.item.hasErrors === true ? <span className="text-highlight text-danger">No</span> : null}
                 {!props.isHeader && props.item.hasErrors === false ? <span className="text-highlight text-success">Yes</span> : null}
+            </Col>
+            <Col sm={2} xsHidden={props.isHeader}>
+                {
+                    props.isHeader ? null :
+                        props.item.hasErrors ? null :
+                            <BatchLinkButton id={props.item.batchId} />
+                }
             </Col>
         </Row>
     )
@@ -45,6 +50,9 @@ export const LatestProcessedBatchList = (props: DataListProps<CardPeak.Entities.
                 renderHeader={() => { return <LatestProcessedBatchRowLayout isHeader /> }}
                 renderItem={(item, key) => { return <LatestProcessedBatchRowLayout item={item} key={key} /> }}
                 data={props.data} />
+            <div className="text-right spacer-top">
+                <ManageBatchLinkButton />
+            </div>
         </div>
     )
 }

@@ -1,7 +1,11 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
+using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF.Core;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace CardPeak.Repository.EF
@@ -12,6 +16,28 @@ namespace CardPeak.Repository.EF
         {
         }
 
+        private IQueryable<Reference> QueryReference(Domain.Enums.ReferenceTypeEnum referenceType)
+        {
+            var query = this.Context.References
+                .Where(_ => _.ReferenceTypeId == (int)referenceType)
+                .OrderBy(_ => _.Description);
+
+            return query;
+        }
+
+        private IQueryable<ApprovalTransaction> QueryDashboard(int year, int month)
+        {
+            var query = this.Context.ApprovalTransactions
+                .Where(_ => _.ApprovalDate.Year == year)
+                .Where(_ => !_.IsDeleted);
+
+            if (month != 0)
+            {
+                query = query.Where(_ => _.ApprovalDate.Month == month);
+            }
+
+            return query;
+        }
 
         private IQueryable<ApprovalTransaction> QueryApprovalTransactionsByYearMonth(int year, int month)
         {
@@ -99,6 +125,93 @@ namespace CardPeak.Repository.EF
                             .DefaultIfEmpty(0)
                             .Sum()
                 });
+
+            return result;
+        }
+
+        public IEnumerable<AgentRankMetric> GetAgentRankings(int year, int month)
+        {
+            var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
+                .AsNoTracking()
+                .ToList();
+
+            var metrics = this.QueryDashboard(year, month)
+                .Include(_ => _.Bank)
+                .Include(_ => _.Agent)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .OrderByDescending(_ => _.Sum(t => t.Units))
+                .ToList();
+
+            var rank = 1;
+            var result = new List<AgentRankMetric>();
+            foreach (var agent in metrics)
+            {
+                var approvalsByBank = banks.ToDictionary(_ => _.ShortDescription, _ => 0m);
+                agent.GroupBy(_ => _.BankId)
+                    .Select(_ => new
+                    {
+                        BankId = _.FirstOrDefault().BankId,
+                        Approvals = _.Sum(t => t.Units)
+                    }).ToList().ForEach(bank => {
+                        var bankName = banks.Single(_ => _.ReferenceId == bank.BankId).ShortDescription;
+                        approvalsByBank[bankName] = bank.Approvals;
+                    });
+
+                var agentRankMetric = new AgentRankMetric()
+                {
+                    Rank = rank++,
+                    Key = agent.FirstOrDefault().Agent,
+                    Value = agent.Sum(_ => _.Units),
+                    ApprovalsByBank = approvalsByBank.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
+                };
+
+                result.Add(agentRankMetric);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<AgentPerformanceMetric> GetAgentPerformanceMetrics(int year)
+        {
+            var startDate = new DateTime(year, 1, 1);
+            var endDate = new DateTime(year, 12, 31);
+            var performanceYear = new Dictionary<string, decimal>();
+
+            for (int i = 1; i <= 12; i++)
+            {
+                performanceYear.Add(new DateTime(year, i, 1).ToString(Configurations.MonthFormat), 0);
+            }
+
+            var metrics = this.QueryDashboard(year, 0)
+                .Include(_ => _.Agent)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .OrderByDescending(_ => _.Sum(t => t.Units))
+                .ToList();
+
+            var rank = 1;
+            var result = new List<AgentPerformanceMetric>();
+            foreach (var agent in metrics)
+            {
+                var approvalsPerMonth = performanceYear.ToDictionary(_ => _.Key, _ => 0m);
+                agent.GroupBy(_ => _.ApprovalDate.Month)
+                    .Select(_ => new
+                    {
+                        Month = _.FirstOrDefault().ApprovalDate.Month,
+                        Approvals = _.Sum(approvals => approvals.Units)
+                    }).ToList().ForEach(item => {
+                        approvalsPerMonth[new DateTime(year, item.Month, 1).ToString(Configurations.MonthFormat)] = item.Approvals;
+                    });
+
+                var agentRankMetric = new AgentPerformanceMetric()
+                {
+                    Rank = rank++,
+                    Key = agent.FirstOrDefault().Agent,
+                    Value = agent.Sum(_ => _.Units),
+                    Performance = approvalsPerMonth.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
+                };
+
+                result.Add(agentRankMetric);
+            }
 
             return result;
         }

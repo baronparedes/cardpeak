@@ -7,10 +7,7 @@ import DashboardView from './views/dashboard/DashboardView'
 import MetricsView from './views/metrics/MetricsView'
 import AgentsView from './views/agents/AgentsView'
 import SettingsView from './views/settings/SettingsView'
-import UploadsView from './views/uploads/UploadsView'
-
-import ReferencesView from './views/settings/ReferencesView'
-
+import TransactionsView from './views/uploads/TransactionsView'
 
 export class AppRouter extends React.Component {
     render() {
@@ -21,7 +18,7 @@ export class AppRouter extends React.Component {
                         <Route exact path="/" component={DashboardView} />
                         <Route path="/metrics" component={MetricsView} />
                         <Route path="/agents" component={AgentsView} />
-                        <Route path="/uploads" component={UploadsView} />
+                        <Route path="/transactions" component={TransactionsView} />
                         <Route path="/settings" component={SettingsView} />
                         <Route component={NotFound} />
                     </Switch>

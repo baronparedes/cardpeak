@@ -3,6 +3,7 @@ import { ThunkAction } from 'redux-thunk'
 import { AGENT_ACTIONS } from '../../constants/actions'
 import { RootState } from '../reducers'
 import * as agentsController from '../api/agentsController'
+import { getAgentPayoutStart } from '../actions/agentPayoutActions'
 
 export const selectAgent = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.SELECT_AGENT);
 export const selectAgentDashboard = createAction(AGENT_ACTIONS.SELECT_AGENT_DASHBOARD);
@@ -19,6 +20,23 @@ export const putAgentError = createAction(AGENT_ACTIONS.PUT_AGENT_ERROR);
 export const postAgent = createAction(AGENT_ACTIONS.POST_AGENT);
 export const postAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.POST_AGENT_COMPLETE);
 export const postAgentError = createAction(AGENT_ACTIONS.POST_AGENT_ERROR);
+
+export function selectAgentById(id: number, successCallback: (agent: CardPeak.Entities.Agent) => void) {
+    return (dispatch: (e: any) => void, getState: () => RootState) => {
+        let agent: CardPeak.Entities.Agent = undefined;
+        const agents = getState().agentDashboardModel.agents;
+        if (!agents) {
+            dispatch(getAllAgentsStart((data: CardPeak.Entities.Agent[]) => {
+                agent = data.filter(_ => _.agentId == id)[0];
+                successCallback(agent);
+            }));
+        }
+        else {
+            agent = agents.filter(_ => _.agentId == id)[0];
+            successCallback(agent);
+        }
+    }
+}
 
 export function getAccounts(agentId: number, successCallback:(data: CardPeak.Entities.Account[]) => void) {
     return (dispatch: (e: any) => void) => {
@@ -83,6 +101,7 @@ export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCr
         dispatch(postAgentTransaction());
         agentsController.postAgentTransaction(transaction, isDebit, (data: CardPeak.Entities.DebitCreditTransaction) => {
             dispatch(postAgentTransactionComplete(data));
+            dispatch(getAgentPayoutStart());
             if (successCallback) {
                 successCallback();
             }
@@ -95,11 +114,14 @@ export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCr
     }
 }
 
-export function getAllAgentsStart() {
+export function getAllAgentsStart(completedCallback?: (data: CardPeak.Entities.Agent[]) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(getAllAgents());
         agentsController.getAll((data: CardPeak.Entities.Agent[]) => {
             dispatch(getAllAgentsComplete(data));
+            if (completedCallback) {
+                completedCallback(data);
+            }
         });
     }
 }

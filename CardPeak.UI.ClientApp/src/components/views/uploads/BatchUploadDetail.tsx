@@ -43,24 +43,25 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                 {
                     this.props.processingComplete ? null :
                         <div className="container-fluid">
-                            <ConfirmButton
-                                useButtonLoading
-                                bsStyle="success"
-                                onToggleConfirm={this.handleOnToggleModal}
-                                onConfirm={this.handleOnConfirm}
-                                confirmTitle="start processing"
-                                confirmMessage="Do you want to begin processing?"
-                                isLoading={this.props.processing}
-                                disabled={this.props.processing || this.props.processingComplete}
-                                buttonLabel="Process" />
-                            <span className="spacer-right" />
-                            <ConfirmButton
-                                bsStyle="warning"
-                                onConfirm={this.props.onClear}
-                                confirmTitle="cancel batch upload"
-                                confirmMessage="Continue?"
-                                disabled={this.props.processing || this.props.processingComplete}
-                                buttonLabel="cancel" />
+                            <ButtonGroup>
+                                <ConfirmButton
+                                    useButtonLoading
+                                    bsStyle="success"
+                                    onToggleConfirm={this.handleOnToggleModal}
+                                    onConfirm={this.handleOnConfirm}
+                                    confirmTitle="start processing"
+                                    confirmMessage="Do you want to begin processing?"
+                                    isLoading={this.props.processing}
+                                    disabled={this.props.processing || this.props.processingComplete}
+                                    buttonLabel="Process" />
+                                <ConfirmButton
+                                    bsStyle="warning"
+                                    onConfirm={this.props.onClear}
+                                    confirmTitle="cancel batch upload"
+                                    confirmMessage="Continue?"
+                                    disabled={this.props.processing || this.props.processingComplete}
+                                    buttonLabel="cancel" />
+                            </ButtonGroup>
                         </div>
 
                 }

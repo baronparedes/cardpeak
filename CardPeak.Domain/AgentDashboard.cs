@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CardPeak.Domain.Metrics;
+using System.Collections.Generic;
 
 namespace CardPeak.Domain
 {

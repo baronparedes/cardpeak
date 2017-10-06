@@ -1,4 +1,4 @@
-﻿namespace CardPeak.Domain
+﻿namespace CardPeak.Domain.Metrics
 {
     public sealed class AgentApprovalMetric : ApprovalMetric<Agent>
     {

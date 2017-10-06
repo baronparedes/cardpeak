@@ -1,6 +1,7 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Core.Service;
 using CardPeak.Domain;
+using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ namespace CardPeak.Service
             year = year ?? DateTime.Now.Year;
             month = month ?? 0;
 
+            var agents = this.ApprovalTransactionDashboardRepository.GetTopAgents(year.Value, month.Value);
             var result = new Dashboard
             {
                 LatestProcessedBatch = this.BatchUploadRepository.GetLatestProcessed(),

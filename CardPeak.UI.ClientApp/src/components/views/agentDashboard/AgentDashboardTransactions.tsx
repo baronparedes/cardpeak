@@ -16,7 +16,7 @@ export default class AgentDashboardTransactions extends React.Component<AgentDas
             <div>
                 <DebitCreditTransactionList data={this.props.agentDashboard.debitCreditTransactions} />
                 <br />
-                <ApprovalTransactionList data={this.props.agentDashboard.approvalTransactions} />
+                <ApprovalTransactionList data={this.props.agentDashboard.approvalTransactions} hideSearchBar />
             </div>
         )
     }

@@ -79,6 +79,21 @@ namespace CardPeak.WebAPI.Controllers
             return this.Ok(result);
         }
 
+        [HttpGet]
+        [Route("payout")]
+        public IHttpActionResult GetPayout()
+        {
+            try
+            {
+                var result = this.AgentService.GetAgentPayouts();
+                return this.Ok(result);
+            }
+            catch (Exception e)
+            {
+                return this.InternalServerError(e);
+            }
+        }
+
         [HttpPost]
         [Route("create")]
         public IHttpActionResult Create(Agent agent)

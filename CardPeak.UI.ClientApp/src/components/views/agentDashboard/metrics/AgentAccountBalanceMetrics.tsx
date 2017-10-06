@@ -4,7 +4,7 @@ import { DashboardLabel } from '../../../layout'
 
 export const AgentAccountBalanceMetrics = (props: { accountBalance: number, savingsBalance: number }) => {
     return (
-        <Panel className="panel-agent-dashboard">
+        <Panel className="panel-label-dashboard">
             <DashboardLabel
                 className="pull-right"
                 label="Account Balance"

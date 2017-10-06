@@ -12,15 +12,15 @@ const AgentDashboardSummary = (props: AgentDashboardSummaryProps) => {
         <div>
             <Grid fluid className="no-padding">
                 <Row className="row-eq-height">
-                    <Col sm={4}>
+                    <Col md={4}>
                         <TotalApprovedMetrics
                             totalApprovals={props.agentDashboard.totalApprovals} />
                     </Col>
-                    <Col sm={4}>
+                    <Col md={4}>
                         <AgentPerformanceMetrics
                             performance={props.agentDashboard.performance} />
                     </Col>
-                    <Col sm={4}>
+                    <Col md={4}>
                         <AgentAccountBalanceMetrics
                             accountBalance={props.agentDashboard.accountBalance}
                             savingsBalance={props.agentDashboard.savingsBalance} />

@@ -1,31 +1,41 @@
 ﻿import * as React from 'react'
 import { Nav, Navbar, NavItem, NavbarHeader, NavDropdown, MenuItem, NavbarBrand } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import PayoutBadgeContainer from './PayoutBadgeContainer'
 
-const NavLinkText = (props: { text: string, fa: string }) => {
+interface NavProps {
+    text?: string;
+    fa?: string;
+    exact?: boolean;
+    to?: string;
+    addOn?: React.ReactNode;
+}
+
+const NavLinkText = (props: NavProps) => {
     return (
         <span>
             <i className={"fa fa-nav " + props.fa} aria-hidden="true"></i>
             {props.text}
+            {props.addOn}
         </span>
     )
 }
 
-const NavItemLinkContainer = (props: { text: string, fa: string, exact: boolean, to: string }) => {
+const NavItemLinkContainer = (props: NavProps) => {
     return (
         <LinkContainer exact={props.exact} to={props.to}>
             <NavItem href={props.to}>
-                <NavLinkText text={props.text} fa={props.fa} />
+                <NavLinkText {...props} />
             </NavItem>
         </LinkContainer>
     );
 }
 
-const MenuItemLinkContainer = (props: { text: string, fa: string, exact: boolean, to: string }) => {
+const MenuItemLinkContainer = (props: NavProps) => {
     return (
         <LinkContainer exact={props.exact} to={props.to}>
             <MenuItem href={props.to} >
-                <NavLinkText text={props.text} fa={props.fa} />
+                <NavLinkText {...props} />
             </MenuItem>
         </LinkContainer>
     );
@@ -46,9 +56,16 @@ export class NavigationBar extends React.Component<{}, undefined> {
         return (
             <LinkContainer to="/agents" onClick={(e) => e.preventDefault()}>
                 <NavDropdown
-                    title={<NavLinkText text="Agents" fa="fa-users" />}
+                    title={<span>
+                        <NavLinkText text="Agents" fa="fa-users" />
+                        <PayoutBadgeContainer />
+                    </span>}
                     id="agents-nav-dropdown">
                     <MenuItemLinkContainer exact to="/agents" text="Agent Dashboard" fa="fa-user-circle" />
+                    <MenuItem divider />
+                    <MenuItemLinkContainer exact to="/agents/payout" text="Payout" fa="fa-money" addOn={
+                        <PayoutBadgeContainer />
+                    } />
                     <MenuItem divider />
                     <MenuItemLinkContainer exact to="/agents/create" text="Create" fa="fa-user-plus" />
                     <MenuItemLinkContainer exact to="/agents/update" text="Update" fa="fa-pencil" />
@@ -56,15 +73,17 @@ export class NavigationBar extends React.Component<{}, undefined> {
             </LinkContainer>
         )
     }
-    renderUploads() {
+    renderTransactions() {
         return (
-            <LinkContainer to="/uploads" onClick={(e) => e.preventDefault()}>
+            <LinkContainer to="/transactions" onClick={(e) => e.preventDefault()}>
                 <NavDropdown
-                    title={<NavLinkText text="Uploads" fa="fa-upload" />}
+                    title={<NavLinkText text="Transactions" fa="fa-upload" />}
                     id="settings-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/uploads" text="Batch Upload" fa="fa-table" />
+                    <MenuItemLinkContainer exact to="/transactions/upload" text="Batch Upload" fa="fa-table" />
+                    <MenuItemLinkContainer exact to="/transactions/batch" text="Manage Uploads" fa="fa-tasks" />
+                    <MenuItemLinkContainer exact to="/transactions/upload/config" text="Configure Uploads" fa="fa-wrench" />
                     <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/uploads/config" text="Configure Uploads" fa="fa-wrench" />
+                    <MenuItemLinkContainer exact to="/transactions/history" text="Find Transactions" fa="fa-search" />
                 </NavDropdown>
             </LinkContainer>
         )
@@ -88,8 +107,8 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     title={<NavLinkText text="Metrics" fa="fa-bar-chart" />}
                     id="metrics-nav-dropdown">
                     <MenuItemLinkContainer exact to="/metrics/agents" text="Agents" fa="fa-users" />
-                    <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/metrics/history" text="Find Transactions" fa="fa-search" />
+                    <MenuItemLinkContainer exact to="/metrics/agents/rankings" text="Agent Rankings" fa="fa-star" />
+                    <MenuItemLinkContainer exact to="/metrics/agents/performance" text="Agent Performance" fa="fa-line-chart" />
                 </NavDropdown>
             </LinkContainer>
         )
@@ -103,7 +122,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                         <NavItemLinkContainer exact to="/" text="Dashboard" fa="fa-area-chart" />
                         {this.renderMetrics()}
                         {this.renderAgents()}
-                        {this.renderUploads()}
+                        {this.renderTransactions()}
                         {this.renderSettings()}
                     </Nav>
                 </Navbar.Collapse>

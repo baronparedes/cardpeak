@@ -54,7 +54,7 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
             return;
         }
         this.setState({ isLoading: true, loadingError: undefined });
-        this.props.actions.getTransactionsStart(this.state.clientName,
+        this.props.actions.getTransactionsByClientStart(this.state.clientName,
             this.handleOnGetTransactionsComplete,
             this.handleOnGetTransactionsError)
     }
@@ -105,7 +105,12 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
                 </Panel>
                 {
                     this.state.isLoading ? <SpinnerBlock /> :
-                        <ApprovalTransactionList data={this.state.transactions} showAgent hideAmount />
+                        <ApprovalTransactionList
+                            data={this.state.transactions}
+                            showAgent
+                            hideAmount
+                            hideSearchBar
+                            onDelete={this.props.actions.deleteTransaciton} />
                 }
             </div>
         )

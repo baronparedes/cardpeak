@@ -51,6 +51,28 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("delete/{id}")]
+        public IHttpActionResult DeleteBatch(int id)
+        {
+            try
+            {
+                var result = this.BatchService.Delete(id);
+                if (result)
+                {
+                    return this.Ok(result);
+                }
+                else
+                {
+                    throw new Exception(string.Format("Unable to delete batch: {0}", id));
+                }
+            }
+            catch (Exception e)
+            {
+                return this.InternalServerError(e);
+            }
+        }
+
+        [HttpPost]
         [Route("batch/{id}")]
         public IHttpActionResult ProcessBatch(int id)
         {
@@ -64,6 +86,18 @@ namespace CardPeak.WebAPI.Controllers
             {
                 return this.InternalServerError(e);
             }
+        }
+
+        [HttpGet]
+        [Route("manage")]
+        public IHttpActionResult GetProcessedBatchUploads([FromUri]DateTime startDate, [FromUri]DateTime? endDate = null)
+        {
+            var result = this.BatchService.GetProcessedBatchUploads(startDate, endDate);
+            if (result == null)
+            {
+                return this.NotFound();
+            }
+            return this.Ok(result);
         }
 
         [HttpPost]

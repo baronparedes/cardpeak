@@ -8,7 +8,11 @@ const API = {
     GET_BATCH_FILE_CONFIG: (bankId: number) => {
         return '/uploads/config/' + bankId;
     },
-    POST_BATCH_FILE_CONFIG: '/uploads/config'
+    POST_BATCH_FILE_CONFIG: '/uploads/config',
+    MANAGE_UPLOADS: '/uploads/manage',
+    DELETE_BATCH: (id: number) => {
+        return '/uploads/delete/' + id;
+    }
 }
 
 export function uploadFile(data: FormData,
@@ -86,4 +90,47 @@ export function postBatchFileConfig(batchFileConfiguration: CardPeak.Entities.Ba
                 errorCallback(reason.message);
             }
         })
+}
+
+export function manageUploads(startDate?: string, endDate?: string,
+    successCallback?: (data: CardPeak.Entities.BatchUpload[]) => void,
+    errorCallback?: (error: string) => void) {
+
+    axios.get(API.MANAGE_UPLOADS, ({
+            params: {
+                startDate: startDate,
+                endDate: endDate
+            }
+        }))
+        .then((r) => {
+            if (successCallback) {
+                successCallback(r.data as CardPeak.Entities.BatchUpload[]);
+            }
+        })
+        .catch((reason) => {
+            try {
+                errorCallback(reason.response.data.exceptionMessage)
+            }
+            catch (e) {
+                errorCallback(reason.message);
+            }
+        });
+}
+
+export function deleteBatch(id: number,
+    successCallback: (id: number) => void,
+    errorCallback: (e: string) => void) {
+
+    axios.post(API.DELETE_BATCH(id))
+        .then((r) => {
+            successCallback(id);
+        })
+        .catch((reason) => {
+            try {
+                errorCallback(reason.response.data.exceptionMessage)
+            }
+            catch (e) {
+                errorCallback(reason.message);
+            }
+        });
 }

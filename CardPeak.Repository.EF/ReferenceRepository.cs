@@ -28,12 +28,12 @@ namespace CardPeak.Repository.EF
                 .ToList();
         }
 
-        public Reference GetCardCategoryByDescription(string description)
+        public Reference GetCardCategoryByShortDescription(string code)
         {
             return this.Context.References
-                .Where(_ => _.Description.ToLower() == description.ToLower())
+                .Where(_ => _.ShortDescription.ToLower() == code.ToLower())
                 .Where(_ => _.ReferenceTypeId == (int)CardPeak.Domain.Enums.ReferenceTypeEnum.CardCategory)
-                .FirstOrDefault();
+                .SingleOrDefault();
         }
     }
 }

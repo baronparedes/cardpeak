@@ -1,7 +1,10 @@
 ﻿import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
-import { ListNoRecordsRow, GridList, SpinnerBlock } from '../../../layout'
-import { DataList, DataListProps, DataItemProps } from '../../../layout'
+import {
+    ListNoRecordsRow, GridList, SpinnerBlock,
+    DataList, DataListProps, DataItemProps, AgentRankingsLinkButton
+} from '../../../layout'
 
 type TopAgentDataList = new () => DataList<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>;
 const TopAgentDataList = DataList as TopAgentDataList;
@@ -22,13 +25,13 @@ const TopAgentRowLayout: React.StatelessComponent<DataItemProps<
                 <span className="grid-label text-center spacer-left">top agents</span>
             </Col>
             <Col sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "rank" : props.rank}
+                {props.isHeader ? "rank" : <strong>{props.rank}</strong>}
             </Col>
             <Col sm={7} xsHidden={props.isHeader}>
                 {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
             </Col>
-            <Col sm={3} xsHidden={props.isHeader}>
-                {props.isHeader ? "approvals" : props.item.value}
+            <Col sm={3} xsHidden={props.isHeader} className="text-center">
+                {props.isHeader ? "approvals" : <label className="text-highlight">{props.item.value}</label>}
             </Col>
         </Row>
     )
@@ -51,6 +54,9 @@ export const TopAgentList = (props: DataListProps<CardPeak.Entities.ApprovalMetr
                     return <TopAgentRowLayout item={item} key={key} rank={rank} />
                 }}
                 data={props.data} />
+            <div className="text-right spacer-top">
+                <AgentRankingsLinkButton />
+            </div>
         </div>
     )
 }

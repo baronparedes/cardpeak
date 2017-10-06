@@ -23,6 +23,7 @@ namespace CardPeak.Domain
         public Nullable<int> ProcessedRecords { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual Reference Bank { get; set; }
     }

@@ -3,6 +3,7 @@ import { DataList, DataListProps, DataListDisplayProps, SearchBar } from './'
 
 interface DataListFilteredProps<T> {
     predicate: (item: T, searchString: string) => any;
+    hideSearchBar?: boolean;
 }
 
 interface DataListFilteredState<T> {
@@ -40,7 +41,10 @@ export class DataListFiltered<T> extends React.Component<DataListProps<T> & Data
     render() {
         return (
             <div>
-                <SearchBar hidden={this.props.isLoading} onSearchBarChange={this.handleOnSearchBarChange} />
+                {
+                    this.props.hideSearchBar ? null :
+                        <SearchBar hidden={this.props.isLoading} onSearchBarChange={this.handleOnSearchBarChange} disabled={this.props.isLoading}  />
+                }
                 <DataList { ...this.props } data={this.state.filteredData} />
             </div>
         )

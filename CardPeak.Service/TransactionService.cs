@@ -16,9 +16,26 @@ namespace CardPeak.Service
             this.ApprovalTransactionRepository = new ApprovalTransactionRepository(context);
         }
 
-        public IEnumerable<ApprovalTransaction> GetTransactions(string clientName)
+        public IEnumerable<ApprovalTransaction> GetTransactionsByClient(string clientName)
         {
-            return this.ApprovalTransactionRepository.FindByClient(clientName);
+            var result = this.ApprovalTransactionRepository.FindByClient(clientName);
+            return result;
+        }
+
+        public IEnumerable<ApprovalTransaction> GetTransactionsByBatch(int batchId)
+        {
+            var result = this.ApprovalTransactionRepository.FindByBatch(batchId);
+            return result;
+        }
+
+        public bool DeleteTransaction(int id)
+        {
+            var result = this.ApprovalTransactionRepository.Delete(id);
+            if (result)
+            {
+                this.Complete();
+            }
+            return result;
         }
     }
 }

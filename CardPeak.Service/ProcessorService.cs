@@ -1,7 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Core.Service;
 using CardPeak.Domain;
-using CardPeak.Domain.Constants;
 using CardPeak.Repository.EF;
 using System.Collections.Generic;
 
@@ -34,12 +33,7 @@ namespace CardPeak.Service
 
         public Reference GetCardCategoryByCode(string code)
         {
-            var codes = CardCategory.Codes;
-            if (!codes.TryGetValue(code.ToUpper(), out string description))
-            {
-                return null;
-            }
-            return this.ReferenceRepository.GetCardCategoryByDescription(description);
+            return this.ReferenceRepository.GetCardCategoryByShortDescription(code);
         }
 
         public bool TransactionHasDuplicates(ApprovalTransaction transaction)

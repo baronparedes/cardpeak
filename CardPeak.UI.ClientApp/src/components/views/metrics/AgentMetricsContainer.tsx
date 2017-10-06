@@ -6,16 +6,16 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
-import { Col, Row, Grid, Panel } from 'react-bootstrap'
+import { Col, Row, Grid, Panel, Button, DropdownButton, MenuItem } from 'react-bootstrap'
 import {
-    YearMonthAction, DataListFiltered, DataListProps, DataItemProps, Currency
+    YearMonthAction, DataListFiltered, DataListProps, DataItemProps, Currency,
+    DashboardLabel
 } from '../../layout'
 
 type AgentMetricsDataListFiltered = new () => DataListFiltered<CardPeak.Entities.AgentApprovalMetric>;
 const AgentMetricsDataListFiltered = DataListFiltered as AgentMetricsDataListFiltered;
 
-
-interface AgentMetricsListContainerDispatchProps {
+interface AgentMetricsContainerDispatchProps {
     actions?: typeof Actions
 }
 
@@ -25,27 +25,45 @@ const AgentMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Ent
                 <Col mdHidden
                     lgHidden
                     smHidden
-                    xsHidden={!props.isHeader}>
-                    <span className="grid-label text-center spacer-left">agent metrics</span>
+                    xsHidden={!props.isHeader} className="text-center">
+                    <span className="grid-label spacer-left">agent metrics</span>
                 </Col>
-                <Col sm={4} xsHidden={props.isHeader}>
+                <Col sm={4} xs={12} xsHidden={props.isHeader}>
                     {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
                 </Col>
-                <Col sm={2} xsHidden={props.isHeader}>
+                <Col sm={2} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "approvals" : <label className="text-highlight">{props.item.value}</label>}
                 </Col>
-                <Col sm={3} xsHidden={props.isHeader}>
+                <Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "balance" : <Currency currency={props.item.accountBalance} />}
                 </Col>
-                <Col sm={3} xsHidden={props.isHeader}>
+                <Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "savings" : <Currency noCurrencyColor currency={props.item.savingsBalance} />}
                 </Col>
             </Row>
         )
-    }
+}
 
-class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsModel & AgentMetricsListContainerDispatchProps, undefined> {
-    constructor(props: CardPeak.Models.MetricsModel & AgentMetricsListContainerDispatchProps) {
+const AgentMetricsTotals: React.StatelessComponent<CardPeak.Models.MetricsModel> = (props) => {
+    return (
+        <Row>
+            <Col sm={6}>
+                <Panel className="panel-label-dashboard">
+                    <DashboardLabel className="pull-right" label="approvals" metrics={props.agentMetrics.totalApproved} />
+                </Panel>
+            </Col>
+            <Col sm={6}>
+                <Panel className="panel-label-dashboard">
+                    <DashboardLabel className="pull-right" label="balance" metrics={props.agentMetrics.totalBalance} isCurrency />
+                    <DashboardLabel className="pull-right" label="savings" metrics={props.agentMetrics.totalSavings} isCurrency />
+                </Panel>
+            </Col>
+        </Row>
+    )
+}
+
+class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentMetricsContainerDispatchProps, undefined> {
+    constructor(props: CardPeak.Models.MetricsModel & AgentMetricsContainerDispatchProps) {
         super(props);
     }
     componentDidMount() {
@@ -58,10 +76,11 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                 <YearMonthAction
                     label="agent metrics"
                     availableYears={this.props.availableYears}
-                    refreshing={this.props.loadingAgentMetrics}
+                    refreshing={this.props.loadingMetrics}
                     onRefresh={this.props.actions.getAgentMetricsStart} />
                 <br />
                 <Grid className="no-padding">
+                    <AgentMetricsTotals agentMetrics={this.props.agentMetrics} />
                     <Row>
                         <AgentMetricsDataListFiltered
                             predicate={(agent, searchString) => {
@@ -69,15 +88,13 @@ class AgentMetricsListContainer extends React.Component<CardPeak.Models.MetricsM
                                 const lastNameMatch = agent.key.lastName.toLowerCase().indexOf(searchString) >= 0;
                                 return firstNameMatch || lastNameMatch;
                             }}
-                            paged
-                            pageSize={20}
                             onGetKey={(item) => item.key.agentId}
                             renderHeader={() => { return <AgentMetricsRowLayout isHeader /> }}
                             renderItem={(item, key) => {
                                 return <AgentMetricsRowLayout item={item} key={key} />
                             }}
-                            isLoading={this.props.loadingAgentMetrics}
-                            data={this.props.agentMetrics} />
+                            isLoading={this.props.loadingMetrics}
+                            data={this.props.agentMetrics.agentApprovalMetrics} />
                     </Row>
                 </Grid>
             </div>
@@ -89,10 +106,10 @@ const mapStateToProps = (state: RootState): CardPeak.Models.MetricsModel => ({
     ...state.metricsModel,
 })
 
-const mapDispatchToProps = (dispatch: any): AgentMetricsListContainerDispatchProps => {
+const mapDispatchToProps = (dispatch: any): AgentMetricsContainerDispatchProps => {
     return {
         actions: bindActionCreators(Actions as any, dispatch)
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgentMetricsListContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AgentMetricsContainer);

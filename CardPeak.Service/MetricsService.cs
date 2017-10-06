@@ -1,12 +1,9 @@
-﻿using CardPeak.Core.Service;
+﻿using CardPeak.Core.Repository;
+using CardPeak.Core.Service;
+using CardPeak.Domain.Metrics;
+using CardPeak.Repository.EF;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CardPeak.Domain;
-using CardPeak.Core.Repository;
-using CardPeak.Repository.EF;
 
 namespace CardPeak.Service
 {
@@ -19,11 +16,27 @@ namespace CardPeak.Service
             this.MetricsRepository = new MetricsRepository(context);
         }
 
-        public IEnumerable<AgentApprovalMetric> GetAgentApprovalMetrics(int? year, int? month)
+        public AgentMetrics GetAgentApprovalMetrics(int? year, int? month)
         {
             year = year ?? DateTime.Now.Year;
             month = month ?? 0;
-            return this.MetricsRepository.GetApprovalsByAgent(year.Value, month.Value);
+            return new AgentMetrics()
+            {
+                AgentApprovalMetrics = this.MetricsRepository.GetApprovalsByAgent(year.Value, month.Value)
+            };
+        }
+
+        public IEnumerable<AgentPerformanceMetric> GetAgentPerformanceMetrics(int? year)
+        {
+            year = year ?? DateTime.Now.Year;
+            return this.MetricsRepository.GetAgentPerformanceMetrics(year.Value);
+        }
+
+        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int? year, int? month)
+        {
+            year = year ?? DateTime.Now.Year;
+            month = month ?? 0;
+            return this.MetricsRepository.GetAgentRankings(year.Value, month.Value);
         }
     }
 }

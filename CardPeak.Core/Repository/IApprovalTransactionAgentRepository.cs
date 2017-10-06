@@ -1,4 +1,5 @@
 ﻿using CardPeak.Domain;
+using CardPeak.Domain.Metrics;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace CardPeak.Core.Repository
     {
         IEnumerable<ApprovalTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate);
         decimal GetAgentAccountBalance(int agentId);
-        decimal GetAgentTotalApprovals(int agentId);
+        decimal GetAgentTotalApprovals(int agentId, DateTime startDate, DateTime? endDate);
         IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId);
         IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, DateTime startDate, DateTime? endDate);
         IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByCategory(int agentId, DateTime startDate, DateTime? endDate);

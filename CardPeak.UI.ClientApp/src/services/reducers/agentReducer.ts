@@ -2,7 +2,7 @@
 import { AGENT_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.AgentDashboardModel = {
-    agents: []
+    agents: undefined
 };
 
 export default handleActions<CardPeak.Models.AgentDashboardModel, any>({

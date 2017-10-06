@@ -40,6 +40,9 @@
         selectedBatchFileConfiguration?: CardPeak.Entities.BatchFileConfiguration;
         loadingBatchFileConfiguration?: boolean;
         postingBatchFileConfiguration?: boolean;
+        batchUploads?: CardPeak.Entities.BatchUpload[];
+        loadingBatchUploads?: boolean;
+        deletingBatch?: boolean;
     }
 
     export interface DashboardModel {
@@ -58,7 +61,17 @@
 
     export interface MetricsModel {
         availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
-        loadingAgentMetrics?: boolean;
-        agentMetrics?: CardPeak.Entities.AgentApprovalMetric[];
+        loadingMetrics?: boolean;
+        agentMetrics?: CardPeak.Entities.AgentMetrics;
+        agentRankingMetrics?: CardPeak.Entities.AgentRankMetric[];
+        agentPerformanceMetrics?: CardPeak.Entities.AgentPerformanceMetric[];
+    }
+
+    export interface AgentPayoutModel {
+        initialized?: boolean;
+        count?: number;
+        payouts?: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[];
+        loadingPayouts?: boolean;
+        loadingPayoutsError?: string;
     }
 }

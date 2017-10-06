@@ -1,4 +1,4 @@
-﻿namespace CardPeak.Domain
+﻿namespace CardPeak.Domain.Metrics
 {
     public class ApprovalMetric<TKey>
     {

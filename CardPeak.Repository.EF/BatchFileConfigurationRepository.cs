@@ -1,5 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
 using CardPeak.Repository.EF.Core;
 using System.Data.Entity;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace CardPeak.Repository.EF
                 {
                     BankId = bankId,
                     Bank = this.Context.References.Where(_ => _.ReferenceId == bankId).Single(),
+                    ApprovalDateFormat = Configurations.DefaultDateTimeFormat
                 };
             }
 
@@ -34,11 +36,13 @@ namespace CardPeak.Repository.EF
         {
             if (batchFileConfiguration.BatchFileConfigurationId == 0)
             {
+                this.Context.Entry(batchFileConfiguration.Bank).State = EntityState.Unchanged;
                 this.Context.Entry(batchFileConfiguration).State = EntityState.Added;
                 this.Context.BatchFileConfiguration.Add(batchFileConfiguration);
             }
             else
             {
+                this.Context.Entry(batchFileConfiguration.Bank).State = EntityState.Unchanged;
                 this.Context.Entry(batchFileConfiguration).State = EntityState.Modified;
             }
 

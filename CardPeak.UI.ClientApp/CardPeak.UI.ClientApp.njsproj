@@ -87,6 +87,9 @@
     <Content Include="src\components\layout\index.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\LinkButton.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\ListNoRecordsRow.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -106,6 +109,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\layout\NotFound.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\layout\PayoutBadgeContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\layout\PerformanceDashboard.tsx">
@@ -158,6 +164,9 @@
     <Content Include="src\components\views\agents\AgentListModal.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\agents\AgentPayoutContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\agents\AgentsView.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -182,10 +191,22 @@
     <Content Include="src\components\views\metrics\AgentMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\FindTransactionsContainer.tsx">
+    <Content Include="src\components\views\metrics\AgentPerformanceMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\FindTransactionsView.tsx">
+    <Content Include="src\components\views\metrics\AgentPerformanceMetricsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\metrics\AgentRankingMetricsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\metrics\AgentRankingMetricsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\transactions\FindTransactionsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\transactions\FindTransactionsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\metrics\MetricsView.tsx">
@@ -248,10 +269,25 @@
     <Content Include="src\components\views\uploads\BatchUploadDetailInfo.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\uploads\BatchUploadList.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\uploads\BatchUploadView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\uploads\UploadsView.tsx">
+    <Content Include="src\components\views\uploads\BatchListContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\ManageUploadsActions.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\ManageUploadsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\ManageUploadsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\uploads\TransactionsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\img\favicon.ico" />
@@ -310,7 +346,7 @@
     <TypeScriptCompile Include="src\components\views\dashboard\metrics\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\components\views\metrics\AgentMetricsListContainer.tsx">
+    <TypeScriptCompile Include="src\components\views\metrics\AgentMetricsContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\uploads\BatchUploadDetail.tsx">
@@ -327,6 +363,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\actions\agentActions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\actions\agentPayoutActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\actions\dashboardActions.ts">
@@ -366,6 +405,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\api\uploadController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\reducers\agentPayoutReducer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\agentReducer.ts">

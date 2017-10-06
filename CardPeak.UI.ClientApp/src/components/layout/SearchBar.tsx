@@ -21,7 +21,7 @@ export class SearchBar extends React.Component<SearchBarProps, undefined> {
     }
     render() {
         return (
-            <FormGroup>
+            <FormGroup className="hidden-print">
                 {
                     this.props.hidden ? null :
                         <InputGroup>

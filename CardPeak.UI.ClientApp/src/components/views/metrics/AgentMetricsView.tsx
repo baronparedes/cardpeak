@@ -1,11 +1,11 @@
 ﻿import * as React from 'react'
-import AgentMetricsListContainer from './AgentMetricsListContainer'
+import AgentMetricsContainer from './AgentMetricsContainer'
 
 const AgentMetricsView = () => {
     return (
         <div>
             <h2>Agents</h2>
-            <AgentMetricsListContainer />
+            <AgentMetricsContainer />
         </div>
     )
 }

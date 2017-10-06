@@ -7,6 +7,6 @@ namespace CardPeak.Core.Repository
     {
         IEnumerable<Reference> GetBanks();
         IEnumerable<Reference> GetCardCategories();
-        Reference GetCardCategoryByDescription(string description);
+        Reference GetCardCategoryByShortDescription(string code);
     }
 }

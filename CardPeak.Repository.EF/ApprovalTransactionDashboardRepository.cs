@@ -1,10 +1,12 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
 using CardPeak.Domain.Constants;
+using CardPeak.Domain.Metrics;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+
 
 namespace CardPeak.Repository.EF
 {
@@ -118,8 +120,8 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Agent)
                 .GroupBy(_ => _.AgentId)
                 .OrderByDescending(_ => _.Sum(t => t.Units))
-                .Take(Configurations.TopAgentCount)
                 .Select(_ => new ApprovalMetric<Agent> { Key = _.FirstOrDefault().Agent, Value = _.Sum(t => t.Units) })
+                .Take(Configurations.TopAgentCount)
                 .ToList();
 
             return result;

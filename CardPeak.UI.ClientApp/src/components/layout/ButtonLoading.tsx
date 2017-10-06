@@ -2,19 +2,23 @@
 import { Button } from 'react-bootstrap'
 
 interface ButtonLoadingProps {
-    bsStyle?: string,
-    onClick?: () => void,
-    isLoading: boolean,
-    disabled?: boolean
-    label: React.ReactNode,
+    bsStyle?: string;
+    onClick?: () => void;
+    isLoading: boolean;
+    disabled?: boolean;
+    label: React.ReactNode;
     className?: string;
+    noText?: boolean;
 }
 
-export const ButtonLoadingText = (props: { isLoading: boolean, label: React.ReactNode }) => {
+export const ButtonLoadingText = (props: { isLoading: boolean, label: React.ReactNode, noText?: boolean }) => {
     if (props.isLoading) {
         return (
             <div>
-                <span className="spacer-right">Loading..</span>
+                {
+                    props.noText ? null :
+                        <span className="spacer-right">Loading...</span>
+                }
                 <i className="fa fa-spinner fa-spin"></i>
             </div>
         )
@@ -34,7 +38,7 @@ export const ButtonLoading = (props: ButtonLoadingProps) => {
             bsStyle={props.bsStyle}
             onClick={props.onClick}
             disabled={props.disabled}>
-            <ButtonLoadingText isLoading={props.isLoading} label={props.label} />
+            <ButtonLoadingText isLoading={props.isLoading} label={props.label} noText={props.noText} />
         </Button>
     )
 }

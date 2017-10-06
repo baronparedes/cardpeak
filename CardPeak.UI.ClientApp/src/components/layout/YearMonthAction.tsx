@@ -8,6 +8,8 @@ interface YearMonthActionsProps {
     refreshing?: boolean
     availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
     label?: string;
+    addOnActions?: React.ReactNode;
+    yearOnly?: boolean;
 }
 
 interface YearMonthActionsState {
@@ -70,10 +72,13 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
                                 onChange={this.handleOnChange} />
                         </Col>
                         <Col sm={6}>
-                            <MonthPicker
-                                value={this.state.month}
-                                refreshing={this.props.refreshing}
-                                onChange={this.handleOnChange} />
+                            {
+                                this.props.yearOnly ? null :
+                                    <MonthPicker
+                                        value={this.state.month}
+                                        refreshing={this.props.refreshing}
+                                        onChange={this.handleOnChange} />
+                            }
                         </Col>
                     </Row>
                 </div>
@@ -83,20 +88,23 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
     renderButtons() {
         return (
             <Col sm={4} className="text-right">
-                <Button
-                    onClick={this.handleOnRefresh}
-                    bsStyle="primary"
-                    disabled={this.props.refreshing}>
-                    <ButtonLoadingText
-                        isLoading={this.props.refreshing}
-                        label={"refresh" + (this.props.label ? (" " + this.props.label) : "")} />
-                </Button>
+                <ButtonGroup>
+                    <Button
+                        onClick={this.handleOnRefresh}
+                        bsStyle="primary"
+                        disabled={this.props.refreshing}>
+                        <ButtonLoadingText
+                            isLoading={this.props.refreshing}
+                            label={"refresh" + (this.props.label ? (" " + this.props.label) : "")} />
+                    </Button>
+                    {this.props.addOnActions}
+                </ButtonGroup>
             </Col >
         )
     }
     render() {
         return (
-            <Grid className="spacer-bottom no-padding">
+            <Grid className="spacer-bottom no-padding hidden-print">
                 <Row>
                     {this.renderDateFilters()}
                     {this.renderButtons()}

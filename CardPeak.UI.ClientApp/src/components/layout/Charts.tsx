@@ -89,7 +89,7 @@ export const ApprovalMetricsLineChart = (props: ChartProps) => {
 
     return (
         <div>
-            <Line data={data} legend={data.legendOpts} height={80}/>
+            <Line data={data} legend={data.legendOpts} height={70}/>
         </div>
     )
 }
@@ -103,7 +103,7 @@ export const ApprovalMetricsBarChart = (props: ChartProps) => {
 
     return (
         <div>
-            <HorizontalBar data={data} legend={data.legendOpts} height={200} onElementsClick={props.onClick} />
+            <HorizontalBar data={data} legend={data.legendOpts} onElementsClick={props.onClick} height={180} />
         </div>
     )
 }

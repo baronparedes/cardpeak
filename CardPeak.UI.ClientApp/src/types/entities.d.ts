@@ -65,6 +65,7 @@
         public referenceId: number;
         public referenceTypeId: number;
         public description: string;
+        public shortDescription: string;
     }
 
     export class Rate {
@@ -96,6 +97,7 @@
         public processEndDateTime?: Date;
         public processedRecords?: number;
         public bank?: Reference;
+        public originalFileName?: string;
     }
 
     export class ProcessedApprovalTransaction {
@@ -142,6 +144,26 @@
         public value: number;
         public accountBalance: number;
         public savingsBalance: number;
+    }
 
+    export class AgentRankMetric {
+        public rank: number;
+        public key: Agent;
+        public value: number;
+        public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];
+    }
+
+    export class AgentPerformanceMetric {
+        public rank: number;
+        public key: Agent;
+        public value: number;
+        public performance: CardPeak.Entities.ApprovalMetric<string>[];
+    }
+
+    export class AgentMetrics {
+        public agentApprovalMetrics?: CardPeak.Entities.AgentApprovalMetric[];
+        public totalApproved?: number;
+        public totalBalance?: number;
+        public totalSavings?: number;
     }
 }
