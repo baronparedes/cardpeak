@@ -1,7 +1,9 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
 using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF.Core;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -161,6 +163,51 @@ namespace CardPeak.Repository.EF
                     Key = agent.FirstOrDefault().Agent,
                     Value = agent.Sum(_ => _.Units),
                     ApprovalsByBank = approvalsByBank.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
+                };
+
+                result.Add(agentRankMetric);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<AgentPerformanceMetric> GetAgentPerformanceMetrics(int year)
+        {
+            var startDate = new DateTime(year, 1, 1);
+            var endDate = new DateTime(year, 12, 31);
+            var performanceYear = new Dictionary<string, decimal>();
+
+            for (int i = 1; i <= 12; i++)
+            {
+                performanceYear.Add(new DateTime(year, i, 1).ToString(Configurations.MonthFormat), 0);
+            }
+
+            var metrics = this.QueryDashboard(year, 0)
+                .Include(_ => _.Agent)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .OrderByDescending(_ => _.Sum(t => t.Units))
+                .ToList();
+
+            var rank = 1;
+            var result = new List<AgentPerformanceMetric>();
+            foreach (var agent in metrics)
+            {
+                var approvalsPerMonth = performanceYear.ToDictionary(_ => _.Key, _ => 0m);
+                agent.GroupBy(_ => _.ApprovalDate.Month)
+                    .Select(_ => new
+                    {
+                        Month = _.FirstOrDefault().ApprovalDate.Month,
+                        Approvals = _.Sum(approvals => approvals.Units)
+                    }).ToList().ForEach(item => {
+                        approvalsPerMonth[new DateTime(year, item.Month, 1).ToString(Configurations.MonthFormat)] = item.Approvals;
+                    });
+
+                var agentRankMetric = new AgentPerformanceMetric()
+                {
+                    Rank = rank++,
+                    Key = agent.FirstOrDefault().Agent,
+                    Value = agent.Sum(_ => _.Units),
+                    Performance = approvalsPerMonth.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
                 };
 
                 result.Add(agentRankMetric);

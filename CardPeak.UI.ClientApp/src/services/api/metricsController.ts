@@ -2,7 +2,27 @@
 
 const API = {
     GET_AGENT_METRICS: '/metrics/agents',
-    GET_AGENT_RANKING_METRICS: '/metrics/rankings',
+    GET_AGENT_RANKING_METRICS: '/metrics/agents/rankings',
+    GET_AGENT_PERFORMANCE_METRICS: '/metrics/agents/performance',
+}
+
+export function getAgentPerformanceMetrics(year: number,
+    successCallback?: (data: CardPeak.Entities.AgentPerformanceMetric[]) => void,
+    errorCallback?: (error: string) => void) {
+
+    axios.get(API.GET_AGENT_PERFORMANCE_METRICS, ({
+        params: {
+            year
+        }
+    })).then((r) => {
+        if (successCallback) {
+            successCallback(r.data as CardPeak.Entities.AgentPerformanceMetric[]);
+        }
+    }).catch((reason) => {
+        if (errorCallback) {
+            errorCallback(reason.message);
+        }
+    });
 }
 
 export function getAgentRankingMetrics(year: number, month?: number,
@@ -24,6 +44,7 @@ export function getAgentRankingMetrics(year: number, month?: number,
         }
     });
 }
+
 export function getAgentMetrics(year: number, month?: number,
     successCallback?: (data: CardPeak.Entities.AgentMetrics) => void,
     errorCallback?: (error: string) => void) {

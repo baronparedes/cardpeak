@@ -3,6 +3,7 @@ import { METRIC_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.MetricsModel = {
     agentRankingMetrics: [],
+    agentPerformanceMetrics: [],
     agentMetrics: {
         agentApprovalMetrics: []
     }
@@ -39,6 +40,13 @@ export default handleActions<CardPeak.Models.MetricsModel, any>({
             ...state,
             loadingMetrics: undefined,
             agentRankingMetrics: action.payload
+        }
+    },
+    [METRIC_ACTIONS.GET_AGENT_PERFORMANCE_METRICS_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            loadingMetrics: undefined,
+            agentPerformanceMetrics: action.payload
         }
     }
 }, initialState);

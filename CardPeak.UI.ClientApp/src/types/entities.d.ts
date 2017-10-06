@@ -153,6 +153,13 @@
         public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];
     }
 
+    export class AgentPerformanceMetric {
+        public rank: number;
+        public key: Agent;
+        public value: number;
+        public performance: CardPeak.Entities.ApprovalMetric<string>[];
+    }
+
     export class AgentMetrics {
         public agentApprovalMetrics?: CardPeak.Entities.AgentApprovalMetric[];
         public totalApproved?: number;

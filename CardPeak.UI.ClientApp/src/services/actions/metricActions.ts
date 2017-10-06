@@ -11,6 +11,23 @@ export const getMetricsError = createAction(METRIC_ACTIONS.GET_METRICS_ERROR);
 
 export const getAgentMetricsComplete = createAction<CardPeak.Entities.AgentMetrics>(METRIC_ACTIONS.GET_AGENT_METRICS_COMPLETE);
 export const getAgentRankingMetricsComplete = createAction<CardPeak.Entities.AgentRankMetric[]>(METRIC_ACTIONS.GET_AGENT_RANKING_METRICS_COMPLETE);
+export const getAgentPerformanceMetricsComplete = createAction<CardPeak.Entities.AgentPerformanceMetric[]>(METRIC_ACTIONS.GET_AGENT_PERFORMANCE_METRICS_COMPLETE);
+
+export function getAgentPerformanceMetricsStart(year: number, month?: number,
+    errorCallback?: (e: string) => void) {
+
+    return (dispatch: (e: any) => void) => {
+        dispatch(getMetrics());
+        metricsController.getAgentPerformanceMetrics(year, (data: CardPeak.Entities.AgentPerformanceMetric[]) => {
+            dispatch(getAgentPerformanceMetricsComplete(data));
+        }, (error: string) => {
+            dispatch(getMetricsError());
+            if (errorCallback) {
+                errorCallback(error);
+            }
+        });
+    }
+}
 
 export function getAgentRankingMetricsStart(year: number, month: number,
     errorCallback?: (e: string) => void) {

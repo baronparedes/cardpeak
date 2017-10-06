@@ -64,5 +64,6 @@
         loadingMetrics?: boolean;
         agentMetrics?: CardPeak.Entities.AgentMetrics;
         agentRankingMetrics?: CardPeak.Entities.AgentRankMetric[];
+        agentPerformanceMetrics?: CardPeak.Entities.AgentPerformanceMetric[];
     }
 }

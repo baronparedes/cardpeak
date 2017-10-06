@@ -27,10 +27,22 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("rankings")]
+        [Route("agents/rankings")]
         public IHttpActionResult GetAgentRankMetrics([FromUri]int? year = null, [FromUri]int? month = null)
         {
             var result = this.MetricsService.GetAgentRankMetrics(year, month);
+            if (result == null)
+            {
+                return this.NotFound();
+            }
+            return this.Ok(result);
+        }
+
+        [HttpGet]
+        [Route("agents/performance")]
+        public IHttpActionResult GetAg([FromUri]int? year = null)
+        {
+            var result = this.MetricsService.GetAgentPerformanceMetrics(year);
             if (result == null)
             {
                 return this.NotFound();

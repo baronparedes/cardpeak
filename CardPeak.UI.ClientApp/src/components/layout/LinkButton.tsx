@@ -44,7 +44,7 @@ export const ManageBatchLinkButton = () => {
 
 export const AgentRankingsLinkButton = () => {
     return (
-        <Link to="/metrics/rankings">
+        <Link to="/metrics/agents/rankings">
             <Button bsStyle="primary">
                 View Agent Rankings
             </Button>
