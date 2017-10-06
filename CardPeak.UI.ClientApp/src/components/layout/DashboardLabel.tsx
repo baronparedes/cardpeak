@@ -14,7 +14,7 @@ interface DashboardLabelProps {
 export const DashboardLabel: React.StatelessComponent<DashboardLabelProps> = (props) => {
     return (
         <div>
-            <label className="text-label text-muted spacer-right dashboard-label">
+            <label className="text-label text-muted dashboard-label">
                 {props.label}
             </label>
             {

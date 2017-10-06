@@ -9,6 +9,7 @@ interface YearMonthActionsProps {
     availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
     label?: string;
     addOnActions?: React.ReactNode;
+    yearOnly?: boolean;
 }
 
 interface YearMonthActionsState {
@@ -71,10 +72,13 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
                                 onChange={this.handleOnChange} />
                         </Col>
                         <Col sm={6}>
-                            <MonthPicker
-                                value={this.state.month}
-                                refreshing={this.props.refreshing}
-                                onChange={this.handleOnChange} />
+                            {
+                                this.props.yearOnly ? null :
+                                    <MonthPicker
+                                        value={this.state.month}
+                                        refreshing={this.props.refreshing}
+                                        onChange={this.handleOnChange} />
+                            }
                         </Col>
                     </Row>
                 </div>
