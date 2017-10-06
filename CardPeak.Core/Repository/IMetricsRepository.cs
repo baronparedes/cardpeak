@@ -1,4 +1,4 @@
-﻿using CardPeak.Domain;
+﻿using CardPeak.Domain.Metrics;
 using System.Collections.Generic;
 
 namespace CardPeak.Core.Repository

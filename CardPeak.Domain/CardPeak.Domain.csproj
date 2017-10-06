@@ -49,10 +49,10 @@
     <Compile Include="..\AppVersion.cs">
       <Link>Properties\AppVersion.cs</Link>
     </Compile>
-    <Compile Include="AgentApprovalMetric.cs" />
+    <Compile Include="Metrics\AgentApprovalMetric.cs" />
     <Compile Include="AgentDashboard.cs" />
-    <Compile Include="AgentMetrics.cs" />
-    <Compile Include="AgentRankMetric.cs" />
+    <Compile Include="Metrics\AgentMetrics.cs" />
+    <Compile Include="Metrics\AgentRankMetric.cs" />
     <Compile Include="BatchUpload.partial.cs" />
     <Compile Include="Constants\ApprovalFileFields.cs" />
     <Compile Include="Constants\Configurations.cs" />
@@ -82,7 +82,7 @@
     <Compile Include="Generated\DebitCreditTransaction.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>
-    <Compile Include="ApprovalMetric.cs" />
+    <Compile Include="Metrics\ApprovalMetric.cs" />
     <Compile Include="ProcessedApprovalTransaction.cs" />
     <Compile Include="ProcessedBatchUpload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CardPeak.Domain
+namespace CardPeak.Domain.Metrics
 {
     public sealed class AgentMetrics
     {

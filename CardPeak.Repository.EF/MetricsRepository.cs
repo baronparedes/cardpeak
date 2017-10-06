@@ -1,5 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
 using System.Data.Entity;

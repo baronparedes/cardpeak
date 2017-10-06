@@ -1,11 +1,10 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Core.Service;
 using CardPeak.Domain;
-using CardPeak.Domain.Constants;
+using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CardPeak.Service
 {

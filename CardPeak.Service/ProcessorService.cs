@@ -1,7 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Core.Service;
 using CardPeak.Domain;
-using CardPeak.Domain.Constants;
 using CardPeak.Repository.EF;
 using System.Collections.Generic;
 
