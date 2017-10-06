@@ -6,14 +6,33 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
-import { Col, Row } from 'react-bootstrap'
-import { YearMonthAction, DataListFiltered, DataItemProps }from '../../layout'
+import { Col, Row, Grid } from 'react-bootstrap'
+import { YearMonthAction, DataListFiltered, DataItemProps, DashboardLabel }from '../../layout'
 
 type AgentRankingMetricsDataList = new () => DataListFiltered<CardPeak.Entities.AgentRankMetric>;
 const AgentRankingMetricsDataList = DataListFiltered as AgentRankingMetricsDataList;
 
 interface AgentRankingMetricsContainerDispatchProps {
     actions?: typeof Actions
+}
+
+const AgentApprovalsByBank = (props: { data: CardPeak.Entities.ApprovalMetric<string>[] }) => {
+    if (!props.data) {
+        return null;
+    }
+    return (
+        <Grid fluid>
+            <Row>
+                {props.data.map(_ => {
+                    return (
+                        <Col key={_.key}>
+                            <DashboardLabel label={_.key} metrics={_.value} />
+                        </Col>
+                    )
+                })}
+            </Row>
+        </Grid>
+    )
 }
 
 const AgentRankingMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AgentRankMetric>> = (props) => {
@@ -28,12 +47,18 @@ const AgentRankingMetricsRowLayout: React.StatelessComponent<DataItemProps<CardP
             <Col sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "rank" : props.item.rank}
             </Col>
-            <Col sm={7} xsHidden={props.isHeader}>
+            <Col sm={8} xsHidden={props.isHeader}>
                 {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
             </Col>
-            <Col sm={3} xsHidden={props.isHeader}>
-                {props.isHeader ? "approvals" : props.item.value}
+            <Col sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "approvals" : <span className="text-highlight">{props.item.value}</span>}
             </Col>
+            {
+                props.isHeader ? null :
+                    <Col sm={12}>
+                        <AgentApprovalsByBank data={props.item.approvalsByBank} />
+                    </Col>
+            }
         </Row>
     )
 }
