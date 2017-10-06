@@ -91,6 +91,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     title={<NavLinkText text="Metrics" fa="fa-bar-chart" />}
                     id="metrics-nav-dropdown">
                     <MenuItemLinkContainer exact to="/metrics/agents" text="Agents" fa="fa-users" />
+                    <MenuItemLinkContainer exact to="/metrics/rankings" text="Agent Rankings" fa="fa-star" />
                 </NavDropdown>
             </LinkContainer>
         )

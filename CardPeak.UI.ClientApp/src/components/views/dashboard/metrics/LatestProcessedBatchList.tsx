@@ -54,6 +54,13 @@ export const LatestProcessedBatchList = (props: DataListProps<CardPeak.Entities.
                 renderHeader={() => { return <LatestProcessedBatchRowLayout isHeader /> }}
                 renderItem={(item, key) => { return <LatestProcessedBatchRowLayout item={item} key={key} /> }}
                 data={props.data} />
+            <div className="text-right spacer-top">
+                <Link to="/transactions/batch">
+                    <Button bsStyle="primary">
+                        Manage Batch Uploads
+                    </Button>
+                </Link>
+            </div>
         </div>
     )
 }

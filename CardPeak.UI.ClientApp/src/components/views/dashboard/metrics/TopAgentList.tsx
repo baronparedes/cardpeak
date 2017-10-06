@@ -1,4 +1,5 @@
 ﻿import * as React from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import {
     ListNoRecordsRow, GridList, SpinnerBlock,
@@ -53,6 +54,13 @@ export const TopAgentList = (props: DataListProps<CardPeak.Entities.ApprovalMetr
                     return <TopAgentRowLayout item={item} key={key} rank={rank} />
                 }}
                 data={props.data} />
+            <div className="text-right spacer-top">
+                <Link to="/metrics/rankings">
+                    <Button bsStyle="primary">
+                        View Rankings
+                    </Button>
+                </Link>
+            </div>
         </div>
     )
 }
