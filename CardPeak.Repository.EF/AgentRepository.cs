@@ -1,5 +1,6 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -48,6 +49,50 @@ namespace CardPeak.Repository.EF
             this.Context.Entry(agent).State = EntityState.Modified;
 
             return agent;
+        }
+
+        public AgentPayout GetAgentPayouts()
+        {
+            var approvalTransactions = this.Context.ApprovalTransactions
+                .Include(_ => _.Agent)
+                .Where(_ => !_.IsDeleted)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .Select(_ => new {
+                    AgentId = _.FirstOrDefault().AgentId,
+                    Agent = _.FirstOrDefault().Agent,
+                    Amount = _.Sum(t => t.Amount)
+                });
+
+            var creditDebitTransactions = this.Context.DebitCreditTransactions
+                .Include(_ => _.Agent)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .Select(_ => new
+                {
+                    AgentId = _.FirstOrDefault().AgentId,
+                    Agent = _.FirstOrDefault().Agent,
+                    Amount = _.Sum(t => t.Amount)
+                });
+
+            var query = approvalTransactions.Union(creditDebitTransactions)
+                .GroupBy(_ => _.AgentId)
+                .Select(_ => new {
+                    AgentId = _.FirstOrDefault().AgentId,
+                    Agent = _.FirstOrDefault().Agent,
+                    Amount = _.Sum(t => t.Amount)
+                })
+                .Where(_ => _.Amount > 0);
+
+
+            var payout = query.Select(_ => new ApprovalMetric<Agent> {
+                Key = _.Agent,
+                Value = _.Amount
+            }).ToList();
+
+            return new AgentPayout {
+                Payouts = payout
+            };
         }
     }
 }

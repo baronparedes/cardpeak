@@ -99,5 +99,10 @@ namespace CardPeak.Service
         {
             return this.AccountRepository.FindByAgent(agentId);
         }
+
+        public AgentPayout GetAgentPayouts()
+        {
+            return this.AgentRepository.GetAgentPayouts();
+        }
     }
 }

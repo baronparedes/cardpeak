@@ -49,6 +49,7 @@
     <Compile Include="..\AppVersion.cs">
       <Link>Properties\AppVersion.cs</Link>
     </Compile>
+    <Compile Include="AgentPayout.cs" />
     <Compile Include="Metrics\AgentApprovalMetric.cs" />
     <Compile Include="AgentDashboard.cs" />
     <Compile Include="Metrics\AgentMetrics.cs" />

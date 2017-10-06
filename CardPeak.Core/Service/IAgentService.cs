@@ -12,5 +12,6 @@ namespace CardPeak.Core.Service
         DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit);
         Agent Update(Agent agent);
         Agent Create(Agent agent);
+        AgentPayout GetAgentPayouts();
     }
 }

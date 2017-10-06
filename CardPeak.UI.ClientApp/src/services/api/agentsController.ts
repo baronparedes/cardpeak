@@ -20,7 +20,18 @@ const API = {
     CREATE_AGENT: '/agents/create',
     GET_ACCOUNTS: (agentId: number) => {
         return '/agents/' + agentId + '/accounts';
-    }
+    },
+    GET_AGENT_PAYOUT: '/agents/payout'
+}
+
+export function getAgentPayout(successCallback: (data: CardPeak.Models.AgentPayoutModel) => void, errorCallback: (e: string) => void) {
+    axios.get(API.GET_AGENT_PAYOUT)
+        .then((r) => {
+            successCallback(r.data as CardPeak.Models.AgentPayoutModel);
+        })
+        .catch((reason) => {
+            errorCallback(reason.message);
+        });
 }
 
 export function getAll(successCallback: (data: CardPeak.Entities.Agent[]) => void) {

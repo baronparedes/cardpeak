@@ -111,6 +111,9 @@
     <Content Include="src\components\layout\NotFound.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\PayoutBadgeContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\PerformanceDashboard.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -159,6 +162,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentListModal.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\agents\AgentPayoutContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentsView.tsx">
@@ -359,6 +365,9 @@
     <TypeScriptCompile Include="src\services\actions\agentActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\actions\agentPayoutActions.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\actions\dashboardActions.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -396,6 +405,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\api\uploadController.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\services\reducers\agentPayoutReducer.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\reducers\agentReducer.ts">
