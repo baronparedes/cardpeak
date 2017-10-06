@@ -43,7 +43,7 @@ export class DataListFiltered<T> extends React.Component<DataListProps<T> & Data
             <div>
                 {
                     this.props.hideSearchBar ? null :
-                        <SearchBar hidden={this.props.isLoading} onSearchBarChange={this.handleOnSearchBarChange} disabled={this.props.isLoading} />
+                        <SearchBar hidden={this.props.isLoading} onSearchBarChange={this.handleOnSearchBarChange} disabled={this.props.isLoading}  />
                 }
                 <DataList { ...this.props } data={this.state.filteredData} />
             </div>

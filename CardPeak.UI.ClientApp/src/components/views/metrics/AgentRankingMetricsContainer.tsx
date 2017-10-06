@@ -25,7 +25,7 @@ const AgentApprovalsByBank = (props: { data: CardPeak.Entities.ApprovalMetric<st
             <Row>
                 {props.data.map(_ => {
                     return (
-                        <Col key={_.key}>
+                        <Col key={_.key} sm={3} xs={4}>
                             <DashboardLabel label={_.key} metrics={_.value} />
                         </Col>
                     )
@@ -41,21 +41,21 @@ const AgentRankingMetricsRowLayout: React.StatelessComponent<DataItemProps<CardP
             <Col mdHidden
                 lgHidden
                 smHidden
-                xsHidden={!props.isHeader}>
-                <span className="grid-label text-center spacer-left">top agents</span>
+                xsHidden={!props.isHeader} className="text-center">
+                <span className="grid-label spacer-left">rankings</span>
             </Col>
-            <Col sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "rank" : props.item.rank}
+            <Col sm={1} xs={3} xsHidden={props.isHeader}>
+                {props.isHeader ? "rank" : <strong>{props.item.rank}</strong>}
             </Col>
-            <Col sm={8} xsHidden={props.isHeader}>
+            <Col sm={2} xs={6} xsHidden={props.isHeader}>
                 {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
             </Col>
-            <Col sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "approvals" : <span className="text-highlight">{props.item.value}</span>}
+            <Col sm={1} xs={3} xsHidden={props.isHeader} className={props.isHeader ? "" : "text-center"}>
+                {props.isHeader ? "approvals" : <label className="text-highlight text-larger">{props.item.value}</label>}
             </Col>
             {
                 props.isHeader ? null :
-                    <Col sm={12}>
+                    <Col sm={8} xs={12}>
                         <AgentApprovalsByBank data={props.item.approvalsByBank} />
                     </Col>
             }
@@ -80,19 +80,23 @@ class AgentRankingMetricsContainer extends React.Component<CardPeak.Models.Metri
                     refreshing={this.props.loadingMetrics}
                     onRefresh={this.props.actions.getAgentRankingMetricsStart} />
                 <br />
-                <AgentRankingMetricsDataList
-                    predicate={(metric, searchString) => {
-                        const firstNameMatch = metric.key.firstName.toLowerCase().indexOf(searchString) >= 0;
-                        const lastNameMatch = metric.key.lastName.toLowerCase().indexOf(searchString) >= 0;
-                        return firstNameMatch || lastNameMatch;
-                    }}
-                    onGetKey={(item) => item.key.agentId}
-                    renderHeader={() => { return <AgentRankingMetricsRowLayout isHeader /> }}
-                    renderItem={(item, key) => {
-                        return <AgentRankingMetricsRowLayout item={item} key={key} />
-                    }}
-                    isLoading={this.props.loadingMetrics}
-                    data={this.props.agentRankingMetrics} />
+                <Grid className="no-padding">
+                    <Row>
+                        <AgentRankingMetricsDataList
+                            predicate={(metric, searchString) => {
+                                const firstNameMatch = metric.key.firstName.toLowerCase().indexOf(searchString) >= 0;
+                                const lastNameMatch = metric.key.lastName.toLowerCase().indexOf(searchString) >= 0;
+                                return firstNameMatch || lastNameMatch;
+                            }}
+                            onGetKey={(item) => item.key.agentId}
+                            renderHeader={() => { return <AgentRankingMetricsRowLayout isHeader /> }}
+                            renderItem={(item, key) => {
+                                return <AgentRankingMetricsRowLayout item={item} key={key} />
+                            }}
+                            isLoading={this.props.loadingMetrics}
+                            data={this.props.agentRankingMetrics} />
+                    </Row>
+                </Grid>
             </div>
         )
     }

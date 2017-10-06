@@ -25,13 +25,13 @@ const TopAgentRowLayout: React.StatelessComponent<DataItemProps<
                 <span className="grid-label text-center spacer-left">top agents</span>
             </Col>
             <Col sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "rank" : props.rank}
+                {props.isHeader ? "rank" : <strong>{props.rank}</strong>}
             </Col>
             <Col sm={7} xsHidden={props.isHeader}>
                 {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
             </Col>
-            <Col sm={3} xsHidden={props.isHeader}>
-                {props.isHeader ? "approvals" : props.item.value}
+            <Col sm={3} xsHidden={props.isHeader} className="text-center">
+                {props.isHeader ? "approvals" : <label className="text-highlight">{props.item.value}</label>}
             </Col>
         </Row>
     )

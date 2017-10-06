@@ -100,7 +100,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
     }
     render() {
         return (
-            <Grid className="spacer-bottom no-padding">
+            <Grid className="spacer-bottom no-padding hidden-print">
                 <Row>
                     {this.renderDateFilters()}
                     {this.renderButtons()}

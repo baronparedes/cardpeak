@@ -25,19 +25,19 @@ const AgentMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Ent
                 <Col mdHidden
                     lgHidden
                     smHidden
-                    xsHidden={!props.isHeader}>
-                    <span className="grid-label text-center spacer-left">agent metrics</span>
+                    xsHidden={!props.isHeader} className="text-center">
+                    <span className="grid-label spacer-left">agent metrics</span>
                 </Col>
-                <Col sm={4} xsHidden={props.isHeader}>
+                <Col sm={4} xs={12} xsHidden={props.isHeader}>
                     {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
                 </Col>
-                <Col sm={2} xsHidden={props.isHeader}>
+                <Col sm={2} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "approvals" : <label className="text-highlight">{props.item.value}</label>}
                 </Col>
-                <Col sm={3} xsHidden={props.isHeader}>
+                <Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "balance" : <Currency currency={props.item.accountBalance} />}
                 </Col>
-                <Col sm={3} xsHidden={props.isHeader}>
+                <Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "savings" : <Currency noCurrencyColor currency={props.item.savingsBalance} />}
                 </Col>
             </Row>
