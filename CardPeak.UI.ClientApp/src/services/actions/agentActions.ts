@@ -3,6 +3,7 @@ import { ThunkAction } from 'redux-thunk'
 import { AGENT_ACTIONS } from '../../constants/actions'
 import { RootState } from '../reducers'
 import * as agentsController from '../api/agentsController'
+import { getAgentPayoutStart } from '../actions/agentPayoutActions'
 
 export const selectAgent = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.SELECT_AGENT);
 export const selectAgentDashboard = createAction(AGENT_ACTIONS.SELECT_AGENT_DASHBOARD);
@@ -100,6 +101,7 @@ export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCr
         dispatch(postAgentTransaction());
         agentsController.postAgentTransaction(transaction, isDebit, (data: CardPeak.Entities.DebitCreditTransaction) => {
             dispatch(postAgentTransactionComplete(data));
+            dispatch(getAgentPayoutStart());
             if (successCallback) {
                 successCallback();
             }

@@ -17,7 +17,7 @@ class PayoutBadgeContainer extends React.Component<CardPeak.Models.AgentPayoutMo
     componentDidMount() {
         if (!this.props.initialized) {
             this.props.actions.initializeStart();
-            setInterval(this.props.actions.getAgentPayoutStart, 10000);
+            setInterval(this.props.actions.getAgentPayoutStart, 15000);
         }
     }
     componentWillUpdate(nextProps: CardPeak.Models.AgentPayoutModel) {

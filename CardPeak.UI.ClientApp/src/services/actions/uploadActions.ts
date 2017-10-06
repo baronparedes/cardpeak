@@ -3,6 +3,7 @@ import { ThunkAction } from 'redux-thunk'
 import { UPLOAD_ACTIONS } from '../../constants/actions'
 import { RootState } from '../reducers'
 import * as uploadController from '../api/uploadController'
+import { getAgentPayoutStart } from '../actions/agentPayoutActions'
 
 export const uploadFile = createAction(UPLOAD_ACTIONS.UPLOAD_FILE);
 export const uploadFileComplete = createAction<CardPeak.Entities.BatchUpload>(UPLOAD_ACTIONS.UPLOAD_FILE_COMPLETE);
@@ -38,6 +39,7 @@ export function deleteBatchStart(id: number, deleteComplete: () => void) {
         uploadController.deleteBatch(id,
             (data: number) => {
                 dispatch(deleteBatchComplete(data));
+                dispatch(getAgentPayoutStart());
                 deleteComplete();
             },
             (e: string) => {
@@ -110,6 +112,7 @@ export function processBatchStart(batchId: number, errorCallback?: (e: string) =
         dispatch(processBatch());
         uploadController.processBatch(batchId, (data: CardPeak.Entities.ProcessedBatchUpload) => {
             dispatch(processBatchComplete(data));
+            dispatch(getAgentPayoutStart());
         }, (e: string) => {
             dispatch(processBatchError());
             if (errorCallback) {

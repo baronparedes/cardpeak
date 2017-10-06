@@ -3,6 +3,7 @@ import { ThunkAction } from 'redux-thunk'
 import { RootState } from '../reducers'
 import { TRANSACTION_ACTIONS } from '../../constants/actions'
 import * as transactionsController from '../api/transactionsController'
+import { getAgentPayoutStart } from '../actions/agentPayoutActions'
 
 export const getTransactions = createAction(TRANSACTION_ACTIONS.GET_TRANSACTION);
 export const getTransactionsComplete = createAction<CardPeak.Entities.ApprovalTransaction[]>(TRANSACTION_ACTIONS.GET_TRANSACTION_COMPLETE);
@@ -15,6 +16,7 @@ export function deleteTransaciton(id: number,
         transactionsController.deleteTransaciton(id,
             (data: number) => {
                 deleteComplete(data);
+                dispatch(getAgentPayoutStart());
             },
             (e: string) => {
                 deleteError(e);
