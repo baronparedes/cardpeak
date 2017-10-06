@@ -2,6 +2,7 @@
 using CardPeak.Domain;
 using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace CardPeak.Repository.EF
@@ -12,6 +13,21 @@ namespace CardPeak.Repository.EF
         {
         }
 
+        private IQueryable<ApprovalTransaction> QueryDashboard(int year, int month)
+        {
+            var query = this.Context.ApprovalTransactions
+                .Include(_ => _.Bank)
+                .Include(_ => _.CardCategory)
+                .Where(_ => _.ApprovalDate.Year == year)
+                .Where(_ => !_.IsDeleted);
+
+            if (month != 0)
+            {
+                query = query.Where(_ => _.ApprovalDate.Month == month);
+            }
+
+            return query;
+        }
 
         private IQueryable<ApprovalTransaction> QueryApprovalTransactionsByYearMonth(int year, int month)
         {
@@ -101,6 +117,19 @@ namespace CardPeak.Repository.EF
                 });
 
             return result;
+        }
+
+        public IEnumerable<AgentRankMetric> GetAgentRankings(int year, int month)
+        {
+            return new List<AgentRankMetric> { new AgentRankMetric() };
+            //var result = this.QueryDashboard(year, month)
+            //    .Include(_ => _.Agent)
+            //    .GroupBy(_ => _.AgentId)
+            //    .OrderByDescending(_ => _.Sum(t => t.Units))
+            //    .Select(_ => new ApprovalMetric<Agent> { Key = _.FirstOrDefault().Agent, Value = _.Sum(t => t.Units) })
+            //    .ToList();
+
+            //return result;
         }
     }
 }

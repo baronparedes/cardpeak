@@ -145,6 +145,12 @@
         public savingsBalance: number;
     }
 
+    export class AgentRankMetric {
+        public key: Agent;
+        public value: number;
+        public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];
+    }
+
     export class AgentMetrics {
         public agentApprovalMetrics?: CardPeak.Entities.AgentApprovalMetric[];
         public totalApproved?: number;

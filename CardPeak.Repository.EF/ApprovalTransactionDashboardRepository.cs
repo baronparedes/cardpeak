@@ -119,6 +119,7 @@ namespace CardPeak.Repository.EF
                 .GroupBy(_ => _.AgentId)
                 .OrderByDescending(_ => _.Sum(t => t.Units))
                 .Select(_ => new ApprovalMetric<Agent> { Key = _.FirstOrDefault().Agent, Value = _.Sum(t => t.Units) })
+                .Take(Configurations.TopAgentCount)
                 .ToList();
 
             return result;

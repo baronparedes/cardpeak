@@ -25,5 +25,12 @@ namespace CardPeak.Service
                 AgentApprovalMetrics = this.MetricsRepository.GetApprovalsByAgent(year.Value, month.Value)
             };
         }
+
+        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int? year, int? month)
+        {
+            year = year ?? DateTime.Now.Year;
+            month = month ?? 0;
+            return this.MetricsRepository.GetAgentRankings(year.Value, month.Value);
+        }
     }
 }
