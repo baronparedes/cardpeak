@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import {
     ListNoRecordsRow, GridList, SpinnerBlock,
-    DataList, DataListProps, DataItemProps
+    DataList, DataListProps, DataItemProps, AgentRankingsLinkButton
 } from '../../../layout'
 
 type TopAgentDataList = new () => DataList<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>;
@@ -55,11 +55,7 @@ export const TopAgentList = (props: DataListProps<CardPeak.Entities.ApprovalMetr
                 }}
                 data={props.data} />
             <div className="text-right spacer-top">
-                <Link to="/metrics/rankings">
-                    <Button bsStyle="primary">
-                        View Rankings
-                    </Button>
-                </Link>
+                <AgentRankingsLinkButton />
             </div>
         </div>
     )

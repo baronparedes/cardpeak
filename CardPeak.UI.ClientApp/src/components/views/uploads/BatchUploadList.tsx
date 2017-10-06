@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, Button, ButtonGroup, Panel } from 'react-bootstrap'
-import { DataListFiltered, DataListProps, DataItemProps, ConfirmButton } from '../../layout'
+import { DataListFiltered, DataListProps, DataItemProps, ConfirmButton, BatchLinkButton } from '../../layout'
 
 type BatchUploadDataList = new () => DataListFiltered<CardPeak.Entities.BatchUpload>;
 const BatchUploadDataList = DataListFiltered as BatchUploadDataList;
@@ -60,13 +60,7 @@ class BatchUploadRowLayout extends React.Component<DataItemProps<CardPeak.Entiti
                     {
                         this.props.isHeader ? "actions" :
                             <ButtonGroup>
-                                <ButtonGroup>
-                                    <Link to={"/transactions/batch/" + this.props.item.batchId}>
-                                        <Button bsStyle="primary">
-                                            <i className="fa fa-table"></i>
-                                        </Button>
-                                    </Link>
-                                </ButtonGroup>
+                                <BatchLinkButton id={this.props.item.batchId} />
                                 <ConfirmButton
                                     useButtonLoading
                                     noButtonLoadingText

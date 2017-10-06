@@ -6,7 +6,7 @@ const API = {
 }
 
 export function getAgentRankingMetrics(year: number, month?: number,
-    successCallback?: (data: CardPeak.Entities.AgentMetrics) => void,
+    successCallback?: (data: CardPeak.Entities.AgentRankMetric[]) => void,
     errorCallback?: (error: string) => void) {
 
     axios.get(API.GET_AGENT_RANKING_METRICS, ({

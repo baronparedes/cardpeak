@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps } from '../../../layout'
+import { DataList, DataListProps, DataItemProps, BatchLinkButton, ManageBatchLinkButton } from '../../../layout'
 
 type LatestProcessedBatchDataList = new () => DataList<CardPeak.Entities.BatchUpload>;
 const LatestProcessedBatchDataList = DataList as LatestProcessedBatchDataList;
@@ -30,11 +30,7 @@ const LatestProcessedBatchRowLayout = (props: DataItemProps<CardPeak.Entities.Ba
                 {
                     props.isHeader ? null :
                         props.item.hasErrors ? null :
-                            <Link to={"/transactions/batch/" + props.item.batchId}>
-                                <Button bsStyle="primary">
-                                    <i className="fa fa-table"></i>
-                                </Button>
-                            </Link>
+                            <BatchLinkButton id={props.item.batchId} />
                 }
             </Col>
         </Row>
@@ -55,11 +51,7 @@ export const LatestProcessedBatchList = (props: DataListProps<CardPeak.Entities.
                 renderItem={(item, key) => { return <LatestProcessedBatchRowLayout item={item} key={key} /> }}
                 data={props.data} />
             <div className="text-right spacer-top">
-                <Link to="/transactions/batch">
-                    <Button bsStyle="primary">
-                        Manage Batch Uploads
-                    </Button>
-                </Link>
+                <ManageBatchLinkButton />
             </div>
         </div>
     )
