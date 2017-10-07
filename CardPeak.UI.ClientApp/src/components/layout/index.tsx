@@ -27,5 +27,5 @@ export { YearPicker, MonthPicker } from './YearMonthPicker'
 export { YearMonthAction } from './YearMonthAction'
 export {
     LinkButton, BatchLinkButton, AgentDashboardLinkButton, ManageBatchLinkButton, 
-    AgentRankingsLinkButton
+    AgentRankingsLinkButton, UpdateAgentLinkButton
 } from './LinkButton'

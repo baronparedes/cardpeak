@@ -94,7 +94,7 @@ const BatchUploadList = (props: DataListProps<CardPeak.Entities.BatchUpload> & B
                     const originalFileNameMatch = item.originalFileName.toLowerCase().indexOf(searchString) >= 0;
                     return originalFileNameMatch;
                 }}
-                paged
+                pageSize={10}
                 isLoading={props.isLoading}
                 onGetKey={(item) => item.batchId}
                 renderHeader={() => { return <BatchUploadRowLayout isHeader /> }}

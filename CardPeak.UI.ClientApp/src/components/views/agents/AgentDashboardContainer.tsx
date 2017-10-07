@@ -28,10 +28,12 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashb
     }
     componentDidMount() {
         if (this.props.match.params.id) {
-            this.props.actions.selectAgentById(this.props.match.params.id, (agent: CardPeak.Entities.Agent) => {
+            this.props.actions.selectAgentById(parseInt(this.props.match.params.id), (agent: CardPeak.Entities.Agent) => {
                 this.props.actions.selectAgent(agent);
                 this.props.actions.selectAgentDashboardStart();
-            });;
+            }, () => {
+                this.props.history.push("/404");
+            });
         }
     }
     handleToggleModal = () => {

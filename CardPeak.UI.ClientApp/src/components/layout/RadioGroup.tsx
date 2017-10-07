@@ -2,15 +2,16 @@
 import { ButtonGroup, Button } from 'react-bootstrap'
 
 interface RadioGroupProps {
-    name: string,
-    onChange?: (e: any) => void,
-    options: string[][],
-    value: string,
+    name: string;
+    onChange?: (e: any) => void;
+    options: string[][];
+    value: string;
+    className?: string;
 }
 
 export const RadioGroup: React.StatelessComponent<RadioGroupProps> = (props) => {
     return (
-        <ButtonGroup>
+        <ButtonGroup className={props.className}>
             {props.options.map(option =>
                 <Button
                     key={option[0]}

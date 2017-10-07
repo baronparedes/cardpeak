@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Button, Grid, Row, Col, ButtonGroup } from 'react-bootstrap'
-import { ButtonLoadingText, DatePicker } from '../../layout'
+import { ButtonLoadingText, DatePicker, UpdateAgentLinkButton } from '../../layout'
 import DebitCreditTransactionFormModal from '../transactions/DebitCreditTransactionFormModal'
 import * as dateHelpers from '../../../helpers/dateHelpers'
 
@@ -75,7 +75,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     renderButtons() {
         return (
             <Col lg={6} md={6} sm={12}  xsHidden className="text-right">
-                <ButtonGroup disabled={this.props.refreshingAgentDashboard}>
+                <ButtonGroup disabled={this.props.refreshingAgentDashboard} className="spacer-right-sm">
                     <Button
                         onClick={this.handleOnRefreshTransactions}
                         bsStyle="primary"
@@ -97,13 +97,14 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                         Debit
                     </Button>
                 </ButtonGroup>
+                <UpdateAgentLinkButton id={this.props.agent.agentId} />
             </Col >
         )
     }
     renderSmallButtons() {
         return (
             <Col xs={12} smHidden lgHidden mdHidden className="text-right">
-                <ButtonGroup className="spacer-top spacer-bottom" disabled={this.props.refreshingAgentDashboard}>
+                <ButtonGroup className="spacer-top spacer-bottom spacer-right-sm" disabled={this.props.refreshingAgentDashboard}>
                     <Button
                         onClick={this.handleOnRefreshTransactions}
                         bsStyle="primary"
@@ -125,12 +126,17 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                         <i className="fa fa-minus fa-2x" title="Debit Transaction" data-name="Debit"></i>
                     </Button>
                 </ButtonGroup>
-                <DebitCreditTransactionFormModal
-                    agent={this.props.agent}
-                    onToggleModal={this.handleOnToggleModal}
-                    showModal={this.state.showModal}
-                    transaction={this.state.transaction} />
+                <UpdateAgentLinkButton id={this.props.agent.agentId} />
             </Col>    
+        )
+    }
+    renderModals() {
+        return (
+            <DebitCreditTransactionFormModal
+                agent={this.props.agent}
+                onToggleModal={this.handleOnToggleModal}
+                showModal={this.state.showModal}
+                transaction={this.state.transaction} />
         )
     }
     render() {
@@ -140,6 +146,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                     {this.renderDateFilters()}
                     {this.renderButtons()}
                     {this.renderSmallButtons()}
+                    {this.renderModals()}
                 </Row>
             </Grid>
         )

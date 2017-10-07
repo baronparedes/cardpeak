@@ -30,9 +30,11 @@ class PayoutBadgeContainer extends React.Component<CardPeak.Models.AgentPayoutMo
             return null;
         }
         return (
-            <Badge>
-                {this.props.count}
-            </Badge>
+            <span className="spacer-left-sm">
+                <Badge>
+                    {this.props.count}
+                </Badge>
+            </span>
         )
     }
 }

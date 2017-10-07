@@ -31,7 +31,6 @@ const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListProp
                     const lastNameMatch = agent.lastName.toLowerCase().indexOf(searchString) >= 0;
                     return firstNameMatch || lastNameMatch;
                 }}
-                paged
                 pageSize={5}
                 onGetKey={(item) => item.agentId}
                 isLoading={props.isLoading}

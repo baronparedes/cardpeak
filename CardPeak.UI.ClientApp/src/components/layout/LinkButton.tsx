@@ -22,6 +22,16 @@ export const BatchLinkButton: React.StatelessComponent<{id: number}> = (props) =
     )
 }
 
+export const UpdateAgentLinkButton: React.StatelessComponent<{ id: number }> = (props) => {
+    return (
+        <LinkButton to={"/agents/update/" + props.id} button={
+            <Button bsStyle="primary">
+                <i className="fa fa-pencil"></i>
+            </Button>
+        } />
+    )
+}
+
 export const AgentDashboardLinkButton: React.StatelessComponent<{ id: number }> = (props) => {
     return (
         <LinkButton to={"/agents/" + props.id} button={

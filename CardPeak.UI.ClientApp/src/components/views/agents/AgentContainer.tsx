@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { SpinnerBlock, RadioGroup } from '../../layout'
+import { SpinnerBlock, RadioGroup, AgentDashboardLinkButton } from '../../layout'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -98,6 +98,7 @@ class AgentContainer extends
             return (
                 <Grid fluid className="text-right spacer-bottom">
                     <RadioGroup
+                        className="spacer-right-sm"
                         name="update-options"
                         value={this.state.showWindow}
                         options={[
@@ -105,6 +106,7 @@ class AgentContainer extends
                             ['rates', 'Rates']
                         ]}
                         onChange={this.handleOnWindowChange} />
+                    <AgentDashboardLinkButton id={this.state.selectedAgent.agentId} />
                 </Grid>
             )
         }

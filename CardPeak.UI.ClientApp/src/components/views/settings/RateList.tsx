@@ -1,10 +1,10 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps, HighlightedSpan } from '../../layout'
+import { DataListFiltered, DataListProps, DataItemProps, HighlightedSpan } from '../../layout'
 import { currencyFormat } from '../../../helpers/currencyHelper'
 
-type RateDataList = new () => DataList<CardPeak.Entities.Rate>;
-const RateDataList = DataList as RateDataList;
+type RateDataList = new () => DataListFiltered<CardPeak.Entities.Rate>;
+const RateDataList = DataListFiltered as RateDataList;
 
 interface RateListProps {
     agentId?: number
@@ -65,7 +65,18 @@ const RateList = (props: DataListProps<CardPeak.Entities.Rate> & RateListProps) 
     return (
         <div>
             <RateDataList
+                predicate={(rate, searchString) => {
+                    const bankMatched = rate.bank.description.toLowerCase().startsWith(searchString);
+                    const categoryMatched = rate.cardCategory.description.toLowerCase().startsWith(searchString);
+                    let shortDescriptionMatched = false;
+                    if (rate.bank.shortDescription) {
+                        shortDescriptionMatched = rate.bank.shortDescription.toLowerCase() === searchString;
+                    }
+
+                    return bankMatched || categoryMatched || shortDescriptionMatched;
+                }}
                 isLoading={props.isLoading}
+                onGetKey={(rate) => rate.bank.description + rate.cardCategory.description}
                 renderHeader={() => { return <RateListRowLayout isHeader /> }}
                 renderItem={(item, key) => {
                     return (

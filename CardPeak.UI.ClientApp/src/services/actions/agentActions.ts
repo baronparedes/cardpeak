@@ -21,19 +21,29 @@ export const postAgent = createAction(AGENT_ACTIONS.POST_AGENT);
 export const postAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.POST_AGENT_COMPLETE);
 export const postAgentError = createAction(AGENT_ACTIONS.POST_AGENT_ERROR);
 
-export function selectAgentById(id: number, successCallback: (agent: CardPeak.Entities.Agent) => void) {
+export function selectAgentById(id: number, successCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
         let agent: CardPeak.Entities.Agent = undefined;
         const agents = getState().agentDashboardModel.agents;
         if (!agents) {
             dispatch(getAllAgentsStart((data: CardPeak.Entities.Agent[]) => {
                 agent = data.filter(_ => _.agentId == id)[0];
-                successCallback(agent);
+                if (agent) {
+                    successCallback(agent);
+                }
+                else {
+                    notFoundCallback();
+                }
             }));
         }
         else {
             agent = agents.filter(_ => _.agentId == id)[0];
-            successCallback(agent);
+            if (agent) {
+                successCallback(agent);
+            }
+            else {
+                notFoundCallback();
+            }
         }
     }
 }

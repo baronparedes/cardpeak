@@ -44,6 +44,8 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
             [e.target.name]: e.target.value,
             errors
         });
+
+        this.handleOnRefresh();
     }
     hasErrors = () => {
         this.handleErrors();

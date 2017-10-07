@@ -6,7 +6,6 @@ export interface DataListDisplayProps<T> {
     renderItem: (item: T, key: number | string) => React.ReactNode;
     renderHeader: () => React.ReactNode;
     addOn?: React.ReactNode;
-    paged?: boolean;
     pageSize?: number;
 }
 
@@ -26,27 +25,28 @@ export interface DataListState<T> {
     pageSize?: number;
     pages?: number;
     currentPage?: number;
+    defaultPageSize?: number;
 }
 
 export class DataList<T> extends React.Component<DataListProps<T> & DataListDisplayProps<T>, DataListState<T>>{
     constructor(props: DataListProps<T> & DataListDisplayProps<T>) {
         super(props);
-        if (props.paged) {
+        if (props.pageSize) {
             this.state = {
-                data: this.props.data ? this.props.data.slice(0, this.props.pageSize ? this.props.pageSize : 10) : this.props.data,
-                pageSize: this.props.pageSize ? this.props.pageSize : 10,
-                pages: !this.props.data ? 0 : Math.ceil(this.props.data.length / (this.props.pageSize ? this.props.pageSize : 10)),
+                data: props.data ? props.data.slice(0, props.pageSize) : props.data,
+                pageSize: props.pageSize,
+                pages: !props.data ? 0 : Math.ceil(props.data.length / props.pageSize),
                 currentPage: 1
             }
         }
         else {
             this.state = {
-                data: this.props.data
+                data: props.data
             }
         }
     }
     handleOnSelectPage = (page: any) => {
-        if (!this.props.paged) {
+        if (!this.state.pageSize) {
             return;
         }
         if (this.props.data) {
@@ -58,15 +58,14 @@ export class DataList<T> extends React.Component<DataListProps<T> & DataListDisp
                 currentPage: page
             });
         }
-  
     }
     componentWillReceiveProps(nextProps: DataListProps<T> & DataListDisplayProps<T>) {
         if (this.props.data != nextProps.data) {
-            if (nextProps.paged) {
+            if (nextProps.pageSize) {
                 this.setState({
                     data: nextProps.data.slice(0, nextProps.pageSize),
-                    pageSize: nextProps.pageSize ? nextProps.pageSize : 10,
-                    pages: !nextProps.data ? 0 : Math.ceil(nextProps.data.length / (nextProps.pageSize ? nextProps.pageSize : 10)),
+                    pageSize: nextProps.pageSize ? nextProps.pageSize : this.state.defaultPageSize,
+                    pages: !nextProps.data ? 0 : Math.ceil(nextProps.data.length / (nextProps.pageSize ? nextProps.pageSize : this.state.defaultPageSize)),
                     currentPage: 1
                 });
             }
@@ -96,7 +95,7 @@ export class DataList<T> extends React.Component<DataListProps<T> & DataListDisp
                     }
                 </GridList>
                 {
-                    !this.props.paged ? null :
+                    !this.props.pageSize ? null :
                         <div className="container-fluid text-center">
                             <Pagination
                                 prev

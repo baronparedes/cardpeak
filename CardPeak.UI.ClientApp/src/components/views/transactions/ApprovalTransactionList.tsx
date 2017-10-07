@@ -153,7 +153,7 @@ class ApprovalTransactionList extends React.Component<DataListProps<CardPeak.Ent
                         return clientMatched || productMatched;
                     }}
                     hideSearchBar={this.props.hideSearchBar}
-                    paged
+                    pageSize={10}
                     isLoading={this.props.isLoading}
                     renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader hideAmount={this.props.hideAmount} /> }}
                     renderItem={(item, key) => {
