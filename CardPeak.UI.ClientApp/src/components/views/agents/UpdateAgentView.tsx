@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { NotFound, NavigationProps } from '../../layout'
 import AgentContainer from './AgentContainer'
 
-const UpdateAgentView = (props: NavigationProps<any>) => {
+const UpdateAgentView: React.StatelessComponent<NavigationProps<any>> = (props) => {
     return (
         <div>
             <h2>Update Agent Details</h2>

@@ -6,7 +6,7 @@ import UpdateAgentView from './UpdateAgentView'
 import AddAgentView from './AddAgentView'
 import AgentPayoutContainer from './AgentPayoutContainer'
 
-const AgentsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
+const AgentsView: React.StatelessComponent<{match: any}> = (props) => {
     return (
         <div>
             <Switch>
