@@ -7,8 +7,7 @@ import { RootState } from '../../../services/reducers'
 
 import { Panel } from 'react-bootstrap'
 
-import AgentListModal from './AgentListModal'
-import SelectedAgent from './SelectedAgent'
+import SelectAgent from './SelectAgent'
 import AgentDashboardView from '../agentDashboard/AgentDashboardView'
 
 import { NavigationProps } from '../../layout'
@@ -17,16 +16,9 @@ interface AgentDashboardContainerDispatchProps {
     actions?: typeof AgentsActions
 }
 
-interface AgentDashboardContainerState {
-    showModal: boolean;
-}
-
-class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & NavigationProps<any>, AgentDashboardContainerState>{
-    constructor(props: CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & NavigationProps<any>) {
+class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel & AgentDashboardContainerDispatchProps & NavigationProps<any>, {}>{
+    constructor(props: CardPeak.Models.AgentModel & AgentDashboardContainerDispatchProps & NavigationProps<any>) {
         super(props);
-        this.state = {
-            showModal: false
-        }
     }
     componentDidMount() {
         if (this.props.match.params.id) {
@@ -38,17 +30,10 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashb
             });
         }
     }
-    handleToggleModal = () => {
-        this.setState({ 
-            showModal: !this.state.showModal
-        });
-    }
-    handleOnSelectedAgentClick = () => {
-        this.handleToggleModal();
+    handleOnSelectAgent = () => {
         this.props.actions.getAllAgentsStart();
     }
     handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
-        this.handleToggleModal();
         if (this.props.history) {
             this.props.history.push("/agents/" + agent.agentId);
         }
@@ -61,15 +46,12 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashb
                 <h2>Agent Dashboard</h2>
                 <div className="container-fluid no-padding">
                     <Panel>
-                        <SelectedAgent
+                        <SelectAgent
                             agent={this.props.selectedAgent}
-                            onAgentSelectedClick={this.handleOnSelectedAgentClick} />
-                        <AgentListModal
-                            showModal={this.state.showModal}
                             agents={this.props.agents}
-                            onToggleModal={this.handleToggleModal}
+                            isLoading={this.props.loadingAgents}
                             onAgentSelected={this.handleOnAgentSelected}
-                            isLoading={this.props.loadingAgents} />
+                            onSelectAgent={this.handleOnSelectAgent} />
                     </Panel>
                     <AgentDashboardView
                         agentDashboard={this.props.selectedAgentDashboard}
@@ -82,13 +64,13 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashb
     }
 }
 
-const mapStateToProps = (state: RootState): CardPeak.Models.AgentDashboardModel  => ({
-    selectedAgent: state.agentDashboardModel.selectedAgent,
-    selectedAgentDashboard: state.agentDashboardModel.selectedAgentDashboard,
-    agents: state.agentDashboardModel.agents,
-    loadingAgents: state.agentDashboardModel.loadingAgents,
-    loadingAgentDashboard: state.agentDashboardModel.loadingAgentDashboard,
-    refreshingAgentDashboard: state.agentDashboardModel.refreshingAgentDashboard
+const mapStateToProps = (state: RootState): CardPeak.Models.AgentModel  => ({
+    selectedAgent: state.agentModel.selectedAgent,
+    selectedAgentDashboard: state.agentModel.selectedAgentDashboard,
+    agents: state.agentModel.agents,
+    loadingAgents: state.agentModel.loadingAgents,
+    loadingAgentDashboard: state.agentModel.loadingAgentDashboard,
+    refreshingAgentDashboard: state.agentModel.refreshingAgentDashboard
 });
 
 const mapDispatchToProps = (dispatch: any): AgentDashboardContainerDispatchProps => {

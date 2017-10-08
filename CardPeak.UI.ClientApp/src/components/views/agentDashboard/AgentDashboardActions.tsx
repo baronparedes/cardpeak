@@ -12,7 +12,7 @@ interface AgentDashboardActionsProps {
 
 interface AgentDashboardActionsState {
     showModal: boolean;
-    transaction: string;
+    transaction: Transaction;
     startDate?: string;
     endDate?: string
 }
@@ -22,7 +22,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
         super(props);
         this.state = {
             showModal: false,
-            transaction: "Credit",
+            transaction: "credit",
             startDate: dateHelpers.firstDayOfTheMonth()
         }
     }

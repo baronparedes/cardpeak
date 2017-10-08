@@ -20,7 +20,7 @@ interface DebitCreditTransactionFormState {
 
 interface DebitCreditTransactionFormProps {
     agent: CardPeak.Entities.Agent;
-    transaction: string;
+    transaction: Transaction;
     onTransactionSubmitted?: () => void;
 }
 
@@ -62,9 +62,9 @@ class DebitCreditTransactionFormContainer extends React.Component<
             agentId: this.props.agent.agentId,
             amount: this.state.amount,
             remarks: this.state.remarks
-        },
-        (this.props.transaction.toLowerCase() == 'debit'),
-        this.handleOnTransactionSubmitted, this.handleOnTransactionSubmittedError);
+            },
+            (this.props.transaction.toLowerCase() === "debit"),
+            this.handleOnTransactionSubmitted, this.handleOnTransactionSubmittedError);
     }
     handleOnTransactionSubmitted = () => {
         this.setState({ postingTransactionError: undefined });
@@ -97,7 +97,7 @@ class DebitCreditTransactionFormContainer extends React.Component<
         });
     }
     render() {
-        let isDebit: boolean = (this.props.transaction.toLowerCase() == 'debit');
+        let isDebit: boolean = (this.props.transaction.toLowerCase() === "debit");
         let transaction = (isDebit) ? "Debit" : "Credit";
         let buttonClass = (isDebit) ? "danger" : "success";
         return (
@@ -163,7 +163,7 @@ class DebitCreditTransactionFormContainer extends React.Component<
 }
 
 const mapStateToProps = (state: RootState): DebitCreditTransactionFormPropsConnect => ({
-    postingTransaction: state.agentDashboardModel.postingTransaction
+    postingTransaction: state.agentModel.postingTransaction
 });
 
 const mapDispatchToProps = (dispatch: any): DebitCreditTransactionFormDispatchProps => {

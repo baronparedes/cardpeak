@@ -6,7 +6,7 @@ interface DebitCreditTransactionFormModalProps {
     onToggleModal: () => void;
     agent: CardPeak.Entities.Agent
     showModal: boolean;
-    transaction: string;
+    transaction: Transaction;
 }
 
 const DebitCreditTransactionFormModal = (props: DebitCreditTransactionFormModalProps) => {

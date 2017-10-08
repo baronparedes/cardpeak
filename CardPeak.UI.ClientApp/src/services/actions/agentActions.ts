@@ -21,29 +21,26 @@ export const postAgent = createAction(AGENT_ACTIONS.POST_AGENT);
 export const postAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.POST_AGENT_COMPLETE);
 export const postAgentError = createAction(AGENT_ACTIONS.POST_AGENT_ERROR);
 
-export function selectAgentById(id: number, successCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
+function filterAgent(data: CardPeak.Entities.Agent[], id: number, agentFoundCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
+    let agent: CardPeak.Entities.Agent = data.filter(_ => _.agentId == id)[0];
+    if (agent) {
+        agentFoundCallback(agent);
+    }
+    else {
+        notFoundCallback();
+    }
+}
+
+export function selectAgentById(id: number, agentFoundCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
-        let agent: CardPeak.Entities.Agent = undefined;
-        const agents = getState().agentDashboardModel.agents;
+        const agents = getState().agentModel.agents;
         if (!agents) {
             dispatch(getAllAgentsStart((data: CardPeak.Entities.Agent[]) => {
-                agent = data.filter(_ => _.agentId == id)[0];
-                if (agent) {
-                    successCallback(agent);
-                }
-                else {
-                    notFoundCallback();
-                }
+                filterAgent(data, id, agentFoundCallback, notFoundCallback);
             }));
         }
         else {
-            agent = agents.filter(_ => _.agentId == id)[0];
-            if (agent) {
-                successCallback(agent);
-            }
-            else {
-                notFoundCallback();
-            }
+            filterAgent(agents, id, agentFoundCallback, notFoundCallback);
         }
     }
 }
@@ -96,7 +93,7 @@ export function putAgentStart(agent: CardPeak.Entities.Agent, successCallback?: 
 
 export function refreshAgentDashboardStart(startDate?: string, endDate?: string) {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
-        let agentId = getState().agentDashboardModel.selectedAgent.agentId;
+        let agentId = getState().agentModel.selectedAgent.agentId;
         dispatch(refreshAgentDashboard());
         agentsController.getAgentDashboardFiltered(agentId, startDate, endDate, (data: CardPeak.Entities.AgentDashboard) => {
             dispatch(selectAgentDashboardComplete(data));
@@ -138,7 +135,7 @@ export function getAllAgentsStart(completedCallback?: (data: CardPeak.Entities.A
 
 export function selectAgentDashboardStart() {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
-        let agent = getState().agentDashboardModel.selectedAgent;
+        let agent = getState().agentModel.selectedAgent;
         dispatch(selectAgentDashboard());
         agentsController.getAgentDashboard(agent.agentId, (data: CardPeak.Entities.AgentDashboard) => {
             dispatch(selectAgentDashboardComplete(data));
