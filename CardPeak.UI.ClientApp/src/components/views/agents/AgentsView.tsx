@@ -1,12 +1,12 @@
 ﻿import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { NotFound } from '../../layout'
+import { NotFound, NavigationProps } from '../../layout'
 import AgentDashboardContainer from './AgentDashboardContainer'
 import UpdateAgentView from './UpdateAgentView'
 import AddAgentView from './AddAgentView'
 import AgentPayoutContainer from './AgentPayoutContainer'
 
-const AgentsView: React.StatelessComponent<{ match: any }> = (props) => {
+const AgentsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
     return (
         <div>
             <Switch>

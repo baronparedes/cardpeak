@@ -11,6 +11,8 @@ import AgentListModal from './AgentListModal'
 import SelectedAgent from './SelectedAgent'
 import AgentDashboardView from '../agentDashboard/AgentDashboardView'
 
+import { NavigationProps } from '../../layout'
+
 interface AgentDashboardContainerDispatchProps {
     actions?: typeof AgentsActions
 }
@@ -19,8 +21,8 @@ interface AgentDashboardContainerState {
     showModal: boolean;
 }
 
-class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & { match: any, history: any }, AgentDashboardContainerState>{
-    constructor(props: CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & { match: any, history: any }) {
+class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & NavigationProps<any>, AgentDashboardContainerState>{
+    constructor(props: CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & NavigationProps<any>) {
         super(props);
         this.state = {
             showModal: false

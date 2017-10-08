@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import ManageUploadsContainer from './ManageUploadsContainer'
 import BatchListContainer from './BatchListContainer'
 
-const ManageUploadsView: React.StatelessComponent<{ match: any }> = (props) => {
+const ManageUploadsView: React.StatelessComponent<{}> = (props) => {
     return (
         <div>
             <h2>Manage Uploads</h2>

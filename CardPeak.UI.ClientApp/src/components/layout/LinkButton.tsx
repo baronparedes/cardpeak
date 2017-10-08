@@ -1,6 +1,13 @@
 ﻿import * as React from 'react'
+import * as H from 'history';
+import { match } from 'react-router'
 import { ButtonGroup, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+
+export interface NavigationProps<P> {
+    match?: match<P>;
+    history?: H.History;
+}
 
 export const LinkButton: React.StatelessComponent<{to: string, button: React.ReactNode}> = (props) => {
     return (
