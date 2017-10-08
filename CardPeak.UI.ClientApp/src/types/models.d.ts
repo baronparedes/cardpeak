@@ -1,5 +1,5 @@
 ﻿declare module CardPeak.Models {
-    export interface AgentDashboardModel {
+    export interface AgentModel {
         selectedAgent?: CardPeak.Entities.Agent;
         selectedAgentDashboard?: CardPeak.Entities.AgentDashboard;
         agents?: CardPeak.Entities.Agent[];
@@ -7,8 +7,8 @@
         loadingAgentDashboard?: boolean;
         postingTransaction?: boolean;
         refreshingAgentDashboard?: boolean;
-        puttingAgent?: boolean;
-        postingAgent?: boolean;
+        updatingAgent?: boolean;
+        creatingAgent?: boolean;
     }
 
     export interface RatesModel {

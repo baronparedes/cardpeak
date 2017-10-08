@@ -161,9 +161,6 @@
     <Content Include="src\components\views\agents\AgentList.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\AgentListModal.tsx">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\views\agents\AgentPayoutContainer.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -242,7 +239,7 @@
     <Content Include="src\components\views\transactions\DebitCreditTransactionList.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\agents\SelectedAgent.tsx">
+    <Content Include="src\components\views\agents\SelectAgent.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\dashboard\DashboardView.tsx">
@@ -439,6 +436,9 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\types\models.d.ts" />
     <TypeScriptCompile Include="src\types\plugins.d.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\types\props.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

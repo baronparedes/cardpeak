@@ -1,13 +1,13 @@
 ﻿import * as React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { NotFound } from '../../layout'
+import { NotFound, NavigationProps } from '../../layout'
 import BatchUploadView from './BatchUploadView'
 import BatchFileConfigurationView from './BatchFileConfigurationView'
 import ManageUploadsView from './ManageUploadsView'
 import BatchListContainer from './BatchListContainer'
 import FindTransactionsView from '../transactions/FindTransactionsView'
 
-const TransactionsView: React.StatelessComponent<{ match: any }> = (props) => {
+const TransactionsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
     return (
         <div>
             <Switch>

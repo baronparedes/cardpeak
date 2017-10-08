@@ -8,7 +8,7 @@ import dashboardReducer from './dashboardReducer'
 import metricsReducer from './metricsReducer'
 
 export interface RootState {
-    agentDashboardModel: CardPeak.Models.AgentDashboardModel;
+    agentModel: CardPeak.Models.AgentModel;
     agentPayoutModel: CardPeak.Models.AgentPayoutModel;
     ratesModel: CardPeak.Models.RatesModel;
     settingsModel: CardPeak.Models.SettingsModel;
@@ -18,7 +18,7 @@ export interface RootState {
 }
 
 export default combineReducers<RootState>({
-    agentDashboardModel: agentReducer,
+    agentModel: agentReducer,
     agentPayoutModel: agentPayoutReducer,
     ratesModel: ratesReducer,
     settingsModel: settingsReducer,

@@ -10,14 +10,20 @@ interface PayoutBadgeContainerDispatchProps {
     actions?: typeof Actions;
 }
 
-class PayoutBadgeContainer extends React.Component<CardPeak.Models.AgentPayoutModel & PayoutBadgeContainerDispatchProps, {}> {
-    constructor(props: CardPeak.Models.AgentPayoutModel & PayoutBadgeContainerDispatchProps) {
+interface PayoutBadgeContainerProps {
+    autoRefresh?: boolean;
+}
+
+class PayoutBadgeContainer extends React.Component<CardPeak.Models.AgentPayoutModel & PayoutBadgeContainerDispatchProps & PayoutBadgeContainerProps, {}> {
+    constructor(props: CardPeak.Models.AgentPayoutModel & PayoutBadgeContainerDispatchProps & PayoutBadgeContainerProps) {
         super(props);
     }
     componentDidMount() {
         if (!this.props.initialized) {
             this.props.actions.initializeStart();
-            setInterval(this.props.actions.getAgentPayoutStart, 15000);
+            if (this.props.autoRefresh) {
+                setInterval(this.props.actions.getAgentPayoutStart, 15000);
+            }
         }
     }
     componentWillUpdate(nextProps: CardPeak.Models.AgentPayoutModel) {
@@ -30,9 +36,11 @@ class PayoutBadgeContainer extends React.Component<CardPeak.Models.AgentPayoutMo
             return null;
         }
         return (
-            <Badge>
-                {this.props.count}
-            </Badge>
+            <span className="spacer-left-sm">
+                <Badge>
+                    {this.props.count}
+                </Badge>
+            </span>
         )
     }
 }

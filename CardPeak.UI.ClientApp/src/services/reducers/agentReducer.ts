@@ -1,11 +1,11 @@
 ﻿import { handleActions } from 'redux-actions';
 import { AGENT_ACTIONS } from '../../constants/actions'
 
-const initialState: CardPeak.Models.AgentDashboardModel = {
+const initialState: CardPeak.Models.AgentModel = {
     agents: undefined
 };
 
-export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
+export default handleActions<CardPeak.Models.AgentModel, any>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
             ...state,
@@ -84,19 +84,19 @@ export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
             selectedAgentDashboard: action.payload
         }
     },
-    [AGENT_ACTIONS.PUT_AGENT]: (state, action) => {
+    [AGENT_ACTIONS.UPDATE_AGENT]: (state, action) => {
         return {
             ...state,
-            puttingAgent: true
+            updatingAgent: true
         }
     },
-    [AGENT_ACTIONS.PUT_AGENT_ERROR]: (state, action) => {
+    [AGENT_ACTIONS.UPDATE_AGENT_ERROR]: (state, action) => {
         return {
             ...state,
-            puttingAgent: undefined
+            updatingAgent: undefined
         }
     },
-    [AGENT_ACTIONS.PUT_AGENT_COMPLETE]: (state, action) => {
+    [AGENT_ACTIONS.UPDATE_AGENT_COMPLETE]: (state, action) => {
         let agent = action.payload as CardPeak.Entities.Agent;
         let agents = state.agents.slice();
         agents.push(agent);
@@ -104,7 +104,7 @@ export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
         if (state.selectedAgent && state.selectedAgent.agentId === agent.agentId) {
             return {
                 ...state,
-                puttingAgent: undefined,
+                updatingAgent: undefined,
                 agents,
                 selectedAgent: agent
             }
@@ -112,30 +112,30 @@ export default handleActions<CardPeak.Models.AgentDashboardModel, any>({
 
         return {
             ...state,
-            puttingAgent: undefined,
+            updatingAgent: undefined,
             agents
         }
     },
-    [AGENT_ACTIONS.POST_AGENT]: (state, action) => {
+    [AGENT_ACTIONS.CREATE_AGENT]: (state, action) => {
         return {
             ...state,
-            postingAgent: true
+            creatingAgent: true
         }
     },
-    [AGENT_ACTIONS.POST_AGENT_ERROR]: (state, action) => {
+    [AGENT_ACTIONS.CREATE_AGENT_ERROR]: (state, action) => {
         return {
             ...state,
-            postingAgent: undefined
+            creatingAgent: undefined
         }
     },
-    [AGENT_ACTIONS.POST_AGENT_COMPLETE]: (state, action) => {
+    [AGENT_ACTIONS.CREATE_AGENT_COMPLETE]: (state, action) => {
         let agent = action.payload as CardPeak.Entities.Agent;
         let agents = state.agents.slice();
         agents.push(agent);
 
         return {
             ...state,
-            postingAgent: undefined,
+            creatingAgent: undefined,
             agents
         }
     },

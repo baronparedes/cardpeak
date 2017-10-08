@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { SpinnerBlock } from '../../layout'
+import { SpinnerBlock, NavigationProps } from '../../layout'
 
 import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
 
@@ -20,8 +20,8 @@ interface BatchListContainerState {
     count?: number;
 }
 
-class BatchListContainer extends React.Component<{ match: any } & BatchListContainerDispatchProps, BatchListContainerState> {
-    constructor(props: { match: any } & BatchListContainerDispatchProps) {
+class BatchListContainer extends React.Component<NavigationProps<any> & BatchListContainerDispatchProps, BatchListContainerState> {
+    constructor(props: NavigationProps<any> & BatchListContainerDispatchProps) {
         super(props);
         this.state = {
             loadingError: undefined,

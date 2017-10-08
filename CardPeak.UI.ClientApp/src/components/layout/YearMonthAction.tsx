@@ -27,7 +27,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
             year: dateHelpers.currentYear(),
             month: 0,
             errors: {
-                year: ''
+                year: ""
             }
         }
     }
@@ -41,9 +41,10 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
         let errors = this.state.errors;
         errors[e.target.name] = '';
         this.setState({
+            ...this.state,
             [e.target.name]: e.target.value,
             errors
-        });
+        }, this.handleOnRefresh);
     }
     hasErrors = () => {
         this.handleErrors();
