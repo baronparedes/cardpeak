@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import * as classNames from 'classNames'
+import * as classNames from 'classnames'
 import { currencyFormat } from '../../helpers/currencyHelper'
 
 interface CurrencyProps {
