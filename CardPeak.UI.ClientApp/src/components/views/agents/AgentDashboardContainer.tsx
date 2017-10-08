@@ -22,12 +22,22 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel
     }
     componentDidMount() {
         if (this.props.match.params.id) {
+            if (this.props.selectedAgent) {
+                if (this.props.selectedAgent.agentId == this.props.match.params.id) {
+                    return;
+                }
+            }
             this.props.actions.selectAgentById(parseInt(this.props.match.params.id), (agent: CardPeak.Entities.Agent) => {
                 this.props.actions.selectAgent(agent);
                 this.props.actions.selectAgentDashboardStart();
             }, () => {
                 this.props.history.push("/404");
             });
+            return;
+        }
+
+        if (this.props.selectedAgent) {
+            this.props.history.push("/agents/" + this.props.selectedAgent.agentId);
         }
     }
     handleOnSelectAgent = () => {

@@ -14,12 +14,12 @@ export const postAgentTransaction = createAction(AGENT_ACTIONS.POST_AGENT_TRANSA
 export const postAgentTransactionComplete = createAction<CardPeak.Entities.DebitCreditTransaction>(AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE);
 export const postAgentTransactionError = createAction(AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR);
 export const refreshAgentDashboard = createAction(AGENT_ACTIONS.REFRESH_AGENT_DASHBOARD);
-export const putAgent = createAction(AGENT_ACTIONS.PUT_AGENT);
-export const putAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.PUT_AGENT_COMPLETE);
-export const putAgentError = createAction(AGENT_ACTIONS.PUT_AGENT_ERROR);
-export const postAgent = createAction(AGENT_ACTIONS.POST_AGENT);
-export const postAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.POST_AGENT_COMPLETE);
-export const postAgentError = createAction(AGENT_ACTIONS.POST_AGENT_ERROR);
+export const updateAgent = createAction(AGENT_ACTIONS.UPDATE_AGENT);
+export const updateAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.UPDATE_AGENT_COMPLETE);
+export const updateAgentError = createAction(AGENT_ACTIONS.UPDATE_AGENT_ERROR);
+export const createAgent = createAction(AGENT_ACTIONS.CREATE_AGENT);
+export const createAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.CREATE_AGENT_COMPLETE);
+export const createAgentError = createAction(AGENT_ACTIONS.CREATE_AGENT_ERROR);
 
 function filterAgent(data: CardPeak.Entities.Agent[], id: number, agentFoundCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
     let agent: CardPeak.Entities.Agent = data.filter(_ => _.agentId == id)[0];
@@ -57,16 +57,16 @@ export function getAccounts(agentId: number, successCallback:(data: CardPeak.Ent
     }
 }
 
-export function postAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
+export function createAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
-        dispatch(postAgent());
+        dispatch(createAgent());
         agentsController.createAgent(agent, (agent: CardPeak.Entities.Agent) => {
-            dispatch(postAgentComplete(agent));
+            dispatch(createAgentComplete(agent));
             if (successCallback) {
                 successCallback();
             }
         }, (error: string) => {
-            dispatch(postAgentError());
+            dispatch(createAgentError());
             if (errorCallback) {
                 errorCallback(error);
             }
@@ -74,16 +74,16 @@ export function postAgentStart(agent: CardPeak.Entities.Agent, successCallback?:
     }
 }
 
-export function putAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
+export function updateAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
-        dispatch(putAgent());
+        dispatch(updateAgent());
         agentsController.updateAgent(agent, (agent: CardPeak.Entities.Agent) => {
-            dispatch(putAgentComplete(agent));
+            dispatch(updateAgentComplete(agent));
             if (successCallback) {
                 successCallback();
             }
         }, (error: string) => {
-            dispatch(putAgentError());
+            dispatch(updateAgentError());
             if (errorCallback) {
                 errorCallback(error);
             }

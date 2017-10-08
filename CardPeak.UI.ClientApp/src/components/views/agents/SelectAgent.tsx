@@ -1,7 +1,6 @@
 ﻿import * as React from 'react'
-import { Button } from 'react-bootstrap'
-import { ModalButton } from '../../layout'
-
+import { Button, ButtonGroup } from 'react-bootstrap'
+import { ModalPanel } from '../../layout'
 import AgentList from './AgentList'
 
 interface SelectAgentProps {
@@ -12,19 +11,42 @@ interface SelectAgentProps {
     isLoading?: boolean;
 }
 
-export default class SelectAgent extends React.Component<SelectAgentProps, undefined> {
+export default class SelectAgent extends React.Component<SelectAgentProps, { showModal: boolean }> {
+    constructor(props: SelectAgentProps) {
+        super(props);
+        this.state = { showModal: false };
+    }
+    handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
+        if (this.props.onAgentSelected) {
+            this.props.onAgentSelected(agent);
+        }
+        this.handleOnToggleModal();
+    }
+    handleOnSelectAgent = () => {
+        if (this.props.onSelectAgent) {
+            this.props.onSelectAgent();
+        }
+        this.handleOnToggleModal();
+    }
+    handleOnToggleModal = () => {
+        this.setState({ showModal: !this.state.showModal });
+    }
     renderModalButton() {
         return (
-            <ModalButton
-                bsStyle="primary"
-                title="agents"
-                onTogglingModal={this.props.onSelectAgent}
-                buttonLabel={<i className="fa fa-sm fa-users"></i>}>
-                <AgentList
-                    data={this.props.agents}
-                    onSelectAgent={this.props.onAgentSelected}
-                    isLoading={this.props.isLoading} />
-            </ModalButton>
+            <ButtonGroup>
+                <Button bsStyle="primary" onClick={this.handleOnSelectAgent}>
+                    <i className="fa fa-sm fa-users"></i>
+                </Button>
+                <ModalPanel
+                    onToggleModal={this.handleOnToggleModal}
+                    showModal={this.state.showModal}
+                    title="select agent">
+                    <AgentList
+                        data={this.props.agents}
+                        onAgentSelected={this.handleOnAgentSelected}
+                        isLoading={this.props.isLoading} />
+                </ModalPanel>
+            </ButtonGroup>
         )
     }
     render() {

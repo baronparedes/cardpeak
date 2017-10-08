@@ -84,19 +84,19 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
             selectedAgentDashboard: action.payload
         }
     },
-    [AGENT_ACTIONS.PUT_AGENT]: (state, action) => {
+    [AGENT_ACTIONS.UPDATE_AGENT]: (state, action) => {
         return {
             ...state,
             updatingAgent: true
         }
     },
-    [AGENT_ACTIONS.PUT_AGENT_ERROR]: (state, action) => {
+    [AGENT_ACTIONS.UPDATE_AGENT_ERROR]: (state, action) => {
         return {
             ...state,
             updatingAgent: undefined
         }
     },
-    [AGENT_ACTIONS.PUT_AGENT_COMPLETE]: (state, action) => {
+    [AGENT_ACTIONS.UPDATE_AGENT_COMPLETE]: (state, action) => {
         let agent = action.payload as CardPeak.Entities.Agent;
         let agents = state.agents.slice();
         agents.push(agent);
@@ -116,19 +116,19 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
             agents
         }
     },
-    [AGENT_ACTIONS.POST_AGENT]: (state, action) => {
+    [AGENT_ACTIONS.CREATE_AGENT]: (state, action) => {
         return {
             ...state,
             creatingAgent: true
         }
     },
-    [AGENT_ACTIONS.POST_AGENT_ERROR]: (state, action) => {
+    [AGENT_ACTIONS.CREATE_AGENT_ERROR]: (state, action) => {
         return {
             ...state,
             creatingAgent: undefined
         }
     },
-    [AGENT_ACTIONS.POST_AGENT_COMPLETE]: (state, action) => {
+    [AGENT_ACTIONS.CREATE_AGENT_COMPLETE]: (state, action) => {
         let agent = action.payload as CardPeak.Entities.Agent;
         let agents = state.agents.slice();
         agents.push(agent);

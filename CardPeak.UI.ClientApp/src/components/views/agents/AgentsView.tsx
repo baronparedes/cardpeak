@@ -10,7 +10,7 @@ const AgentsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
     return (
         <div>
             <Switch>
-                <Route exact path={props.match.url + "/update"} component={UpdateAgentView} />
+                <Route path={props.match.url + "/update"} component={UpdateAgentView} />
                 <Route exact path={props.match.url + "/create"} component={AddAgentView} />
                 <Route exact path={props.match.url + "/payout"} component={AgentPayoutContainer} />
                 <Route exact path={props.match.url} component={AgentDashboardContainer} />

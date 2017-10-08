@@ -6,7 +6,7 @@ type AgentDataListFiltered = new () => DataListFiltered<CardPeak.Entities.Agent>
 const AgentDataListFiltered = DataListFiltered as AgentDataListFiltered;
 
 interface AgentListProps {
-    onSelectAgent?: (data: CardPeak.Entities.Agent) => void;
+    onAgentSelected?: (data: CardPeak.Entities.Agent) => void;
 }
 
 const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & AgentListProps) => {
@@ -16,7 +16,7 @@ const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & Agen
                 {props.isHeader ? "agent" : props.item.firstName + " " + props.item.lastName}
             </Col>
             <Col sm={2}>
-                {props.isHeader ? "" : <Button onClick={() => { props.onSelectAgent(props.item) }} bsStyle="primary" bsSize="sm">Select</Button>}
+                {props.isHeader ? "" : <Button onClick={() => { props.onAgentSelected(props.item) }} bsStyle="primary" bsSize="sm">Select</Button>}
             </Col>
         </Row>
     )
@@ -35,7 +35,7 @@ const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListProp
                 onGetKey={(item) => item.agentId}
                 isLoading={props.isLoading}
                 renderHeader={() => { return <AgentListRowLayout isHeader/> }}
-                renderItem={(item, key) => { return <AgentListRowLayout item={item} key={key} onSelectAgent={props.onSelectAgent} /> }}
+                renderItem={(item, key) => { return <AgentListRowLayout item={item} key={key} onAgentSelected={props.onAgentSelected} /> }}
                 data={props.data} />
         </div>
     )

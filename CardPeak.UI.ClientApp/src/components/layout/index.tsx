@@ -8,7 +8,7 @@ export {
     FormFieldRadioGroup, FormFieldDropdown, FormFieldInline, FormFieldLabel
 } from './FormField'
 export { ModalConfirm } from './ModalConfirm'
-export { ModalPanel, ModalButton } from './ModalPanel'
+export { ModalPanel } from './ModalPanel'
 export { NavigationBar } from './NavigationBar'
 export { PerformanceDashboard } from './PerformanceDashboard'
 export { DatePicker, DatePickerForm } from './DatePicker'

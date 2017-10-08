@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
+import * as dateHelper from '../../../helpers/dateHelpers'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { SpinnerBlock, RadioGroup, AgentDashboardLinkButton, NavigationProps } from '../../layout'
 
@@ -54,6 +55,17 @@ class AgentContainer extends
             emptyAgent: emptyAgent
         }
     }
+    componentDidMount() {
+        if (!this.props.isNew) {
+            if (this.props.match.params.id) {
+                this.props.actions.selectAgentById(parseInt(this.props.match.params.id), (agent: CardPeak.Entities.Agent) => {
+                    this.handleOnAgentSelected(agent);
+                }, () => {
+                    this.props.history.push("/404");
+                });
+            }
+        }
+    }
     handleOnSelectAgent = () => {
         this.props.actions.getAllAgentsStart();
     }
@@ -68,18 +80,12 @@ class AgentContainer extends
     }
     handleOnSaveAgent = (agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) => {
         if (this.props.isNew) {
-            this.props.actions.postAgentStart(agent, () => {
-                this.setState({
-                    selectedAgent: {
-                        ...this.state.selectedAgent,
-                        ...this.state.emptyAgent
-                    }
-                });
-                    
+            this.props.actions.createAgentStart(agent, () => {
+                this.setState({ selectedAgent: agent });
             }, errorCallback);
         }
         else {
-            this.props.actions.putAgentStart(agent, () => {
+            this.props.actions.updateAgentStart(agent, () => {
                 this.setState({ selectedAgent: agent });
             }, errorCallback);
         }
