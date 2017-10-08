@@ -64,7 +64,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     <MenuItemLinkContainer exact to="/agents" text="Agent Dashboard" fa="fa-user-circle" />
                     <MenuItem divider />
                     <MenuItemLinkContainer exact to="/agents/payout" text="Payout" fa="fa-money" addOn={
-                        <PayoutBadgeContainer />
+                        <PayoutBadgeContainer autoRefresh />
                     } />
                     <MenuItem divider />
                     <MenuItemLinkContainer exact to="/agents/create" text="Create" fa="fa-user-plus" />
