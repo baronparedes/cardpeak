@@ -20,7 +20,7 @@ interface AgentDashboardContainerState {
 }
 
 class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & { match: any, history: any }, AgentDashboardContainerState>{
-    constructor(props: CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & { match: any, history: any },) {
+    constructor(props: CardPeak.Models.AgentDashboardModel & AgentDashboardContainerDispatchProps & { match: any, history: any }) {
         super(props);
         this.state = {
             showModal: false
