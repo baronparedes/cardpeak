@@ -42,7 +42,7 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Bank)
                 .Where(_ => _.ProcessEndDateTime != null)
                 .Where(_ => !_.IsDeleted)
-                .OrderByDescending(_ => _.BatchId)
+                .OrderByDescending(_ => _.ProcessEndDateTime)
                 .Take(Configurations.LatestProcessedBatchCount)
                 .ToList();
 
@@ -64,7 +64,9 @@ namespace CardPeak.Repository.EF
                     .Where(_ => DbFunctions.TruncateTime(_.ProcessStartDateTime) <= DbFunctions.TruncateTime(endDate.Value));
             }
 
-            return result.ToList();
+            return result
+                .OrderByDescending(_ => _.ProcessEndDateTime)
+                .ToList();
         }
 
         public bool DeleteBatchUpload(int batchId)
