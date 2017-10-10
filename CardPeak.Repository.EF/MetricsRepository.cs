@@ -25,20 +25,6 @@ namespace CardPeak.Repository.EF
             return query;
         }
 
-        private IQueryable<ApprovalTransaction> QueryDashboard(int year, int month)
-        {
-            var query = this.Context.ApprovalTransactions
-                .Where(_ => _.ApprovalDate.Year == year)
-                .Where(_ => !_.IsDeleted);
-
-            if (month != 0)
-            {
-                query = query.Where(_ => _.ApprovalDate.Month == month);
-            }
-
-            return query;
-        }
-
         private IQueryable<ApprovalTransaction> QueryApprovalTransactionsByYearMonth(int year, int month)
         {
             var result = this.Context.ApprovalTransactions
@@ -135,7 +121,7 @@ namespace CardPeak.Repository.EF
                 .AsNoTracking()
                 .ToList();
 
-            var metrics = this.QueryDashboard(year, month)
+            var metrics = this.QueryApprovalTransactionsByYearMonth(year, month)
                 .Include(_ => _.Bank)
                 .Include(_ => _.Agent)
                 .GroupBy(_ => new { _.AgentId, _.Agent })
@@ -182,7 +168,7 @@ namespace CardPeak.Repository.EF
                 performanceYear.Add(new DateTime(year, i, 1).ToString(Configurations.MonthFormat), 0);
             }
 
-            var metrics = this.QueryDashboard(year, 0)
+            var metrics = this.QueryApprovalTransactionsByYearMonth(year, 0)
                 .Include(_ => _.Agent)
                 .GroupBy(_ => new { _.AgentId, _.Agent })
                 .OrderByDescending(_ => _.Sum(t => t.Units))
@@ -211,6 +197,58 @@ namespace CardPeak.Repository.EF
                 };
 
                 result.Add(agentRankMetric);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<BankAmountBreakdown> GetBankAmountBreakdown(int year, int month)
+        {
+            var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank).Select(_ => new { _.ReferenceId, _.Description });
+            var cardCategories = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory).Select(_ => new { _.ReferenceId, _.Description });
+            var query = this.QueryApprovalTransactionsByYearMonth(year, month)
+                .GroupBy(_ => new { _.BankId, _.CardCategoryId, _.Amount })
+                .Select(_ => new
+                {
+                    BankId = _.FirstOrDefault().BankId,
+                    CardCategoryId = _.FirstOrDefault().CardCategoryId,
+                    Amount = _.FirstOrDefault().Amount,
+                    Approvals = _.Sum(approvals => approvals.Units)
+                }).ToList();
+
+            var result = new List<BankAmountBreakdown>();
+            foreach (var bank in banks)
+            {
+                var cardCategoryAmountBreakdown = new List<AmountBreakdown>();
+                foreach (var cardCategory in cardCategories)
+                {
+                    var approvalsByAmount = query
+                        .Where(q => q.BankId == bank.ReferenceId)
+                        .Where(q => q.CardCategoryId == cardCategory.ReferenceId)
+                        .Where(q => q.Approvals > 0)
+                        .Where(q => q.Amount > 0)
+                        .OrderBy(q => q.Amount)
+                        .Select(q => new ApprovalMetric<decimal> {
+                            Key = q.Amount,
+                            Value = q.Approvals
+                        });
+
+                    var amountBreakdown = new AmountBreakdown
+                    {
+                        Description = cardCategory.Description,
+                        ApprovalsByAmount = approvalsByAmount
+                    };
+
+                    cardCategoryAmountBreakdown.Add(amountBreakdown);
+                }
+
+                var item = new BankAmountBreakdown
+                {
+                    Description = bank.Description,
+                    CardCategoryAmountBreakdown = cardCategoryAmountBreakdown
+                };
+
+                result.Add(item);
             }
 
             return result;

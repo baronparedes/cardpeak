@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
 import { Col, Row, Grid } from 'react-bootstrap'
-import { YearMonthAction, DataListFiltered, DataItemProps, DashboardLabel, PerformanceDashboard } from '../../layout'
+import { YearMonthAction, DataListFiltered, DataItemProps, DashboardLabel, PerformanceDashboard, ApprovalMetricsLineChart, RadioGroup } from '../../layout'
 
 type AgentPerformanceMetricsDataList = new () => DataListFiltered<CardPeak.Entities.AgentPerformanceMetric>;
 const AgentPerformanceMetricsDataList = DataListFiltered as AgentPerformanceMetricsDataList;
@@ -16,7 +16,11 @@ interface AgentPerformanceMetricsContainerDispatchProps {
     actions?: typeof Actions
 }
 
-const AgentPerformanceMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AgentPerformanceMetric>> = (props) => {
+interface AgentPerformanceMetricsRowLayout {
+    showCharts?: boolean;
+}
+
+const AgentPerformanceMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AgentPerformanceMetric> & AgentPerformanceMetricsRowLayout> = (props) => {
     return (
         <Row>
             <Col mdHidden
@@ -39,18 +43,32 @@ const AgentPerformanceMetricsRowLayout: React.StatelessComponent<DataItemProps<C
                     <Col sm={8} xs={12}>
                         <PerformanceDashboard performance={props.item.performance} />
                     </Col>
+
+            }
+            {
+                !props.isHeader && props.showCharts ?
+                    <Col sm={12} xsHidden>
+                        <ApprovalMetricsLineChart metrics={props.item.performance} />
+                    </Col> : null
             }
         </Row>
     )
 }
 
-class AgentPerformanceMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentPerformanceMetricsContainerDispatchProps, undefined> {
+class AgentPerformanceMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentPerformanceMetricsContainerDispatchProps, { showCharts?: boolean }> {
     constructor(props: CardPeak.Models.MetricsModel & AgentPerformanceMetricsContainerDispatchProps) {
         super(props);
+        this.state = { showCharts: false }
     }
     componentDidMount() {
         this.props.actions.getAvailableYears();
         this.props.actions.getAgentPerformanceMetricsStart(dateHelpers.currentYear(), 0);
+    }
+    handleOnToggleCharts = (e: any) => {
+        const value = e.target.value;
+        this.setState({
+            showCharts: value === "On" ? true : false
+        })
     }
     render() {
         return (
@@ -62,7 +80,20 @@ class AgentPerformanceMetricsContainer extends React.Component<CardPeak.Models.M
                     refreshing={this.props.loadingMetrics}
                     onRefresh={this.props.actions.getAgentPerformanceMetricsStart} />
                 <br />
-                <Grid className="no-padding">
+                <Grid>
+                    <Row className="spacer-bottom text-right hidden-print">
+                        <Col xsHidden>
+                            <label className="text-muted spacer-right">Charts</label>
+                            <RadioGroup
+                                name="toggleCharts"
+                                value={this.state.showCharts ? "On" : "Off"}
+                                options={[
+                                    ['On', 'On'],
+                                    ['Off', 'Off']
+                                ]}
+                                onChange={this.handleOnToggleCharts} />
+                        </Col>
+                    </Row>
                     <Row>
                         <AgentPerformanceMetricsDataList
                             predicate={(metric, searchString) => {
@@ -73,7 +104,7 @@ class AgentPerformanceMetricsContainer extends React.Component<CardPeak.Models.M
                             onGetKey={(item) => item.key.agentId}
                             renderHeader={() => { return <AgentPerformanceMetricsRowLayout isHeader /> }}
                             renderItem={(item, key) => {
-                                return <AgentPerformanceMetricsRowLayout item={item} key={key} />
+                                return <AgentPerformanceMetricsRowLayout item={item} key={key} showCharts={this.state.showCharts} />
                             }}
                             isLoading={this.props.loadingMetrics}
                             data={this.props.agentPerformanceMetrics} />

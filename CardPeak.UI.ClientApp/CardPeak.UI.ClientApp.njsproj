@@ -35,6 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="server.js" />
+    <Compile Include="src\components\views\metrics\BankAmountBreakdownMetricsView.tsx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="src\components\views\settings\SettingsView.tsx">
       <SubType>Code</SubType>
     </Compile>
@@ -198,6 +201,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\metrics\AgentRankingMetricsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\metrics\BankAmountBreakdownMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\FindTransactionsContainer.tsx">

@@ -11,11 +11,8 @@ namespace CardPeak.Domain.Metrics
         {
             get
             {
-                if (this.AgentApprovalMetrics != null)
-                {
-                    return this.AgentApprovalMetrics.Sum(_ => _.Value);
-                }
-                return 0;
+                var result = this.AgentApprovalMetrics?.Sum(_ => _.Value);
+                return result.GetValueOrDefault();
             }
         }
 
@@ -23,11 +20,8 @@ namespace CardPeak.Domain.Metrics
         {
             get
             {
-                if (this.AgentApprovalMetrics != null)
-                {
-                    return this.AgentApprovalMetrics.Sum(_ => _.AccountBalance);
-                }
-                return 0;
+                var result = this.AgentApprovalMetrics?.Sum(_ => _.AccountBalance);
+                return result.GetValueOrDefault();
             }
         }
 
@@ -35,11 +29,8 @@ namespace CardPeak.Domain.Metrics
         {
             get
             {
-                if (this.AgentApprovalMetrics != null)
-                {
-                    return this.AgentApprovalMetrics.Sum(_ => _.SavingsBalance);
-                }
-                return 0;
+                var result = this.AgentApprovalMetrics?.Sum(_ => _.SavingsBalance);
+                return result.GetValueOrDefault();
             }
         }
     }

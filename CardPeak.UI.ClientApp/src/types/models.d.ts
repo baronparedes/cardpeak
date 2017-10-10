@@ -62,9 +62,11 @@
     export interface MetricsModel {
         availableYears?: CardPeak.Entities.ApprovalMetric<number>[];
         loadingMetrics?: boolean;
+        loadingMetricsError?: string;
         agentMetrics?: CardPeak.Entities.AgentMetrics;
         agentRankingMetrics?: CardPeak.Entities.AgentRankMetric[];
         agentPerformanceMetrics?: CardPeak.Entities.AgentPerformanceMetric[];
+        bankAmountBreakdown?: CardPeak.Entities.BankAmountBreakdown[];
     }
 
     export interface AgentPayoutModel {
