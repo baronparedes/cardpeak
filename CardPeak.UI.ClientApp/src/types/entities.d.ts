@@ -166,4 +166,16 @@
         public totalBalance?: number;
         public totalSavings?: number;
     }
+
+    export class AmountBreakdown {
+        public description?: string;
+        public approvalsByAmount?: CardPeak.Entities.ApprovalMetric<number>[];
+        public totalApproved?: number;
+    }
+
+    export class BankAmountBreakdown {
+        public description?: string;
+        public cardCategoryAmountBreakdown?: CardPeak.Entities.AmountBreakdown[];
+        public totalApproved?: number;
+    }
 }

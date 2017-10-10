@@ -4,7 +4,7 @@ import * as colorScale from '../../constants/colorScale'
 
 
 interface ChartProps {
-    metrics?: CardPeak.Entities.ApprovalMetric<string>[];
+    metrics?: CardPeak.Entities.ApprovalMetric<any>[];
     label?: string;
     onClick?: (e: any) => void;
 }
@@ -19,7 +19,7 @@ function getLineData(props: ChartProps) {
     };
 
     props.metrics.forEach(_ => {
-        labels.push(_.key + " (" + _.value + ")");
+        labels.push(_.key.toString() + " (" + _.value + ")");
         dataSet.push(_.value);
     });
 

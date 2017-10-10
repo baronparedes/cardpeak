@@ -19,19 +19,22 @@ export default handleActions<CardPeak.Models.MetricsModel, any>({
     [METRIC_ACTIONS.GET_METRICS]: (state, action) => {
         return {
             ...state,
-            loadingMetrics: true
+            loadingMetrics: true,
+            loadingMetricsError: undefined
         }
     },
     [METRIC_ACTIONS.GET_METRICS_ERROR]: (state, action) => {
         return {
             ...state,
-            loadingMetrics: undefined
+            loadingMetrics: undefined,
+            loadingMetricsError: action.payload
         }
     },
     [METRIC_ACTIONS.GET_AGENT_METRICS_COMPLETE]: (state, action) => {
         return {
             ...state,
             loadingMetrics: undefined,
+            loadingMetricsError: undefined,
             agentMetrics: action.payload
         }
     },
@@ -39,6 +42,7 @@ export default handleActions<CardPeak.Models.MetricsModel, any>({
         return {
             ...state,
             loadingMetrics: undefined,
+            loadingMetricsError: undefined,
             agentRankingMetrics: action.payload
         }
     },
@@ -46,7 +50,16 @@ export default handleActions<CardPeak.Models.MetricsModel, any>({
         return {
             ...state,
             loadingMetrics: undefined,
+            loadingMetricsError: undefined,
             agentPerformanceMetrics: action.payload
+        }
+    },
+    [METRIC_ACTIONS.GET_BANK_AMOUNT_BREAKDOWN_METRICS_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            loadingMetrics: undefined,
+            loadingMetricsError: undefined,
+            bankAmountBreakdown: action.payload
         }
     }
 }, initialState);

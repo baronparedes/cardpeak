@@ -5,6 +5,7 @@ import { NotFound, NavigationProps } from '../../layout'
 import AgentMetricsView from './AgentMetricsView'
 import AgentRankingMetricsView from './AgentRankingMetricsView'
 import AgentPerformanceMetricsView from './AgentPerformanceMetricsView'
+import BankAmountBreakdownMetricsView from './BankAmountBreakdownMetricsView'
 
 const MetricsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
     return (
@@ -13,6 +14,7 @@ const MetricsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
                 <Route exact path={props.match.url + "/agents"} component={AgentMetricsView} />
                 <Route exact path={props.match.url + "/agents/rankings"} component={AgentRankingMetricsView} />
                 <Route exact path={props.match.url + "/agents/performance"} component={AgentPerformanceMetricsView} />
+                <Route exact path={props.match.url + "/banks/amountbreakdown"} component={BankAmountBreakdownMetricsView} />
                 <Route component={NotFound} />
             </Switch>
 

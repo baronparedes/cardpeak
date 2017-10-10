@@ -80,7 +80,7 @@ class AgentRankingMetricsContainer extends React.Component<CardPeak.Models.Metri
                     refreshing={this.props.loadingMetrics}
                     onRefresh={this.props.actions.getAgentRankingMetricsStart} />
                 <br />
-                <Grid className="no-padding">
+                <Grid>
                     <Row>
                         <AgentRankingMetricsDataList
                             predicate={(metric, searchString) => {

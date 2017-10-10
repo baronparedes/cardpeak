@@ -38,5 +38,12 @@ namespace CardPeak.Service
             month = month ?? 0;
             return this.MetricsRepository.GetAgentRankings(year.Value, month.Value);
         }
+
+        public IEnumerable<BankAmountBreakdown> GetBankAmountBreakdown(int? year, int? month)
+        {
+            year = year ?? DateTime.Now.Year;
+            month = month ?? 0;
+            return this.MetricsRepository.GetBankAmountBreakdown(year.Value, month.Value);
+        }
     }
 }

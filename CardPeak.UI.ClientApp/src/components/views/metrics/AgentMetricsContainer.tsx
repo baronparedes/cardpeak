@@ -79,7 +79,7 @@ class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel
                     refreshing={this.props.loadingMetrics}
                     onRefresh={this.props.actions.getAgentMetricsStart} />
                 <br />
-                <Grid className="no-padding">
+                <Grid>
                     <AgentMetricsTotals agentMetrics={this.props.agentMetrics} />
                     <Row>
                         <AgentMetricsDataListFiltered
