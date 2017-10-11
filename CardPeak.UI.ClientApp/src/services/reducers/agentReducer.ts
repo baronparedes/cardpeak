@@ -52,9 +52,9 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
         };
     },
     [AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE]: (state, action) => {
-        let transaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
+        const transaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
         let transactions = state.selectedAgentDashboard.debitCreditTransactions.slice();
-        transactions.push(transaction);
+        transactions.unshift(transaction);
         return {
             ...state,
             postingTransaction: undefined,

@@ -46,7 +46,9 @@ namespace CardPeak.Repository.EF
                 result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) <= DbFunctions.TruncateTime(endDate.Value));
             }
 
-            return result.ToList();
+            return result
+                .OrderByDescending(_ => _.Id)
+                .ToList();
         }
 
         private decimal QueryBalance(int year, int month, Domain.Enums.TransactionTypeEnum transactionType)

@@ -62,7 +62,7 @@ namespace CardPeak.Service
                 {
                     AgentId = agentId,
                     Remarks = remarks,
-                    TransactionDateTime = DateTime.Today,
+                    TransactionDateTime = DateTime.Now,
                     TransactionTypeId = (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction,
                     IsDeleted = false,
                     Amount = transactionAmount
