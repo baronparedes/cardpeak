@@ -207,13 +207,13 @@ namespace CardPeak.Processor.Excel
         {
             var result = new List<ProcessedApprovalTransaction>();
             var agentCount = accounts.Count();
-            decimal splitUnits = 1.0m / agentCount;
+            decimal splitUnits = transaction.ValidApproval ? (1.0m / agentCount) : 0m;
             foreach (var account in accounts)
             {
                 var agentFullname = string.Format(Processor.FullNameFormat,
                     account.Agent.LastName,
                     account.Agent.FirstName,
-                    account.Agent.MiddleName ?? "").Trim();
+                    account.Agent.MiddleName ?? string.Empty).Trim();
 
                 var splitTransaction = new ProcessedApprovalTransaction
                 {
