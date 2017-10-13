@@ -7,7 +7,10 @@ import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
 import { Col, Row, Grid } from 'react-bootstrap'
-import { YearMonthAction, DataListFiltered, DataItemProps, DashboardLabel, PerformanceDashboard, ApprovalMetricsLineChart, RadioGroup } from '../../layout'
+import {
+    YearMonthAction, DataListFiltered, DataItemProps, Toggle,
+    DashboardLabel, PerformanceDashboard, ApprovalMetricsLineChart, RadioGroup
+} from '../../layout'
 
 type AgentPerformanceMetricsDataList = new () => DataListFiltered<CardPeak.Entities.AgentPerformanceMetric>;
 const AgentPerformanceMetricsDataList = DataListFiltered as AgentPerformanceMetricsDataList;
@@ -64,12 +67,6 @@ class AgentPerformanceMetricsContainer extends React.Component<CardPeak.Models.M
         this.props.actions.getAvailableYears();
         this.props.actions.getAgentPerformanceMetricsStart(dateHelpers.currentYear(), 0);
     }
-    handleOnToggleCharts = (e: any) => {
-        const value = e.target.value;
-        this.setState({
-            showCharts: value === "On" ? true : false
-        })
-    }
     render() {
         return (
             <div>
@@ -83,15 +80,10 @@ class AgentPerformanceMetricsContainer extends React.Component<CardPeak.Models.M
                 <Grid>
                     <Row className="spacer-bottom text-right hidden-print">
                         <Col xsHidden>
-                            <label className="text-muted spacer-right">Charts</label>
-                            <RadioGroup
-                                name="toggleCharts"
-                                value={this.state.showCharts ? "On" : "Off"}
-                                options={[
-                                    ['On', 'On'],
-                                    ['Off', 'Off']
-                                ]}
-                                onChange={this.handleOnToggleCharts} />
+                            <Toggle
+                                isToggled={this.state.showCharts}
+                                label="Charts"
+                                onToggle={(on: boolean) => { this.setState({ showCharts: on }) }} />
                         </Col>
                     </Row>
                     <Row>

@@ -129,6 +129,9 @@
     <Content Include="src\components\layout\Spinner.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\layout\Toggle.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\layout\YearMonthAction.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -204,6 +207,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\metrics\BankAmountBreakdownMetricsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\transactions\AgentDashboardTransactionList.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\FindTransactionsContainer.tsx">
@@ -438,6 +444,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\types\entities.d.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\constants\enums.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\types\models.d.ts" />

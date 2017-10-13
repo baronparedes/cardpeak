@@ -20,6 +20,7 @@ export const updateAgentError = createAction(AGENT_ACTIONS.UPDATE_AGENT_ERROR);
 export const createAgent = createAction(AGENT_ACTIONS.CREATE_AGENT);
 export const createAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.CREATE_AGENT_COMPLETE);
 export const createAgentError = createAction(AGENT_ACTIONS.CREATE_AGENT_ERROR);
+export const setDateFilters = createAction<CardPeak.Entities.DateFilters>(AGENT_ACTIONS.SET_DASHBOARD_DATE_FILTERS);
 
 function filterAgent(data: CardPeak.Entities.Agent[], id: number, agentFoundCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
     let agent: CardPeak.Entities.Agent = data.filter(_ => _.agentId == id)[0];

@@ -15,6 +15,52 @@ namespace CardPeak.Service
         private IApprovalTransactionAgentRepository ApprovalTransactionAgentRepository;
         private IDebitCreditTransactionRepository DebitCreditTransactionRepository;
 
+        private string GenerateAgentDashboardTransactionRemarks(ApprovalTransaction approvalTransaction)
+        {
+            return string.Format("{0} - {1} - {2} - {3}", 
+                approvalTransaction.Bank.Description, 
+                approvalTransaction.CardCategory.Description, 
+                approvalTransaction.ProductType, 
+                approvalTransaction.Client);
+        }
+
+        private IEnumerable<AgentDashboardTransaction> GenerateAgentDashboardTransactions(
+            IEnumerable<ApprovalTransaction> approvalTransactions, 
+            IEnumerable<DebitCreditTransaction> debitCreditTransactions,
+            decimal startingRunningBalance)
+        {
+            var transactions = debitCreditTransactions
+                .Select(_ => new AgentDashboardTransaction
+                {
+                    TransactionId = _.Id,
+                    TransactionType = (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction,
+                    TransactionAmount = _.Amount,
+                    TransactionDate = _.TransactionDateTime,
+                    Details = _.Remarks
+                });
+
+            transactions = transactions.Union(approvalTransactions
+                .Select(_ => new AgentDashboardTransaction
+                {
+                    TransactionId = _.Id,
+                    TransactionType = (int)Domain.Enums.TransactionTypeEnum.ApprovalTransaction,
+                    TransactionAmount = _.Amount,
+                    TransactionDate = _.ApprovalDate,
+                    Details = this.GenerateAgentDashboardTransactionRemarks(_)
+                }));
+
+            var result = transactions.OrderByDescending(_ => _.TransactionDate).ToList();
+            var balance = startingRunningBalance
+                + result.Sum(_ => _.TransactionAmount);
+            foreach (var transaction in result)
+            {
+                transaction.RunningBalance = balance;
+                balance = balance - transaction.TransactionAmount;
+            }
+
+            return result;
+        }
+
         public AgentService(CardPeakDbContext context) 
             : base(context)
         {
@@ -31,12 +77,19 @@ namespace CardPeak.Service
 
         public AgentDashboard GetAgentDashboard(int agentId, DateTime startDate, DateTime? endDate = null)
         {
+            var approvalTransactions = this.ApprovalTransactionAgentRepository.FindByAgent(agentId, startDate, endDate);
+            var debitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate);
+            var startingBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId, startDate) +
+                    this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, startDate);
+            var agentDashboardTransactions = this.GenerateAgentDashboardTransactions(approvalTransactions, debitCreditTransactions, startingBalance);
+
             return new AgentDashboard
             {
                 Agent = this.AgentRepository.Find(_ => _.AgentId == agentId).SingleOrDefault(),
                 Accounts = this.AccountRepository.FindByAgent(agentId),
-                ApprovalTransactions = this.ApprovalTransactionAgentRepository.FindByAgent(agentId, startDate, endDate),
-                DebitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate),
+                ApprovalTransactions = approvalTransactions,
+                DebitCreditTransactions = debitCreditTransactions,
+                AgentDashboardTransactions = agentDashboardTransactions,
                 AccountBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId) + 
                     this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId),
                 SavingsBalance = this.DebitCreditTransactionRepository.GetAgentSavingsBalance(agentId),

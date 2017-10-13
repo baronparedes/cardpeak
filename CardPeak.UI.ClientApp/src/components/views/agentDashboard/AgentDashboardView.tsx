@@ -6,10 +6,11 @@ import AgentDashboardTransactions from './AgentDashboardTransactions'
 import AgentDashboardActions from './AgentDashboardActions'
 
 interface AgentDashboardViewProps {
-    agentDashboard?: CardPeak.Entities.AgentDashboard,
-    onRefresh?: (toDate?: string, fromDate?: string) => void,
-    loadingAgentDashboard?: boolean,
-    refreshingAgentDashboard?: boolean
+    agentDashboard?: CardPeak.Entities.AgentDashboard;
+    onRefresh?: (toDate?: string, fromDate?: string) => void;
+    onSetDateFilters?: (dateFilters: CardPeak.Entities.DateFilters) => void;
+    loadingAgentDashboard?: boolean;
+    refreshingAgentDashboard?: boolean;
 }
 
 const AgentDashboardView = (props: AgentDashboardViewProps) => {
@@ -22,7 +23,7 @@ const AgentDashboardView = (props: AgentDashboardViewProps) => {
     if (props.agentDashboard) {
         return (
             <div>
-                <AgentDashboardActions agent={props.agentDashboard.agent} onRefresh={props.onRefresh} refreshingAgentDashboard={props.refreshingAgentDashboard} />
+                <AgentDashboardActions agent={props.agentDashboard.agent} onRefresh={props.onRefresh} refreshingAgentDashboard={props.refreshingAgentDashboard} onSetDateFilters={props.onSetDateFilters} />
                 <AgentDashboardSummary agentDashboard={props.agentDashboard} />
                 {
                     props.refreshingAgentDashboard ? <SpinnerBlock /> :

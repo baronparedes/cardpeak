@@ -45,10 +45,17 @@ namespace CardPeak.Repository.EF
             return result.ToList();
         }
 
-        public decimal GetAgentAccountBalance(int agentId)
+        public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null)
         {
-            return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
+            var result = this.Context.ApprovalTransactions
+                .Where(_ => _.AgentId == agentId && !_.IsDeleted);
+
+            if (endDate.HasValue)
+            {
+                result = result.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) < endDate.Value);
+            }
+
+            return result
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
                 .FirstOrDefault();

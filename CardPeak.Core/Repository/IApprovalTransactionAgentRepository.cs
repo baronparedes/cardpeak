@@ -8,7 +8,7 @@ namespace CardPeak.Core.Repository
     public interface IApprovalTransactionAgentRepository : IApprovalTransactionRepository
     {
         IEnumerable<ApprovalTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate);
-        decimal GetAgentAccountBalance(int agentId);
+        decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null);
         decimal GetAgentTotalApprovals(int agentId, DateTime startDate, DateTime? endDate);
         IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId);
         IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, DateTime startDate, DateTime? endDate);
