@@ -148,7 +148,6 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
         )
     }
     render() {
-        console.log(this.state.agent);
         return(
             <div className="container-fluid">
                 <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>

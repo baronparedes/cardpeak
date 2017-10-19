@@ -36,7 +36,8 @@ namespace CardPeak.Service
                     TransactionType = (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction,
                     TransactionAmount = _.Amount,
                     TransactionDate = _.TransactionDateTime,
-                    Details = _.Remarks
+                    Details = _.Remarks,
+                    CreatedDate = _.CreatedDate
                 });
 
             transactions = transactions.Union(approvalTransactions
@@ -46,10 +47,11 @@ namespace CardPeak.Service
                     TransactionType = (int)Domain.Enums.TransactionTypeEnum.ApprovalTransaction,
                     TransactionAmount = _.Amount,
                     TransactionDate = _.ApprovalDate,
-                    Details = this.GenerateAgentDashboardTransactionRemarks(_)
+                    Details = this.GenerateAgentDashboardTransactionRemarks(_),
+                    CreatedDate = _.CreatedDate
                 }));
 
-            var result = transactions.OrderByDescending(_ => _.TransactionDate).ToList();
+            var result = transactions.OrderByDescending(_ => _.CreatedDate).ToList();
             var balance = startingRunningBalance
                 + result.Sum(_ => _.TransactionAmount);
             foreach (var transaction in result)
@@ -156,6 +158,12 @@ namespace CardPeak.Service
         public AgentPayout GetAgentPayouts()
         {
             return this.AgentRepository.GetAgentPayouts();
+        }
+
+        public void DeactivateAgent(int agentId)
+        {
+            this.AgentRepository.DeactivateAgent(agentId);
+            this.Complete();
         }
     }
 }

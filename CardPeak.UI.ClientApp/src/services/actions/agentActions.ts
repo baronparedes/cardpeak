@@ -32,6 +32,17 @@ function filterAgent(data: CardPeak.Entities.Agent[], id: number, agentFoundCall
     }
 }
 
+export function deactivateAgent(agentId: number, successCallback: () => void) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(createAction(AGENT_ACTIONS.DEACTIVATE_AGENT)());
+        agentsController.deactivateAgent(agentId, () => {
+            if (successCallback) {
+                successCallback();
+            }
+        });
+    }
+}
+
 export function selectAgentById(id: number, agentFoundCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
     return (dispatch: (e: any) => void, getState: () => RootState) => {
         const agents = getState().agentModel.agents;

@@ -14,5 +14,6 @@ namespace CardPeak.Domain
         public DateTime TransactionDate { get; set; }
         public decimal TransactionAmount { get; set; }
         public decimal RunningBalance { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

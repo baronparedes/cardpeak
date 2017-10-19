@@ -21,7 +21,22 @@ const API = {
     GET_ACCOUNTS: (agentId: number) => {
         return '/agents/' + agentId + '/accounts';
     },
-    GET_AGENT_PAYOUT: '/agents/payout'
+    GET_AGENT_PAYOUT: '/agents/payout',
+    DEACTIVATE_AGENT: (agentId: number) => {
+        return "/agents/deactivate/" + agentId
+    }
+}
+
+export function deactivateAgent(agentId: number, successCallback: () => void, errorCallback?: (e: string) => void) {
+    axios.post(API.DEACTIVATE_AGENT(agentId))
+        .then((r) => {
+            successCallback();
+        })
+        .catch((reason) => {
+            if (errorCallback) {
+                errorCallback(reason.message);
+            }
+        })
 }
 
 export function getAgentPayout(successCallback: (data: CardPeak.Models.AgentPayoutModel) => void, errorCallback: (e: string) => void) {

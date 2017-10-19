@@ -22,6 +22,7 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
                 .Where(_ => _.ApprovalDate.Year == year)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => !_.IsDeleted);
 
             if (month != 0)

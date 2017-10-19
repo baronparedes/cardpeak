@@ -39,8 +39,7 @@ namespace CardPeak.Repository.EF
         {
             var result = this.QueryByAgentAndDateRange(agentId, startDate, endDate);
             result = result
-                .OrderBy(_ => _.ApprovalDate)
-                .ThenBy(_ => _.Client);
+                .OrderByDescending(_ => _.Id);
 
             return result.ToList();
         }

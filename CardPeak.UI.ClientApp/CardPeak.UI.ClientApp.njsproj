@@ -47,7 +47,6 @@
     <None Include=".gitignore">
       <SubType>Code</SubType>
     </None>
-    <None Include="release.pubxml" />
     <Content Include="src\components\App.tsx">
       <SubType>Code</SubType>
     </Content>
