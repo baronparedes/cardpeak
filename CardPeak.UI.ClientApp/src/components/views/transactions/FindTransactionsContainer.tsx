@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Panel, Button, FormGroup } from 'react-bootstrap'
-import { SearchBar, SpinnerBlock } from '../../layout'
+import { SearchBar, SpinnerBlock, ErrorLabel } from '../../layout'
 
 import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
 
@@ -88,7 +88,7 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
     render() {
         return (
             <div>
-                <Panel>
+                <div>
                     <FormGroup validationState={!!this.state.errors.clientName && this.state.errors.clientName != "" ? "error" : null}>
                         <SearchBar
                             name="clientName"
@@ -99,10 +99,8 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
                             onSearchBarClick={this.handleOnGetTransactions}
                             onSearchBarChange={this.handleOnSearchBarChange} />
                     </FormGroup>
-                    <label className="text-danger">
-                        { this.state.loadingError ? this.state.loadingError : null }
-                    </label>
-                </Panel>
+                    <ErrorLabel error={this.state.loadingError} />
+                </div>
                 {
                     this.state.isLoading ? <SpinnerBlock /> :
                         <ApprovalTransactionList

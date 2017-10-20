@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButton } from '../../layout'
+import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButton, ErrorLabel } from '../../layout'
 
 import AgentAccountList from './AgentAccountList'
 
@@ -138,11 +138,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                         disabled={this.props.isSaving} />
                 </Col>
                 <Col sm={12} xs={12} md={12} lg={12}>
-                    {
-                        this.state.onSaveAgentErrorMessage ?
-                            <label className="text-danger">{this.state.onSaveAgentErrorMessage}</label>
-                            : null
-                    }
+                    <ErrorLabel error={this.state.onSaveAgentErrorMessage} />
                 </Col>
             </FormGroup>
         )

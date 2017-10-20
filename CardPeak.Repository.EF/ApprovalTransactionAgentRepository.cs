@@ -17,13 +17,12 @@ namespace CardPeak.Repository.EF
 
         private IQueryable<ApprovalTransaction> QueryByAgentAndDateRange(int agentId, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context
-                .ApprovalTransactions
+            var result = this.Context.ApprovalTransactions
                 .Include(_ => _.Agent)
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
-                .Where(_ => _.AgentId == agentId)
                 .Where(_ => !_.IsDeleted)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
             if (endDate != null && startDate.Date <= endDate.Value.Date)

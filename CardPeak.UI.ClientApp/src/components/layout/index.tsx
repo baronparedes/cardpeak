@@ -30,3 +30,4 @@ export {
     AgentRankingsLinkButton, UpdateAgentLinkButton, NavigationProps
 } from './LinkButton'
 export { Toggle } from './Toggle'
+export { ErrorLabel } from './ErrorLabel'

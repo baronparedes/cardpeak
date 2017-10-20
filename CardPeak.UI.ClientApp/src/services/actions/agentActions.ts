@@ -34,8 +34,9 @@ function filterAgent(data: CardPeak.Entities.Agent[], id: number, agentFoundCall
 
 export function deactivateAgent(agentId: number, successCallback: () => void) {
     return (dispatch: (e: any) => void) => {
-        dispatch(createAction(AGENT_ACTIONS.DEACTIVATE_AGENT)());
         agentsController.deactivateAgent(agentId, () => {
+            dispatch(createAction(AGENT_ACTIONS.DEACTIVATE_AGENT)());
+            dispatch(getAgentPayoutStart());
             if (successCallback) {
                 successCallback();
             }

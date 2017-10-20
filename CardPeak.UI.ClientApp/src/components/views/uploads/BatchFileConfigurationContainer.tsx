@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { FormFieldDropdown, SpinnerBlock } from '../../layout'
+import { FormFieldDropdown, SpinnerBlock, ErrorLabel } from '../../layout'
 
 import BatchFileConfigurationForm from './BatchFileConfigurationForm'
 
@@ -81,11 +81,7 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
                                 </FormFieldDropdown>
                             </fieldset>
                     }
-                    {
-                        this.state.loadingBatchFileConfigError ?
-                            <label className="text-danger">{this.state.loadingBatchFileConfigError}</label>
-                                : null
-                    }
+                    <ErrorLabel error={this.state.loadingBatchFileConfigError} />
                 </Panel>
                 {
                     this.props.loadingBatchFileConfig ? <SpinnerBlock /> : null

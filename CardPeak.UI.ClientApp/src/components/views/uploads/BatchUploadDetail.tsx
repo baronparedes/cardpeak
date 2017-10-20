@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, ButtonGroup } from 'react-bootstrap'
-import { ConfirmButton, SpinnerBlock } from '../../layout'
+import { ConfirmButton, SpinnerBlock, ErrorLabel } from '../../layout'
 
 import BatchUploadDetailInfo from './BatchUploadDetailInfo'
 
@@ -89,13 +89,7 @@ class BatchUploadDetail extends React.Component<BatchUploadDetailProps, BatchUpl
                 <BatchUploadDetailInfo batchUpload={this.props.batchUpload} />
                 <br />
                 {this.renderActions()}
-                <div>
-                    {
-                        this.state.onProcessError ?
-                            <label className="text-danger">{this.state.onProcessError}</label>
-                            : null
-                    }
-                </div>
+                <ErrorLabel error={this.state.onProcessError} />
             </Panel>
         )
     }

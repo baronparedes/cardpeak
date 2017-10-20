@@ -162,6 +162,7 @@ namespace CardPeak.Repository.EF
         public IEnumerable<ApprovalMetric<int>> GetAvailableYears()
         {
             var result = this.Context.ApprovalTransactions
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => !_.IsDeleted)
                 .GroupBy(_ => _.ApprovalDate.Year)
                 .Select(_ => new ApprovalMetric<int>
