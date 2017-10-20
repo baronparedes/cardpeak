@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { SpinnerBlock, NavigationProps } from '../../layout'
+import { SpinnerBlock, NavigationProps, ErrorLabel } from '../../layout'
 
 import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
 
@@ -55,9 +55,7 @@ class BatchListContainer extends React.Component<NavigationProps<any> & BatchLis
         return (
             <div>
                 <h2>Batch {this.props.match.params.id} transactions</h2>
-                <label className="text-danger">
-                    {this.state.loadingError ? this.state.loadingError : null}
-                </label>
+                <ErrorLabel error={this.state.loadingError} />
                 {
                     this.state.isLoading ? <SpinnerBlock /> :
                         <ApprovalTransactionList

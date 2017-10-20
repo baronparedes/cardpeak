@@ -66,6 +66,7 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel
                     <AgentDashboardView
                         agentDashboard={this.props.selectedAgentDashboard}
                         onRefresh={this.props.actions.refreshAgentDashboardStart}
+                        onSetDateFilters={this.props.actions.setDateFilters}
                         refreshingAgentDashboard={this.props.refreshingAgentDashboard}
                         loadingAgentDashboard={this.props.loadingAgentDashboard} />
                 </div>

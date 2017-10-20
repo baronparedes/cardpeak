@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
-import { FormFieldFile, ConfirmButton } from '../../layout'
+import { FormFieldFile, ConfirmButton, ErrorLabel } from '../../layout'
 import { Panel, Form, FormGroup, Button, Col } from 'react-bootstrap'
 
 import BatchUploadDetail from './BatchUploadDetail'
@@ -122,11 +122,7 @@ class BatchUploadContainer extends React.Component<CardPeak.Models.BatchUploadMo
                                         buttonLabel="Upload" />
                                 </Col>
                                 <Col sm={12} xs={12} md={12} lg={12}>
-                                    {
-                                        this.state.onUploadError ?
-                                            <label className="text-danger">{this.state.onUploadError}</label>
-                                            : null
-                                    }
+                                    <ErrorLabel error={this.state.onUploadError} />
                                 </Col>
                             </FormGroup>
                         </fieldset>

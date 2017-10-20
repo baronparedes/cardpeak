@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, ModalConfirm, ButtonLoadingText, Currency, ConfirmButton }from '../../layout'
+import { FormFieldInput, ModalConfirm, ButtonLoadingText, Currency, ConfirmButton, ErrorLabel }from '../../layout'
 
 interface DebitCreditTransactionFormState {
     showConfirmModal: boolean;
@@ -148,11 +148,7 @@ class DebitCreditTransactionFormContainer extends React.Component<
                                 </ConfirmButton>
                             </Col>
                             <Col sm={12} xs={12} md={12} lg={12}>
-                                {
-                                    this.state.postingTransactionError ?
-                                        <label className="text-danger">{this.state.postingTransactionError}</label>
-                                        : null
-                                }
+                                <ErrorLabel error={this.state.postingTransactionError} />
                             </Col>
                         </FormGroup>
                     </fieldset>

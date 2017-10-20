@@ -13,5 +13,6 @@ namespace CardPeak.Core.Service
         Agent Update(Agent agent);
         Agent Create(Agent agent);
         AgentPayout GetAgentPayouts();
+        void DeactivateAgent(int agentId);
     }
 }

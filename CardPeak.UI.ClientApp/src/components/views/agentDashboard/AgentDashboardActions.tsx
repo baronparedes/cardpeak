@@ -5,8 +5,9 @@ import DebitCreditTransactionFormModal from '../transactions/DebitCreditTransact
 import * as dateHelpers from '../../../helpers/dateHelpers'
 
 interface AgentDashboardActionsProps {
-    agent: CardPeak.Entities.Agent,
-    onRefresh?: (toDate?: string, fromDate?: string) => void,
+    agent: CardPeak.Entities.Agent;
+    onRefresh?: (toDate?: string, fromDate?: string) => void;
+    onSetDateFilters?: (dateFilters: CardPeak.Entities.DateFilters) => void;
     refreshingAgentDashboard?: boolean
 }
 
@@ -26,6 +27,9 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
             startDate: dateHelpers.firstDayOfTheMonth()
         }
     }
+    componentDidMount() {
+        this.handleOnSetDateFilters();
+    }
     handleOnTransactionToggleModal = (e: any) => {
         this.setState({ transaction: e.target.dataset.name });
         this.handleOnToggleModal();
@@ -34,6 +38,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
         this.setState({ showModal: !this.state.showModal });
     }
     handleOnRefreshTransactions = () => {
+        this.handleOnSetDateFilters();
         this.props.onRefresh(this.state.startDate, this.state.endDate);
     }
     handleOnStartDatePickerChange = (value: string, formattedValue: string) => {
@@ -41,6 +46,15 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     }
     handleOnEndDatePickerChange = (value: string, formattedValue: string) => {
         this.setState({ endDate: value });
+    }
+    handleOnSetDateFilters() {
+        if (this.props.onSetDateFilters) {
+            const dateFilters: CardPeak.Entities.DateFilters = {
+                startDate: this.state.startDate,
+                endDate: this.state.endDate
+            };
+            this.props.onSetDateFilters(dateFilters);
+        }
     }
     renderDateFilters() {
         return (

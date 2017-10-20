@@ -14,18 +14,28 @@ namespace CardPeak.Repository.EF
         {
         }
 
-        private decimal GetBalanceByAgent(int agentId, int type)
+        private decimal GetBalanceByAgent(int agentId, int type, DateTime? endDate = null)
         {
-            return this.Context.DebitCreditTransactions
-                .Where(_ => _.TransactionTypeId == type && _.AgentId == agentId && !_.IsDeleted)
+            var result = this.Context.DebitCreditTransactions
+                .Where(_ => _.AgentId == agentId)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => !_.Agent.IsDeleted)
+                .Where(_ => _.TransactionTypeId == type && _.AgentId == agentId && !_.IsDeleted);
+
+            if (endDate.HasValue)
+            {
+                result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) < DbFunctions.TruncateTime(endDate.Value));
+            }
+
+            return result
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
                 .FirstOrDefault();
         }
 
-        public decimal GetAgentAccountBalance(int agentId)
+        public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null)
         {
-            return this.GetBalanceByAgent(agentId, (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+            return this.GetBalanceByAgent(agentId, (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction, endDate);
         }
 
         public decimal GetAgentSavingsBalance(int agentId)
@@ -37,7 +47,9 @@ namespace CardPeak.Repository.EF
         {
             var result = this.Context
                 .DebitCreditTransactions
-                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
+                .Where(_ => _.AgentId == agentId)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
                 .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) >= startDate.Date);
 
@@ -46,7 +58,9 @@ namespace CardPeak.Repository.EF
                 result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) <= DbFunctions.TruncateTime(endDate.Value));
             }
 
-            return result.ToList();
+            return result
+                .OrderByDescending(_ => _.Id)
+                .ToList();
         }
 
         private decimal QueryBalance(int year, int month, Domain.Enums.TransactionTypeEnum transactionType)
@@ -54,6 +68,7 @@ namespace CardPeak.Repository.EF
             var query = this.Context.DebitCreditTransactions
                 .Where(_ => _.TransactionDateTime.Year == year)
                 .Where(_ => !_.IsDeleted)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => _.TransactionTypeId == (int)transactionType);
 
             if (month != 0)

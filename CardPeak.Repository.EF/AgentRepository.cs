@@ -55,6 +55,7 @@ namespace CardPeak.Repository.EF
         {
             var approvalTransactions = this.Context.ApprovalTransactions
                 .Include(_ => _.Agent)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => !_.IsDeleted)
                 .GroupBy(_ => new { _.AgentId, _.Agent })
                 .Select(_ => new {
@@ -65,6 +66,7 @@ namespace CardPeak.Repository.EF
 
             var creditDebitTransactions = this.Context.DebitCreditTransactions
                 .Include(_ => _.Agent)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => !_.IsDeleted)
                 .Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
                 .GroupBy(_ => new { _.AgentId, _.Agent })
@@ -93,6 +95,13 @@ namespace CardPeak.Repository.EF
             return new AgentPayout {
                 Payouts = payout
             };
+        }
+
+        public void DeactivateAgent(int agentId)
+        {
+            var agent = this.Context.Agents.Single(_ => _.AgentId == agentId);
+            agent.IsDeleted = true;
+            this.Context.Entry(agent).State = EntityState.Modified;
         }
     }
 }

@@ -54,6 +54,7 @@
         public accounts?: Account[];
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
+        public agentDashboardTransactions?: AgentDashboardTransaction[];
         public performance?: ApprovalMetric<string>[];
         public approvalsByBank?: ApprovalMetric<string>[];
         public approvalsByCategory?: ApprovalMetric<string>[];
@@ -177,5 +178,19 @@
         public description?: string;
         public cardCategoryAmountBreakdown?: CardPeak.Entities.AmountBreakdown[];
         public totalApproved?: number;
+    }
+
+    export class AgentDashboardTransaction {
+        public transactionId: number;
+        public transactionType: number;
+        public details: string;
+        public transactionDate: Date;
+        public transactionAmount: number;
+        public runningBalance: number;
+    }
+
+    export class DateFilters {
+        public startDate?: string;
+        public endDate?: string;
     }
 }

@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Grid, Row, Col, Form, FormGroup, Button, ButtonGroup, Panel } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDropdown, ConfirmButton } from '../../layout'
+import { FormFieldInput, FormFieldDropdown, ConfirmButton, ErrorLabel } from '../../layout'
 import RateList from './RateList'
 
 interface RatesContainerProps {
@@ -233,11 +233,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
                             isLoading={this.props.postingRates || this.props.loadingRates} />
                     </Col>
                     <Col sm={12} xs={12} md={12} lg={12}>
-                        {
-                            this.state.postingRatesError ?
-                                <label className="text-danger">{this.state.postingRatesError}</label>
-                                : null
-                        }
+                        <ErrorLabel error={this.state.postingRatesError} />
                     </Col>
                 </Row>
             </Grid>

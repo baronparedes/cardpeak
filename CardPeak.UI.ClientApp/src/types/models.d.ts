@@ -9,6 +9,7 @@
         refreshingAgentDashboard?: boolean;
         updatingAgent?: boolean;
         creatingAgent?: boolean;
+        dateFilters?: CardPeak.Entities.DateFilters
     }
 
     export interface RatesModel {

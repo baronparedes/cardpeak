@@ -29,6 +29,7 @@ namespace CardPeak.Repository.EF
         {
             var result = this.Context.ApprovalTransactions
                 .Where(_ => !_.IsDeleted)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => _.ApprovalDate.Year == year);
 
             if (month != 0)
@@ -44,6 +45,7 @@ namespace CardPeak.Repository.EF
         {
             var result = this.Context.DebitCreditTransactions
                 .Where(_ => !_.IsDeleted)
+                .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => _.TransactionDateTime.Year == year);
 
             if (month != 0)
