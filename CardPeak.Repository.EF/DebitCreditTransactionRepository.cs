@@ -18,9 +18,9 @@ namespace CardPeak.Repository.EF
         {
             var result = this.Context.DebitCreditTransactions
                 .Where(_ => _.AgentId == agentId)
-                .Where(_ => !_.IsDeleted)
                 .Where(_ => !_.Agent.IsDeleted)
-                .Where(_ => _.TransactionTypeId == type && _.AgentId == agentId && !_.IsDeleted);
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.TransactionTypeId == type);
 
             if (endDate.HasValue)
             {
@@ -45,11 +45,10 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<DebitCreditTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context
-                .DebitCreditTransactions
+            var result = this.Context.DebitCreditTransactions
                 .Where(_ => _.AgentId == agentId)
-                .Where(_ => !_.IsDeleted)
                 .Where(_ => !_.Agent.IsDeleted)
+                .Where(_ => !_.IsDeleted)
                 .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
                 .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) >= startDate.Date);
 
