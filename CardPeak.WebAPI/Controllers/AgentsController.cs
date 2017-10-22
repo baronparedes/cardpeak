@@ -131,5 +131,20 @@ namespace CardPeak.WebAPI.Controllers
 
             return this.Ok(result);
         }
+
+        [HttpPost]
+        [Route("deactivate/{id}")]
+        public IHttpActionResult DeactivateAgent(int id)
+        {
+            try
+            {
+                this.AgentService.DeactivateAgent(id);
+                return this.Ok(id);
+            }
+            catch (Exception e)
+            {
+                return this.InternalServerError(e);
+            }
+        }
     }
 }

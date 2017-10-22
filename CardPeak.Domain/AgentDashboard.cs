@@ -10,6 +10,7 @@ namespace CardPeak.Domain
         public decimal SavingsBalance { get; set; }
         public decimal TotalApprovals { get; set; }
         public IEnumerable<Account> Accounts { get; set; }
+        public IEnumerable<AgentDashboardTransaction> AgentDashboardTransactions { get; set; }
         public IEnumerable<ApprovalTransaction> ApprovalTransactions { get; set; }
         public IEnumerable<DebitCreditTransaction> DebitCreditTransactions { get; set; }
         public IEnumerable<ApprovalMetric<string>> Performance { get; set; }

@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Form, Row, Col, FormGroup } from 'react-bootstrap'
-import { ConfirmButton, FormFieldInput, FormFieldDropdown, FormFieldBoolean } from '../../layout'
+import { ConfirmButton, FormFieldInput, FormFieldDropdown, FormFieldBoolean, ErrorLabel } from '../../layout'
 
 interface BatchFileConfigurationFormProps {
     batchFileConfiguration: CardPeak.Entities.BatchFileConfiguration,
@@ -110,11 +110,7 @@ export default class BatchFileConfigurationForm extends React.Component<BatchFil
                         disabled={this.props.isSaving} />
                 </Col>
                 <Col sm={12} xs={12} md={12} lg={12}>
-                    {
-                        this.state.onSaveErrorMessage ?
-                            <label className="text-danger">{this.state.onSaveErrorMessage}</label>
-                            : null
-                    }
+                    <ErrorLabel error={this.state.onSaveErrorMessage} />
                 </Col>
             </FormGroup>
         )

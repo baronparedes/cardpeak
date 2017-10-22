@@ -5,6 +5,18 @@ const initialState: CardPeak.Models.AgentModel = {
     agents: undefined
 };
 
+function isBetween(dateFilters: CardPeak.Entities.DateFilters, transactionDate: Date): boolean {
+    const from = new Date(dateFilters.startDate);
+    const target = new Date(transactionDate.toString());
+    if (dateFilters.endDate) {
+        const to = new Date(dateFilters.endDate);
+        return from <= target && target <= to;
+    }
+    else {
+        return from <= target;
+    }
+}
+
 export default handleActions<CardPeak.Models.AgentModel, any>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
@@ -52,16 +64,34 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
         };
     },
     [AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE]: (state, action) => {
-        let transaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
-        let transactions = state.selectedAgentDashboard.debitCreditTransactions.slice();
-        transactions.push(transaction);
+        let debitCreditTransactions = state.selectedAgentDashboard.debitCreditTransactions.slice();
+        let agentDashboardTransactions = state.selectedAgentDashboard.agentDashboardTransactions.slice();
+
+        const debitCreditTransaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
+        const agentDashboardTransaction: CardPeak.Entities.AgentDashboardTransaction = {
+            details: debitCreditTransaction.remarks,
+            transactionAmount: debitCreditTransaction.amount,
+            transactionId: debitCreditTransaction.id,
+            transactionType: debitCreditTransaction.transactionTypeId,
+            transactionDate: debitCreditTransaction.transactionDateTime,
+            runningBalance: agentDashboardTransactions.length === 0 ?
+                debitCreditTransaction.amount : agentDashboardTransactions[0].runningBalance + debitCreditTransaction.amount
+        };
+        const accountBalance = state.selectedAgentDashboard.accountBalance + debitCreditTransaction.amount;
+
+        if (isBetween(state.dateFilters, debitCreditTransaction.transactionDateTime)) {
+            debitCreditTransactions.unshift(debitCreditTransaction);
+            agentDashboardTransactions.unshift(agentDashboardTransaction);
+        }
+
         return {
             ...state,
             postingTransaction: undefined,
             selectedAgentDashboard: {
                 ...state.selectedAgentDashboard,
-                accountBalance: state.selectedAgentDashboard.accountBalance + transaction.amount,
-                debitCreditTransactions: transactions
+                accountBalance,
+                debitCreditTransactions,
+                agentDashboardTransactions
             },
         };
     },
@@ -97,7 +127,7 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
         }
     },
     [AGENT_ACTIONS.UPDATE_AGENT_COMPLETE]: (state, action) => {
-        let agent = action.payload as CardPeak.Entities.Agent;
+        const agent = action.payload as CardPeak.Entities.Agent;
         let agents = state.agents.slice();
         agents.push(agent);
 
@@ -139,4 +169,10 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
             agents
         }
     },
+    [AGENT_ACTIONS.SET_DASHBOARD_DATE_FILTERS]: (state, action) => {
+        return {
+            ...state,
+            dateFilters: action.payload
+        }
+    }
 }, initialState);

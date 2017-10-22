@@ -2,7 +2,7 @@
 import * as AgentsActions from '../../../services/actions/agentActions'
 import * as dateHelper from '../../../helpers/dateHelpers'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { SpinnerBlock, RadioGroup, AgentDashboardLinkButton, NavigationProps } from '../../layout'
+import { SpinnerBlock, RadioGroup, AgentDashboardLinkButton, NavigationProps, ConfirmButton } from '../../layout'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -70,6 +70,9 @@ class AgentContainer extends
         this.props.actions.getAllAgentsStart();
     }
     handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
+        if (this.props.history) {
+            this.props.history.push("/agents/update/" + agent.agentId);
+        }
         this.props.actions.getAccounts(agent.agentId, (data: CardPeak.Entities.Account[]) => {
             agent.accounts = data;
             this.setState({ selectedAgent: agent });
@@ -89,7 +92,14 @@ class AgentContainer extends
                 this.setState({ selectedAgent: agent });
             }, errorCallback);
         }
-        
+
+    }
+    handleOnDeactivateAgent = () => {
+        this.props.actions.deactivateAgent(this.state.selectedAgent.agentId, () => {
+            this.setState({ selectedAgent: undefined }, () => {
+                this.props.history.push("/agents/update")
+            });
+        });
     }
     renderActions() {
         if (this.state.selectedAgent && !this.props.isNew) {
@@ -105,6 +115,15 @@ class AgentContainer extends
                         ]}
                         onChange={this.handleOnTabChange} />
                     <AgentDashboardLinkButton id={this.state.selectedAgent.agentId} />
+                    <span className="spacer-left-sm"></span>
+                    <ConfirmButton
+                        confirmTitle="Deactive Agent"
+                        confirmMessage="Do you wish to continue?"
+                        buttonLabel={
+                            <i className="fa fa-trash-o"></i>
+                        }
+                        bsStyle="danger"
+                        onConfirm={this.handleOnDeactivateAgent} />
                 </Grid>
             )
         }

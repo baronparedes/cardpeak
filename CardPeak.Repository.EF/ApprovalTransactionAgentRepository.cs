@@ -17,13 +17,13 @@ namespace CardPeak.Repository.EF
 
         private IQueryable<ApprovalTransaction> QueryByAgentAndDateRange(int agentId, DateTime startDate, DateTime? endDate)
         {
-            var result = this.Context
-                .ApprovalTransactions
+            var result = this.Context.ApprovalTransactions
                 .Include(_ => _.Agent)
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
-                .Where(_ => _.AgentId == agentId)
                 .Where(_ => !_.IsDeleted)
+                .Where(_ => !_.Agent.IsDeleted)
+                .Where(_ => _.AgentId == agentId)
                 .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
             if (endDate != null && startDate.Date <= endDate.Value.Date)
@@ -39,16 +39,22 @@ namespace CardPeak.Repository.EF
         {
             var result = this.QueryByAgentAndDateRange(agentId, startDate, endDate);
             result = result
-                .OrderBy(_ => _.ApprovalDate)
-                .ThenBy(_ => _.Client);
+                .OrderByDescending(_ => _.Id);
 
             return result.ToList();
         }
 
-        public decimal GetAgentAccountBalance(int agentId)
+        public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null)
         {
-            return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == agentId && !_.IsDeleted)
+            var result = this.Context.ApprovalTransactions
+                .Where(_ => _.AgentId == agentId && !_.IsDeleted);
+
+            if (endDate.HasValue)
+            {
+                result = result.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) < endDate.Value);
+            }
+
+            return result
                 .GroupBy(_ => _.AgentId)
                 .Select(balance => balance.Sum(_ => _.Amount))
                 .FirstOrDefault();
