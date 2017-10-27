@@ -133,6 +133,19 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("{id}/incentive")]
+        public IHttpActionResult IncentiveAgent(int id, decimal amount, string remarks)
+        {
+            var result = this.AgentService.AddIncentiveTransaction(id, amount, remarks);
+            if (result == null)
+            {
+                return this.InternalServerError();
+            }
+
+            return this.Ok(result);
+        }
+
+        [HttpPost]
         [Route("deactivate/{id}")]
         public IHttpActionResult DeactivateAgent(int id)
         {

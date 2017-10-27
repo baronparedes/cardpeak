@@ -50,6 +50,7 @@
         latestProcessedBatch?: CardPeak.Entities.BatchUpload[];
         accountBalance?: number;
         savingsBalance?: number;
+        incentivesBalance?: number;
         totalApprovals?: number;
         approvalsByBank?: CardPeak.Entities.ApprovalMetric<string>[];
         approvalsByCategory?: CardPeak.Entities.ApprovalMetric<string>[];

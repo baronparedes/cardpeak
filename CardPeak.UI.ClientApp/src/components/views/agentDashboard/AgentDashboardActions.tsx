@@ -110,6 +110,13 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                         disabled={this.props.refreshingAgentDashboard}>
                         Debit
                     </Button>
+                    <Button
+                        onClick={this.handleOnTransactionToggleModal}
+                        bsStyle="info"
+                        data-name="Incentive"
+                        disabled={this.props.refreshingAgentDashboard}>
+                        Incentive
+                    </Button>
                 </ButtonGroup>
                 <UpdateAgentLinkButton id={this.props.agent.agentId} />
             </Col >
@@ -123,21 +130,28 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
                         onClick={this.handleOnRefreshTransactions}
                         bsStyle="primary"
                         disabled={this.props.refreshingAgentDashboard}>
-                        <i className={"fa fa-refresh fa-2x" + (this.props.refreshingAgentDashboard ? " fa-spin" : "")} title="Refresh"></i>
+                        <i className={"fa fa-refresh" + (this.props.refreshingAgentDashboard ? " fa-spin" : "")} title="Refresh"></i>
                     </Button>
                     <Button
                         onClick={this.handleOnTransactionToggleModal}
                         bsStyle="success"
                         data-name="Credit"
                         disabled={this.props.refreshingAgentDashboard}>
-                        <i className="fa fa-plus fa-2x" title="Credit Credit" data-name="Credit"></i>
+                        <i className="fa fa-plus" title="Credit Credit" data-name="Credit"></i>
                     </Button>
                     <Button
                         onClick={this.handleOnTransactionToggleModal}
                         bsStyle="danger"
                         data-name="Debit"
                         disabled={this.props.refreshingAgentDashboard}>
-                        <i className="fa fa-minus fa-2x" title="Debit Transaction" data-name="Debit"></i>
+                        <i className="fa fa-minus" title="Debit Transaction" data-name="Debit"></i>
+                    </Button>
+                    <Button
+                        onClick={this.handleOnTransactionToggleModal}
+                        bsStyle="info"
+                        data-name="Incentive"
+                        disabled={this.props.refreshingAgentDashboard}>
+                        <i className="fa fa-money" title="Incentive Transaction" data-name="Incentive"></i>
                     </Button>
                 </ButtonGroup>
                 <UpdateAgentLinkButton id={this.props.agent.agentId} />

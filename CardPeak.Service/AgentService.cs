@@ -80,7 +80,8 @@ namespace CardPeak.Service
         public AgentDashboard GetAgentDashboard(int agentId, DateTime startDate, DateTime? endDate = null)
         {
             var approvalTransactions = this.ApprovalTransactionAgentRepository.FindByAgent(agentId, startDate, endDate);
-            var debitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate);
+            var debitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+            var incentiveTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate, Domain.Enums.TransactionTypeEnum.IncentivesTransaction);
             var startingBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId, startDate) +
                     this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, startDate);
             var agentDashboardTransactions = this.GenerateAgentDashboardTransactions(approvalTransactions, debitCreditTransactions, startingBalance);
@@ -91,16 +92,36 @@ namespace CardPeak.Service
                 Accounts = this.AccountRepository.FindByAgent(agentId),
                 ApprovalTransactions = approvalTransactions,
                 DebitCreditTransactions = debitCreditTransactions,
+                IncentiveTransactions = incentiveTransactions,
                 AgentDashboardTransactions = agentDashboardTransactions,
                 AccountBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId) + 
                     this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId),
-                SavingsBalance = this.DebitCreditTransactionRepository.GetAgentSavingsBalance(agentId),
+                SavingsBalance = this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, null, Domain.Enums.TransactionTypeEnum.SavingsTransaction),
+                IncentivesBalance = this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, null, Domain.Enums.TransactionTypeEnum.IncentivesTransaction),
                 TotalApprovals = this.ApprovalTransactionAgentRepository.GetAgentTotalApprovals(agentId, startDate, endDate),
                 Performance = this.ApprovalTransactionAgentRepository.GetAgentPerformance(agentId),
                 ApprovalsByBank = this.ApprovalTransactionAgentRepository.GetAgentApprovalsByBank(agentId, startDate, endDate),
                 ApprovalsByCategory = this.ApprovalTransactionAgentRepository.GetAgentApprovalsByCategory(agentId, startDate, endDate),
                 ApprovalsByBankDetails = this.ApprovalTransactionAgentRepository.GetAgentApprovalsByBankDetails(agentId, startDate, endDate)
             };
+        }
+
+        private DebitCreditTransaction AddTransaction(int agentId, decimal amount, string remarks, Domain.Enums.TransactionTypeEnum transactionType)
+        {
+            var transaction = new DebitCreditTransaction
+            {
+                AgentId = agentId,
+                Remarks = remarks,
+                TransactionDateTime = DateTime.Now,
+                TransactionTypeId = (int)transactionType,
+                IsDeleted = false,
+                Amount = amount
+            };
+
+            this.DebitCreditTransactionRepository.Add(transaction);
+            this.Complete();
+
+            return transaction;
         }
 
         public DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit)
@@ -111,22 +132,25 @@ namespace CardPeak.Service
                 {
                     throw new ArgumentNullException("Amount cannot be 0 or less.");
                 }
-
                 var transactionAmount = (isDebit) ? Math.Abs(amount) * -1 : Math.Abs(amount);
-                var transaction = new DebitCreditTransaction
+                return this.AddTransaction(agentId, transactionAmount, remarks, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+            }
+            catch
+            {
+                // TODO: Log Errors
+                return null;
+            }
+        }
+
+        public DebitCreditTransaction AddIncentiveTransaction(int agentId, decimal amount, string remarks)
+        {
+            try
+            {
+                if (amount <= 0)
                 {
-                    AgentId = agentId,
-                    Remarks = remarks,
-                    TransactionDateTime = DateTime.Now,
-                    TransactionTypeId = (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction,
-                    IsDeleted = false,
-                    Amount = transactionAmount
-                };
-
-                this.DebitCreditTransactionRepository.Add(transaction);
-                this.Complete();
-
-                return transaction;
+                    throw new ArgumentNullException("Amount cannot be 0 or less.");
+                }
+                return this.AddTransaction(agentId, Math.Abs(amount), remarks, Domain.Enums.TransactionTypeEnum.IncentivesTransaction);
             }
             catch
             {

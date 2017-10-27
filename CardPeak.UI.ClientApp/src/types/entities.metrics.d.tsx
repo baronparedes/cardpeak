@@ -10,6 +10,7 @@
         public value: number;
         public accountBalance: number;
         public savingsBalance: number;
+        public incentivesBalance: number;
     }
 
     export class AgentRankMetric {
@@ -38,6 +39,7 @@
         public totalApproved?: number;
         public totalBalance?: number;
         public totalSavings?: number;
+        public totalIncentives?: number;
     }
 
     export class AmountBreakdown {

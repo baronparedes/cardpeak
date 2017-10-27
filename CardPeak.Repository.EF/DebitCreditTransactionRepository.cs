@@ -33,23 +33,19 @@ namespace CardPeak.Repository.EF
                 .FirstOrDefault();
         }
 
-        public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null)
+        public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null, 
+            Domain.Enums.TransactionTypeEnum transactionType = Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
         {
-            return this.GetBalanceByAgent(agentId, (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction, endDate);
+            return this.GetBalanceByAgent(agentId, (int)transactionType, endDate);
         }
 
-        public decimal GetAgentSavingsBalance(int agentId)
-        {
-            return this.GetBalanceByAgent(agentId, (int)CardPeak.Domain.Enums.TransactionTypeEnum.SavingsTransaction);
-        }
-
-        public IEnumerable<DebitCreditTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate)
+        public IEnumerable<DebitCreditTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate, Domain.Enums.TransactionTypeEnum transactionType)
         {
             var result = this.Context.DebitCreditTransactions
                 .Where(_ => _.AgentId == agentId)
                 .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => !_.IsDeleted)
-                .Where(_ => _.TransactionTypeId == (int)CardPeak.Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
+                .Where(_ => _.TransactionTypeId == (int)transactionType)
                 .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) >= startDate.Date);
 
             if (endDate != null && startDate.Date <= endDate.Value.Date)
@@ -80,14 +76,9 @@ namespace CardPeak.Repository.EF
                 .Sum();
         }
 
-        public decimal GetAccountBalance(int year, int month)
+        public decimal GetAccountBalance(int year, int month, Domain.Enums.TransactionTypeEnum transactionType = Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
         {
-            return this.QueryBalance(year, month, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
-        }
-
-        public decimal GetSavingsBalance(int year, int month)
-        {
-            return this.QueryBalance(year, month, Domain.Enums.TransactionTypeEnum.SavingsTransaction);
+            return this.QueryBalance(year, month, transactionType);
         }
     }
 }

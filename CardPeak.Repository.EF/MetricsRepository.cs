@@ -94,6 +94,12 @@ namespace CardPeak.Repository.EF
                         .Select(at => at.Units)
                         .DefaultIfEmpty(0)
                         .Sum(),
+                    IncentivesBalance = debitCreditSavingsTransactions
+                        .Where(dcst => dcst.AgentId == _.AgentId)
+                        .Where(dcst => dcst.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.IncentivesTransaction)
+                        .Select(at => at.Amount)
+                        .DefaultIfEmpty(0)
+                        .Sum(),
                     SavingsBalance = debitCreditSavingsTransactions
                         .Where(dcst => dcst.AgentId == _.AgentId)
                         .Where(dcst => dcst.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.SavingsTransaction)

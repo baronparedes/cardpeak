@@ -63,7 +63,7 @@ class DebitCreditTransactionFormContainer extends React.Component<
             amount: this.state.amount,
             remarks: this.state.remarks
             },
-            (this.props.transaction.toLowerCase() === "debit"),
+            this.props.transaction,
             this.handleOnTransactionSubmitted, this.handleOnTransactionSubmittedError);
     }
     handleOnTransactionSubmitted = () => {
@@ -97,9 +97,26 @@ class DebitCreditTransactionFormContainer extends React.Component<
         });
     }
     render() {
-        let isDebit: boolean = (this.props.transaction.toLowerCase() === "debit");
-        let transaction = (isDebit) ? "Debit" : "Credit";
-        let buttonClass = (isDebit) ? "danger" : "success";
+        let buttonClass: string;
+        let amountClass: string;
+        let transaction: string;
+        switch (this.props.transaction.toLowerCase()) {
+            case "credit":
+                buttonClass = "success";
+                amountClass = "amount-credit";
+                transaction = "Credit";
+                break;
+            case "debit":
+                buttonClass = "danger";
+                amountClass = "amount-debit";
+                transaction = "Debit";
+                break;
+            case "incentive":
+                buttonClass = "info";
+                amountClass = "amount-incentive";
+                transaction = "Incentive";
+                break;
+        }
         return (
             <div className="container-fluid">
                 <Form horizontal onSubmit={(e) => { e.preventDefault() }}>
@@ -139,7 +156,7 @@ class DebitCreditTransactionFormContainer extends React.Component<
                                         You are about to <strong>{this.props.transaction} </strong>
                                         <br />
                                         <span className="text-muted spacer-right">amount:</span>
-                                        <Currency noCurrencyColor className={(isDebit) ? "amount-debit" : "amount-credit"} currency={this.state.amount} />
+                                        <Currency noCurrencyColor className={amountClass} currency={this.state.amount} />
                                         <br />
                                         <span className="text-muted spacer-right">account:</span>
                                         <strong className="text-highlight">{this.props.agent.firstName + " " + this.props.agent.lastName}</strong>

@@ -54,10 +54,12 @@
         public agent: Agent;
         public accountBalance: number;
         public savingsBalance: number;
+        public incentivesBalance: number;
         public totalApprovals: number;
         public accounts?: Account[];
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
+        public incentiveTransactions?: DebitCreditTransaction[];
         public agentDashboardTransactions?: AgentDashboardTransaction[];
         public performance?: ApprovalMetric<string>[];
         public approvalsByBank?: ApprovalMetric<string>[];

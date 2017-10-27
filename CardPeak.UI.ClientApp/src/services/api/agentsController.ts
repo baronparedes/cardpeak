@@ -14,6 +14,9 @@ const API = {
     CREDIT_AGENT: (agentId: number) => {
         return '/agents/' + agentId + '/credit'
     },
+    INCENTIVE_AGENT: (agentId: number) => {
+        return '/agents/' + agentId + '/incentive'
+    },
     UPDATE_AGENT: (agentId: number) => {
         return '/agents/' + agentId + '/update'
     },
@@ -83,11 +86,22 @@ export function getAgentDashboardFiltered(agentId: number, startDate?: string, e
 
 export function postAgentTransaction(
     transaction: CardPeak.Entities.DebitCreditTransaction,
-    isDebit: boolean,
+    transactionType: Transaction,
     successCallback: (data: CardPeak.Entities.DebitCreditTransaction) => void,
     errorCallback: (error: string) => void) {
 
-    let url = (isDebit) ? API.DEBIT_AGENT(transaction.agentId) : API.CREDIT_AGENT(transaction.agentId);
+    let url: string;
+    switch (transactionType.toLowerCase()) {
+        case "credit":
+            url = API.CREDIT_AGENT(transaction.agentId);
+            break;
+        case "debit":
+            url = API.DEBIT_AGENT(transaction.agentId);
+            break;
+        case "incentive":
+            url = API.INCENTIVE_AGENT(transaction.agentId);
+            break;
+    }
     axios.post(url, null, {
             params: {
                 amount: transaction.amount, remarks: transaction.remarks
