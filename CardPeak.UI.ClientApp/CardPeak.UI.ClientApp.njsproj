@@ -208,6 +208,12 @@
     <Content Include="src\components\views\metrics\AgentRankingMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\metrics\AgentTresholdMetricsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\metrics\AgentTresholdMetricsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\metrics\BankAmountBreakdownMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -321,6 +327,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\styles\theme.less">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\types\entities.metrics.d.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="tsconfig.json">

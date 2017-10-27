@@ -37,6 +37,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
             { text: "Agents", fa: "fa-users", exact: true, to: "/metrics/agents" },
             { text: "Agent Rankings", fa: "fa-star", exact: true, to: "/metrics/agents/rankings" },
             { text: "Agent Performance", fa: "fa-line-chart", exact: true, to: "/metrics/agents/performance" },
+            { text: "Agent Treshold", fa: "fa-area-chart", exact: true, to: "/metrics/agents/treshold" },
             { divider: true },
             { text: "Bank Amount Breakdown", fa: "fa-pie-chart", exact: true, to: "/metrics/banks/amountbreakdown" }
         ];
@@ -51,7 +52,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
         const id = "agent-nav-dropdown";
         const root: NavProps = { to: "/agents", text: "Agents", fa: "fa-users", addOn: <PayoutBadgeContainer /> };
         const navs: NavProps[] = [
-            { text: "Agent Dashboard", fa: "fa-user-circle", exact: true, to: "/agents" },
+            { text: "Agent Dashboard", fa: "fa-tachometer", exact: true, to: "/agents" },
             { divider: true },
             { text: "Payout", fa: "fa-money", exact: true, to: "/agents/payout", addOn: <PayoutBadgeContainer autoRefresh /> },
             { divider: true },
@@ -142,7 +143,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
                     <Nav pullRight>
                         <LinkContainer exact to="/">
                             <NavItem>
-                                <NavLinkText text="Dashboard" fa="fa-area-chart" />
+                                <NavLinkText text="Dashboard" fa="fa-home" />
                             </NavItem>
                         </LinkContainer>
                         {this.renderNavDropdown(this.getMetricsNavs())}
