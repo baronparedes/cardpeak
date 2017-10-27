@@ -33,6 +33,8 @@
         public bank?: Reference;
         public cardCategory?: Reference;
         public agent?: Agent;
+        public createdBy?: string;
+        public createdDate?: Date;
     }
 
     export class DebitCreditTransaction {
@@ -44,6 +46,8 @@
         public transactionDateTime?: Date;
         public isDeleted?: boolean;
         public transactionType?: Reference;
+        public createdBy?: string;
+        public createdDate?: Date;
     }
 
     export class AgentDashboard {
