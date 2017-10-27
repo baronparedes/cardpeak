@@ -3,12 +3,20 @@ import { Nav, Navbar, NavItem, NavbarHeader, NavDropdown, MenuItem, NavbarBrand 
 import { LinkContainer } from 'react-router-bootstrap'
 import PayoutBadgeContainer from './PayoutBadgeContainer'
 
+interface RenderNavDropdownProps {
+    id: string,
+    root: NavProps,
+    navs: NavProps[]
+}
+
 interface NavProps {
     text?: string;
     fa?: string;
     exact?: boolean;
     to?: string;
     addOn?: React.ReactNode;
+    eventKey?: number;
+    divider?: boolean;
 }
 
 const NavLinkText = (props: NavProps) => {
@@ -21,111 +29,126 @@ const NavLinkText = (props: NavProps) => {
     )
 }
 
-const NavItemLinkContainer = (props: NavProps) => {
-    return (
-        <LinkContainer exact={props.exact} to={props.to}>
-            <NavItem href={props.to}>
-                <NavLinkText {...props} />
-            </NavItem>
-        </LinkContainer>
-    );
-}
-
-const MenuItemLinkContainer = (props: NavProps) => {
-    return (
-        <LinkContainer exact={props.exact} to={props.to}>
-            <MenuItem href={props.to} >
-                <NavLinkText {...props} />
-            </MenuItem>
-        </LinkContainer>
-    );
-}
-
 export class NavigationBar extends React.Component<{}, undefined> {
-    renderHeader() {
-        return (
-            <Navbar.Header>
-                <NavbarBrand>
-                    CARDPEAK
-                </NavbarBrand>
-                <Navbar.Toggle />
-            </Navbar.Header>
-        )
+    getMetricsNavs(): RenderNavDropdownProps {
+        const id = "metrics-nav-dropdown";
+        const root: NavProps = { to: "/metrics", text: "Metrics", fa: "fa-bar-chart" };
+        const navs: NavProps[] = [
+            { text: "Agents", fa: "fa-users", exact: true, to: "/metrics/agents" },
+            { text: "Agent Rankings", fa: "fa-star", exact: true, to: "/metrics/agents/rankings" },
+            { text: "Agent Performance", fa: "fa-line-chart", exact: true, to: "/metrics/agents/performance" },
+            { divider: true },
+            { text: "Bank Amount Breakdown", fa: "fa-pie-chart", exact: true, to: "/metrics/banks/amountbreakdown" }
+        ];
+
+        return {
+            id,
+            root,
+            navs
+        };
     }
-    renderAgents() {
-        return (
-            <LinkContainer to="/agents" onClick={(e) => e.preventDefault()}>
-                <NavDropdown
-                    title={<span>
-                        <NavLinkText text="Agents" fa="fa-users" />
-                        <PayoutBadgeContainer />
-                    </span>}
-                    id="agents-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/agents" text="Agent Dashboard" fa="fa-user-circle" />
-                    <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/agents/payout" text="Payout" fa="fa-money" addOn={
-                        <PayoutBadgeContainer autoRefresh />
-                    } />
-                    <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/agents/create" text="Create" fa="fa-user-plus" />
-                    <MenuItemLinkContainer exact to="/agents/update" text="Update" fa="fa-pencil" />
-                </NavDropdown>
-            </LinkContainer>
-        )
+    getAgentsNavs(): RenderNavDropdownProps {
+        const id = "agent-nav-dropdown";
+        const root: NavProps = { to: "/agents", text: "Agents", fa: "fa-users", addOn: <PayoutBadgeContainer /> };
+        const navs: NavProps[] = [
+            { text: "Agent Dashboard", fa: "fa-user-circle", exact: true, to: "/agents" },
+            { divider: true },
+            { text: "Payout", fa: "fa-money", exact: true, to: "/agents/payout", addOn: <PayoutBadgeContainer autoRefresh /> },
+            { divider: true },
+            { text: "Create", fa: "fa-user-plus", exact: true, to: "/agents/create" },
+            { text: "Update", fa: "fa-pencil", exact: true, to: "/agents/update" }
+        ];
+
+        return {
+            id,
+            root,
+            navs
+        };
     }
-    renderTransactions() {
-        return (
-            <LinkContainer to="/transactions" onClick={(e) => e.preventDefault()}>
-                <NavDropdown
-                    title={<NavLinkText text="Transactions" fa="fa-upload" />}
-                    id="settings-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/transactions/upload" text="Batch Upload" fa="fa-table" />
-                    <MenuItemLinkContainer exact to="/transactions/batch" text="Manage Uploads" fa="fa-tasks" />
-                    <MenuItemLinkContainer exact to="/transactions/upload/config" text="Configure Uploads" fa="fa-wrench" />
-                    <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/transactions/history" text="Find Transactions" fa="fa-search" />
-                </NavDropdown>
-            </LinkContainer>
-        )
+    getTransactionsNavs(): RenderNavDropdownProps {
+        const id = "transactions-nav-dropdown";
+        const root: NavProps = { to: "/transactions", text: "Transactions", fa: "fa-upload" };
+        const navs: NavProps[] = [
+            { text: "Batch Upload", fa: "fa-table", exact: true, to: "/transactions/upload" },
+            { text: "Manage Uploads", fa: "fa-tasks", exact: true, to: "/transactions/batch" },
+            { text: "Configure Uploads", fa: "fa-wrench", exact: true, to: "/transactions/upload/config" },
+            { divider: true },
+            { text: "Find Transactions", fa: "fa-search", exact: true, to: "/transactions/history" }
+        ];
+
+        return {
+            id,
+            root,
+            navs
+        };
     }
-    renderSettings() {
-        return (
-            <LinkContainer to="/settings" onClick={(e) => e.preventDefault()}>
-                <NavDropdown
-                    title={<NavLinkText text="Settings" fa="fa-cog" />}
-                    id="settings-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/settings" text="References" fa="fa-file-code-o" />
-                    <MenuItemLinkContainer exact to="/settings/rates" text="Default Rates" fa="fa-sliders" />
-                </NavDropdown>
-            </LinkContainer>
-        )
+    getSettingsNavs(): RenderNavDropdownProps {
+        const id = "settings-nav-dropdown";
+        const root: NavProps = { to: "/settings", text: "Settings", fa: "fa-upload" };
+        const navs: NavProps[] = [
+            { text: "References", fa: "fa-file-code-o", exact: true, to: "/settings" },
+            { text: "Default Rates", fa: "fa-sliders", exact: true, to: "/settings/rates" },
+        ];
+
+        return {
+            id,
+            root,
+            navs
+        };
     }
-    renderMetrics() {
+    renderNavDropdown(props: RenderNavDropdownProps) {
+        let i = 0;
         return (
-            <LinkContainer to="/metrics" onClick={(e) => e.preventDefault()}>
+            <LinkContainer to={props.root.to} onClick={(e) => e.preventDefault()}>
                 <NavDropdown
-                    title={<NavLinkText text="Metrics" fa="fa-bar-chart" />}
-                    id="metrics-nav-dropdown">
-                    <MenuItemLinkContainer exact to="/metrics/agents" text="Agents" fa="fa-users" />
-                    <MenuItemLinkContainer exact to="/metrics/agents/rankings" text="Agent Rankings" fa="fa-star" />
-                    <MenuItemLinkContainer exact to="/metrics/agents/performance" text="Agent Performance" fa="fa-line-chart" />
-                    <MenuItem divider />
-                    <MenuItemLinkContainer exact to="/metrics/banks/amountbreakdown" text="Bank Amount Breakdown" fa="fa-pie-chart" />
+                    title={
+                        <span>
+                            <NavLinkText text={props.root.text} fa={props.root.fa} />
+                            {props.root.addOn}
+                        </span>
+                    }
+                    id={props.id}>
+                    {
+                        props.navs.map(nav => {
+                            i++;
+                            if (nav.divider) {
+                                return (
+                                    <MenuItem divider key={i} />
+                                )
+                            }
+                            return (
+                                <LinkContainer exact={nav.exact} to={nav.to} key={i}>
+                                    <MenuItem>
+                                        <NavLinkText {...nav} />
+                                    </MenuItem>
+                                </LinkContainer>
+                            )
+                        })
+                    }
                 </NavDropdown>
-            </LinkContainer>
+            </LinkContainer >
         )
     }
     render() {
         return (
             <Navbar collapseOnSelect id="main-nav" role="navigation" staticTop>
-                {this.renderHeader()}
+                <Navbar.Header>
+                    <NavbarBrand>
+                        CARDPEAK
+                </NavbarBrand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav pullRight>
-                        <NavItemLinkContainer exact to="/" text="Dashboard" fa="fa-area-chart" />
-                        {this.renderMetrics()}
-                        {this.renderAgents()}
-                        {this.renderTransactions()}
-                        {this.renderSettings()}
+                        <LinkContainer exact to="/">
+                            <NavItem>
+                                <NavLinkText text="Dashboard" fa="fa-area-chart" />
+                            </NavItem>
+                        </LinkContainer>
+                        {this.renderNavDropdown(this.getMetricsNavs())}
+                        {this.renderNavDropdown(this.getAgentsNavs())}
+                        {this.renderNavDropdown(this.getTransactionsNavs())}
+                        {this.renderNavDropdown(this.getSettingsNavs())}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
