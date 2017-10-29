@@ -62,7 +62,7 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
     }
     render() {
         return (
-            <Row>
+            <Row className="hidden-print">
                 <Col sm={6}>
                     <Panel>
                         <ApprovalMetricsBarChart metrics={this.props.approvalsByBank} label="approval by banks" onClick={this.handleOnClick} />

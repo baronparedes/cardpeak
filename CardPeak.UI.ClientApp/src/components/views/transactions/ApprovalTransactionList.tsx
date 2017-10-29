@@ -128,7 +128,6 @@ const ApprovalTransactionListRowLayout = (props: DataItemProps<CardPeak.Entities
     )
 }
 
-
 class ApprovalTransactionList extends React.Component<DataListProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps, ApprovalTransactionListState> {
     constructor(props: DataListProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps) {
         super(props);
@@ -156,7 +155,7 @@ class ApprovalTransactionList extends React.Component<DataListProps<CardPeak.Ent
                         return clientMatched || productMatched;
                     }}
                     hideSearchBar={this.props.hideSearchBar}
-                    pageSize={10}
+                    pageSize={this.props.pageSize}
                     isLoading={this.props.isLoading}
                     renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader hideAmount={this.props.hideAmount} /> }}
                     renderItem={(item, key) => {

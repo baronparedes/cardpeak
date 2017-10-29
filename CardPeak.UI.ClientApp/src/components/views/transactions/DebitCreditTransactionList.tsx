@@ -34,7 +34,7 @@ const DebitCreditTransactionList = (props: DataListProps<CardPeak.Entities.Debit
     return (
         <div>
             <DebitCreditTransactionDataList
-                pageSize={10}
+                pageSize={props.pageSize}
                 isLoading={props.isLoading}
                 renderHeader={() => { return <DebitCreditTransactionListRowLayout isHeader /> }}
                 renderItem={(item, key) => { return <DebitCreditTransactionListRowLayout item={item} key={key} /> }}

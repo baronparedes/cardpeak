@@ -1,4 +1,5 @@
 ﻿import * as React from 'react'
+import { Button } from 'react-bootstrap'
 import { Toggle } from '../../layout'
 import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
 import DebitCreditTransactionList from '../transactions//DebitCreditTransactionList'
@@ -41,7 +42,7 @@ export default class AgentDashboardTransactions extends React.Component<AgentDas
     render() {
         return (
             <div>
-                <div className="text-right spacer-bottom">
+                <div className="text-right spacer-bottom hidden-print">
                     <Toggle
                         isToggled={this.state.transactionView}
                         toggleOnLabel="Transaction"

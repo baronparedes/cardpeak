@@ -8,6 +8,7 @@ interface AgentDashboardActionsProps {
     agent: CardPeak.Entities.Agent;
     onRefresh?: (toDate?: string, fromDate?: string) => void;
     onSetDateFilters?: (dateFilters: CardPeak.Entities.DateFilters) => void;
+    onPrint?: () => void;
     refreshingAgentDashboard?: boolean
 }
 
@@ -88,13 +89,13 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     }
     renderButtons() {
         return (
-            <Col lg={6} md={6} sm={12}  xsHidden className="text-right">
-                <ButtonGroup disabled={this.props.refreshingAgentDashboard} className="spacer-right-sm">
+            <Col lg={6} md={6} sm={12} xsHidden className="text-right hidden-print">
+                <ButtonGroup disabled={this.props.refreshingAgentDashboard}>
                     <Button
                         onClick={this.handleOnRefreshTransactions}
                         bsStyle="primary"
                         disabled={this.props.refreshingAgentDashboard}>
-                        <ButtonLoadingText isLoading={this.props.refreshingAgentDashboard} label="refresh transactions" />
+                        <ButtonLoadingText isLoading={this.props.refreshingAgentDashboard} label="refresh" />
                     </Button>
                     <Button
                         onClick={this.handleOnTransactionToggleModal}
@@ -124,7 +125,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     }
     renderSmallButtons() {
         return (
-            <Col xs={12} smHidden lgHidden mdHidden className="text-right">
+            <Col xs={12} smHidden lgHidden mdHidden className="text-right hidden-print">
                 <ButtonGroup className="spacer-top spacer-bottom spacer-right-sm" disabled={this.props.refreshingAgentDashboard}>
                     <Button
                         onClick={this.handleOnRefreshTransactions}

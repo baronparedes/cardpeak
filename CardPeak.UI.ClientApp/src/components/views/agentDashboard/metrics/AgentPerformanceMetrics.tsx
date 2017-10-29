@@ -4,7 +4,7 @@ import { PerformanceDashboard } from '../../../layout'
 
 export const AgentPerformanceMetrics = (props: { performance: CardPeak.Entities.ApprovalMetric<string>[] }) => {
     return (
-        <Panel className="text-center panel-label-dashboard">
+        <Panel className="text-center panel-label-dashboard hidden-print">
             <PerformanceDashboard performance={props.performance} />
         </Panel>
     )

@@ -104,6 +104,7 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
                 {
                     this.state.isLoading ? <SpinnerBlock /> :
                         <ApprovalTransactionList
+                            pageSize={10}
                             data={this.state.transactions}
                             showAgent
                             hideAmount

@@ -33,7 +33,7 @@ export default class SelectAgent extends React.Component<SelectAgentProps, { sho
     }
     renderModalButton() {
         return (
-            <ButtonGroup>
+            <ButtonGroup className="hidden-print">
                 <Button bsStyle="primary" onClick={this.handleOnSelectAgent}>
                     <i className="fa fa-sm fa-users"></i>
                 </Button>

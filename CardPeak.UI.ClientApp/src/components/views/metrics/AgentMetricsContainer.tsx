@@ -50,7 +50,7 @@ const AgentMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Ent
 const AgentMetricsTotals: React.StatelessComponent<CardPeak.Models.MetricsModel> = (props) => {
     return (
         <Row>
-            <Col sm={6}>
+             <Col sm={6}>
                 <Panel className="panel-label-dashboard">
                     <DashboardLabel className="pull-right" label="approvals" metrics={props.agentMetrics.totalApproved} />
                 </Panel>

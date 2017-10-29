@@ -34,7 +34,7 @@ const IncentiveTransactionList = (props: DataListProps<CardPeak.Entities.DebitCr
     return (
         <div>
             <IncentiveTransactionDataList
-                pageSize={10}
+                pageSize={props.pageSize}
                 isLoading={props.isLoading}
                 renderHeader={() => { return <IncentiveTransactionListRowLayout isHeader /> }}
                 renderItem={(item, key) => { return <IncentiveTransactionListRowLayout item={item} key={key} /> }}

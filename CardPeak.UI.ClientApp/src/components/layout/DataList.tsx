@@ -6,13 +6,13 @@ export interface DataListDisplayProps<T> {
     renderItem: (item: T, key: number | string) => React.ReactNode;
     renderHeader: () => React.ReactNode;
     addOn?: React.ReactNode;
-    pageSize?: number;
 }
 
 export interface DataListProps<T> {
     data: T[];
     onGetKey?: (item: T) => number | string;
     isLoading?: boolean;
+    pageSize?: number;
 }
 
 export interface DataItemProps<T> {

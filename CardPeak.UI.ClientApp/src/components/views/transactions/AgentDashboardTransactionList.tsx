@@ -39,7 +39,7 @@ const AgentDashboardTransactionList = (props: DataListProps<CardPeak.Entities.Ag
     return (
         <div>
             <AgentDashboardTransactionDataList
-                pageSize={20}
+                pageSize={10}
                 isLoading={props.isLoading}
                 renderHeader={() => { return <AgentDashboardTransactionListRowLayout isHeader /> }}
                 renderItem={(item, key) => { return <AgentDashboardTransactionListRowLayout item={item} key={key} /> }}
