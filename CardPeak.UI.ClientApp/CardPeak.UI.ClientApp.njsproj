@@ -208,6 +208,12 @@
     <Content Include="src\components\views\metrics\AgentRankingMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\components\views\metrics\AgentThresholdMetricsContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\metrics\AgentThresholdMetricsView.tsx">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\views\metrics\BankAmountBreakdownMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -260,6 +266,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AgentDashboardContainer.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\components\views\transactions\IncentiveTransactionList.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\uploads\BatchFileConfigurationContainer.tsx">
@@ -321,6 +330,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\styles\theme.less">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\types\entities.metrics.d.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="tsconfig.json">

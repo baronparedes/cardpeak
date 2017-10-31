@@ -51,10 +51,22 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("agents/threshold")]
+        public IHttpActionResult GetAgentThreshold([FromUri]int? year = null, [FromUri]int? month = null)
+        {
+            var result = this.MetricsService.GetAgentThresholdMetrics(year, month);
+            if (result == null)
+            {
+                return this.NotFound();
+            }
+            return this.Ok(result);
+        }
+
+        [HttpGet]
         [Route("banks/amountbreakdown")]
         public IHttpActionResult GetBankBreakdown([FromUri]int? year = null, [FromUri]int? month = null)
         {
-            var result = this.MetricsService.GetBankAmountBreakdown(year, month);
+            var result = this.MetricsService.GetBankAmountBreakdownMetrics(year, month);
             if (result == null)
             {
                 return this.NotFound();

@@ -10,6 +10,7 @@ namespace CardPeak.Core.Service
         IEnumerable<Account> GetAccounts(int agentId);
         AgentDashboard GetAgentDashboard(int agentId, DateTime startDate, DateTime? endDate);
         DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit);
+        DebitCreditTransaction AddIncentiveTransaction(int agentId, decimal amount, string remarks);
         Agent Update(Agent agent);
         Agent Create(Agent agent);
         AgentPayout GetAgentPayouts();

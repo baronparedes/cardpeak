@@ -39,7 +39,8 @@ namespace CardPeak.Service
                 ApprovalsByCategory = this.ApprovalTransactionDashboardRepository.GetApprovalsByCategory(year.Value, month.Value),
                 AccountBalance = this.ApprovalTransactionDashboardRepository.GetAccountBalance(year.Value, month.Value)
                     + this.DebitCreditTransactionRepository.GetAccountBalance(year.Value, month.Value),
-                SavingsBalance = this.DebitCreditTransactionRepository.GetSavingsBalance(year.Value, month.Value),
+                SavingsBalance = this.DebitCreditTransactionRepository.GetAccountBalance(year.Value, month.Value, Domain.Enums.TransactionTypeEnum.SavingsTransaction),
+                IncentivesBalance = this.DebitCreditTransactionRepository.GetAccountBalance(year.Value, month.Value, Domain.Enums.TransactionTypeEnum.IncentivesTransaction),
                 TotalApprovals = this.ApprovalTransactionDashboardRepository.GetTotalApprovals(year.Value, month.Value),
                 Performance = this.ApprovalTransactionDashboardRepository.GetYearlyPerformance(year.Value),
                 TopAgents = this.ApprovalTransactionDashboardRepository.GetTopAgents(year.Value, month.Value),

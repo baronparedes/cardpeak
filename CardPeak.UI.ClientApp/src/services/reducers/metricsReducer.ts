@@ -54,6 +54,14 @@ export default handleActions<CardPeak.Models.MetricsModel, any>({
             agentPerformanceMetrics: action.payload
         }
     },
+    [METRIC_ACTIONS.GET_AGENT_THRESHOLD_METRICS_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            loadingMetrics: undefined,
+            loadingMetricsError: undefined,
+            agentThresholdMetrics: action.payload
+        }
+    },
     [METRIC_ACTIONS.GET_BANK_AMOUNT_BREAKDOWN_METRICS_COMPLETE]: (state, action) => {
         return {
             ...state,

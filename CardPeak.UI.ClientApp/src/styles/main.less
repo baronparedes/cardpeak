@@ -28,35 +28,31 @@ hr {
 }
 
 .spacer-right-sm {
-    padding-right: 5px;
+    margin-right: 5px;
 }
 
 .spacer-left-sm {
-    padding-left: 5px;
+    margin-left: 5px;
 }
 
 .spacer-right {
-    padding-right: 10px;
+    margin-right: 10px;
 }
 
 .spacer-left {
-    padding-left: 10px;
+    margin-left: 10px;
 }
 
 .spacer-bottom {
-    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .spacer-top {
-    padding-top: 10px;
+    margin-top: 10px;
 }
 
 .spacer-top-large {
-    padding-top: 50px;
-}
-
-.margin-top {
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 .grid-rows {
@@ -87,7 +83,8 @@ hr {
 
 .panel-label-dashboard {
     height: 100%;
-    min-height: 85px;
+    min-height: 110px;
+    vertical-align: central;
 }
 
 .currency:before {
@@ -111,6 +108,11 @@ hr {
     &.text-success,
     &.amount-credit {
         color: @theme-color-credit;
+    }
+
+    &.text-info,
+    &.amount-incentive {
+        color: @theme-color-incentive;
     }
 
     &.row-amount {

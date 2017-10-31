@@ -13,7 +13,7 @@ export const GridList: React.StatelessComponent<GridListProps> = (props) => {
                     {props.header}
                 </Panel>
             </Grid>
-            <Grid fluid className="grid-rows margin-top no-padding">
+            <Grid fluid className="grid-rows spacer-top no-padding">
                 {props.children}
             </Grid>
         </div>

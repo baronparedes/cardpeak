@@ -28,7 +28,7 @@ export class Toggle extends React.Component<ToggleProps, {}> {
     }
     render() {
         return (
-            <div>
+            <span>
                 <label className="text-muted spacer-right">{this.props.label}</label>
                 <RadioGroup
                     name={this.props.name}
@@ -38,7 +38,7 @@ export class Toggle extends React.Component<ToggleProps, {}> {
                         ["0", this.props.toggleOffLabel]
                     ]}
                     onChange={this.handleOnToggle} />
-            </div>
+            </span>
         )
     }
 }

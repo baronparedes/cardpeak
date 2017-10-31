@@ -4,5 +4,6 @@
     {
         public decimal AccountBalance { get; set; }
         public decimal SavingsBalance { get; set; }
+        public decimal IncentivesBalance { get; set; }
     }
 }

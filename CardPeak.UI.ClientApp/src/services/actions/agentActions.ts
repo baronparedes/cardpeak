@@ -114,12 +114,12 @@ export function refreshAgentDashboardStart(startDate?: string, endDate?: string)
     }
 }
 
-export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCreditTransaction, isDebit: boolean,
+export function postAgentTransactionStart(transaction: CardPeak.Entities.DebitCreditTransaction, transactionType: Transaction,
     successCallback?: () => void, errorCallback?: (m: string) => void) {
 
     return (dispatch: (e: any) => void) => {
         dispatch(postAgentTransaction());
-        agentsController.postAgentTransaction(transaction, isDebit, (data: CardPeak.Entities.DebitCreditTransaction) => {
+        agentsController.postAgentTransaction(transaction, transactionType, (data: CardPeak.Entities.DebitCreditTransaction) => {
             dispatch(postAgentTransactionComplete(data));
             dispatch(getAgentPayoutStart());
             if (successCallback) {

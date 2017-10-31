@@ -87,17 +87,20 @@ const ApprovalTransactionListRowLayout = (props: DataItemProps<CardPeak.Entities
                 xsHidden={!props.isHeader}>
                 <span className="grid-label text-center spacer-left">Approval Transactions</span>
             </Col>
-            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "bank" : props.item.bank.description}
+            <Col md={1} lg={1} sm={1} xsHidden={props.isHeader}>
+                {props.isHeader ? "bank" : props.item.bank.shortDescription}
             </Col>
-            <Col md={1} lg={1} sm={2} xsHidden={props.isHeader}>
-                {props.isHeader ? "card category" : props.item.cardCategory.description}
+            <Col md={1} lg={1} sm={1} xsHidden={props.isHeader}>
+                {props.isHeader ? "card category" : props.item.cardCategory.shortDescription}
             </Col>
             <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "product" : props.item.productType}
             </Col>
-            <Col md={3} lg={3} sm={2} xsHidden={props.isHeader}>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "client" : props.item.client}
+            </Col>
+            <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
+                {props.isHeader ? "upload date" : dateFormat(props.item.createdDate)}
             </Col>
             <Col md={2} lg={2} sm={2} xsHidden={props.isHeader}>
                 {props.isHeader ? "approval date" : dateFormat(props.item.approvalDate)}
@@ -124,7 +127,6 @@ const ApprovalTransactionListRowLayout = (props: DataItemProps<CardPeak.Entities
         </Row>
     )
 }
-
 
 class ApprovalTransactionList extends React.Component<DataListProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps, ApprovalTransactionListState> {
     constructor(props: DataListProps<CardPeak.Entities.ApprovalTransaction> & ApprovalTransactionListProps) {
@@ -153,7 +155,7 @@ class ApprovalTransactionList extends React.Component<DataListProps<CardPeak.Ent
                         return clientMatched || productMatched;
                     }}
                     hideSearchBar={this.props.hideSearchBar}
-                    pageSize={10}
+                    pageSize={this.props.pageSize}
                     isLoading={this.props.isLoading}
                     renderHeader={() => { return <ApprovalTransactionListRowLayout isHeader hideAmount={this.props.hideAmount} /> }}
                     renderItem={(item, key) => {

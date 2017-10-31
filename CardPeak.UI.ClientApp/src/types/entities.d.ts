@@ -33,6 +33,8 @@
         public bank?: Reference;
         public cardCategory?: Reference;
         public agent?: Agent;
+        public createdBy?: string;
+        public createdDate?: Date;
     }
 
     export class DebitCreditTransaction {
@@ -44,16 +46,20 @@
         public transactionDateTime?: Date;
         public isDeleted?: boolean;
         public transactionType?: Reference;
+        public createdBy?: string;
+        public createdDate?: Date;
     }
 
     export class AgentDashboard {
         public agent: Agent;
         public accountBalance: number;
         public savingsBalance: number;
+        public incentivesBalance: number;
         public totalApprovals: number;
         public accounts?: Account[];
         public approvalTransactions?: ApprovalTransaction[];
         public debitCreditTransactions?: DebitCreditTransaction[];
+        public incentiveTransactions?: DebitCreditTransaction[];
         public agentDashboardTransactions?: AgentDashboardTransaction[];
         public performance?: ApprovalMetric<string>[];
         public approvalsByBank?: ApprovalMetric<string>[];
@@ -133,51 +139,6 @@
         public cardCountColumn?: number;
         public bank?: Reference;
         public approvalDateFormat?: string;
-    }
-
-    export class ApprovalMetric<TKey> {
-        public key: TKey;
-        public value: number;
-    }
-
-    export class AgentApprovalMetric {
-        public key: Agent;
-        public value: number;
-        public accountBalance: number;
-        public savingsBalance: number;
-    }
-
-    export class AgentRankMetric {
-        public rank: number;
-        public key: Agent;
-        public value: number;
-        public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];
-    }
-
-    export class AgentPerformanceMetric {
-        public rank: number;
-        public key: Agent;
-        public value: number;
-        public performance: CardPeak.Entities.ApprovalMetric<string>[];
-    }
-
-    export class AgentMetrics {
-        public agentApprovalMetrics?: CardPeak.Entities.AgentApprovalMetric[];
-        public totalApproved?: number;
-        public totalBalance?: number;
-        public totalSavings?: number;
-    }
-
-    export class AmountBreakdown {
-        public description?: string;
-        public approvalsByAmount?: CardPeak.Entities.ApprovalMetric<number>[];
-        public totalApproved?: number;
-    }
-
-    export class BankAmountBreakdown {
-        public description?: string;
-        public cardCategoryAmountBreakdown?: CardPeak.Entities.AmountBreakdown[];
-        public totalApproved?: number;
     }
 
     export class AgentDashboardTransaction {

@@ -33,5 +33,14 @@ namespace CardPeak.Domain.Metrics
                 return result.GetValueOrDefault();
             }
         }
+
+        public decimal TotalIncentives
+        {
+            get
+            {
+                var result = this.AgentApprovalMetrics?.Sum(_ => _.IncentivesBalance);
+                return result.GetValueOrDefault();
+            }
+        }
     }
 }
