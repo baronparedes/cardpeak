@@ -90,7 +90,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
     renderButtons() {
         return (
             <Col lg={6} md={6} sm={12} xsHidden className="text-right hidden-print">
-                <ButtonGroup disabled={this.props.refreshingAgentDashboard}>
+                <ButtonGroup disabled={this.props.refreshingAgentDashboard} className="spacer-right-sm">
                     <Button
                         onClick={this.handleOnRefreshTransactions}
                         bsStyle="primary"

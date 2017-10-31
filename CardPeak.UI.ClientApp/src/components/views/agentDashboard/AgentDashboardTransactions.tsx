@@ -21,6 +21,11 @@ export default class AgentDashboardTransactions extends React.Component<AgentDas
             transactionView: true
         }
     }
+    handleOnPrint = () => {
+        this.setState({ transactionView: false }, () => {
+            window.print();
+        });
+    }
     renderSplitView() {
         return (
             <div>
@@ -43,6 +48,9 @@ export default class AgentDashboardTransactions extends React.Component<AgentDas
         return (
             <div>
                 <div className="text-right spacer-bottom hidden-print">
+                    <Button bsStyle="primary" onClick={this.handleOnPrint}>
+                        <i className="fa fa-print" />
+                    </Button>
                     <Toggle
                         isToggled={this.state.transactionView}
                         toggleOnLabel="Transaction"
