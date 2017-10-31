@@ -4,7 +4,7 @@ export const API = {
     GET_AGENT_METRICS: '/metrics/agents',
     GET_AGENT_RANKING_METRICS: '/metrics/agents/rankings',
     GET_AGENT_PERFORMANCE_METRICS: '/metrics/agents/performance',
-    GET_AGENT_TRESHOLD_METRICS: '/metrics/agents/treshold',
+    GET_AGENT_THRESHOLD_METRICS: '/metrics/agents/threshold',
     GET_BANK_AMOUNT_BREAKDOWN_METRICS: '/metrics/banks/amountbreakdown'
 }
 

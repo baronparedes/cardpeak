@@ -9,6 +9,6 @@ namespace CardPeak.Core.Repository
         IEnumerable<AgentRankMetric> GetAgentRankMetrics(int year, int month);
         IEnumerable<AgentPerformanceMetric> GetAgentPerformanceMetrics(int year);
         IEnumerable<BankAmountBreakdown> GetBankAmountBreakdown(int year, int month);
-        IEnumerable<AgentTresholdMetric> GetAgentTresholdMetrics(int year, int month);
+        IEnumerable<AgentThresholdMetric> GetAgentThresholdMetrics(int year, int month);
     }
 }

@@ -165,10 +165,10 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public IEnumerable<AgentTresholdMetric> GetAgentTresholdMetrics(int year, int month)
+        public IEnumerable<AgentThresholdMetric> GetAgentThresholdMetrics(int year, int month)
         {
-            var tresholdBanks = new List<int> { 3, 4, 5 }; // EWB, SB, RCBC
-            var tresholdCategories = new Dictionary<int, List<int>>
+            var thresholdBanks = new List<int> { 3, 4, 5 }; // EWB, SB, RCBC
+            var thresholdCategories = new Dictionary<int, List<int>>
             {
                 { 3, new List<int> { 7, 8, 9 } }, // EWB - CGP
                 { 4, new List<int> { 8, 9 } }, // SB - GP
@@ -176,12 +176,12 @@ namespace CardPeak.Repository.EF
             };
 
             var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
-                            .Where(_ => tresholdBanks.Contains(_.ReferenceId))
+                            .Where(_ => thresholdBanks.Contains(_.ReferenceId))
                             .AsNoTracking()
                             .ToList();
 
             var metrics = this.QueryApprovalTransactionsByYearMonth(year, month)
-                .Where(_ => tresholdBanks.Contains(_.BankId))
+                .Where(_ => thresholdBanks.Contains(_.BankId))
                 .Include(_ => _.Bank)
                 .Include(_ => _.Agent)
                 .GroupBy(_ => new { _.AgentId, _.Agent })
@@ -189,7 +189,7 @@ namespace CardPeak.Repository.EF
                 .ToList();
 
             var rank = 1;
-            var result = new List<AgentTresholdMetric>();
+            var result = new List<AgentThresholdMetric>();
             foreach (var agent in metrics)
             {
                 var approvalsByBank = banks.ToDictionary(_ => _.ShortDescription, _ => 0m);
@@ -197,14 +197,14 @@ namespace CardPeak.Repository.EF
                     .Select(_ => new
                     {
                         BankId = _.FirstOrDefault().BankId,
-                        Approvals = _.Where(t => tresholdCategories[_.FirstOrDefault().BankId].Contains(t.CardCategoryId))
+                        Approvals = _.Where(t => thresholdCategories[_.FirstOrDefault().BankId].Contains(t.CardCategoryId))
                             .Sum(t => t.Units)
                     }).ToList().ForEach(bank => {
                         var bankName = banks.Single(_ => _.ReferenceId == bank.BankId).ShortDescription;
                         approvalsByBank[bankName] = bank.Approvals;
                     });
 
-                var agentTresholdMetric = new AgentTresholdMetric()
+                var agentThresholdMetric = new AgentThresholdMetric()
                 {
                     Rank = rank++,
                     Key = agent.FirstOrDefault().Agent,
@@ -212,7 +212,7 @@ namespace CardPeak.Repository.EF
                     ApprovalsByBank = approvalsByBank.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
                 };
 
-                result.Add(agentTresholdMetric);
+                result.Add(agentThresholdMetric);
             }
 
             return result;

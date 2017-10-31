@@ -208,10 +208,10 @@
     <Content Include="src\components\views\metrics\AgentRankingMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\AgentTresholdMetricsContainer.tsx">
+    <Content Include="src\components\views\metrics\AgentThresholdMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\AgentTresholdMetricsView.tsx">
+    <Content Include="src\components\views\metrics\AgentThresholdMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\metrics\BankAmountBreakdownMetricsContainer.tsx">

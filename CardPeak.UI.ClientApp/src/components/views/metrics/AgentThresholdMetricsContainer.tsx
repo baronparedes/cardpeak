@@ -9,10 +9,10 @@ import { RootState } from '../../../services/reducers'
 import { Col, Row, Grid } from 'react-bootstrap'
 import { YearMonthAction, DataListFiltered, DataItemProps, DashboardLabel } from '../../layout'
 
-type AgentTresholdMetricsDataList = new () => DataListFiltered<CardPeak.Entities.AgentRankMetric>;
-const AgentTresholdMetricsDataList = DataListFiltered as AgentTresholdMetricsDataList;
+type AgentThresholdMetricsDataList = new () => DataListFiltered<CardPeak.Entities.AgentRankMetric>;
+const AgentThresholdMetricsDataList = DataListFiltered as AgentThresholdMetricsDataList;
 
-interface AgentTresholdMetricsContainerDispatchProps {
+interface AgentThresholdMetricsContainerDispatchProps {
     actions?: typeof Actions
 }
 
@@ -35,7 +35,7 @@ const AgentApprovalsByBank = (props: { data: CardPeak.Entities.ApprovalMetric<st
     )
 }
 
-const AgentTresholdMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AgentRankMetric>> = (props) => {
+const AgentThresholdMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AgentRankMetric>> = (props) => {
     return (
         <Row>
             <Col mdHidden
@@ -63,13 +63,13 @@ const AgentTresholdMetricsRowLayout: React.StatelessComponent<DataItemProps<Card
     )
 }
 
-class AgentTresholdMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentTresholdMetricsContainerDispatchProps, undefined> {
-    constructor(props: CardPeak.Models.MetricsModel & AgentTresholdMetricsContainerDispatchProps) {
+class AgentThresholdMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentThresholdMetricsContainerDispatchProps, undefined> {
+    constructor(props: CardPeak.Models.MetricsModel & AgentThresholdMetricsContainerDispatchProps) {
         super(props);
     }
     componentDidMount() {
         this.props.actions.getAvailableYears();
-        this.props.actions.getAgentTresholdMetricsStart(dateHelpers.currentYear(), 0);
+        this.props.actions.getAgentThresholdMetricsStart(dateHelpers.currentYear(), 0);
     }
     render() {
         return (
@@ -78,23 +78,23 @@ class AgentTresholdMetricsContainer extends React.Component<CardPeak.Models.Metr
                     label="agent metrics"
                     availableYears={this.props.availableYears}
                     refreshing={this.props.loadingMetrics}
-                    onRefresh={this.props.actions.getAgentTresholdMetricsStart} />
+                    onRefresh={this.props.actions.getAgentThresholdMetricsStart} />
                 <br />
                 <Grid>
                     <Row>
-                        <AgentTresholdMetricsDataList
+                        <AgentThresholdMetricsDataList
                             predicate={(metric, searchString) => {
                                 const firstNameMatch = metric.key.firstName.toLowerCase().indexOf(searchString) >= 0;
                                 const lastNameMatch = metric.key.lastName.toLowerCase().indexOf(searchString) >= 0;
                                 return firstNameMatch || lastNameMatch;
                             }}
                             onGetKey={(item) => item.key.agentId}
-                            renderHeader={() => { return <AgentTresholdMetricsRowLayout isHeader /> }}
+                            renderHeader={() => { return <AgentThresholdMetricsRowLayout isHeader /> }}
                             renderItem={(item, key) => {
-                                return <AgentTresholdMetricsRowLayout item={item} key={key} />
+                                return <AgentThresholdMetricsRowLayout item={item} key={key} />
                             }}
                             isLoading={this.props.loadingMetrics}
-                            data={this.props.agentTresholdMetrics} />
+                            data={this.props.agentThresholdMetrics} />
                     </Row>
                 </Grid>
             </div>
@@ -106,10 +106,10 @@ const mapStateToProps = (state: RootState): CardPeak.Models.MetricsModel => ({
     ...state.metricsModel,
 })
 
-const mapDispatchToProps = (dispatch: any): AgentTresholdMetricsContainerDispatchProps => {
+const mapDispatchToProps = (dispatch: any): AgentThresholdMetricsContainerDispatchProps => {
     return {
         actions: bindActionCreators(Actions as any, dispatch)
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgentTresholdMetricsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AgentThresholdMetricsContainer);

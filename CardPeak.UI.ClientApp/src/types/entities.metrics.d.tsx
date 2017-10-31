@@ -20,7 +20,7 @@
         public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];
     }
 
-    export class AgentTresholdMetric {
+    export class AgentThresholdMetric {
         public rank: number;
         public key: Agent;
         public value: number;

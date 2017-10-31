@@ -51,10 +51,10 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("agents/treshold")]
-        public IHttpActionResult GetAgentTreshold([FromUri]int? year = null, [FromUri]int? month = null)
+        [Route("agents/threshold")]
+        public IHttpActionResult GetAgentThreshold([FromUri]int? year = null, [FromUri]int? month = null)
         {
-            var result = this.MetricsService.GetAgentTresholdMetrics(year, month);
+            var result = this.MetricsService.GetAgentThresholdMetrics(year, month);
             if (result == null)
             {
                 return this.NotFound();

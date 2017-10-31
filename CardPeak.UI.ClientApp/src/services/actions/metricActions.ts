@@ -12,17 +12,17 @@ export const getMetricsError = createAction<string>(METRIC_ACTIONS.GET_METRICS_E
 export const getAgentMetricsComplete = createAction<CardPeak.Entities.AgentMetrics>(METRIC_ACTIONS.GET_AGENT_METRICS_COMPLETE);
 export const getAgentRankingMetricsComplete = createAction<CardPeak.Entities.AgentRankMetric[]>(METRIC_ACTIONS.GET_AGENT_RANKING_METRICS_COMPLETE);
 export const getAgentPerformanceMetricsComplete = createAction<CardPeak.Entities.AgentPerformanceMetric[]>(METRIC_ACTIONS.GET_AGENT_PERFORMANCE_METRICS_COMPLETE);
-export const getAgentTresholdMetricsComplete = createAction<CardPeak.Entities.AgentTresholdMetric[]>(METRIC_ACTIONS.GET_AGENT_TRESHOLD_METRICS_COMPLETE);
+export const getAgentThresholdMetricsComplete = createAction<CardPeak.Entities.AgentThresholdMetric[]>(METRIC_ACTIONS.GET_AGENT_THRESHOLD_METRICS_COMPLETE);
 export const getBankAmountBreakdownMetricsComplete = createAction<CardPeak.Entities.BankAmountBreakdown[]>(METRIC_ACTIONS.GET_BANK_AMOUNT_BREAKDOWN_METRICS_COMPLETE);
 
-export function getAgentTresholdMetricsStart(year: number, month?: number,
+export function getAgentThresholdMetricsStart(year: number, month?: number,
     errorCallback?: (e: string) => void) {
 
     return (dispatch: (e: any) => void) => {
         dispatch(getMetrics());
-        metricsController.getMetrics<CardPeak.Entities.AgentTresholdMetric[]>(metricsController.API.GET_AGENT_TRESHOLD_METRICS, year, month,
-            (data: CardPeak.Entities.AgentTresholdMetric[]) => {
-                dispatch(getAgentTresholdMetricsComplete(data));
+        metricsController.getMetrics<CardPeak.Entities.AgentThresholdMetric[]>(metricsController.API.GET_AGENT_THRESHOLD_METRICS, year, month,
+            (data: CardPeak.Entities.AgentThresholdMetric[]) => {
+                dispatch(getAgentThresholdMetricsComplete(data));
             }, (error: string) => {
                 dispatch(getMetricsError(error));
                 if (errorCallback) {
