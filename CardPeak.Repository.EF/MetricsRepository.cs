@@ -167,13 +167,13 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<AgentThresholdMetric> GetAgentThresholdMetrics(int year, int month)
         {
-            var thresholdBanks = new List<int> { 3, 4, 5 }; // EWB, SB, RCBC
-            var thresholdCategories = new Dictionary<int, List<int>>
+            var threshold = new Dictionary<int, List<int>>
             {
                 { 3, new List<int> { 7, 8, 9 } }, // EWB - CGP
                 { 4, new List<int> { 8, 9 } }, // SB - GP
                 { 5, new List<int> { 8, 9 } } // RCBC - GP
             };
+            var thresholdBanks = threshold.Select(_ => _.Key);
 
             var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
                             .Where(_ => thresholdBanks.Contains(_.ReferenceId))
@@ -197,7 +197,7 @@ namespace CardPeak.Repository.EF
                     .Select(_ => new
                     {
                         BankId = _.FirstOrDefault().BankId,
-                        Approvals = _.Where(t => thresholdCategories[_.FirstOrDefault().BankId].Contains(t.CardCategoryId))
+                        Approvals = _.Where(t => threshold[_.FirstOrDefault().BankId].Contains(t.CardCategoryId))
                             .Sum(t => t.Units)
                     }).ToList().ForEach(bank => {
                         var bankName = banks.Single(_ => _.ReferenceId == bank.BankId).ShortDescription;
@@ -208,7 +208,7 @@ namespace CardPeak.Repository.EF
                 {
                     Rank = rank++,
                     Key = agent.FirstOrDefault().Agent,
-                    Value = agent.Sum(_ => _.Units),
+                    Value = approvalsByBank.Sum(_ => _.Value),
                     ApprovalsByBank = approvalsByBank.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
                 };
 
