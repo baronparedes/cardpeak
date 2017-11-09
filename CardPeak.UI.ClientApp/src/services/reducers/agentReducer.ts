@@ -1,5 +1,6 @@
 ﻿import { handleActions } from 'redux-actions';
 import { AGENT_ACTIONS } from '../../constants/actions'
+import { TransactionType } from '../../constants/enums'
 
 const initialState: CardPeak.Models.AgentModel = {
     agents: undefined
@@ -66,22 +67,35 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
     [AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE]: (state, action) => {
         let debitCreditTransactions = state.selectedAgentDashboard.debitCreditTransactions.slice();
         let agentDashboardTransactions = state.selectedAgentDashboard.agentDashboardTransactions.slice();
+        let incentiveTransactions = state.selectedAgentDashboard.incentiveTransactions.slice();
+        let accountBalance = state.selectedAgentDashboard.accountBalance;
+        let incentivesBalance = state.selectedAgentDashboard.incentivesBalance;
 
-        const debitCreditTransaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
+        const transaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
         const agentDashboardTransaction: CardPeak.Entities.AgentDashboardTransaction = {
-            details: debitCreditTransaction.remarks,
-            transactionAmount: debitCreditTransaction.amount,
-            transactionId: debitCreditTransaction.id,
-            transactionType: debitCreditTransaction.transactionTypeId,
-            transactionDate: debitCreditTransaction.transactionDateTime,
+            details: transaction.remarks,
+            transactionAmount: transaction.amount,
+            transactionId: transaction.id,
+            transactionType: transaction.transactionTypeId,
+            transactionDate: transaction.transactionDateTime,
             runningBalance: agentDashboardTransactions.length === 0 ?
-                debitCreditTransaction.amount : agentDashboardTransactions[0].runningBalance + debitCreditTransaction.amount
+                transaction.amount : agentDashboardTransactions[0].runningBalance + transaction.amount
         };
-        const accountBalance = state.selectedAgentDashboard.accountBalance + debitCreditTransaction.amount;
 
-        if (isBetween(state.dateFilters, debitCreditTransaction.transactionDateTime)) {
-            debitCreditTransactions.unshift(debitCreditTransaction);
-            agentDashboardTransactions.unshift(agentDashboardTransaction);
+        if (transaction.transactionTypeId === TransactionType.DebitCreditTransaction) {
+            accountBalance += transaction.amount;
+            if (isBetween(state.dateFilters, transaction.transactionDateTime)) {
+                debitCreditTransactions.unshift(transaction);
+                agentDashboardTransactions.unshift(agentDashboardTransaction);
+            }
+        }
+
+        if (transaction.transactionTypeId === TransactionType.IncentivesTransaction) {
+            incentivesBalance += transaction.amount;
+            if (isBetween(state.dateFilters, transaction.transactionDateTime)) {
+                incentiveTransactions.unshift(transaction);
+                agentDashboardTransactions.unshift(agentDashboardTransaction);
+            }
         }
 
         return {
@@ -90,7 +104,9 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
             selectedAgentDashboard: {
                 ...state.selectedAgentDashboard,
                 accountBalance,
+                incentivesBalance,
                 debitCreditTransactions,
+                incentiveTransactions,
                 agentDashboardTransactions
             },
         };

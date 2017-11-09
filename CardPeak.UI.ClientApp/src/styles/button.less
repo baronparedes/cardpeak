@@ -34,3 +34,30 @@
 .confirm-button {
     display: inline;
 }
+
+.btn-group {
+    .btn-group {
+        &:first-child {
+            a > .btn {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        &:last-child {
+            a > .btn {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        &:not(:first-child):not(:last-child) {
+            a > .btn {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    }
+}
