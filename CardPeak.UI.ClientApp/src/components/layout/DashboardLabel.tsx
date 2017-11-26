@@ -23,7 +23,7 @@ export const DashboardLabel: React.StatelessComponent<DashboardLabelProps> = (pr
                         {props.addOn}
                     </Currency> :
                     <span className={concat("text-highlight", props.className)}>
-                        {props.metrics ? props.metrics : 0}
+                        {props.metrics ? (Math.round(props.metrics * 100) / 100) : 0}
                         {props.addOn}
                     </span>
             }

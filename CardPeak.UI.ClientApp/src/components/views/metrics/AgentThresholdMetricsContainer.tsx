@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
 import { Col, Row, Grid } from 'react-bootstrap'
-import { YearMonthAction, DataListFiltered, DataItemProps, DashboardLabel } from '../../layout'
+import { YearMonthAction, DataListFiltered, DataItemProps, DashboardLabel, ApprovalMetric } from '../../layout'
 
 type AgentThresholdMetricsDataList = new () => DataListFiltered<CardPeak.Entities.AgentRankMetric>;
 const AgentThresholdMetricsDataList = DataListFiltered as AgentThresholdMetricsDataList;
@@ -51,7 +51,7 @@ const AgentThresholdMetricsRowLayout: React.StatelessComponent<DataItemProps<Car
                 {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
             </Col>
             <Col sm={1} xs={3} xsHidden={props.isHeader} className={props.isHeader ? "" : "text-center"}>
-                {props.isHeader ? "approvals" : <label className="text-highlight text-larger">{props.item.value}</label>}
+                {props.isHeader ? "approvals" : <ApprovalMetric metric={props.item.value} className="text-larger" />}
             </Col>
             {
                 props.isHeader ? null :
