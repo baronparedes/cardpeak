@@ -21,3 +21,9 @@ export const Currency = (props: CurrencyProps) => {
         </span>
     )
 }
+
+export const ApprovalMetric = (props: { metric: number, className?: string }) => {
+    return (
+        <label className={classNames("text-highlight", props.className)}>{props.metric === 0 ? 0 : (Math.round(props.metric*100)/100)}</label>
+    );
+}

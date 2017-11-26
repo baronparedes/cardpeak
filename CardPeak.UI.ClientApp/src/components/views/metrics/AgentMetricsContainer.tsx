@@ -9,7 +9,7 @@ import { RootState } from '../../../services/reducers'
 import { Col, Row, Grid, Panel, Button, DropdownButton, MenuItem } from 'react-bootstrap'
 import {
     YearMonthAction, DataListFiltered, DataListProps, DataItemProps, Currency,
-    DashboardLabel
+    DashboardLabel, ApprovalMetric
 } from '../../layout'
 
 type AgentMetricsDataListFiltered = new () => DataListFiltered<CardPeak.Entities.AgentApprovalMetric>;
@@ -32,7 +32,7 @@ const AgentMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Ent
                     {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
                 </Col>
                 <Col sm={2} xs={3} xsHidden={props.isHeader} className="text-center">
-                    {props.isHeader ? "approvals" : <label className="text-highlight">{props.item.value}</label>}
+                    {props.isHeader ? "approvals" : <ApprovalMetric metric={props.item.value} />}
                 </Col>
                 <Col sm={2} xs={3} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "balance" : <Currency currency={props.item.accountBalance} />}

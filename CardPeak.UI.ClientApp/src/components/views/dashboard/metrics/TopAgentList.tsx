@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Row, Col, Button, Panel } from 'react-bootstrap'
 import {
     ListNoRecordsRow, GridList, SpinnerBlock,
-    DataList, DataListProps, DataItemProps, AgentRankingsLinkButton
+    DataList, DataListProps, DataItemProps, AgentRankingsLinkButton, ApprovalMetric
 } from '../../../layout'
 
 type TopAgentDataList = new () => DataList<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>;
@@ -31,7 +31,7 @@ const TopAgentRowLayout: React.StatelessComponent<DataItemProps<
                 {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
             </Col>
             <Col sm={3} xsHidden={props.isHeader} className="text-center">
-                {props.isHeader ? "approvals" : <label className="text-highlight">{props.item.value}</label>}
+                {props.isHeader ? "approvals" : <ApprovalMetric metric={props.item.value} /> }
             </Col>
         </Row>
     )
