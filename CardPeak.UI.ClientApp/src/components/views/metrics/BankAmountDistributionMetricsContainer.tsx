@@ -9,14 +9,14 @@ import { RootState } from '../../../services/reducers'
 import { Col, Row, Grid } from 'react-bootstrap'
 import { YearMonthAction, DataList, DataItemProps, DashboardLabel, PerformanceDashboard, ApprovalMetricsBarChart } from '../../layout'
 
-type BankAmountBreakdownMetricsDataList = new () => DataList<CardPeak.Entities.BankAmountBreakdown>;
-const BankAmountBreakdownMetricsDataList = DataList as BankAmountBreakdownMetricsDataList;
+type BankAmountDistributionMetricsDataList = new () => DataList<CardPeak.Entities.BankAmountDistribution>;
+const BankAmountDistributionMetricsDataList = DataList as BankAmountDistributionMetricsDataList;
 
-interface BankAmountBreakdownMetricsContainerDispatchProps {
+interface BankAmountDistributionMetricsContainerDispatchProps {
     actions?: typeof Actions
 }
 
-const CardCategoryAmountBreakdownMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AmountBreakdown[]>> = (props) => {
+const CardCategoryAmountDistributionMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AmountDistribution[]>> = (props) => {
     return (
         <Grid fluid>
             <Row>
@@ -37,38 +37,38 @@ const CardCategoryAmountBreakdownMetricsRowLayout: React.StatelessComponent<Data
     )
 }
 
-const BankAmountBreakdownMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.BankAmountBreakdown>> = (props) => {
+const BankAmountDistributionMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.BankAmountDistribution>> = (props) => {
     return (
         <Row>
             <Col mdHidden
                 lgHidden
                 smHidden
                 xsHidden={!props.isHeader} className="text-center">
-                <span className="grid-label spacer-left">bank amount breakdown</span>
+                <span className="grid-label spacer-left">bank amount distribution</span>
             </Col>
             <Col sm={12} xsHidden={props.isHeader} className="text-center">
                 {
-                    props.isHeader ? "bank amount breakdown" :
+                    props.isHeader ? "bank amount distribution" :
                         <h3>{props.item.description}</h3>
                 }
             </Col>
             {
                 props.isHeader ? null :
                     <Col sm={12}>
-                        {props.isHeader ? null : <CardCategoryAmountBreakdownMetricsRowLayout item={props.item.cardCategoryAmountBreakdown} />}
+                        {props.isHeader ? null : <CardCategoryAmountDistributionMetricsRowLayout item={props.item.cardCategoryAmountDistribution} />}
                     </Col>
             }
         </Row>
     )
 }
 
-class BankAmountBreakdownMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & BankAmountBreakdownMetricsContainerDispatchProps, undefined> {
-    constructor(props: CardPeak.Models.MetricsModel & BankAmountBreakdownMetricsContainerDispatchProps) {
+class BankAmountDistributionMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & BankAmountDistributionMetricsContainerDispatchProps, undefined> {
+    constructor(props: CardPeak.Models.MetricsModel & BankAmountDistributionMetricsContainerDispatchProps) {
         super(props);
     }
     componentDidMount() {
         this.props.actions.getAvailableYears();
-        this.props.actions.getBankAmountBreakdownMetricsStart(dateHelpers.currentYear(), 0);
+        this.props.actions.getBankAmountDistributionMetricsStart(dateHelpers.currentYear(), 0);
     }
     render() {
         return (
@@ -77,18 +77,18 @@ class BankAmountBreakdownMetricsContainer extends React.Component<CardPeak.Model
                     label="metrics"
                     availableYears={this.props.availableYears}
                     refreshing={this.props.loadingMetrics}
-                    onRefresh={this.props.actions.getBankAmountBreakdownMetricsStart} />
+                    onRefresh={this.props.actions.getBankAmountDistributionMetricsStart} />
                 <br />
                 <Grid>
                     <Row>
-                        <BankAmountBreakdownMetricsDataList
+                        <BankAmountDistributionMetricsDataList
                             onGetKey={(item) => item.description}
-                            renderHeader={() => { return <BankAmountBreakdownMetricsRowLayout isHeader /> }}
+                            renderHeader={() => { return <BankAmountDistributionMetricsRowLayout isHeader /> }}
                             renderItem={(item, key) => {
-                                return <BankAmountBreakdownMetricsRowLayout item={item} key={key} />
+                                return <BankAmountDistributionMetricsRowLayout item={item} key={key} />
                             }}
                             isLoading={this.props.loadingMetrics}
-                            data={this.props.bankAmountBreakdown} />
+                            data={this.props.bankAmountDistribution} />
                     </Row>
                 </Grid>
             </div>
@@ -100,10 +100,10 @@ const mapStateToProps = (state: RootState): CardPeak.Models.MetricsModel => ({
     ...state.metricsModel,
 })
 
-const mapDispatchToProps = (dispatch: any): BankAmountBreakdownMetricsContainerDispatchProps => {
+const mapDispatchToProps = (dispatch: any): BankAmountDistributionMetricsContainerDispatchProps => {
     return {
         actions: bindActionCreators(Actions as any, dispatch)
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BankAmountBreakdownMetricsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BankAmountDistributionMetricsContainer);

@@ -263,7 +263,7 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public IEnumerable<BankAmountBreakdown> GetBankAmountBreakdown(int year, int month)
+        public IEnumerable<BankAmountDistribution> GetBankAmountDistribution(int year, int month)
         {
             var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank).Select(_ => new { _.ReferenceId, _.Description });
             var cardCategories = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory).Select(_ => new { _.ReferenceId, _.Description });
@@ -277,10 +277,10 @@ namespace CardPeak.Repository.EF
                     Approvals = _.Sum(approvals => approvals.Units)
                 }).ToList();
 
-            var result = new List<BankAmountBreakdown>();
+            var result = new List<BankAmountDistribution>();
             foreach (var bank in banks)
             {
-                var cardCategoryAmountBreakdown = new List<AmountBreakdown>();
+                var cardCategoryAmountDistribution = new List<AmountDistribution>();
                 foreach (var cardCategory in cardCategories)
                 {
                     var approvalsByAmount = query
@@ -294,19 +294,19 @@ namespace CardPeak.Repository.EF
                             Value = q.Approvals
                         });
 
-                    var amountBreakdown = new AmountBreakdown
+                    var amountDistribution = new AmountDistribution
                     {
                         Description = cardCategory.Description,
                         ApprovalsByAmount = approvalsByAmount
                     };
 
-                    cardCategoryAmountBreakdown.Add(amountBreakdown);
+                    cardCategoryAmountDistribution.Add(amountDistribution);
                 }
 
-                var item = new BankAmountBreakdown
+                var item = new BankAmountDistribution
                 {
                     Description = bank.Description,
-                    CardCategoryAmountBreakdown = cardCategoryAmountBreakdown
+                    CardCategoryAmountDistribution = cardCategoryAmountDistribution
                 };
 
                 result.Add(item);

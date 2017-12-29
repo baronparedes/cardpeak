@@ -6,7 +6,7 @@ import AgentMetricsView from './AgentMetricsView'
 import AgentRankingMetricsView from './AgentRankingMetricsView'
 import AgentPerformanceMetricsView from './AgentPerformanceMetricsView'
 import AgentThresholdMetricsView from './AgentThresholdMetricsView'
-import BankAmountBreakdownMetricsView from './BankAmountBreakdownMetricsView'
+import BankAmountDistributionMetricsView from './BankAmountDistributionMetricsView'
 
 const MetricsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
     return (
@@ -16,7 +16,7 @@ const MetricsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
                 <Route exact path={props.match.url + "/agents/rankings"} component={AgentRankingMetricsView} />
                 <Route exact path={props.match.url + "/agents/performance"} component={AgentPerformanceMetricsView} />
                 <Route exact path={props.match.url + "/agents/threshold"} component={AgentThresholdMetricsView} />
-                <Route exact path={props.match.url + "/banks/amountbreakdown"} component={BankAmountBreakdownMetricsView} />
+                <Route exact path={props.match.url + "/banks/amountdistribution"} component={BankAmountDistributionMetricsView} />
                 <Route component={NotFound} />
             </Switch>
 

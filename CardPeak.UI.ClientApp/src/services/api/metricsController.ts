@@ -5,7 +5,7 @@ export const API = {
     GET_AGENT_RANKING_METRICS: '/metrics/agents/rankings',
     GET_AGENT_PERFORMANCE_METRICS: '/metrics/agents/performance',
     GET_AGENT_THRESHOLD_METRICS: '/metrics/agents/threshold',
-    GET_BANK_AMOUNT_BREAKDOWN_METRICS: '/metrics/banks/amountbreakdown'
+    GET_BANK_AMOUNT_DISTRIBUTION_METRICS: '/metrics/banks/amountdistribution'
 }
 
 export function getMetrics<T>(api: string, year: number, month?: number,

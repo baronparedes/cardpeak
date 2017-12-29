@@ -46,11 +46,11 @@ namespace CardPeak.Service
             return this.MetricsRepository.GetAgentThresholdMetrics(year.Value, month.Value);
         }
 
-        public IEnumerable<BankAmountBreakdown> GetBankAmountBreakdownMetrics(int? year, int? month)
+        public IEnumerable<BankAmountDistribution> GetBankAmountDistributionMetrics(int? year, int? month)
         {
             year = year ?? DateTime.Now.Year;
             month = month ?? 0;
-            return this.MetricsRepository.GetBankAmountBreakdown(year.Value, month.Value);
+            return this.MetricsRepository.GetBankAmountDistribution(year.Value, month.Value);
         }
     }
 }

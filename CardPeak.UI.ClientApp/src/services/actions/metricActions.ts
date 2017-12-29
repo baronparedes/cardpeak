@@ -13,7 +13,7 @@ export const getAgentMetricsComplete = createAction<CardPeak.Entities.AgentMetri
 export const getAgentRankingMetricsComplete = createAction<CardPeak.Entities.AgentRankMetric[]>(METRIC_ACTIONS.GET_AGENT_RANKING_METRICS_COMPLETE);
 export const getAgentPerformanceMetricsComplete = createAction<CardPeak.Entities.AgentPerformanceMetric[]>(METRIC_ACTIONS.GET_AGENT_PERFORMANCE_METRICS_COMPLETE);
 export const getAgentThresholdMetricsComplete = createAction<CardPeak.Entities.AgentThresholdMetric[]>(METRIC_ACTIONS.GET_AGENT_THRESHOLD_METRICS_COMPLETE);
-export const getBankAmountBreakdownMetricsComplete = createAction<CardPeak.Entities.BankAmountBreakdown[]>(METRIC_ACTIONS.GET_BANK_AMOUNT_BREAKDOWN_METRICS_COMPLETE);
+export const getBankAmountDistributionMetricsComplete = createAction<CardPeak.Entities.BankAmountDistribution[]>(METRIC_ACTIONS.GET_BANK_AMOUNT_DISTRIBUTION_METRICS_COMPLETE);
 
 export function getAgentThresholdMetricsStart(year: number, month?: number,
     errorCallback?: (e: string) => void) {
@@ -33,14 +33,14 @@ export function getAgentThresholdMetricsStart(year: number, month?: number,
 
 }
 
-export function getBankAmountBreakdownMetricsStart(year: number, month?: number,
+export function getBankAmountDistributionMetricsStart(year: number, month?: number,
     errorCallback?: (e: string) => void) {
 
     return (dispatch: (e: any) => void) => {
         dispatch(getMetrics());
-        metricsController.getMetrics<CardPeak.Entities.BankAmountBreakdown[]>(metricsController.API.GET_BANK_AMOUNT_BREAKDOWN_METRICS, year, month,
-            (data: CardPeak.Entities.BankAmountBreakdown[]) => {
-                dispatch(getBankAmountBreakdownMetricsComplete(data));
+        metricsController.getMetrics<CardPeak.Entities.BankAmountDistribution[]>(metricsController.API.GET_BANK_AMOUNT_DISTRIBUTION_METRICS, year, month,
+            (data: CardPeak.Entities.BankAmountDistribution[]) => {
+                dispatch(getBankAmountDistributionMetricsComplete(data));
             }, (error: string) => {
                 dispatch(getMetricsError(error));
                 if (errorCallback) {

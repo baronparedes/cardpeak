@@ -42,15 +42,15 @@
         public totalIncentives?: number;
     }
 
-    export class AmountBreakdown {
+    export class AmountDistribution {
         public description?: string;
         public approvalsByAmount?: CardPeak.Entities.ApprovalMetric<number>[];
         public totalApproved?: number;
     }
 
-    export class BankAmountBreakdown {
+    export class BankAmountDistribution {
         public description?: string;
-        public cardCategoryAmountBreakdown?: CardPeak.Entities.AmountBreakdown[];
+        public cardCategoryAmountDistribution?: CardPeak.Entities.AmountDistribution[];
         public totalApproved?: number;
     }
 

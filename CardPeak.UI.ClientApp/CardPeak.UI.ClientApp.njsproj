@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="server.js" />
-    <Compile Include="src\components\views\metrics\BankAmountBreakdownMetricsView.tsx">
+    <Compile Include="src\components\views\metrics\BankAmountDistributionMetricsView.tsx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="src\components\views\settings\SettingsView.tsx">
@@ -214,7 +214,7 @@
     <Content Include="src\components\views\metrics\AgentThresholdMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\BankAmountBreakdownMetricsContainer.tsx">
+    <Content Include="src\components\views\metrics\BankAmountDistributionMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\AgentDashboardTransactionList.tsx">
