@@ -15,7 +15,12 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<Account> FindByAgent(int id)
         {
-            return this.Find(_ => _.AgentId == id).ToList();
+            return this.Context.Accounts
+                .Include(_ => _.Agent)
+                .Where(_ => _.AgentId == id)
+                .Where(_ => !_.Agent.IsDeleted)
+                .AsNoTracking()
+                .ToList();
         }
 
         public IEnumerable<Account> FindByAlias(string alias)
@@ -24,6 +29,7 @@ namespace CardPeak.Repository.EF
                 .Include(_ => _.Agent)
                 .Where(_ => _.Alias.ToLower() == alias.ToLower())
                 .Where(_ => !_.Agent.IsDeleted)
+                .AsNoTracking()
                 .ToList();
         }
     }

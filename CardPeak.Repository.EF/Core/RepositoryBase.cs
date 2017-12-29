@@ -22,17 +22,23 @@ namespace CardPeak.Repository.EF.Core
 
         public IEnumerable<TEntity> GetAll()
         {
-            return this.Context.Set<TEntity>().ToList();
+            return this.Context.Set<TEntity>()
+                .AsNoTracking()
+                .ToList();
         }
 
         public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return this.Context.Set<TEntity>().Where(predicate);
+            return this.Context.Set<TEntity>()
+                .AsNoTracking()
+                .Where(predicate);
         }
 
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            return this.Context.Set<TEntity>().SingleOrDefault(predicate);
+            return this.Context.Set<TEntity>()
+                .AsNoTracking()
+                .SingleOrDefault(predicate);
         }
 
         public virtual void Add(TEntity entity)

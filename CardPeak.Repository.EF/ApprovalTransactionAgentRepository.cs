@@ -41,7 +41,9 @@ namespace CardPeak.Repository.EF
             result = result
                 .OrderByDescending(_ => _.Id);
 
-            return result.ToList();
+            return result
+                .AsNoTracking()
+                .ToList();
         }
 
         public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null)

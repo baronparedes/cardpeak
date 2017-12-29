@@ -55,6 +55,7 @@ namespace CardPeak.Repository.EF
 
             return result
                 .OrderByDescending(_ => _.Id)
+                .AsNoTracking()
                 .ToList();
         }
 
