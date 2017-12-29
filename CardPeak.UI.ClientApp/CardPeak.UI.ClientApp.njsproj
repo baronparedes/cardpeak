@@ -65,7 +65,7 @@
     <Content Include="src\components\layout\ConfirmButton.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\layout\Currency.tsx">
+    <Content Include="src\components\layout\NumberLabel.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\layout\DashboardLabel.tsx">
