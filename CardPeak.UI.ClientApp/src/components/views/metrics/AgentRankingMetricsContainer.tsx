@@ -162,7 +162,7 @@ class AgentRankingMetricsContainer extends React.Component<CardPeak.Models.Metri
     }
 }
 
-const mapStateToProps = (state: RootState): CardPeak.Models.MetricsModel => ({
+const mapStateToProps = (state: RootState): CardPeak.Models.MetricsModel & AgentRankingMetricsContainerProps => ({
     ...state.metricsModel,
     banks: state.settingsModel.banks
 })
