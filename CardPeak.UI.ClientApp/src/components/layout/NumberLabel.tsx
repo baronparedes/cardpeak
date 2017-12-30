@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import * as classNames from 'classnames'
-import { currencyFormat } from '../../helpers/currencyHelper'
+import { currencyFormat, roundOff } from '../../helpers/currencyHelper'
 
 interface CurrencyProps {
     currency: number;
@@ -16,7 +16,7 @@ export const Currency = (props: CurrencyProps) => {
     }
     return (
         <span className={classNames("currency text-highlight", props.className, currencyColor)}>
-            {currencyFormat(props.currency)}
+            {currencyFormat(roundOff(props.currency))}
             {props.children}
         </span>
     )
@@ -24,6 +24,6 @@ export const Currency = (props: CurrencyProps) => {
 
 export const ApprovalMetric = (props: { metric: number, className?: string }) => {
     return (
-        <label className={classNames("text-highlight", props.className)}>{props.metric === 0 ? 0 : (Math.round(props.metric*100)/100)}</label>
+        <label className={classNames("text-highlight", props.className)}>{roundOff(props.metric)}</label>
     );
 }

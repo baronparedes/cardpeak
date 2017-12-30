@@ -73,24 +73,27 @@ class BankAmountDistributionMetricsContainer extends React.Component<CardPeak.Mo
     render() {
         return (
             <div>
-                <YearMonthAction
-                    label="metrics"
-                    availableYears={this.props.availableYears}
-                    refreshing={this.props.loadingMetrics}
-                    onRefresh={this.props.actions.getBankAmountDistributionMetricsStart} />
-                <br />
-                <Grid>
-                    <Row>
-                        <BankAmountDistributionMetricsDataList
-                            onGetKey={(item) => item.description}
-                            renderHeader={() => { return <BankAmountDistributionMetricsRowLayout isHeader /> }}
-                            renderItem={(item, key) => {
-                                return <BankAmountDistributionMetricsRowLayout item={item} key={key} />
-                            }}
-                            isLoading={this.props.loadingMetrics}
-                            data={this.props.bankAmountDistribution} />
-                    </Row>
-                </Grid>
+                <h2>Bank Amount Distribution</h2>
+                <div>
+                    <YearMonthAction
+                        label="metrics"
+                        availableYears={this.props.availableYears}
+                        refreshing={this.props.loadingMetrics}
+                        onRefresh={this.props.actions.getBankAmountDistributionMetricsStart} />
+                    <br />
+                    <Grid>
+                        <Row>
+                            <BankAmountDistributionMetricsDataList
+                                onGetKey={(item) => item.description}
+                                renderHeader={() => { return <BankAmountDistributionMetricsRowLayout isHeader /> }}
+                                renderItem={(item, key) => {
+                                    return <BankAmountDistributionMetricsRowLayout item={item} key={key} />
+                                }}
+                                isLoading={this.props.loadingMetrics}
+                                data={this.props.bankAmountDistributionMetrics} />
+                        </Row>
+                    </Grid>
+                </div>
             </div>
         )
     }

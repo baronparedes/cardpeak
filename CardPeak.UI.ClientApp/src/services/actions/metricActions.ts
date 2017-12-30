@@ -67,12 +67,19 @@ export function getAgentPerformanceMetricsStart(year: number, month?: number,
     }
 }
 
-export function getAgentRankingMetricsStart(year: number, month: number,
+export function getAgentRankingMetricsStart(year: number, month: number, bankId: number,
     errorCallback?: (e: string) => void) {
 
     return (dispatch: (e: any) => void) => {
         dispatch(getMetrics());
-        metricsController.getMetrics<CardPeak.Entities.AgentRankMetric[]>(metricsController.API.GET_AGENT_RANKING_METRICS, year, month,
+
+        let params = {
+            year,
+            month,
+            bankId
+        };
+
+        metricsController.getMetricsWithParams<CardPeak.Entities.AgentRankMetric[]>(metricsController.API.GET_AGENT_RANKING_METRICS, params,
             (data: CardPeak.Entities.AgentRankMetric[]) => {
                 dispatch(getAgentRankingMetricsComplete(data));
             }, (error: string) => {

@@ -74,29 +74,32 @@ class AgentThresholdMetricsContainer extends React.Component<CardPeak.Models.Met
     render() {
         return (
             <div>
-                <YearMonthAction
-                    label="agent metrics"
-                    availableYears={this.props.availableYears}
-                    refreshing={this.props.loadingMetrics}
-                    onRefresh={this.props.actions.getAgentThresholdMetricsStart} />
-                <br />
-                <Grid>
-                    <Row>
-                        <AgentThresholdMetricsDataList
-                            predicate={(metric, searchString) => {
-                                const firstNameMatch = metric.key.firstName.toLowerCase().indexOf(searchString) >= 0;
-                                const lastNameMatch = metric.key.lastName.toLowerCase().indexOf(searchString) >= 0;
-                                return firstNameMatch || lastNameMatch;
-                            }}
-                            onGetKey={(item) => item.key.agentId}
-                            renderHeader={() => { return <AgentThresholdMetricsRowLayout isHeader /> }}
-                            renderItem={(item, key) => {
-                                return <AgentThresholdMetricsRowLayout item={item} key={key} />
-                            }}
-                            isLoading={this.props.loadingMetrics}
-                            data={this.props.agentThresholdMetrics} />
-                    </Row>
-                </Grid>
+                <h2>Agent Threshold</h2>
+                <div>
+                    <YearMonthAction
+                        label="agent metrics"
+                        availableYears={this.props.availableYears}
+                        refreshing={this.props.loadingMetrics}
+                        onRefresh={this.props.actions.getAgentThresholdMetricsStart} />
+                    <br />
+                    <Grid>
+                        <Row>
+                            <AgentThresholdMetricsDataList
+                                predicate={(metric, searchString) => {
+                                    const firstNameMatch = metric.key.firstName.toLowerCase().indexOf(searchString) >= 0;
+                                    const lastNameMatch = metric.key.lastName.toLowerCase().indexOf(searchString) >= 0;
+                                    return firstNameMatch || lastNameMatch;
+                                }}
+                                onGetKey={(item) => item.key.agentId}
+                                renderHeader={() => { return <AgentThresholdMetricsRowLayout isHeader /> }}
+                                renderItem={(item, key) => {
+                                    return <AgentThresholdMetricsRowLayout item={item} key={key} />
+                                }}
+                                isLoading={this.props.loadingMetrics}
+                                data={this.props.agentThresholdMetrics} />
+                        </Row>
+                    </Grid>
+                </div>
             </div>
         )
     }

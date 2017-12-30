@@ -67,7 +67,7 @@ export default handleActions<CardPeak.Models.MetricsModel, any>({
             ...state,
             loadingMetrics: undefined,
             loadingMetricsError: undefined,
-            bankAmountDistribution: action.payload
+            bankAmountDistributionMetrics: action.payload
         }
     }
 }, initialState);

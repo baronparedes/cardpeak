@@ -28,9 +28,9 @@ namespace CardPeak.WebAPI.Controllers
 
         [HttpGet]
         [Route("agents/rankings")]
-        public IHttpActionResult GetAgentRankMetrics([FromUri]int? year = null, [FromUri]int? month = null)
+        public IHttpActionResult GetAgentRankMetrics([FromUri]int? year = null, [FromUri]int? month = null, [FromUri]int? bankId = null)
         {
-            var result = this.MetricsService.GetAgentRankMetrics(year, month);
+            var result = this.MetricsService.GetAgentRankMetrics(year, month, bankId);
             if (result == null)
             {
                 return this.NotFound();

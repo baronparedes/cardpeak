@@ -32,11 +32,12 @@ namespace CardPeak.Service
             return this.MetricsRepository.GetAgentPerformanceMetrics(year.Value);
         }
 
-        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int? year, int? month)
+        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int? year, int? month, int? bankId)
         {
             year = year ?? DateTime.Now.Year;
             month = month ?? 0;
-            return this.MetricsRepository.GetAgentRankMetrics(year.Value, month.Value);
+            bankId = bankId ?? 0;
+            return this.MetricsRepository.GetAgentRankMetrics(year.Value, month.Value, bankId.Value);
         }
 
         public IEnumerable<AgentThresholdMetric> GetAgentThresholdMetrics(int? year, int? month)

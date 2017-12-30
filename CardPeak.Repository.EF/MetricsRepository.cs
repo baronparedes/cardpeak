@@ -123,13 +123,20 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int year, int month)
+        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int year, int month, int bankId)
         {
+            var metricsQuery = this.QueryApprovalTransactionsByYearMonth(year, month);
             var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
                 .AsNoTracking()
                 .ToList();
 
-            var metrics = this.QueryApprovalTransactionsByYearMonth(year, month)
+            if (bankId != 0)
+            {
+                banks = banks.Where(_ => _.ReferenceId == bankId).ToList();
+                metricsQuery = metricsQuery.Where(_ => _.BankId == bankId);
+            }
+
+            var metrics = metricsQuery
                 .Include(_ => _.Bank)
                 .Include(_ => _.Agent)
                 .GroupBy(_ => new { _.AgentId, _.Agent })

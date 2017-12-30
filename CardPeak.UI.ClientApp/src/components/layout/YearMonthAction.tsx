@@ -61,54 +61,64 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
     }
     renderDateFilters() {
         return (
-            <Col sm={8}>
-                <div className="container-fluid no-padding">
-                    <Row>
-                        <Col sm={6}>
-                            <YearPicker
-                                value={this.state.year}
-                                error={this.state.errors.year}
-                                refreshing={this.props.refreshing}
-                                availableYears={this.props.availableYears}
-                                onChange={this.handleOnChange} />
-                        </Col>
-                        <Col sm={6}>
-                            {
-                                this.props.yearOnly ? null :
-                                    <MonthPicker
-                                        value={this.state.month}
-                                        refreshing={this.props.refreshing}
-                                        onChange={this.handleOnChange} />
-                            }
-                        </Col>
-                    </Row>
-                </div>
-            </Col>
+            <div className="container-fluid no-padding">
+                <Row>
+                    <Col sm={6}>
+                        <YearPicker
+                            value={this.state.year}
+                            error={this.state.errors.year}
+                            refreshing={this.props.refreshing}
+                            availableYears={this.props.availableYears}
+                            onChange={this.handleOnChange} />
+                    </Col>
+                    <Col sm={6}>
+                        {
+                            this.props.yearOnly ? null :
+                                <MonthPicker
+                                    value={this.state.month}
+                                    refreshing={this.props.refreshing}
+                                    onChange={this.handleOnChange} />
+                        }
+                    </Col>
+                </Row>
+            </div>
         )
     }
     renderButtons() {
         return (
-            <Col sm={4} className="text-right">
-                <ButtonGroup>
-                    <Button
-                        onClick={this.handleOnRefresh}
-                        bsStyle="primary"
-                        disabled={this.props.refreshing}>
-                        <ButtonLoadingText
-                            isLoading={this.props.refreshing}
-                            label={"refresh" + (this.props.label ? (" " + this.props.label) : "")} />
-                    </Button>
-                    {this.props.addOnActions}
-                </ButtonGroup>
-            </Col >
+            <ButtonGroup>
+                <Button
+                    onClick={this.handleOnRefresh}
+                    bsStyle="primary"
+                    disabled={this.props.refreshing}>
+                    <ButtonLoadingText
+                        isLoading={this.props.refreshing}
+                        label={"refresh" + (this.props.label ? (" " + this.props.label) : "")} />
+                </Button>
+                {this.props.addOnActions}
+            </ButtonGroup>
         )
     }
     render() {
         return (
             <Grid className="spacer-bottom no-padding hidden-print">
                 <Row>
-                    {this.renderDateFilters()}
-                    {this.renderButtons()}
+                    <Col sm={8}>
+                        {this.renderDateFilters()}
+                        {
+                            !this.props.children ? null :
+                                <Row>
+                                    <Col sm={12}>
+                                        <fieldset disabled={this.props.refreshing}>
+                                            {this.props.children}
+                                        </fieldset>
+                                    </Col>
+                                </Row>
+                        }
+                    </Col>
+                    <Col sm={4} className="text-right">
+                        {this.renderButtons()}
+                    </Col>
                 </Row>
             </Grid>
         )

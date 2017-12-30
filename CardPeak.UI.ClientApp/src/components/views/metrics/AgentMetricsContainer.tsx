@@ -77,30 +77,33 @@ class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel
     render() {
         return (
             <div>
-                <YearMonthAction
-                    label="agent metrics"
-                    availableYears={this.props.availableYears}
-                    refreshing={this.props.loadingMetrics}
-                    onRefresh={this.props.actions.getAgentMetricsStart} />
-                <br />
-                <Grid>
-                    <AgentMetricsTotals agentMetrics={this.props.agentMetrics} />
-                    <Row>
-                        <AgentMetricsDataListFiltered
-                            predicate={(agent, searchString) => {
-                                const firstNameMatch = agent.key.firstName.toLowerCase().indexOf(searchString) >= 0;
-                                const lastNameMatch = agent.key.lastName.toLowerCase().indexOf(searchString) >= 0;
-                                return firstNameMatch || lastNameMatch;
-                            }}
-                            onGetKey={(item) => item.key.agentId}
-                            renderHeader={() => { return <AgentMetricsRowLayout isHeader /> }}
-                            renderItem={(item, key) => {
-                                return <AgentMetricsRowLayout item={item} key={key} />
-                            }}
-                            isLoading={this.props.loadingMetrics}
-                            data={this.props.agentMetrics.agentApprovalMetrics} />
-                    </Row>
-                </Grid>
+                <h2>Agents</h2>
+                <div>
+                    <YearMonthAction
+                        label="agent metrics"
+                        availableYears={this.props.availableYears}
+                        refreshing={this.props.loadingMetrics}
+                        onRefresh={this.props.actions.getAgentMetricsStart} />
+                    <br />
+                    <Grid>
+                        <AgentMetricsTotals agentMetrics={this.props.agentMetrics} />
+                        <Row>
+                            <AgentMetricsDataListFiltered
+                                predicate={(agent, searchString) => {
+                                    const firstNameMatch = agent.key.firstName.toLowerCase().indexOf(searchString) >= 0;
+                                    const lastNameMatch = agent.key.lastName.toLowerCase().indexOf(searchString) >= 0;
+                                    return firstNameMatch || lastNameMatch;
+                                }}
+                                onGetKey={(item) => item.key.agentId}
+                                renderHeader={() => { return <AgentMetricsRowLayout isHeader /> }}
+                                renderItem={(item, key) => {
+                                    return <AgentMetricsRowLayout item={item} key={key} />
+                                }}
+                                isLoading={this.props.loadingMetrics}
+                                data={this.props.agentMetrics.agentApprovalMetrics} />
+                        </Row>
+                    </Grid>
+                </div>
             </div>
         )
     }
