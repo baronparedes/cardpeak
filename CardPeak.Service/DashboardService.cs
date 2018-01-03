@@ -28,10 +28,9 @@ namespace CardPeak.Service
 
         public Dashboard GetDashboard(int? year = null, int? month = null)
         {
-            year = year ?? DateTime.Now.Year;
+            year = year ?? 0;
             month = month ?? 0;
 
-            var agents = this.ApprovalTransactionDashboardRepository.GetTopAgents(year.Value, month.Value);
             var result = new Dashboard
             {
                 LatestProcessedBatch = this.BatchUploadRepository.GetLatestProcessed(),

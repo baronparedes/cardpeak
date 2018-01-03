@@ -87,8 +87,8 @@
     </Compile>
     <Compile Include="Metrics\AgentThresholdMetric.cs" />
     <Compile Include="Metrics\ApprovalMetric.cs" />
-    <Compile Include="Metrics\AmountBreakdown.cs" />
-    <Compile Include="Metrics\BankAmountBreakdown.cs" />
+    <Compile Include="Metrics\AmountDistribution.cs" />
+    <Compile Include="Metrics\BankAmountDistribution.cs" />
     <Compile Include="ProcessedApprovalTransaction.cs" />
     <Compile Include="ProcessedBatchUpload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

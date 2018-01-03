@@ -21,9 +21,13 @@ namespace CardPeak.Repository.EF
             var query = this.Context.ApprovalTransactions
                 .Include(_ => _.Bank)
                 .Include(_ => _.CardCategory)
-                .Where(_ => _.ApprovalDate.Year == year)
                 .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => !_.IsDeleted);
+
+            if (year != 0)
+            {
+                query = query.Where(_ => _.ApprovalDate.Year == year);
+            }
 
             if (month != 0)
             {
@@ -88,6 +92,11 @@ namespace CardPeak.Repository.EF
 
         public IEnumerable<ApprovalMetric<string>> GetYearlyPerformance(int year)
         {
+            if (year == 0)
+            {
+                return null;
+            }
+
             var startDate = new DateTime(year, 1, 1);
             var endDate = new DateTime(year, 12, 31);
             var result = new Dictionary<string, decimal>();

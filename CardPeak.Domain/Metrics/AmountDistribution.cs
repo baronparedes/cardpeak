@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace CardPeak.Domain.Metrics
 {
-    public sealed class BankAmountBreakdown
+    public sealed class AmountDistribution
     {
         public string Description { get; set; }
-        public IEnumerable<AmountBreakdown> CardCategoryAmountBreakdown { get; set; }
+        public IEnumerable<ApprovalMetric<decimal>> ApprovalsByAmount { get; set; }
         public decimal TotalApproved
         {
             get
             {
-                var result = this.CardCategoryAmountBreakdown?
-                    .Sum(_ => _.ApprovalsByAmount?.Sum(t => t.Value));
+                var result = this.ApprovalsByAmount?.Sum(_ => _.Value);
                 return result.GetValueOrDefault();
             }
         }

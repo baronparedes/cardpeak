@@ -2,21 +2,21 @@
 import { Route, Switch } from 'react-router-dom'
 import { NotFound, NavigationProps } from '../../layout'
 
-import AgentMetricsView from './AgentMetricsView'
-import AgentRankingMetricsView from './AgentRankingMetricsView'
-import AgentPerformanceMetricsView from './AgentPerformanceMetricsView'
-import AgentThresholdMetricsView from './AgentThresholdMetricsView'
-import BankAmountBreakdownMetricsView from './BankAmountBreakdownMetricsView'
+import AgentMetricsContainer from './AgentMetricsContainer'
+import AgentRankingMetricsContainer from './AgentRankingMetricsContainer'
+import AgentPerformanceMetricsContainer from './AgentPerformanceMetricsContainer'
+import AgentThresholdMetricsContainer from './AgentThresholdMetricsContainer'
+import BankAmountDistributionMetricsContainer from './BankAmountDistributionMetricsContainer'
 
 const MetricsView: React.StatelessComponent<NavigationProps<any>> = (props) => {
     return (
         <div>
             <Switch>
-                <Route exact path={props.match.url + "/agents"} component={AgentMetricsView} />
-                <Route exact path={props.match.url + "/agents/rankings"} component={AgentRankingMetricsView} />
-                <Route exact path={props.match.url + "/agents/performance"} component={AgentPerformanceMetricsView} />
-                <Route exact path={props.match.url + "/agents/threshold"} component={AgentThresholdMetricsView} />
-                <Route exact path={props.match.url + "/banks/amountbreakdown"} component={BankAmountBreakdownMetricsView} />
+                <Route exact path={props.match.url + "/agents"} component={AgentMetricsContainer} />
+                <Route exact path={props.match.url + "/agents/rankings"} component={AgentRankingMetricsContainer} />
+                <Route exact path={props.match.url + "/agents/performance"} component={AgentPerformanceMetricsContainer} />
+                <Route exact path={props.match.url + "/agents/threshold"} component={AgentThresholdMetricsContainer} />
+                <Route exact path={props.match.url + "/banks/amountdistribution"} component={BankAmountDistributionMetricsContainer} />
                 <Route component={NotFound} />
             </Switch>
 

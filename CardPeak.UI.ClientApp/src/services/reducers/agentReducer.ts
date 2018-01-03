@@ -94,7 +94,7 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
             incentivesBalance += transaction.amount;
             if (isBetween(state.dateFilters, transaction.transactionDateTime)) {
                 incentiveTransactions.unshift(transaction);
-                agentDashboardTransactions.unshift(agentDashboardTransaction);
+                //agentDashboardTransactions.unshift(agentDashboardTransaction);
             }
         }
 

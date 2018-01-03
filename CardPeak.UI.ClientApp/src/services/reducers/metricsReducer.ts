@@ -62,12 +62,12 @@ export default handleActions<CardPeak.Models.MetricsModel, any>({
             agentThresholdMetrics: action.payload
         }
     },
-    [METRIC_ACTIONS.GET_BANK_AMOUNT_BREAKDOWN_METRICS_COMPLETE]: (state, action) => {
+    [METRIC_ACTIONS.GET_BANK_AMOUNT_DISTRIBUTION_METRICS_COMPLETE]: (state, action) => {
         return {
             ...state,
             loadingMetrics: undefined,
             loadingMetricsError: undefined,
-            bankAmountBreakdown: action.payload
+            bankAmountDistributionMetrics: action.payload
         }
     }
 }, initialState);

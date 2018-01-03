@@ -35,9 +35,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="server.js" />
-    <Compile Include="src\components\views\metrics\BankAmountBreakdownMetricsView.tsx">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="src\components\views\settings\SettingsView.tsx">
       <SubType>Code</SubType>
     </Compile>
@@ -193,28 +190,16 @@
     <Content Include="src\components\views\dashboard\metrics\TopAgentList.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\AgentMetricsView.tsx">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\views\metrics\AgentPerformanceMetricsContainer.tsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\views\metrics\AgentPerformanceMetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\metrics\AgentRankingMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\AgentRankingMetricsView.tsx">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\views\metrics\AgentThresholdMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\metrics\AgentThresholdMetricsView.tsx">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="src\components\views\metrics\BankAmountBreakdownMetricsContainer.tsx">
+    <Content Include="src\components\views\metrics\BankAmountDistributionMetricsContainer.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\transactions\AgentDashboardTransactionList.tsx">

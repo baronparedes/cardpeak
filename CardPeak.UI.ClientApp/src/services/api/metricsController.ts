@@ -5,18 +5,14 @@ export const API = {
     GET_AGENT_RANKING_METRICS: '/metrics/agents/rankings',
     GET_AGENT_PERFORMANCE_METRICS: '/metrics/agents/performance',
     GET_AGENT_THRESHOLD_METRICS: '/metrics/agents/threshold',
-    GET_BANK_AMOUNT_BREAKDOWN_METRICS: '/metrics/banks/amountbreakdown'
+    GET_BANK_AMOUNT_DISTRIBUTION_METRICS: '/metrics/banks/amountdistribution',
+    GET_BANK_AGENT_RANKINGS_METRICS: '/metrics/banks/rankings'
 }
 
-export function getMetrics<T>(api: string, year: number, month?: number,
-    successCallback?: (data: T) => void,
-    errorCallback?: (error: string) => void) {
+export function getMetricsWithParams<T>(api: string, params: any, successCallback?: (data: T) => void, errorCallback?: (error: string) => void) {
 
     axios.get(api, ({
-        params: {
-            year,
-            month
-        }
+        params
     })).then((r) => {
         if (successCallback) {
             successCallback(r.data as T);
@@ -26,5 +22,17 @@ export function getMetrics<T>(api: string, year: number, month?: number,
             errorCallback(reason.message);
         }
     });
+
+}
+
+export function getMetrics<T>(api: string, year: number, month?: number,
+    successCallback?: (data: T) => void,
+    errorCallback?: (error: string) => void) {
+
+    let params = {
+        year,
+        month
+    }
+    getMetricsWithParams(api, params, successCallback, errorCallback);
 
 }

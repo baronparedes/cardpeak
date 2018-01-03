@@ -69,7 +69,7 @@
         agentRankingMetrics?: CardPeak.Entities.AgentRankMetric[];
         agentPerformanceMetrics?: CardPeak.Entities.AgentPerformanceMetric[];
         agentThresholdMetrics?: CardPeak.Entities.AgentThresholdMetric[];
-        bankAmountBreakdown?: CardPeak.Entities.BankAmountBreakdown[];
+        bankAmountDistributionMetrics?: CardPeak.Entities.BankAmountDistribution[];
     }
 
     export interface AgentPayoutModel {

@@ -39,7 +39,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
             { text: "Agent Performance", fa: "fa-line-chart", exact: true, to: "/metrics/agents/performance" },
             { text: "Agent Threshold", fa: "fa-area-chart", exact: true, to: "/metrics/agents/threshold" },
             { divider: true },
-            { text: "Bank Amount Breakdown", fa: "fa-pie-chart", exact: true, to: "/metrics/banks/amountbreakdown" }
+            { text: "Bank Amount Distribution", fa: "fa-pie-chart", exact: true, to: "/metrics/banks/amountdistribution" }
         ];
 
         return {

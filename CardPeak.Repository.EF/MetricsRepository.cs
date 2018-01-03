@@ -27,34 +27,43 @@ namespace CardPeak.Repository.EF
 
         private IQueryable<ApprovalTransaction> QueryApprovalTransactionsByYearMonth(int year, int month)
         {
-            var result = this.Context.ApprovalTransactions
+            var query = this.Context.ApprovalTransactions
                 .Where(_ => !_.IsDeleted)
-                .Where(_ => !_.Agent.IsDeleted)
-                .Where(_ => _.ApprovalDate.Year == year);
+                .Where(_ => !_.Agent.IsDeleted);
+
+            if (year != 0)
+            {
+                query = query.Where(_ => _.ApprovalDate.Year == year);
+            }
 
             if (month != 0)
             {
-                result = result
+                query = query
                     .Where(_ => _.ApprovalDate.Month == month);
             }
 
-            return result;
+            return query;
         }
 
         private IQueryable<DebitCreditTransaction> QueryDebitCreditTransactionByYearMonth(int year, int month)
         {
-            var result = this.Context.DebitCreditTransactions
+            var query = this.Context.DebitCreditTransactions
                 .Where(_ => !_.IsDeleted)
-                .Where(_ => !_.Agent.IsDeleted)
-                .Where(_ => _.TransactionDateTime.Year == year);
+                .Where(_ => !_.Agent.IsDeleted);
+
+            if (year != 0)
+            {
+                query = query
+                    .Where(_ => _.TransactionDateTime.Year == year);
+            }
 
             if (month != 0)
             {
-                result = result
+                query = query
                     .Where(_ => _.TransactionDateTime.Month == month);
             }
 
-            return result;
+            return query;
         }
 
         public IEnumerable<AgentApprovalMetric> GetApprovalsByAgent(int year, int month)
@@ -123,13 +132,20 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int year, int month)
+        public IEnumerable<AgentRankMetric> GetAgentRankMetrics(int year, int month, int bankId)
         {
+            var metricsQuery = this.QueryApprovalTransactionsByYearMonth(year, month);
             var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
                 .AsNoTracking()
                 .ToList();
 
-            var metrics = this.QueryApprovalTransactionsByYearMonth(year, month)
+            if (bankId != 0)
+            {
+                banks = banks.Where(_ => _.ReferenceId == bankId).ToList();
+                metricsQuery = metricsQuery.Where(_ => _.BankId == bankId);
+            }
+
+            var metrics = metricsQuery
                 .Include(_ => _.Bank)
                 .Include(_ => _.Agent)
                 .GroupBy(_ => new { _.AgentId, _.Agent })
@@ -263,7 +279,7 @@ namespace CardPeak.Repository.EF
             return result;
         }
 
-        public IEnumerable<BankAmountBreakdown> GetBankAmountBreakdown(int year, int month)
+        public IEnumerable<BankAmountDistribution> GetBankAmountDistribution(int year, int month)
         {
             var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank).Select(_ => new { _.ReferenceId, _.Description });
             var cardCategories = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory).Select(_ => new { _.ReferenceId, _.Description });
@@ -277,10 +293,10 @@ namespace CardPeak.Repository.EF
                     Approvals = _.Sum(approvals => approvals.Units)
                 }).ToList();
 
-            var result = new List<BankAmountBreakdown>();
+            var result = new List<BankAmountDistribution>();
             foreach (var bank in banks)
             {
-                var cardCategoryAmountBreakdown = new List<AmountBreakdown>();
+                var cardCategoryAmountDistribution = new List<AmountDistribution>();
                 foreach (var cardCategory in cardCategories)
                 {
                     var approvalsByAmount = query
@@ -294,19 +310,19 @@ namespace CardPeak.Repository.EF
                             Value = q.Approvals
                         });
 
-                    var amountBreakdown = new AmountBreakdown
+                    var amountDistribution = new AmountDistribution
                     {
                         Description = cardCategory.Description,
                         ApprovalsByAmount = approvalsByAmount
                     };
 
-                    cardCategoryAmountBreakdown.Add(amountBreakdown);
+                    cardCategoryAmountDistribution.Add(amountDistribution);
                 }
 
-                var item = new BankAmountBreakdown
+                var item = new BankAmountDistribution
                 {
                     Description = bank.Description,
-                    CardCategoryAmountBreakdown = cardCategoryAmountBreakdown
+                    CardCategoryAmountDistribution = cardCategoryAmountDistribution
                 };
 
                 result.Add(item);

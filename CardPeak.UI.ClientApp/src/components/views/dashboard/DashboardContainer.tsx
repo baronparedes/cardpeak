@@ -42,19 +42,22 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
                         </Panel>
                     </Col>
                 </Row>
-                <Row>
-                    <Col sm={12}>
-                        <Panel>
-                            <Col>
-                                <PerformanceDashboard performance={this.props.performance} />
+                {
+                    !this.props.performance ? null :
+                        <Row>
+                            <Col sm={12}>
+                                <Panel>
+                                    <Col>
+                                        <PerformanceDashboard performance={this.props.performance} />
+                                    </Col>
+                                    <Col xsHidden smHidden>
+                                        <br />
+                                        <ApprovalMetricsLineChart metrics={this.props.performance} label="yearly performance" />
+                                    </Col>
+                                </Panel>
                             </Col>
-                            <Col xsHidden smHidden>
-                                <br />
-                                <ApprovalMetricsLineChart metrics={this.props.performance} label="yearly performance" />
-                            </Col>
-                        </Panel>
-                    </Col>
-                </Row>
+                        </Row>
+                }
                 <ApprovalMetrics
                     approvalsByBankDetails={this.props.approvalsByBankDetails}
                     approvalsByBank={this.props.approvalsByBank}
@@ -78,6 +81,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
         return (
             <div>
                 <YearMonthAction
+                    defaultYearValue={0}
                     label="dashboard"
                     availableYears={this.props.availableYears}
                     refreshing={this.props.refreshing}

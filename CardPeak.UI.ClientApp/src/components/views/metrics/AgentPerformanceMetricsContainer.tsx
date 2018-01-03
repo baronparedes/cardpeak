@@ -70,38 +70,41 @@ class AgentPerformanceMetricsContainer extends React.Component<CardPeak.Models.M
     render() {
         return (
             <div>
-                <YearMonthAction
-                    yearOnly
-                    label="agent metrics"
-                    availableYears={this.props.availableYears}
-                    refreshing={this.props.loadingMetrics}
-                    onRefresh={this.props.actions.getAgentPerformanceMetricsStart} />
-                <br />
-                <Grid>
-                    <Row className="spacer-bottom text-right hidden-print">
-                        <Col xsHidden>
-                            <Toggle
-                                isToggled={this.state.showCharts}
-                                label="Charts"
-                                onToggle={(on: boolean) => { this.setState({ showCharts: on }) }} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <AgentPerformanceMetricsDataList
-                            predicate={(metric, searchString) => {
-                                const firstNameMatch = metric.key.firstName.toLowerCase().indexOf(searchString) >= 0;
-                                const lastNameMatch = metric.key.lastName.toLowerCase().indexOf(searchString) >= 0;
-                                return firstNameMatch || lastNameMatch;
-                            }}
-                            onGetKey={(item) => item.key.agentId}
-                            renderHeader={() => { return <AgentPerformanceMetricsRowLayout isHeader /> }}
-                            renderItem={(item, key) => {
-                                return <AgentPerformanceMetricsRowLayout item={item} key={key} showCharts={this.state.showCharts} />
-                            }}
-                            isLoading={this.props.loadingMetrics}
-                            data={this.props.agentPerformanceMetrics} />
-                    </Row>
-                </Grid>
+                <h2>Agent Performance</h2>
+                <div>
+                    <YearMonthAction
+                        yearOnly
+                        label="metrics"
+                        availableYears={this.props.availableYears}
+                        refreshing={this.props.loadingMetrics}
+                        onRefresh={this.props.actions.getAgentPerformanceMetricsStart} />
+                    <br />
+                    <Grid>
+                        <Row className="spacer-bottom text-right hidden-print">
+                            <Col xsHidden>
+                                <Toggle
+                                    isToggled={this.state.showCharts}
+                                    label="Charts"
+                                    onToggle={(on: boolean) => { this.setState({ showCharts: on }) }} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <AgentPerformanceMetricsDataList
+                                predicate={(metric, searchString) => {
+                                    const firstNameMatch = metric.key.firstName.toLowerCase().indexOf(searchString) >= 0;
+                                    const lastNameMatch = metric.key.lastName.toLowerCase().indexOf(searchString) >= 0;
+                                    return firstNameMatch || lastNameMatch;
+                                }}
+                                onGetKey={(item) => item.key.agentId}
+                                renderHeader={() => { return <AgentPerformanceMetricsRowLayout isHeader /> }}
+                                renderItem={(item, key) => {
+                                    return <AgentPerformanceMetricsRowLayout item={item} key={key} showCharts={this.state.showCharts} />
+                                }}
+                                isLoading={this.props.loadingMetrics}
+                                data={this.props.agentPerformanceMetrics} />
+                        </Row>
+                    </Grid>
+                </div>
             </div>
         )
     }
