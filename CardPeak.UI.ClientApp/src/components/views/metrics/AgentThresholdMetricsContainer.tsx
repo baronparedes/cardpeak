@@ -77,7 +77,7 @@ class AgentThresholdMetricsContainer extends React.Component<CardPeak.Models.Met
                 <h2>Agent Threshold</h2>
                 <div>
                     <YearMonthAction
-                        label="agent metrics"
+                        label="metrics"
                         availableYears={this.props.availableYears}
                         refreshing={this.props.loadingMetrics}
                         onRefresh={this.props.actions.getAgentThresholdMetricsStart} />

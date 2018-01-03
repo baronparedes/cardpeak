@@ -29,11 +29,10 @@ export function getMetrics<T>(api: string, year: number, month?: number,
     successCallback?: (data: T) => void,
     errorCallback?: (error: string) => void) {
 
-    getMetricsWithParams(api, ({
-        params: {
-            year,
-            month
-        }
-    }), successCallback, errorCallback);
+    let params = {
+        year,
+        month
+    }
+    getMetricsWithParams(api, params, successCallback, errorCallback);
 
 }

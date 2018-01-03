@@ -82,8 +82,8 @@ namespace CardPeak.Service
             var approvalTransactions = this.ApprovalTransactionAgentRepository.FindByAgent(agentId, startDate, endDate);
             var debitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
             var incentiveTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate, Domain.Enums.TransactionTypeEnum.IncentivesTransaction);
-            var startingBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId, startDate) +
-                    this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, startDate);
+            var startingBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId, startDate.AddDays(-1)) +
+                    this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, startDate.AddDays(-1));
             var agentDashboardTransactions = this.GenerateAgentDashboardTransactions(approvalTransactions, debitCreditTransactions, startingBalance);
 
             return new AgentDashboard

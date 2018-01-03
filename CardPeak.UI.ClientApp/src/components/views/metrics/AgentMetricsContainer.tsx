@@ -80,7 +80,7 @@ class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel
                 <h2>Agents</h2>
                 <div>
                     <YearMonthAction
-                        label="agent metrics"
+                        label="metrics"
                         availableYears={this.props.availableYears}
                         refreshing={this.props.loadingMetrics}
                         onRefresh={this.props.actions.getAgentMetricsStart} />
