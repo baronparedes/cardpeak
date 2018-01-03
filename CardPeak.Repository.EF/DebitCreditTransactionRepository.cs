@@ -62,10 +62,14 @@ namespace CardPeak.Repository.EF
         private decimal QueryBalance(int year, int month, Domain.Enums.TransactionTypeEnum transactionType)
         {
             var query = this.Context.DebitCreditTransactions
-                .Where(_ => _.TransactionDateTime.Year == year)
                 .Where(_ => !_.IsDeleted)
                 .Where(_ => !_.Agent.IsDeleted)
                 .Where(_ => _.TransactionTypeId == (int)transactionType);
+
+            if (year != 0)
+            {
+                query = query.Where(_ => _.TransactionDateTime.Year == year);
+            }
 
             if (month != 0)
             {

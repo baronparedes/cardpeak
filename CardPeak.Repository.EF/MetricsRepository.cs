@@ -27,34 +27,43 @@ namespace CardPeak.Repository.EF
 
         private IQueryable<ApprovalTransaction> QueryApprovalTransactionsByYearMonth(int year, int month)
         {
-            var result = this.Context.ApprovalTransactions
+            var query = this.Context.ApprovalTransactions
                 .Where(_ => !_.IsDeleted)
-                .Where(_ => !_.Agent.IsDeleted)
-                .Where(_ => _.ApprovalDate.Year == year);
+                .Where(_ => !_.Agent.IsDeleted);
+
+            if (year != 0)
+            {
+                query = query.Where(_ => _.ApprovalDate.Year == year);
+            }
 
             if (month != 0)
             {
-                result = result
+                query = query
                     .Where(_ => _.ApprovalDate.Month == month);
             }
 
-            return result;
+            return query;
         }
 
         private IQueryable<DebitCreditTransaction> QueryDebitCreditTransactionByYearMonth(int year, int month)
         {
-            var result = this.Context.DebitCreditTransactions
+            var query = this.Context.DebitCreditTransactions
                 .Where(_ => !_.IsDeleted)
-                .Where(_ => !_.Agent.IsDeleted)
-                .Where(_ => _.TransactionDateTime.Year == year);
+                .Where(_ => !_.Agent.IsDeleted);
+
+            if (year != 0)
+            {
+                query = query
+                    .Where(_ => _.TransactionDateTime.Year == year);
+            }
 
             if (month != 0)
             {
-                result = result
+                query = query
                     .Where(_ => _.TransactionDateTime.Month == month);
             }
 
-            return result;
+            return query;
         }
 
         public IEnumerable<AgentApprovalMetric> GetApprovalsByAgent(int year, int month)

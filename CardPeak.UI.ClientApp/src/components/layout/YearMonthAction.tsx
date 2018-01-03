@@ -10,32 +10,42 @@ interface YearMonthActionsProps {
     label?: string;
     addOnActions?: React.ReactNode;
     yearOnly?: boolean;
+    defaultYearValue?: number;
 }
 
 interface YearMonthActionsState {
     year?: number;
     month?: number;
+    hideMonthPicker?: boolean;
     errors: {
         [error: string]: string,
     },
 }
 
 export class YearMonthAction extends React.Component<YearMonthActionsProps, YearMonthActionsState> {
+    public static defaultProps: Partial<YearMonthActionsProps> = {
+        defaultYearValue: dateHelpers.currentYear()
+    }
+
     constructor(props: YearMonthActionsProps) {
         super(props);
         this.state = {
-            year: dateHelpers.currentYear(),
+            year: props.defaultYearValue,
             month: 0,
+            hideMonthPicker: props.defaultYearValue == 0,
             errors: {
                 year: ""
             }
         }
     }
     handleOnRefresh = () => {
-        if (this.hasErrors()) {
-            return;
-        }
-        this.props.onRefresh(this.state.year, this.state.month);
+        let hideMonthPicker = this.state.year == 0;
+        this.setState({ hideMonthPicker, month: hideMonthPicker ? 0 : this.state.month }, () => {
+            if (this.hasErrors()) {
+                return;
+            }
+            this.props.onRefresh(this.state.year, this.state.month);
+        });
     }
     handleOnChange = (e: any) => {
         let errors = this.state.errors;
@@ -55,7 +65,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
     }
     handleErrors = () => {
         let errors = this.state.errors;
-        if (!this.state.year || this.state.year == 0) errors.year = "*";
+        if (!this.state.year) errors.year = "*";
         this.setState({ errors });
         return errors;
     }
@@ -73,7 +83,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
                     </Col>
                     <Col sm={6}>
                         {
-                            this.props.yearOnly ? null :
+                            this.props.yearOnly || this.state.hideMonthPicker ? null :
                                 <MonthPicker
                                     value={this.state.month}
                                     refreshing={this.props.refreshing}

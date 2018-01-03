@@ -23,6 +23,9 @@ export const YearPicker: React.StatelessComponent<YearProps & YearMonthProps> = 
             value={props.value}
             isRequired
             onChange={props.onChange} >
+
+            <option value={0}>Historical</option>
+
             {
                 props.availableYears ? props.availableYears.map(_ => {
                     return (
