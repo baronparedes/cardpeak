@@ -27,7 +27,8 @@ namespace CardPeak.Service
         private IEnumerable<AgentDashboardTransaction> GenerateAgentDashboardTransactions(
             IEnumerable<ApprovalTransaction> approvalTransactions, 
             IEnumerable<DebitCreditTransaction> debitCreditTransactions,
-            decimal startingRunningBalance)
+            decimal startingRunningBalance,
+            DateTime? runningBalanceAsOf = null)
         {
             var transactions = debitCreditTransactions
                 .Select(_ => new AgentDashboardTransaction
@@ -60,6 +61,15 @@ namespace CardPeak.Service
                 balance = balance - transaction.TransactionAmount;
             }
 
+            if (runningBalanceAsOf.HasValue)
+            {
+                result.Add(new AgentDashboardTransaction {
+                    Details = string.Format("Running Balance as of {0}", runningBalanceAsOf.Value.ToShortDateString()),
+                    TransactionDate = runningBalanceAsOf.Value,
+                    RunningBalance = startingRunningBalance
+                });
+            }
+
             return result;
         }
 
@@ -82,9 +92,10 @@ namespace CardPeak.Service
             var approvalTransactions = this.ApprovalTransactionAgentRepository.FindByAgent(agentId, startDate, endDate);
             var debitCreditTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
             var incentiveTransactions = this.DebitCreditTransactionRepository.FindByAgent(agentId, startDate, endDate, Domain.Enums.TransactionTypeEnum.IncentivesTransaction);
-            var startingBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId, startDate.AddDays(-1)) +
-                    this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, startDate.AddDays(-1));
-            var agentDashboardTransactions = this.GenerateAgentDashboardTransactions(approvalTransactions, debitCreditTransactions, startingBalance);
+            var balanceEndDate = startDate.AddDays(-1);
+            var startingBalance = this.ApprovalTransactionAgentRepository.GetAgentAccountBalance(agentId, balanceEndDate) +
+                    this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, balanceEndDate);
+            var agentDashboardTransactions = this.GenerateAgentDashboardTransactions(approvalTransactions, debitCreditTransactions, startingBalance, balanceEndDate);
 
             return new AgentDashboard
             {
