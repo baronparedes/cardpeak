@@ -215,20 +215,27 @@ namespace CardPeak.Repository.EF
                         BankId = _.FirstOrDefault().BankId,
                         Approvals = _.Where(t => threshold[_.FirstOrDefault().BankId].Contains(t.CardCategoryId))
                             .Sum(t => t.Units)
-                    }).ToList().ForEach(bank => {
+                    }).ToList().ForEach(bank =>
+                    {
                         var bankName = banks.Single(_ => _.ReferenceId == bank.BankId).ShortDescription;
                         approvalsByBank[bankName] = bank.Approvals;
                     });
 
                 var agentThresholdMetric = new AgentThresholdMetric()
                 {
-                    Rank = rank++,
+                    //Rank = rank++,
                     Key = agent.FirstOrDefault().Agent,
                     Value = approvalsByBank.Sum(_ => _.Value),
                     ApprovalsByBank = approvalsByBank.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
                 };
 
                 result.Add(agentThresholdMetric);
+            }
+
+            result = result.OrderByDescending(_ => _.Value).ToList();
+            foreach (var item in result)
+            {
+                item.Rank = rank++;
             }
 
             return result;
