@@ -172,7 +172,7 @@ namespace CardPeak.Service
 
         public Agent Update(Agent agent)
         {
-            var accounts = this.AccountRepository.FindByAgent(agent.AgentId).ToList();
+            var accounts = this.AccountRepository.Find(_ => _.AgentId == agent.AgentId).ToList();
             this.AgentRepository.Update(agent, accounts);
             this.Complete();
             return agent;
