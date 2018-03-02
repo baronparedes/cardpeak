@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
-import { Col, Row, Grid, Panel, Button, DropdownButton, MenuItem } from 'react-bootstrap'
+import { Col, Row, Grid, Panel, Button, DropdownButton, MenuItem, Checkbox, FormGroup, InputGroup } from 'react-bootstrap'
 import {
     YearMonthAction, DataListFiltered, DataListProps, DataItemProps, Currency,
     DashboardLabel, ApprovalMetric
@@ -14,6 +14,14 @@ import {
 
 type AgentMetricsDataListFiltered = new () => DataListFiltered<CardPeak.Entities.AgentApprovalMetric>;
 const AgentMetricsDataListFiltered = DataListFiltered as AgentMetricsDataListFiltered;
+
+interface AgentMetricsContainerState {
+    showNegativeBalance: boolean;
+    showZeroBalance: boolean;
+    showPayouts: boolean;
+    showIncentives: boolean;
+    agentApprovalMetrics?: CardPeak.Entities.AgentApprovalMetric[];
+}
 
 interface AgentMetricsContainerDispatchProps {
     actions?: typeof Actions
@@ -66,13 +74,65 @@ const AgentMetricsTotals: React.StatelessComponent<CardPeak.Models.MetricsModel>
     )
 }
 
-class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentMetricsContainerDispatchProps, undefined> {
+class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel & AgentMetricsContainerDispatchProps, AgentMetricsContainerState> {
     constructor(props: CardPeak.Models.MetricsModel & AgentMetricsContainerDispatchProps) {
         super(props);
+        this.state = {
+            showZeroBalance: true,
+            showIncentives: false,
+            showNegativeBalance: true,
+            showPayouts: true
+        }
+    }
+    handleOnChange = (e: any) => {
+        this.setState({
+            [e.target.name]: e.target.checked
+        }, () => {
+            this.filterMetrics(this.props.agentMetrics.agentApprovalMetrics);
+        });
+    }
+    filterMetrics(data: CardPeak.Entities.AgentApprovalMetric[]) {
+        let filteredData = data.filter((item) => {
+            let showZeroBalance = false;
+            let showIncentives = false;
+            let showNegativeBalance = false;
+            let showPayouts = false;
+
+            if (this.state.showZeroBalance) {
+                showZeroBalance = item.accountBalance === 0;
+            }
+
+            if (this.state.showNegativeBalance) {
+                showNegativeBalance = item.accountBalance < 0;
+            }
+
+            if (this.state.showPayouts) {
+                showPayouts = item.accountBalance > 0;
+            }
+
+            if (this.state.showIncentives) {
+                showIncentives = item.incentivesBalance > 0;
+            }
+
+            const result = showZeroBalance || showIncentives || showNegativeBalance || showPayouts ||
+                (
+                    this.state.showNegativeBalance && this.state.showPayouts && this.state.showIncentives && this.state.showZeroBalance
+                );
+
+            return result;
+        });
+        this.setState({
+            agentApprovalMetrics: filteredData
+        });
     }
     componentDidMount() {
         this.props.actions.getAvailableYears();
         this.props.actions.getAgentMetricsStart(dateHelpers.currentYear(), 0);
+    }
+    componentWillReceiveProps(nextProps: CardPeak.Models.MetricsModel) {
+        if (this.props.agentMetrics.agentApprovalMetrics != nextProps.agentMetrics.agentApprovalMetrics) {
+            this.filterMetrics(nextProps.agentMetrics.agentApprovalMetrics);
+        }
     }
     render() {
         return (
@@ -87,6 +147,22 @@ class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel
                     <br />
                     <Grid>
                         <AgentMetricsTotals agentMetrics={this.props.agentMetrics} />
+                        <Row className="text-right">
+                            <FormGroup>
+                                <Checkbox name="showZeroBalance" checked={this.state.showZeroBalance} onChange={this.handleOnChange} inline>
+                                    <span className="text-highlight money-zero-balance">zero balance</span>
+                                </Checkbox>
+                                <Checkbox name="showNegativeBalance" checked={this.state.showNegativeBalance} onChange={this.handleOnChange} inline>
+                                    <span className="text-highlight money-debit">negative balance</span>
+                                </Checkbox>
+                                <Checkbox name="showPayouts" checked={this.state.showPayouts} onChange={this.handleOnChange} inline>
+                                    <span className="text-highlight money-credit">payout</span>
+                                </Checkbox>
+                                <Checkbox name="showIncentives" checked={this.state.showIncentives} onChange={this.handleOnChange} inline>
+                                    <span className="text-highlight money-incentive">incentives</span>
+                                </Checkbox>
+                            </FormGroup>
+                        </Row>
                         <Row>
                             <AgentMetricsDataListFiltered
                                 predicate={(agent, searchString) => {
@@ -100,7 +176,7 @@ class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel
                                     return <AgentMetricsRowLayout item={item} key={key} />
                                 }}
                                 isLoading={this.props.loadingMetrics}
-                                data={this.props.agentMetrics.agentApprovalMetrics} />
+                                data={this.state.agentApprovalMetrics} />
                         </Row>
                     </Grid>
                 </div>
