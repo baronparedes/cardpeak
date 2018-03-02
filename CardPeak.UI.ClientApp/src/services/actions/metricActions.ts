@@ -99,9 +99,6 @@ export function getAgentMetricsStart(year: number, month: number,
         metricsController.getMetrics(metricsController.API.GET_AGENT_METRICS, year, month,
             (data: CardPeak.Entities.AgentMetrics) => {
                 dispatch(getAgentMetricsComplete(data));
-                if (completeCallback) {
-                    completeCallback();
-                }
             }, (error: string) => {
                 dispatch(getMetricsError(error));
                 if (errorCallback) {
