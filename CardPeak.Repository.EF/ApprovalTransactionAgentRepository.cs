@@ -72,14 +72,14 @@ namespace CardPeak.Repository.EF
 
 		public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId)
 		{
-			var months = 12;
+			var months = Configurations.DisplayAgentPerformanceMonths;
 			var previousMonthsExcludingCurrentMonth = (months - 1) * -1;
 			var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(previousMonthsExcludingCurrentMonth);
 			var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
-			var result = new Dictionary<string, decimal>();
+			var result = new Dictionary<string, dynamic>();
 			for (int i = previousMonthsExcludingCurrentMonth; i < 1; i++)
 			{
-				result.Add(DateTime.Now.AddMonths(i).ToString(Configurations.MonthFormat), 0);
+				result.Add(DateTime.Now.AddMonths(i).ToString(Configurations.MonthFormat), null);
 			}
 
 			var query = this.Context.ApprovalTransactions
@@ -89,17 +89,27 @@ namespace CardPeak.Repository.EF
 				.GroupBy(_ => _.ApprovalDate.Month)
 				.Select(_ => new
 				{
-					Month = _.FirstOrDefault().ApprovalDate.Month,
-					Approvals = _.Sum(approvals => approvals.Units)
+					_.FirstOrDefault().ApprovalDate.Month,
+					Approvals = _.Sum(approvals => approvals.Units),
+					Amount = _.Sum(approvals => approvals.Amount)
 				})
 				.ToList();
 
 			query.ForEach(_ =>
 			{
-				result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = _.Approvals;
+				result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = new
+				{
+					_.Approvals,
+					_.Amount
+				};
 			});
 
-			return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
+			return result.Select(_ => new ApprovalMetric<string>
+			{
+				Key = _.Key,
+				Value = _.Value?.Approvals ?? 0,
+				Amount = _.Value?.Amount ?? 0
+			});
 		}
 
 		public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, DateTime startDate, DateTime? endDate)

@@ -30,9 +30,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
 			<Grid className="no-padding">
 				<Row>
 					<Col sm={6}>
-
-						<TotalApprovedMetrics
-							totalApprovals={this.props.totalApprovals} />
+						<TotalApprovedMetrics totalApprovals={this.props.totalApprovals} />
 					</Col>
 					<Col sm={6}>
 						<Panel className="panel-label-dashboard">
@@ -46,7 +44,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
 						<Row>
 							<Col sm={12}>
 								<Panel>
-									<Col>
+									<Col className="text-center">
 										<PerformanceDashboard performance={this.props.performance} />
 									</Col>
 									<Col xsHidden smHidden>
@@ -80,7 +78,6 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
 		return (
 			<div>
 				<YearMonthAction
-					defaultYearValue={0}
 					label="dashboard"
 					availableYears={this.props.availableYears}
 					refreshing={this.props.refreshing}
