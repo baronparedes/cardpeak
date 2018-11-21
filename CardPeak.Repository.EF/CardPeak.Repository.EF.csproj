@@ -76,6 +76,8 @@
     <Compile Include="RateRepository.cs" />
     <Compile Include="ReferenceRepository.cs" />
     <Compile Include="Core\RepositoryBase.cs" />
+    <Compile Include="TeamPlacementRepository.cs" />
+    <Compile Include="TeamRepository.cs" />
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
