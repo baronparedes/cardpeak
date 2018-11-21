@@ -128,6 +128,23 @@
           <Property Name="ReferenceTypeId" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="TeamPlacement">
+          <Key>
+            <PropertyRef Name="TeamPlacementId" />
+          </Key>
+          <Property Name="TeamPlacementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="IsUnitManager" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -284,6 +301,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TeamPlacement_Agent">
+          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
+          <End Role="TeamPlacement" Type="Self.TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamPlacement_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="TeamPlacement" Type="Self.TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CardPeakModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
@@ -294,6 +335,8 @@
           <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reference" EntityType="Self.Reference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenceType" EntityType="Self.ReferenceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamPlacement" EntityType="Self.TeamPlacement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Account_Agent" Association="Self.FK_Account_Agent">
             <End Role="Agent" EntitySet="Agent" />
@@ -342,6 +385,14 @@
           <AssociationSet Name="FK_Reference_ReferenceType" Association="Self.FK_Reference_ReferenceType">
             <End Role="ReferenceType" EntitySet="ReferenceType" />
             <End Role="Reference" EntitySet="Reference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamPlacement_Agent" Association="Self.FK_TeamPlacement_Agent">
+            <End Role="Agent" EntitySet="Agent" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamPlacement_Team" Association="Self.FK_TeamPlacement_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacement" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -407,6 +458,16 @@
             <End Role="Reference" EntitySet="References" />
             <End Role="BatchFileConfiguration" EntitySet="BatchFileConfiguration" />
           </AssociationSet>
+          <EntitySet Name="Teams" EntityType="CardPeakModel.Team" />
+          <EntitySet Name="TeamPlacements" EntityType="CardPeakModel.TeamPlacement" />
+          <AssociationSet Name="FK_TeamPlacement_Agent" Association="CardPeakModel.FK_TeamPlacement_Agent">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamPlacement_Team" Association="CardPeakModel.FK_TeamPlacement_Team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacements" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -433,6 +494,7 @@
           <NavigationProperty Name="ApprovalTransactions" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="Agent" ToRole="ApprovalTransaction" />
           <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
           <NavigationProperty Name="Rates" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Agent" ToRole="Rate" />
+          <NavigationProperty Name="TeamPlacement" Relationship="CardPeakModel.FK_TeamPlacement_Agent" FromRole="Agent" ToRole="TeamPlacement" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
@@ -704,6 +766,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TeamPlacement" Relationship="CardPeakModel.FK_TeamPlacement_Team" FromRole="Team" ToRole="TeamPlacement" />
+        </EntityType>
+        <EntityType Name="TeamPlacement">
+          <Key>
+            <PropertyRef Name="TeamPlacementId" />
+          </Key>
+          <Property Name="TeamPlacementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="IsUnitManager" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_TeamPlacement_Agent" FromRole="TeamPlacement" ToRole="Agent" />
+          <NavigationProperty Name="Team" Relationship="CardPeakModel.FK_TeamPlacement_Team" FromRole="TeamPlacement" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_TeamPlacement_Agent">
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
+          <End Type="CardPeakModel.TeamPlacement" Role="TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamPlacement_Team">
+          <End Type="CardPeakModel.Team" Role="Team" Multiplicity="1" />
+          <End Type="CardPeakModel.TeamPlacement" Role="TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -849,6 +955,25 @@
                 <ScalarProperty Name="HasHeader" ColumnName="HasHeader" />
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
                 <ScalarProperty Name="BatchFileConfigurationId" ColumnName="BatchFileConfigurationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="CardPeakModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamPlacements">
+            <EntityTypeMapping TypeName="CardPeakModel.TeamPlacement">
+              <MappingFragment StoreEntitySet="TeamPlacement">
+                <ScalarProperty Name="IsUnitManager" ColumnName="IsUnitManager" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="TeamPlacementId" ColumnName="TeamPlacementId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

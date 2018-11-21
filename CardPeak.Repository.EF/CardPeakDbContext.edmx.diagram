@@ -27,6 +27,10 @@
         <AssociationConnector Association="CardPeakModel.FK_Reference_ReferenceType" />
         <EntityTypeShape EntityType="CardPeakModel.BatchFileConfiguration" Width="1.5" PointX="5.25" PointY="13.75" />
         <AssociationConnector Association="CardPeakModel.FK_BatchFileConfiguration_Reference_BankId" />
+        <EntityTypeShape EntityType="CardPeakModel.Team" Width="1.5" PointX="7.875" PointY="3.875" />
+        <EntityTypeShape EntityType="CardPeakModel.TeamPlacement" Width="1.5" PointX="10.875" PointY="1.375" />
+        <AssociationConnector Association="CardPeakModel.FK_TeamPlacement_Agent" />
+        <AssociationConnector Association="CardPeakModel.FK_TeamPlacement_Team" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -37,5 +37,7 @@ namespace CardPeak.Repository.EF
         public virtual DbSet<ReferenceType> ReferenceTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<BatchFileConfiguration> BatchFileConfiguration { get; set; }
+        public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<TeamPlacement> TeamPlacements { get; set; }
     }
 }

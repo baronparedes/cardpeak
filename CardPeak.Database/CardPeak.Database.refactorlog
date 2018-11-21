@@ -210,4 +210,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="TransactionId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="4aeb5504-3789-447e-ba69-e557bf8e01df" ChangeDateTime="11/21/2018 10:03:47">
+    <Property Name="ElementName" Value="[dbo].[Team].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Team]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TeamId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="84dd21f9-5d8b-4eb5-b1eb-609d6e282e62" ChangeDateTime="11/21/2018 10:04:56">
+    <Property Name="ElementName" Value="[dbo].[TeamPlacement].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TeamPlacement]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TeamId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1245671e-9f4c-40a4-8229-975fff56a8dc" ChangeDateTime="11/21/2018 10:05:03">
+    <Property Name="ElementName" Value="[dbo].[TeamPlacement].[TeamId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TeamPlacement]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TeamPlacementId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="78791032-f8d6-4628-9f0e-2372c6a8ff9b" ChangeDateTime="11/21/2018 10:08:04">
+    <Property Name="ElementName" Value="[dbo].[CK_TeamPlacement_TeamId_AgentId]" />
+    <Property Name="ElementType" Value="SqlCheckConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[TeamPlacement]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[CK_TeamPlacement_Unique]" />
+  </Operation>
 </Operations>
