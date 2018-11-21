@@ -146,7 +146,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agentDashboard\metrics\index.tsx" />
-    <Content Include="src\components\views\agentDashboard\metrics\TotalApprovedMetrics.tsx">
+    <Content Include="src\components\layout\TotalApprovedMetrics.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\components\views\agents\AddAgentView.tsx">

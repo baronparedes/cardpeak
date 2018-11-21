@@ -31,3 +31,4 @@ export {
 } from './LinkButton'
 export { Toggle } from './Toggle'
 export { ErrorLabel } from './ErrorLabel'
+export { TotalApprovedMetrics } from './TotalApprovedMetrics'
