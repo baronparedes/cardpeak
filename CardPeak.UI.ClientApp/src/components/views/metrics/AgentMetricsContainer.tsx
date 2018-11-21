@@ -36,20 +36,17 @@ const AgentMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Ent
                     xsHidden={!props.isHeader} className="text-center">
                     <span className="grid-label spacer-left">agent metrics</span>
                 </Col>
-                <Col sm={4} xs={12} xsHidden={props.isHeader}>
+                <Col sm={3} xs={12} xsHidden={props.isHeader}>
                     {props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
                 </Col>
-                <Col sm={2} xs={3} xsHidden={props.isHeader} className="text-center">
+                <Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "approvals" : <ApprovalMetric metric={props.item.value} />}
                 </Col>
-                <Col sm={2} xs={3} xsHidden={props.isHeader} className="text-center">
+                <Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "balance" : <Currency currency={props.item.accountBalance} />}
                 </Col>
-                <Col sm={2} xs={3} xsHidden={props.isHeader} className="text-center">
+                <Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
                     {props.isHeader ? "savings" : <Currency noCurrencyColor currency={props.item.savingsBalance} />}
-                </Col>
-                <Col sm={2} xs={3} xsHidden={props.isHeader} className="text-center">
-                    {props.isHeader ? "incentives" : <Currency noCurrencyColor currency={props.item.incentivesBalance} className="amount-incentive" />}
                 </Col>
             </Row>
         )
@@ -67,7 +64,6 @@ const AgentMetricsTotals: React.StatelessComponent<CardPeak.Models.MetricsModel>
                 <Panel className="panel-label-dashboard">
                     <DashboardLabel className="pull-right" label="balance" metrics={props.agentMetrics.totalBalance} isCurrency />
                     <DashboardLabel className="pull-right" label="savings" metrics={props.agentMetrics.totalSavings} isCurrency noCurrencyColor />
-                    <DashboardLabel className="pull-right amount-incentive" label="savings" metrics={props.agentMetrics.totalIncentives} isCurrency noCurrencyColor />
                 </Panel>
             </Col>
         </Row>
@@ -157,9 +153,6 @@ class AgentMetricsContainer extends React.Component<CardPeak.Models.MetricsModel
                                 </Checkbox>
                                 <Checkbox name="showPayouts" checked={this.state.showPayouts} onChange={this.handleOnChange} inline>
                                     <span className="text-highlight money-credit">payout</span>
-                                </Checkbox>
-                                <Checkbox name="showIncentives" checked={this.state.showIncentives} onChange={this.handleOnChange} inline>
-                                    <span className="text-highlight money-incentive">incentives</span>
                                 </Checkbox>
                             </FormGroup>
                         </Row>

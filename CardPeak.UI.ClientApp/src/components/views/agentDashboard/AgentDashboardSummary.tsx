@@ -23,8 +23,7 @@ const AgentDashboardSummary = (props: AgentDashboardSummaryProps) => {
                     <Col md={4}>
                         <AgentAccountBalanceMetrics
                             accountBalance={props.agentDashboard.accountBalance}
-                            savingsBalance={props.agentDashboard.savingsBalance}
-                            incentivesBalance={props.agentDashboard.incentivesBalance}/>
+                            savingsBalance={props.agentDashboard.savingsBalance} />
                     </Col>
                 </Row>
                 <ApprovalMetrics
