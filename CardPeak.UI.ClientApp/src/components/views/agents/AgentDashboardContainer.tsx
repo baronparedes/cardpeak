@@ -8,7 +8,7 @@ import { RootState } from '../../../services/reducers'
 import { Panel } from 'react-bootstrap'
 
 import SelectAgent from './SelectAgent'
-import AgentDashboardView from '../agentDashboard/AgentDashboardView'
+import AgentDashboardView from './agentDashboard/AgentDashboardView'
 
 import { NavigationProps } from '../../layout'
 

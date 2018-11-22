@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel } from 'react-bootstrap'
-import { DashboardLabel } from '../../../layout'
+import { DashboardLabel } from '../../../../layout'
 
 export const AgentAccountBalanceMetrics = (props: { accountBalance: number, savingsBalance: number }) => {
     return (

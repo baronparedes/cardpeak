@@ -8,11 +8,11 @@ namespace CardPeak.WebAPI.Controllers
 	[RoutePrefix("api/teams")]
 	public sealed class TeamsController : ApiController
 	{
-		private ITeamPlacementService TeamPlacementService { get; set; }
+		private ITeamDashboardService TeamPlacementService { get; set; }
 
 		public TeamsController()
 		{
-			this.TeamPlacementService = new TeamPlacementService(new Repository.EF.CardPeakDbContext());
+			this.TeamPlacementService = new TeamDashboardService(new Repository.EF.CardPeakDbContext());
 		}
 
 		public IHttpActionResult Get()
@@ -59,10 +59,10 @@ namespace CardPeak.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		[Route("{id}/members")]
-		public IHttpActionResult GetMembers(int id)
+		[Route("{id}/dashboard")]
+		public IHttpActionResult GetDashboard(int id, int? year)
 		{
-			var result = this.TeamPlacementService.GetTeamMembers(id);
+			var result = this.TeamPlacementService.GetDashboard(id, year);
 			return this.Ok(result);
 		}
 

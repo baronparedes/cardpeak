@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="AgentDashboardTransaction.cs" />
     <Compile Include="AgentPayout.cs" />
+    <Compile Include="TeamDashboardDetail.cs" />
     <Compile Include="Generated\Team.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>
@@ -111,6 +112,7 @@
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="TeamDashboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Generated\CardPeakDomain.tt">

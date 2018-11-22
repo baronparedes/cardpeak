@@ -1,10 +1,10 @@
 ﻿import * as React from 'react'
 import { Button } from 'react-bootstrap'
-import { Toggle } from '../../layout'
-import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
-import DebitCreditTransactionList from '../transactions//DebitCreditTransactionList'
-import IncentiveTransactionList from '../transactions//IncentiveTransactionList'
-import AgentDashboardTransactionList from '../transactions/AgentDashboardTransactionList'
+import { Toggle } from '../../../layout'
+import ApprovalTransactionList from '../../transactions/ApprovalTransactionList'
+import DebitCreditTransactionList from '../../transactions//DebitCreditTransactionList'
+import IncentiveTransactionList from '../../transactions//IncentiveTransactionList'
+import AgentDashboardTransactionList from '../../transactions/AgentDashboardTransactionList'
 
 interface AgentDashboardTransactionsProps {
     agentDashboard: CardPeak.Entities.AgentDashboard

@@ -25,7 +25,7 @@ const Performance = (props: { perf: CardPeak.Entities.ApprovalMetric<string>, co
 			<span className="block">
 			{
 				props.perf.amount === 0 ? <span>-</span> :
-						<span className="currency text-highlight text-medium">({currencyFormat(roundOff(props.perf.amount))})</span>
+						<span className="currency text-highlight text-medium">{currencyFormat(roundOff(props.perf.amount))}</span>
 			}
 			</span>
 		</div>

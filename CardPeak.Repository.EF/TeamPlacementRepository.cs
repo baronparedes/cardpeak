@@ -2,6 +2,7 @@
 using CardPeak.Domain;
 using CardPeak.Repository.EF.Core;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace CardPeak.Repository.EF
@@ -46,7 +47,11 @@ namespace CardPeak.Repository.EF
 
 		public IEnumerable<TeamPlacement> GetTeamMembers(int teamId)
 		{
-			return this.Find(_ => _.TeamId == teamId);
+			return this.Context.TeamPlacements
+				.Include(_ => _.Agent)
+				.Where(_ => _.TeamId == teamId)
+				.AsNoTracking()
+				.ToList();
 		}
 	}
 }

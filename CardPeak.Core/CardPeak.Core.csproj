@@ -66,7 +66,7 @@
     <Compile Include="Service\IMetricsService.cs" />
     <Compile Include="Service\IProcessorService.cs" />
     <Compile Include="Service\ISettingsService.cs" />
-    <Compile Include="Service\ITeamPlacementService.cs" />
+    <Compile Include="Service\ITeamDashboardService.cs" />
     <Compile Include="Service\ITransactionService.cs" />
     <Compile Include="Service\IUnitOfWork.cs" />
   </ItemGroup>

@@ -72,21 +72,60 @@ namespace CardPeak.Repository.EF
 
 		public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId)
 		{
-			var months = Configurations.DisplayAgentPerformanceMonths;
-			var previousMonthsExcludingCurrentMonth = (months - 1) * -1;
-			var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(previousMonthsExcludingCurrentMonth);
-			var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
-			var result = new Dictionary<string, dynamic>();
-			for (int i = previousMonthsExcludingCurrentMonth; i < 1; i++)
-			{
-				result.Add(DateTime.Now.AddMonths(i).ToString(Configurations.MonthFormat), null);
-			}
+			return this.GetPerformance(this.GetPerformanceQueryByAgent, agentId, DateTime.Now, true);
+		}
 
+		public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId, int year)
+		{
+			return this.GetPerformance(this.GetPerformanceQueryByAgent, agentId, new DateTime(year, 12, 31), false);
+		}
+
+		public IEnumerable<ApprovalMetric<string>> GetTeamPerformance(int teamId, int year)
+		{
+			return this.GetPerformance(this.GetPerformanceQueryByTeam, teamId, new DateTime(year, 12, 31), false);
+		}
+
+		private IQueryable<IGrouping<int, ApprovalTransaction>> GetPerformanceQueryByAgent(int agentId, DateTime startDate, DateTime endDate)
+		{
 			var query = this.Context.ApprovalTransactions
 				.Where(_ => _.AgentId == agentId)
 				.Where(_ => !_.IsDeleted)
 				.Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
-				.GroupBy(_ => _.ApprovalDate.Month)
+				.GroupBy(_ => _.ApprovalDate.Month);
+
+			return query;
+		}
+
+		private IQueryable<IGrouping<int, ApprovalTransaction>> GetPerformanceQueryByTeam(int teamId, DateTime startDate, DateTime endDate)
+		{
+			var agents = this.Context.TeamPlacements
+				.Where(_ => _.TeamId == teamId)
+				.Select(_ => _.AgentId);
+
+			var query = this.Context.ApprovalTransactions
+				.Where(_ => agents.Contains(_.AgentId))
+				.Where(_ => !_.IsDeleted)
+				.Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
+				.GroupBy(_ => _.ApprovalDate.Month);
+
+			return query;
+		}
+
+		private IEnumerable<ApprovalMetric<string>> GetPerformance(
+			Func<int, DateTime, DateTime, IQueryable<IGrouping<int, ApprovalTransaction>>> getQuery,
+			int id, DateTime targetDate, bool showAmount)
+		{
+			var months = Configurations.DisplayAgentPerformanceMonths;
+			var previousMonthsExcludingCurrentMonth = (months - 1) * -1;
+			var startDate = new DateTime(targetDate.Year, targetDate.Month, 1).AddMonths(previousMonthsExcludingCurrentMonth);
+			var endDate = new DateTime(targetDate.Year, targetDate.Month, 1).AddMonths(1).AddDays(-1);
+			var result = new Dictionary<string, dynamic>();
+			for (int i = previousMonthsExcludingCurrentMonth; i < 1; i++)
+			{
+				result.Add(targetDate.AddMonths(i).ToString(Configurations.MonthFormat), null);
+			}
+
+			var query = getQuery(id, startDate, endDate)
 				.Select(_ => new
 				{
 					_.FirstOrDefault().ApprovalDate.Month,
@@ -97,7 +136,7 @@ namespace CardPeak.Repository.EF
 
 			query.ForEach(_ =>
 			{
-				result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = new
+				result[new DateTime(targetDate.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = new
 				{
 					_.Approvals,
 					_.Amount
@@ -108,7 +147,7 @@ namespace CardPeak.Repository.EF
 			{
 				Key = _.Key,
 				Value = _.Value?.Approvals ?? 0,
-				Amount = _.Value?.Amount ?? 0
+				Amount = showAmount ? _.Value?.Amount ?? 0 : 0
 			});
 		}
 

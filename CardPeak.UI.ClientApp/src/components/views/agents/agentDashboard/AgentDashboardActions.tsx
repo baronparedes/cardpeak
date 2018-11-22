@@ -1,8 +1,8 @@
 ﻿import * as React from 'react'
 import { Button, Grid, Row, Col, ButtonGroup } from 'react-bootstrap'
-import { ButtonLoadingText, DatePicker, UpdateAgentLinkButton } from '../../layout'
-import DebitCreditTransactionFormModal from '../transactions/DebitCreditTransactionFormModal'
-import * as dateHelpers from '../../../helpers/dateHelpers'
+import { ButtonLoadingText, DatePicker, UpdateAgentLinkButton } from '../../../layout'
+import DebitCreditTransactionFormModal from '../../transactions/DebitCreditTransactionFormModal'
+import * as dateHelpers from '../../../../helpers/dateHelpers'
 
 interface AgentDashboardActionsProps {
 	agent: CardPeak.Entities.Agent;

@@ -115,7 +115,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 		return (
 			<Grid className="spacer-bottom no-padding hidden-print">
 				<Row>
-					<Col sm={8}>
+					<Col md={8} sm={8}>
 						{this.renderDateFilters()}
 						{
 							!this.props.children ? null :
@@ -128,7 +128,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 								</Row>
 						}
 					</Col>
-					<Col sm={4} className="text-right">
+					<Col md={4} sm={4} className="text-right">
 						{this.renderButtons()}
 					</Col>
 				</Row>

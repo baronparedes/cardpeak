@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CardPeak.Core.Service
 {
-	public interface ITeamPlacementService : IUnitOfWork
+	public interface ITeamDashboardService : IUnitOfWork
 	{
-		IEnumerable<TeamPlacement> GetTeamMembers(int teamId);
+		TeamDashboard GetDashboard(int teamId, int? year);
 		TeamPlacement AddAgent(int teamId, int agentId, bool isUnitManager);
 		bool RemoveAgent(int teamId, int agentId);
 		Team CreateTeam(string teamName, string description);

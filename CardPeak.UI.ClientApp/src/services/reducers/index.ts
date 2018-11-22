@@ -6,23 +6,26 @@ import ratesReducer from './ratesReducer'
 import uploadReducer from './uploadReducer'
 import dashboardReducer from './dashboardReducer'
 import metricsReducer from './metricsReducer'
+import teamsReducer from './teamsReducer'
 
 export interface RootState {
-    agentModel: CardPeak.Models.AgentModel;
-    agentPayoutModel: CardPeak.Models.AgentPayoutModel;
-    ratesModel: CardPeak.Models.RatesModel;
-    settingsModel: CardPeak.Models.SettingsModel;
-    batchUploadModel: CardPeak.Models.BatchUploadModel;
-    dashboardModel: CardPeak.Models.DashboardModel;
-    metricsModel: CardPeak.Models.MetricsModel;
+	agentModel: CardPeak.Models.AgentModel;
+	agentPayoutModel: CardPeak.Models.AgentPayoutModel;
+	ratesModel: CardPeak.Models.RatesModel;
+	settingsModel: CardPeak.Models.SettingsModel;
+	batchUploadModel: CardPeak.Models.BatchUploadModel;
+	dashboardModel: CardPeak.Models.DashboardModel;
+	metricsModel: CardPeak.Models.MetricsModel;
+	teamsModel: CardPeak.Models.TeamsModel;
 }
 
 export default combineReducers<RootState>({
-    agentModel: agentReducer,
-    agentPayoutModel: agentPayoutReducer,
-    ratesModel: ratesReducer,
-    settingsModel: settingsReducer,
-    batchUploadModel: uploadReducer,
-    dashboardModel: dashboardReducer,
-    metricsModel: metricsReducer
+	agentModel: agentReducer,
+	agentPayoutModel: agentPayoutReducer,
+	ratesModel: ratesReducer,
+	settingsModel: settingsReducer,
+	batchUploadModel: uploadReducer,
+	dashboardModel: dashboardReducer,
+	metricsModel: metricsReducer,
+	teamsModel: teamsReducer
 });

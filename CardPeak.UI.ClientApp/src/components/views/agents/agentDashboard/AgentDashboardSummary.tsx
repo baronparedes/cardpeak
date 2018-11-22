@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { PerformanceDashboard, ApprovalMetrics, TotalApprovedMetrics } from '../../layout'
+import { PerformanceDashboard, ApprovalMetrics, TotalApprovedMetrics } from '../../../layout'
 import { AgentPerformanceMetrics, AgentAccountBalanceMetrics } from './metrics'
 
 interface AgentDashboardSummaryProps {
