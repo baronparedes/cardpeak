@@ -10,6 +10,9 @@ export const getTeamsComplete = createAction<CardPeak.Entities.Team[]>(TEAMS_ACT
 export const selectTeamDashboard = createAction<CardPeak.Entities.Team>(TEAMS_ACTIONS.SELECT_TEAM_DASHBOARD);
 export const selectTeamDashboardComplete = createAction<CardPeak.Entities.TeamDashboard>(TEAMS_ACTIONS.SELECT_TEAM_DASHBOARD_COMPLETE);
 
+export const refreshTeamDashboard = createAction<number>(TEAMS_ACTIONS.REFRESH_TEAM_DASHBOARD);
+export const refreshTeamDashboardComplete = createAction<CardPeak.Entities.TeamDashboard>(TEAMS_ACTIONS.REFRESH_TEAM_DASHBOARD_COMPLETE);
+
 function filterTeam(data: CardPeak.Entities.Team[], id: number, teamFoundCallback: (agent: CardPeak.Entities.Team) => void, notFoundCallback: () => void) {
 	let team: CardPeak.Entities.Team = data.filter(_ => _.teamId == id)[0];
 	if (team) {
@@ -54,5 +57,15 @@ export function selectTeamDashboardStart(year: number, errorCallback?: (error: s
 		teamsController.getTeamDashboard(team.teamId, year, (data: CardPeak.Entities.TeamDashboard) => {
 			dispatch(selectTeamDashboardComplete(data));
 		}, errorCallback);
+	}
+}
+
+export function refreshTeamDashboardStart(year: number) {
+	return (dispatch: (e: any) => void, getState: () => RootState) => {
+		let teamId = getState().teamsModel.selectedTeam.teamId;
+		dispatch(refreshTeamDashboard(year));
+		teamsController.getTeamDashboard(teamId, year, (data: CardPeak.Entities.TeamDashboard) => {
+			dispatch(refreshTeamDashboardComplete(data));
+		});
 	}
 }

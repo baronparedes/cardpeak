@@ -72,9 +72,9 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 	}
 	renderDateFilters() {
 		return (
-			<div className="container-fluid no-padding">
+			<div className="no-padding">
 				<Row>
-					<Col sm={6}>
+					<Col md={6} sm={6}>
 						<YearPicker
 							hideHistorical={this.props.hideHistorical}
 							value={this.state.year}
@@ -83,7 +83,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 							availableYears={this.props.availableYears}
 							onChange={this.handleOnChange} />
 					</Col>
-					<Col sm={6}>
+					<Col md={6} sm={6}>
 						{
 							this.props.yearOnly || this.state.hideMonthPicker ? null :
 								<MonthPicker
@@ -98,7 +98,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 	}
 	renderButtons() {
 		return (
-			<ButtonGroup>
+			<ButtonGroup className="spacer-right-sm">
 				<Button
 					onClick={this.handleOnRefresh}
 					bsStyle="primary"
@@ -113,14 +113,14 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 	}
 	render() {
 		return (
-			<Grid className="spacer-bottom no-padding hidden-print">
+			<Grid fluid className="spacer-bottom no-padding hidden-print">
 				<Row>
-					<Col md={8} sm={8}>
+					<Col md={9} sm={9}>
 						{this.renderDateFilters()}
 						{
 							!this.props.children ? null :
 								<Row>
-									<Col sm={12}>
+									<Col md={12} sm={12}>
 										<fieldset disabled={this.props.refreshing}>
 											{this.props.children}
 										</fieldset>
@@ -128,7 +128,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 								</Row>
 						}
 					</Col>
-					<Col md={4} sm={4} className="text-right">
+					<Col md={3} sm={3} className="text-right hidden-print">
 						{this.renderButtons()}
 					</Col>
 				</Row>

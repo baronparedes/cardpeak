@@ -87,5 +87,6 @@
 		loadingTeams?: boolean;
 		loadingTeamDashboard?: boolean;
 		refreshingTeamDashboard?: boolean;
+		selectedYear?: number;
 	}
 }

@@ -59,12 +59,17 @@ export default class SelectTeam extends React.Component<SelectTeamProps, { showM
 			);
 		}
 		return (
-			<h5 className="spacer-right">
-				<span className="spacer-right text-highlight">
-					{this.props.team.name}
-				</span>
-				{this.renderModalButton()}
-			</h5>
+			<div>
+				<h5 className="spacer-right">
+					<span className="spacer-right text-highlight">
+						{this.props.team.name}
+					</span>
+					{this.renderModalButton()}
+				</h5>
+				<label className="text-muted spacer-right">
+					{this.props.team.description}
+				</label>
+			</div>
 		);
 	}
 }

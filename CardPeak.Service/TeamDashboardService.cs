@@ -31,10 +31,12 @@ namespace CardPeak.Service
 			{
 				teamPlacements.ForEach(_ =>
 				{
+					var performance = this.ApprovalAgentRepository.GetAgentPerformance(_.AgentId, year);
 					var detail = new TeamDashboardDetail
 					{
 						TeamPlacement = _,
-						Performance = this.ApprovalAgentRepository.GetAgentPerformance(_.AgentId, year)
+						Performance = performance,
+						TotalApprovals = performance == null ? 0m : performance.Sum(p => p.Value)
 					};
 					details.Add(detail);
 				});
@@ -81,6 +83,7 @@ namespace CardPeak.Service
 			{
 				Team = team,
 				Details = this.GetDashboardDetails(teamId, year.GetValueOrDefault()),
+				Performance = this.ApprovalAgentRepository.GetTeamPerformance(teamId, year.GetValueOrDefault()),
 				AvailableYears = availableYears,
 				TotalApprovals = availableYears
 					.Where(_ => _.Key == year.GetValueOrDefault())

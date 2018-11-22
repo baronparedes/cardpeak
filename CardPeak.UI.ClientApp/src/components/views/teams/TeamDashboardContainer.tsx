@@ -52,8 +52,8 @@ class TeamDashboardContainer extends React.Component<CardPeak.Models.TeamsModel 
 		this.props.actions.selectTeamDashboard(team);
 		this.props.actions.selectTeamDashboardStart(dateHelpers.currentYear());
 	}
-	handleOnRefresh = (year: number, month: number) => {
-
+	handleOnRefresh = (year: number) => {
+		this.props.actions.refreshTeamDashboardStart(year);
 	}
 	render() {
 		return (
@@ -72,7 +72,8 @@ class TeamDashboardContainer extends React.Component<CardPeak.Models.TeamsModel 
 						teamDashboard={this.props.selectedTeamDashboard}
 						onRefresh={this.handleOnRefresh}
 						refreshing={this.props.refreshingTeamDashboard}
-						loadingTeamDashboard={this.props.loadingTeamDashboard} />
+						loadingTeamDashboard={this.props.loadingTeamDashboard}
+						selectedYear={this.props.selectedYear}/>
 				</div>
 			</div>
 		)
@@ -80,11 +81,7 @@ class TeamDashboardContainer extends React.Component<CardPeak.Models.TeamsModel 
 }
 
 const mapStateToProps = (state: RootState): CardPeak.Models.TeamsModel => ({
-	selectedTeam: state.teamsModel.selectedTeam,
-	selectedTeamDashboard: state.teamsModel.selectedTeamDashboard,
-	teams: state.teamsModel.teams,
-	loadingTeams: state.teamsModel.loadingTeams,
-	loadingTeamDashboard: state.teamsModel.loadingTeamDashboard
+	...state.teamsModel
 });
 
 const mapDispatchToProps = (dispatch: any): TeamDashboardContainerDispatchProps => {

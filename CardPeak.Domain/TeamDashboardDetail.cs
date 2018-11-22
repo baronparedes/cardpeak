@@ -7,5 +7,6 @@ namespace CardPeak.Domain
 	{
 		public TeamPlacement TeamPlacement { get; set; }
 		public IEnumerable<ApprovalMetric<string>> Performance { get; set; }
+		public decimal TotalApprovals { get; set; }
 	}
 }

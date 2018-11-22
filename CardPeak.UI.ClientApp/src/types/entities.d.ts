@@ -176,6 +176,7 @@
 	export class TeamDashboardDetail {
 		public teamPlacement: TeamPlacement;
 		public performance: ApprovalMetric<string>[];
+		public totalApprovals: number;
 	}
 
 	export class TeamDashboard {
@@ -183,5 +184,7 @@
 		public totalApprovals: number;
 		public availableYears: ApprovalMetric<number>[];
 		public details: TeamDashboardDetail[];
+		public performance: ApprovalMetric<string>[];
+		public memberCount: number;
 	}
 }

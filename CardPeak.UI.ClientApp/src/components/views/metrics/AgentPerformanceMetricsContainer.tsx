@@ -44,7 +44,7 @@ const AgentPerformanceMetricsRowLayout: React.StatelessComponent<DataItemProps<C
 			{
 				props.isHeader ? null :
 					<Col sm={8} xs={12}>
-						<PerformanceDashboard performance={props.item.performance} />
+						<PerformanceDashboard performance={props.item.performance} hideAmount />
 					</Col>
 
 			}

@@ -367,6 +367,12 @@
     <TypeScriptCompile Include="src\components\views\teams\TeamDashboardContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\teams\teamDashboard\TeamDashboardDetails.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\teams\teamDashboard\TeamDashboardSummary.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\teams\teamDashboard\TeamDashboardView.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

@@ -126,6 +126,7 @@ namespace CardPeak.Repository.EF
 			}
 
 			var query = getQuery(id, startDate, endDate)
+				.AsNoTracking()
 				.Select(_ => new
 				{
 					_.FirstOrDefault().ApprovalDate.Month,
