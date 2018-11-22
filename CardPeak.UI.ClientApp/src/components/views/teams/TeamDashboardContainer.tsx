@@ -55,6 +55,12 @@ class TeamDashboardContainer extends React.Component<CardPeak.Models.TeamsModel 
 	handleOnRefresh = (year: number) => {
 		this.props.actions.refreshTeamDashboardStart(year);
 	}
+	handleOnAddAgent = (target: CardPeak.Entities.TeamDashboard) => {
+		//TODO
+	}
+	handleOnRemoveAgent = (teamPlacement: CardPeak.Entities.TeamPlacement) => {
+		//TODO
+	}
 	render() {
 		return (
 			<div>
@@ -69,6 +75,8 @@ class TeamDashboardContainer extends React.Component<CardPeak.Models.TeamsModel 
 							onSelectTeam={this.handleOnSelectTeam} />
 					</Panel>
 					<TeamDashboardView
+						onAddAgent={this.handleOnAddAgent}
+						onRemoveAgent={this.handleOnRemoveAgent}
 						teamDashboard={this.props.selectedTeamDashboard}
 						onRefresh={this.handleOnRefresh}
 						refreshing={this.props.refreshingTeamDashboard}

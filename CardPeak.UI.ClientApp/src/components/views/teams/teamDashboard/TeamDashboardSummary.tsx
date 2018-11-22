@@ -3,8 +3,7 @@ import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { PerformanceDashboard, TotalApprovedMetrics, DashboardLabel } from '../../../layout'
 
 interface TeamDashboardSummaryProps {
-	teamDashboard: CardPeak.Entities.TeamDashboard,
-	selectedYear: number
+	teamDashboard: CardPeak.Entities.TeamDashboard
 }
 
 const TeamDashboardSummary = (props: TeamDashboardSummaryProps) => {
