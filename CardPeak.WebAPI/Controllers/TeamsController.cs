@@ -90,11 +90,11 @@ namespace CardPeak.WebAPI.Controllers
 
 		[HttpPost]
 		[Route("{id}/add")]
-		public IHttpActionResult AddAgent(int id, int agentId, bool isUnitManager, int performanceYear)
+		public IHttpActionResult AddAgent(int id, int agentId, int performanceYear)
 		{
 			try
 			{
-				var result = this.TeamPlacementService.AddAgent(id, agentId, isUnitManager, performanceYear);
+				var result = this.TeamPlacementService.AddAgent(id, agentId, false, performanceYear);
 				return this.Ok(result);
 			}
 			catch (Exception e)

@@ -42,11 +42,17 @@ namespace CardPeak.Service
 				});
 			}
 
-			return details;
+			return details
+				.OrderBy(_ => _.TeamPlacement.Agent.FirstName + " " + _.TeamPlacement.Agent.LastName);
 		}
 
-		public TeamDashboardDetail AddAgent(int teamId, int agentId, bool isUnitManager, int performanceYear)
+		private int? AddAgent(int teamId, int agentId, bool isUnitManager)
 		{
+			if (this.TeamPlacementRepository.Exists(teamId, agentId))
+			{
+				return null;
+			}
+
 			var teamPlacement = new TeamPlacement
 			{
 				TeamId = teamId,
@@ -57,6 +63,18 @@ namespace CardPeak.Service
 			this.TeamPlacementRepository.Add(teamPlacement);
 			this.Complete();
 
+			return teamPlacement.TeamPlacementId;
+		}
+
+		public TeamDashboardDetail AddAgent(int teamId, int agentId, bool isUnitManager, int performanceYear)
+		{
+			var id = this.AddAgent(teamId, agentId, isUnitManager);
+			if (id == null)
+			{
+				return null;
+			}
+
+			var teamPlacement = this.TeamPlacementRepository.Get(id.Value);
 			var performance = this.ApprovalAgentRepository.GetAgentPerformance(agentId, performanceYear);
 			var detail = new TeamDashboardDetail
 			{

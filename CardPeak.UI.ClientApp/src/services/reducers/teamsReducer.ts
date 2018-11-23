@@ -6,6 +6,14 @@ import * as dateHelpers from '../../helpers/dateHelpers'
 const initialState: CardPeak.Models.TeamsModel = {
 };
 
+function sortDetails(data: CardPeak.Entities.TeamDashboardDetail[]) {
+	data.sort((a, b) => {
+		const one = a.teamPlacement.agent.firstName + ' ' + a.teamPlacement.agent.lastName;
+		const two = b.teamPlacement.agent.firstName + ' ' + b.teamPlacement.agent.lastName;
+		return one.localeCompare(two);
+	})
+}
+
 export default handleActions<CardPeak.Models.TeamsModel, any>({
 	[TEAMS_ACTIONS.GET_TEAMS]: (state, action) => {
 		return {
@@ -62,6 +70,15 @@ export default handleActions<CardPeak.Models.TeamsModel, any>({
 		}
 	},
 	[TEAMS_ACTIONS.DELETE_AGENT_COMPLETE]: (state, action) => {
+
+		console.log(action.payload === null, 'null check');
+		if (action.payload === null) {
+			return {
+				...state,
+				removingAgentError: undefined
+			}
+		}
+
 		const payload = action.payload as CardPeak.Entities.TeamPlacement;
 		const detail = state.selectedTeamDashboard.details.find(_ => _.teamPlacement.agentId === payload.agentId);
 		const details = state.selectedTeamDashboard.details.filter(_ => _.teamPlacement.agentId !== payload.agentId);
@@ -82,5 +99,40 @@ export default handleActions<CardPeak.Models.TeamsModel, any>({
 				details
 			}
 		}
+
+	},
+	[TEAMS_ACTIONS.ADD_AGENT_ERROR]: (state, action) => {
+		return {
+			...state,
+			addingAgentError: action.payload
+		}
+	},
+	[TEAMS_ACTIONS.ADD_AGENT_COMPLETE]: (state, action) => {
+		const detail = action.payload as CardPeak.Entities.TeamDashboardDetail;
+		const totalApprovals = state.selectedTeamDashboard.totalApprovals + detail.totalApprovals;
+
+		let details = state.selectedTeamDashboard.details.slice();
+		details.push(detail);
+
+		sortDetails(details);
+
+		let performance = state.selectedTeamDashboard.performance.slice();
+		performance.forEach(p => {
+			const month = detail.performance.find(_ => _.key === p.key);
+			p.value += month ? month.value : 0;
+		});
+
+		return {
+			...state,
+			addingAgentError: undefined,
+			selectedTeamDashboard: {
+				...state.selectedTeamDashboard,
+				memberCount: state.selectedTeamDashboard.memberCount + 1,
+				totalApprovals,
+				performance,
+				details
+			}
+		}
+
 	}
 }, initialState);

@@ -40,9 +40,6 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel
             this.props.history.push("/agents/" + this.props.selectedAgent.agentId);
         }
     }
-    handleOnSelectAgent = () => {
-        this.props.actions.getAllAgentsStart();
-    }
     handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
         if (this.props.history) {
             this.props.history.push("/agents/" + agent.agentId);
@@ -58,10 +55,7 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel
                     <Panel>
                         <SelectAgent
                             agent={this.props.selectedAgent}
-                            agents={this.props.agents}
-                            isLoading={this.props.loadingAgents}
-                            onAgentSelected={this.handleOnAgentSelected}
-                            onSelectAgent={this.handleOnSelectAgent} />
+                            onAgentSelected={this.handleOnAgentSelected} />
                     </Panel>
                     <AgentDashboardView
                         agentDashboard={this.props.selectedAgentDashboard}
@@ -78,8 +72,6 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel
 const mapStateToProps = (state: RootState): CardPeak.Models.AgentModel  => ({
     selectedAgent: state.agentModel.selectedAgent,
     selectedAgentDashboard: state.agentModel.selectedAgentDashboard,
-    agents: state.agentModel.agents,
-    loadingAgents: state.agentModel.loadingAgents,
     loadingAgentDashboard: state.agentModel.loadingAgentDashboard,
     refreshingAgentDashboard: state.agentModel.refreshingAgentDashboard
 });

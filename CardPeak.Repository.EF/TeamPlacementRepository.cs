@@ -45,6 +45,24 @@ namespace CardPeak.Repository.EF
 			return true;
 		}
 
+		public bool Exists(int teamId, int agentId)
+		{
+			return this.Context.TeamPlacements
+				.Where(_ => _.TeamId == teamId)
+				.Where(_ => _.AgentId == agentId)
+				.Any();
+		}
+
+		public override TeamPlacement Get(int id)
+		{
+			return this.Context.TeamPlacements
+				.Include(_ => _.Agent)
+				.Include(_ => _.Team)
+				.Where(_ => _.TeamPlacementId == id)
+				.AsNoTracking()
+				.FirstOrDefault();
+		}
+
 		public IEnumerable<TeamPlacement> GetTeamMembers(int teamId)
 		{
 			return this.Context.TeamPlacements

@@ -7,7 +7,10 @@ const API = {
 	},
 	DELETE_AGENT: (teamId: number, agentId: number) => {
 		return `/teams/${teamId}/delete?agentId=${agentId}`;
-	}
+	},
+	ADD_AGENT: (teamId: number) => {
+		return `/teams/${teamId}/add`;
+	},
 }
 
 export function getTeams(
@@ -58,5 +61,25 @@ export function deleteAgent(
 			if (errorCallback) {
 				errorCallback(reason.message);
 			}
+		});
+}
+
+export function addAgent(teamId: number, agentId: number, performanceYear: number,
+	successCallback: (data: CardPeak.Entities.TeamDashboardDetail) => void,
+	errorCallback?: (error: string) => void) {
+
+	const config = {
+		params: {
+			agentId,
+			performanceYear
+		}
+	};
+
+	axios.post(API.ADD_AGENT(teamId), null, config)
+		.then((r) => {
+			successCallback(r.data);
+		})
+		.catch((reason) => {
+			errorCallback(reason);
 		});
 }

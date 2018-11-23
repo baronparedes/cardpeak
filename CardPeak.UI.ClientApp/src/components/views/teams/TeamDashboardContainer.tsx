@@ -58,6 +58,13 @@ class TeamDashboardContainer extends React.Component<CardPeak.Models.TeamsModel 
 	handleOnRemoveAgent = (teamPlacement: CardPeak.Entities.TeamPlacement, completeCallback: () => void) => {
 		this.props.actions.removeAgentStart(teamPlacement, completeCallback);
 	}
+	handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
+		this.props.actions.addAgentStart(
+			this.props.selectedTeam.teamId,
+			agent.agentId,
+			this.props.selectedYear
+		);
+	}
 	render() {
 		return (
 			<div>
@@ -74,6 +81,7 @@ class TeamDashboardContainer extends React.Component<CardPeak.Models.TeamsModel 
 					<TeamDashboardView
 						removingAgentError={this.props.removingAgentError}
 						onRemoveAgent={this.handleOnRemoveAgent}
+						onAgentSelected={this.handleOnAgentSelected}
 						teamDashboard={this.props.selectedTeamDashboard}
 						onRefresh={this.handleOnRefresh}
 						refreshing={this.props.refreshingTeamDashboard}

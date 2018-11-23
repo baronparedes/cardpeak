@@ -355,6 +355,9 @@
     <Folder Include="src\styles\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\components\views\agents\SelectAgentContainer.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\dashboard\metrics\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
