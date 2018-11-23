@@ -70,15 +70,6 @@ export default handleActions<CardPeak.Models.TeamsModel, any>({
 		}
 	},
 	[TEAMS_ACTIONS.DELETE_AGENT_COMPLETE]: (state, action) => {
-
-		console.log(action.payload === null, 'null check');
-		if (action.payload === null) {
-			return {
-				...state,
-				removingAgentError: undefined
-			}
-		}
-
 		const payload = action.payload as CardPeak.Entities.TeamPlacement;
 		const detail = state.selectedTeamDashboard.details.find(_ => _.teamPlacement.agentId === payload.agentId);
 		const details = state.selectedTeamDashboard.details.filter(_ => _.teamPlacement.agentId !== payload.agentId);
@@ -108,6 +99,13 @@ export default handleActions<CardPeak.Models.TeamsModel, any>({
 		}
 	},
 	[TEAMS_ACTIONS.ADD_AGENT_COMPLETE]: (state, action) => {
+		if (!!action.payload) {
+			return {
+				...state,
+				addingAgentError: undefined
+			}
+		}
+
 		const detail = action.payload as CardPeak.Entities.TeamDashboardDetail;
 		const totalApprovals = state.selectedTeamDashboard.totalApprovals + detail.totalApprovals;
 
