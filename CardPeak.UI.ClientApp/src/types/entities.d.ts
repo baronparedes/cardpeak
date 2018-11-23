@@ -171,6 +171,7 @@
 		public agentId: number;
 		public isUnitManager?: boolean;
 		public agent?: Agent;
+		public team?: Team;
 	}
 
 	export class TeamDashboardDetail {

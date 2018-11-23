@@ -11,6 +11,7 @@ interface YearMonthProps {
 	value?: any;
 	onChange?: (e: any) => void;
 	hideHistorical?: boolean;
+	hideValue?: boolean;
 }
 
 export const YearPicker: React.StatelessComponent<YearProps & YearMonthProps> = (props) => {
@@ -32,7 +33,7 @@ export const YearPicker: React.StatelessComponent<YearProps & YearMonthProps> = 
 				props.availableYears ? props.availableYears.map(_ => {
 					return (
 						<option key={_.key} value={_.key}>
-							{_.key + " (" + _.value + ")"}
+							{props.hideValue ? _.key : _.key + " (" + _.value + ")"}
 						</option>
 					)
 				}) : null

@@ -55,4 +55,32 @@ export default handleActions<CardPeak.Models.TeamsModel, any>({
 			selectedTeamDashboard: action.payload,
 		}
 	},
+	[TEAMS_ACTIONS.DELETE_AGENT_ERROR]: (state, action) => {
+		return {
+			...state,
+			removingAgentError: action.payload
+		}
+	},
+	[TEAMS_ACTIONS.DELETE_AGENT_COMPLETE]: (state, action) => {
+		const payload = action.payload as CardPeak.Entities.TeamPlacement;
+		const detail = state.selectedTeamDashboard.details.find(_ => _.teamPlacement.agentId === payload.agentId);
+		const details = state.selectedTeamDashboard.details.filter(_ => _.teamPlacement.agentId !== payload.agentId);
+		const totalApprovals = state.selectedTeamDashboard.totalApprovals - detail.totalApprovals;
+		let performance = state.selectedTeamDashboard.performance.slice();
+		performance.forEach(p => {
+			const month = detail.performance.find(_ => _.key === p.key);
+			p.value -= month ? month.value : 0;
+		});
+		return {
+			...state,
+			removingAgentError: undefined,
+			selectedTeamDashboard: {
+				...state.selectedTeamDashboard,
+				memberCount: state.selectedTeamDashboard.memberCount - 1,
+				totalApprovals,
+				performance,
+				details
+			}
+		}
+	}
 }, initialState);

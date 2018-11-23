@@ -12,6 +12,7 @@ interface YearMonthActionsProps {
 	yearOnly?: boolean;
 	defaultYearValue?: number;
 	hideHistorical?: boolean;
+	hideValue?: boolean;
 }
 
 interface YearMonthActionsState {
@@ -76,6 +77,7 @@ export class YearMonthAction extends React.Component<YearMonthActionsProps, Year
 				<Row>
 					<Col md={6} sm={6}>
 						<YearPicker
+							hideValue={this.props.hideValue}
 							hideHistorical={this.props.hideHistorical}
 							value={this.state.year}
 							error={this.state.errors.year}

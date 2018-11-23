@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
-import { PerformanceDashboard, TotalApprovedMetrics, DashboardLabel } from '../../../layout'
+import { PerformanceDashboard, TotalApprovedMetrics, DashboardLabel, ApprovalMetricsLineChart } from '../../../layout'
 
 interface TeamDashboardSummaryProps {
 	teamDashboard: CardPeak.Entities.TeamDashboard
@@ -26,6 +26,7 @@ const TeamDashboardSummary = (props: TeamDashboardSummaryProps) => {
 					<Col md={12}>
 						<Panel className="text-center panel-label-dashboard hidden-print">
 							<PerformanceDashboard performance={props.teamDashboard.performance} hideAmount />
+							<ApprovalMetricsLineChart metrics={props.teamDashboard.performance} label="yearly team performance" />
 						</Panel>
 					</Col>
 				</Row>

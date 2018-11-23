@@ -13,6 +13,10 @@ export const selectTeamDashboardComplete = createAction<CardPeak.Entities.TeamDa
 export const refreshTeamDashboard = createAction<number>(TEAMS_ACTIONS.REFRESH_TEAM_DASHBOARD);
 export const refreshTeamDashboardComplete = createAction<CardPeak.Entities.TeamDashboard>(TEAMS_ACTIONS.REFRESH_TEAM_DASHBOARD_COMPLETE);
 
+//export const removeAgent = createAction(TEAMS_ACTIONS.DELETE_AGENT);
+export const removeAgentComplete = createAction<CardPeak.Entities.TeamPlacement>(TEAMS_ACTIONS.DELETE_AGENT_COMPLETE);
+export const removeAgentError = createAction<string>(TEAMS_ACTIONS.DELETE_AGENT_ERROR);
+
 function filterTeam(data: CardPeak.Entities.Team[], id: number, teamFoundCallback: (agent: CardPeak.Entities.Team) => void, notFoundCallback: () => void) {
 	let team: CardPeak.Entities.Team = data.filter(_ => _.teamId == id)[0];
 	if (team) {
@@ -21,6 +25,17 @@ function filterTeam(data: CardPeak.Entities.Team[], id: number, teamFoundCallbac
 	else {
 		notFoundCallback();
 	}
+}
+
+export function removeAgentStart(teamPlacement: CardPeak.Entities.TeamPlacement, errorCallback: () => void) {
+	return (dispatch: (e: any) => void) => {
+		teamsController.deleteAgent(teamPlacement.teamId, teamPlacement.agentId, () => {
+			dispatch(removeAgentComplete(teamPlacement));
+		}, (error: string) => {
+			dispatch(removeAgentError(error));
+			errorCallback(); 
+		});
+	} 
 }
 
 export function getTeamsStart(completedCallback?: (data: CardPeak.Entities.Team[]) => void, errorCallback?: (error: string) => void) {

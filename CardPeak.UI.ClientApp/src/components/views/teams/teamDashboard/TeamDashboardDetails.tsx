@@ -2,7 +2,7 @@
 import { Panel, Grid, Row, Col, Button } from 'react-bootstrap'
 import {
 	PerformanceDashboard, TotalApprovedMetrics, DashboardLabel,
-	DataListFiltered, DataItemProps, ApprovalMetric
+	DataListFiltered, DataItemProps, ApprovalMetric, ConfirmButton
 } from '../../../layout'
 
 type AgentPerformanceMetricsDataList = new () => DataListFiltered<CardPeak.Entities.TeamDashboardDetail>;
@@ -10,43 +10,83 @@ const AgentPerformanceMetricsDataList = DataListFiltered as AgentPerformanceMetr
 
 interface TeamDashboardDetailsProps {
 	details?: CardPeak.Entities.TeamDashboardDetail[];
-	onRemoveAgent?: (teamPlacement: CardPeak.Entities.TeamPlacement) => void;
+	onRemoveAgent?: (teamPlacement: CardPeak.Entities.TeamPlacement, errorCallback: () => void) => void;
+	removingAgentError?: string;
 }
 
-const AgentPerformanceMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.TeamDashboardDetail> & TeamDashboardDetailsProps> = (props) => {
-	return (
-		<Row>
-			<Col md={3} xs={6} xsHidden={props.isHeader}>
-				{
-					props.isHeader ? "agent" :
-						<div className="block">
-							<Button
-								onClick={() => {
-									if (props.onRemoveAgent) {
-										props.onRemoveAgent(props.item.teamPlacement)
-									}
-								}}
-								className="spacer-right"
-								bsSize="xs"
-								bsStyle="danger">
-								<i className="fa fa-remove" title="Remove Agent"></i>
-							</Button>
-							{props.item.teamPlacement.agent.firstName + " " + props.item.teamPlacement.agent.lastName}
-						</div>
-				}
-			</Col>
-			<Col md={1} xs={6} xsHidden={props.isHeader} className={"text-left"}>
-				{props.isHeader ? "approvals" : <ApprovalMetric metric={props.item.totalApprovals} className="text-larger" />}
-			</Col>
-			{
-				props.isHeader ? null :
-					<Col md={8} xs={12}>
-						<PerformanceDashboard performance={props.item.performance} hideAmount />
-					</Col>
+interface AgentPerformanceMetricsRowLayoutState {
+	removingAgent?: boolean;
+}
 
-			}
-		</Row>
-	)
+class AgentPerformanceMetricsRowLayout extends React.Component<DataItemProps<CardPeak.Entities.TeamDashboardDetail> & TeamDashboardDetailsProps, AgentPerformanceMetricsRowLayoutState> {
+	constructor(props: DataItemProps<CardPeak.Entities.TeamDashboardDetail> & TeamDashboardDetailsProps) {
+		super(props);
+		this.state = {
+			removingAgent: undefined
+		}
+	}
+	handleOnConfirm = () => {
+		if (this.props.onRemoveAgent) {
+			this.setState({ removingAgent: true }, () => {
+				this.props.onRemoveAgent(this.props.item.teamPlacement, () => {
+					this.setState({ removingAgent: undefined });
+				});
+			});
+		}
+	}
+	render() {
+		return (
+			<Row>
+				<Col md={12} xs={12} xsHidden={this.props.isHeader}>
+					{
+						this.props.isHeader ? "agent performance" :
+							<div className="spacer-bottom">
+								<span className="text-highlight text-large">
+									{this.props.item.teamPlacement.agent.firstName + " " + this.props.item.teamPlacement.agent.lastName}
+								</span>
+								<span className="float-right">
+									<ConfirmButton
+										useButtonLoading
+										bsSize="small"
+										bsStyle="danger"
+										onConfirm={this.handleOnConfirm}
+										confirmTitle="confirm"
+										isLoading={this.state.removingAgent}
+										disabled={this.state.removingAgent}
+										buttonLabel={<i className="fa fa-remove"></i>}>
+
+										<p>
+											<strong>Remove from {this.props.item.teamPlacement.team.name}</strong>
+											<br />
+											<span className="text-muted spacer-right">agent:</span>
+											<strong className="text-highlight">
+												{this.props.item.teamPlacement.agent.firstName + " " + this.props.item.teamPlacement.agent.lastName}
+											</strong>
+										</p>
+										<p className="text-right">Do you wish to continue?</p>
+									</ConfirmButton>
+								</span>
+							</div>
+					}
+				</Col>
+				<Col md={2} xs={2}>
+					{
+						this.props.isHeader ? null :
+							<div className={"text-right align-center"}>
+								<small className="text-muted spacer-right">total</small>
+								<ApprovalMetric metric={this.props.item.totalApprovals} className="text-larger" />
+							</div>
+					}
+				</Col>
+				<Col md={10} xs={10}>
+					{
+						this.props.isHeader ? null :
+							<PerformanceDashboard performance={this.props.item.performance} hideAmount />
+					}
+				</Col>
+			</Row>
+		);
+	}
 }
 
 const TeamDashboardDetails = (props: TeamDashboardDetailsProps) => {

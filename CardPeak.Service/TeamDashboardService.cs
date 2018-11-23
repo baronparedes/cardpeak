@@ -45,7 +45,7 @@ namespace CardPeak.Service
 			return details;
 		}
 
-		public TeamPlacement AddAgent(int teamId, int agentId, bool isUnitManager)
+		public TeamDashboardDetail AddAgent(int teamId, int agentId, bool isUnitManager, int performanceYear)
 		{
 			var teamPlacement = new TeamPlacement
 			{
@@ -57,7 +57,15 @@ namespace CardPeak.Service
 			this.TeamPlacementRepository.Add(teamPlacement);
 			this.Complete();
 
-			return teamPlacement;
+			var performance = this.ApprovalAgentRepository.GetAgentPerformance(agentId, performanceYear);
+			var detail = new TeamDashboardDetail
+			{
+				TeamPlacement = teamPlacement,
+				Performance = performance,
+				TotalApprovals = performance == null ? 0 : performance.Sum(p => p.Value)
+			};
+
+			return detail;
 		}
 
 		public Team CreateTeam(string teamName, string description)

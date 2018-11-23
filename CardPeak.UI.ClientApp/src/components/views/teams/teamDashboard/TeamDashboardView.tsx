@@ -10,8 +10,8 @@ interface TeamDashboardViewProps {
 	refreshing?: boolean;
 	onRefresh?: (year?: number, month?: number) => void;
 	selectedYear?: number;
-	onAddAgent: (target: CardPeak.Entities.TeamDashboard) => void;
-	onRemoveAgent: (teamPlacement: CardPeak.Entities.TeamPlacement) => void;
+	onRemoveAgent: (teamPlacement: CardPeak.Entities.TeamPlacement, errorCallback: () => void) => void;
+	removingAgentError?: string;
 }
 
 const TeamDashboardView = (props: TeamDashboardViewProps) => {
@@ -20,18 +20,12 @@ const TeamDashboardView = (props: TeamDashboardViewProps) => {
 			<SpinnerBlock />
 		)
 	}
-
 	if (props.teamDashboard) {
 		return (
 			<div>
 				<YearMonthAction
 					addOnActions={
 						<Button
-							onClick={() => {
-								if (props.onAddAgent) {
-									props.onAddAgent(props.teamDashboard);
-								}
-							}}
 							bsStyle="success"
 							disabled={props.refreshing}>
 							<i className="fa fa-user-plus" title="Add Agent"></i>
@@ -41,6 +35,7 @@ const TeamDashboardView = (props: TeamDashboardViewProps) => {
 					availableYears={props.teamDashboard.availableYears}
 					yearOnly
 					hideHistorical
+					hideValue
 					defaultYearValue={props.selectedYear}
 					refreshing={props.refreshing}
 					onRefresh={props.onRefresh} />
@@ -49,7 +44,8 @@ const TeamDashboardView = (props: TeamDashboardViewProps) => {
 					props.refreshing ? <SpinnerBlock /> :
 						<div>
 							<TeamDashboardSummary teamDashboard={props.teamDashboard} />
-							<TeamDashboardDetails details={props.teamDashboard.details} onRemoveAgent={props.onRemoveAgent} />
+							<TeamDashboardDetails details={props.teamDashboard.details}
+								onRemoveAgent={props.onRemoveAgent} removingAgentError={props.removingAgentError} />
 						</div>
 				}
 			</div>

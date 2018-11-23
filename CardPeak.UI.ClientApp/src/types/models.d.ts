@@ -88,5 +88,6 @@
 		loadingTeamDashboard?: boolean;
 		refreshingTeamDashboard?: boolean;
 		selectedYear?: number;
+		removingAgentError?: string;
 	}
 }

@@ -49,6 +49,7 @@ namespace CardPeak.Repository.EF
 		{
 			return this.Context.TeamPlacements
 				.Include(_ => _.Agent)
+				.Include(_ => _.Team)
 				.Where(_ => _.TeamId == teamId)
 				.AsNoTracking()
 				.ToList();
