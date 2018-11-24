@@ -1,11 +1,13 @@
 ﻿import * as React from 'react'
 import * as TeamsActions from '../../../services/actions/teamsActions'
+import { SpinnerBlock } from '../../layout'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
 import ManageTeamsActions from './ManageTeamsActions'
+import TeamList from './TeamList'
 
 interface ManageTeamsContainerPropsConnect {
 	refreshing?: boolean;
@@ -34,6 +36,15 @@ class ManageTeamsContainer extends React.Component<ManageTeamsContainerPropsConn
 					onRefresh={this.handleOnRefresh}
 					refreshing={this.props.refreshing}
 					teams={this.props.teams} />
+				<br />
+				{
+					this.props.refreshing ? <SpinnerBlock /> :
+						<TeamList
+							onRefresh={this.handleOnRefresh}
+							onSaveTeam={this.props.actions.saveTeamStart}
+							data={this.props.teams}
+							isLoading={this.props.refreshing} />
+				}
 			</div>
 		)
 	}

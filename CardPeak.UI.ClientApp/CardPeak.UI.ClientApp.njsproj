@@ -391,6 +391,9 @@
     <TypeScriptCompile Include="src\components\views\teams\SelectTeamList.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\teams\TeamList.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\teams\TeamModalForm.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

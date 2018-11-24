@@ -107,7 +107,6 @@ export function saveTeamStart(
 		teamsController.saveTeam(team, (data: CardPeak.Entities.Team) => {
 			dispatch(saveTeamComplete(data));
 			saveCompleteCallback();
-			getTeamsStart();
 		}, (error: string) => {
 			dispatch(saveTeamError(error));
 			errorCallback(error);

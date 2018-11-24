@@ -4,8 +4,12 @@ import { ButtonGroup, Button, Form, FormGroup, Col } from 'react-bootstrap'
 import { ModalPanel, FormFieldInput, ErrorLabel } from '../../layout'
 
 interface TeamModalFormProps {
+	bsStyle: string;
+	buttonLabel: React.ReactNode;
 	refreshing?: boolean;
 	team?: CardPeak.Entities.Team;
+	onRefresh?: () => void;
+	onPostSaveComplete?: (team: CardPeak.Entities.Team) => void
 	onSaveTeam?: (
 		team: CardPeak.Entities.Team,
 		saveCompleteCallback: () => void,
@@ -51,13 +55,22 @@ class TeamModalForm extends React.Component<TeamModalFormProps, TeamModalFormSta
 	handleOnSaveError = (error: string) => {
 		this.setState({ isSaving: false, saveError: error });
 	}
+	handleOnSaveComplete = () => {
+		if (this.props.onRefresh) {
+			this.props.onRefresh();
+		}
+		if (this.props.onPostSaveComplete) {
+			this.props.onPostSaveComplete(this.state.team)
+		}
+		this.handleOnToggleModal();
+	}
 	handleOnSave = () => {
 		if (!this.hasErrors() && this.props.onSaveTeam) {
 			this.setState({
 				isSaving: true,
 				saveError: undefined
 			}, () => {
-				this.props.onSaveTeam(this.state.team, this.handleOnToggleModal, this.handleOnSaveError);
+				this.props.onSaveTeam(this.state.team, this.handleOnSaveComplete, this.handleOnSaveError);
 			})
 		}
 	}
@@ -105,9 +118,9 @@ class TeamModalForm extends React.Component<TeamModalFormProps, TeamModalFormSta
 			<ButtonGroup className="hidden-print">
 				<Button
 					disabled={this.props.refreshing}
-					bsStyle="success"
+					bsStyle={this.props.bsStyle}
 					onClick={this.handleOnToggleModal}>
-					<i className="fa fa-plus" />
+					{this.props.buttonLabel}
 				</Button>
 				<ModalPanel
 					footer={this.renderActions()}
@@ -131,7 +144,7 @@ class TeamModalForm extends React.Component<TeamModalFormProps, TeamModalFormSta
 										onChange={this.handleChange} />
 									<FormFieldInput
 										controlId="form-description"
-										type="text"
+										type="textarea"
 										name="description"
 										label="description"
 										value={this.state.team.description}
