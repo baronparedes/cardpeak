@@ -11,7 +11,11 @@ const API = {
 	ADD_AGENT: (teamId: number) => {
 		return `/teams/${teamId}/add`;
 	},
-	SAVE_TEAM: '/teams/save'
+	SAVE_TEAM: '/teams/save',
+	DELETE_TEAM: (teamId: number) => {
+		return `/teams/delete/${teamId}`;
+	},
+
 }
 
 export function getTeams(
@@ -95,5 +99,27 @@ export function saveTeam(team: CardPeak.Entities.Team,
 		})
 		.catch((reason) => {
 			errorCallback(reason);
+		});
+}
+
+export function deleteTeam(teamId: number,
+	successCallback: () => void,
+	errorCallback?: (error: string) => void) {
+
+	axios.delete(API.DELETE_TEAM(teamId))
+		.then((r) => {
+			if (r.status === 200) {
+				successCallback();
+			}
+			else {
+				if (errorCallback) {
+					errorCallback(r.statusText);
+				}
+			}
+		})
+		.catch((reason) => {
+			if (errorCallback) {
+				errorCallback(reason.message);
+			}
 		});
 }

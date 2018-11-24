@@ -20,12 +20,12 @@ function sortDetails(data: CardPeak.Entities.TeamDashboardDetail[]) {
 	})
 }
 
-function removeTeam(state: CardPeak.Models.TeamsModel, payload: CardPeak.Entities.Team) {
-	return state.teams.filter(_ => _.teamId !== payload.teamId);;
+function removeTeam(state: CardPeak.Models.TeamsModel, teamId: number) {
+	return state.teams.filter(_ => _.teamId !== teamId);;
 }
 
 function saveTeam(state: CardPeak.Models.TeamsModel, payload: CardPeak.Entities.Team) {
-	let data = removeTeam(state, payload);
+	let data = removeTeam(state, payload.teamId);
 	data.push(payload);
 	sortTeam(data);
 	return data;
@@ -94,10 +94,32 @@ export default handleActions<CardPeak.Models.TeamsModel, any>({
 			saveTeamError: `Save Failed: ${action.payload}`
 		}
 	},
+	[TEAMS_ACTIONS.DELETE_TEAM_COMPLETE]: (state, action) => {
+		const teams = removeTeam(state, action.payload);
+		let selectedTeam = { ...state.selectedTeam };
+		let selectedTeamDashboard = { ...state.selectedTeamDashboard };
+		if (selectedTeam && selectedTeam.teamId === action.payload) {
+			selectedTeam = undefined;
+			selectedTeamDashboard = undefined;
+		}
+		return {
+			...state,
+			deleteTeamError: undefined,
+			selectedTeam,
+			selectedTeamDashboard,
+			teams
+		}
+	},
+	[TEAMS_ACTIONS.DELETE_TEAM_ERROR]: (state, action) => {
+		return {
+			...state,
+			deleteTeamError: `Delete Failed: ${action.payload}`
+		}
+	},
 	[TEAMS_ACTIONS.DELETE_AGENT_ERROR]: (state, action) => {
 		return {
 			...state,
-			removingAgentError: `Delete failed: ${action.payload}`
+			removingAgentError: `Delete Failed: ${action.payload}`
 		}
 	},
 	[TEAMS_ACTIONS.DELETE_AGENT_COMPLETE]: (state, action) => {

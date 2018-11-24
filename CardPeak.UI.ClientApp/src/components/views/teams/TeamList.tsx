@@ -1,6 +1,9 @@
 ﻿import * as React from 'react'
 import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
-import { DataListFiltered, DataListProps, DataItemProps, TeamDashboardLinkButton, ConfirmButton } from '../../layout'
+import {
+	DataListFiltered, DataListProps, DataItemProps,
+	TeamDashboardLinkButton, ConfirmButton, HighlightedSpan
+} from '../../layout'
 import TeamModalForm from './TeamModalForm'
 
 type TeamDataListFiltered = new () => DataListFiltered<CardPeak.Entities.Team>;
@@ -31,10 +34,16 @@ class TeamListRowLayout extends React.Component<DataItemProps<CardPeak.Entities.
 		return (
 			<Row className="team-item">
 				<Col sm={4}>
-					{this.props.isHeader ? "name" : this.props.item.name}
+					{
+						this.props.isHeader ? "name" :
+							<HighlightedSpan value={this.props.item.name} />
+					}
 				</Col>
 				<Col sm={6}>
-					{this.props.isHeader ? "description" : this.props.item.description}
+					{
+						this.props.isHeader ? "description" :
+							<HighlightedSpan value={this.props.item.description} />
+					}
 				</Col>
 				<Col sm={2}>
 					{

@@ -91,5 +91,6 @@
 		removingAgentError?: string;
 		addingAgentError?: string;
 		saveTeamError?: string;
+		deleteTeamError?: string;
 	}
 }

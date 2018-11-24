@@ -22,6 +22,9 @@ export const addAgentError = createAction<string>(TEAMS_ACTIONS.ADD_AGENT_ERROR)
 export const saveTeamComplete = createAction<CardPeak.Entities.Team>(TEAMS_ACTIONS.SAVE_TEAM_COMPLETE);
 export const saveTeamError = createAction<string>(TEAMS_ACTIONS.SAVE_TEAM_ERROR);
 
+export const deleteTeamComplete = createAction<number>(TEAMS_ACTIONS.DELETE_TEAM_COMPLETE);
+export const deleteTeamError = createAction<string>(TEAMS_ACTIONS.DELETE_TEAM_ERROR);
+
 function filterTeam(data: CardPeak.Entities.Team[], id: number, teamFoundCallback: (agent: CardPeak.Entities.Team) => void, notFoundCallback: () => void) {
 	let team: CardPeak.Entities.Team = data.filter(_ => _.teamId == id)[0];
 	if (team) {
@@ -110,6 +113,16 @@ export function saveTeamStart(
 		}, (error: string) => {
 			dispatch(saveTeamError(error));
 			errorCallback(error);
+		});
+	}
+}
+
+export function deleteTeamStart(teamId: number) {
+	return (dispatch: (e: any) => void) => {
+		teamsController.deleteTeam(teamId, () => {
+			dispatch(deleteTeamComplete(teamId));
+		}, (error: string) => {
+			dispatch(deleteTeamError(error));
 		});
 	}
 }
