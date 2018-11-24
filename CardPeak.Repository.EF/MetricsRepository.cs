@@ -25,7 +25,7 @@ namespace CardPeak.Repository.EF
 			return query;
 		}
 
-		private IQueryable<ApprovalTransaction> QueryApprovalTransactionsByYearMonth(int year, int month)
+		private IQueryable<ApprovalTransaction> QueryApprovalTransactionsByYearMonth(int year, int month, int day = 0)
 		{
 			var query = this.Context.ApprovalTransactions
 				.Where(_ => !_.IsDeleted)
@@ -42,10 +42,16 @@ namespace CardPeak.Repository.EF
 					.Where(_ => _.ApprovalDate.Month == month);
 			}
 
+			if (day != 0)
+			{
+				query = query
+					.Where(_ => _.ApprovalDate.Day == day);
+			}
+
 			return query;
 		}
 
-		private IQueryable<DebitCreditTransaction> QueryDebitCreditTransactionByYearMonth(int year, int month)
+		private IQueryable<DebitCreditTransaction> QueryDebitCreditTransactionByYearMonth(int year, int month, int day = 0)
 		{
 			var query = this.Context.DebitCreditTransactions
 				.Where(_ => !_.IsDeleted)
@@ -61,6 +67,12 @@ namespace CardPeak.Repository.EF
 			{
 				query = query
 					.Where(_ => _.TransactionDateTime.Month == month);
+			}
+
+			if (day != 0)
+			{
+				query = query
+					.Where(_ => _.TransactionDateTime.Day == day);
 			}
 
 			return query;
@@ -339,6 +351,59 @@ namespace CardPeak.Repository.EF
 
 				result.Add(item);
 			}
+
+			return result;
+		}
+
+		public IEnumerable<AgentDisbursementMetrics> GetAgentDisbursementMetrics(DateTime targetDate)
+		{
+			var agents = this.Context.Agents
+							.Where(_ => !_.IsDeleted)
+							.OrderBy(_ => _.FirstName)
+							.ThenBy(_ => _.LastName)
+							.ToList();
+
+			var approvalTransactions = this.QueryApprovalTransactionsByYearMonth(targetDate.Year, targetDate.Month, targetDate.Day)
+				.GroupBy(_ => _.AgentId)
+				.Select(_ => new
+				{
+					_.FirstOrDefault().AgentId,
+					Amount = _.Sum(at => at.Amount),
+					Units = _.Sum(at => at.Units)
+				})
+				.ToList();
+
+			var debitTransactions = this.QueryDebitCreditTransactionByYearMonth(targetDate.Year, targetDate.Month, targetDate.Day)
+				.Where(_ => _.Amount < 0)
+				.Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
+				.GroupBy(_ => new { _.AgentId })
+				.Select(_ => new
+				{
+					_.FirstOrDefault().AgentId,
+					Amount = _.Sum(d => d.Amount)
+				})
+				.ToList();
+
+			var result = agents
+				.Select(_ => new AgentDisbursementMetrics
+				{
+					Key = _,
+					Value = approvalTransactions
+						.Where(at => at.AgentId == _.AgentId)
+						.Select(at => at.Units)
+						.DefaultIfEmpty(0)
+						.Sum(),
+					Amount = approvalTransactions
+						.Where(at => at.AgentId == _.AgentId)
+						.Select(at => at.Amount)
+						.DefaultIfEmpty(0)
+						.Sum(),
+					Disbursement = debitTransactions
+						.Where(dcst => dcst.AgentId == _.AgentId)
+						.Select(at => at.Amount)
+						.DefaultIfEmpty(0)
+						.Sum()
+				});
 
 			return result;
 		}

@@ -6,32 +6,24 @@
 		public amount?: number;
 	}
 
-	export class AgentApprovalMetric {
-		public key: Agent;
-		public value: number;
+	export class AgentApprovalMetric extends ApprovalMetric<Agent> {
 		public accountBalance: number;
 		public savingsBalance: number;
 		public incentivesBalance: number;
 	}
 
-	export class AgentRankMetric {
+	export class AgentRankMetric extends ApprovalMetric<Agent> {
 		public rank: number;
-		public key: Agent;
-		public value: number;
 		public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];
 	}
 
-	export class AgentThresholdMetric {
+	export class AgentThresholdMetric extends ApprovalMetric<Agent> {
 		public rank: number;
-		public key: Agent;
-		public value: number;
 		public approvalsByBank: CardPeak.Entities.ApprovalMetric<string>[];
 	}
 
-	export class AgentPerformanceMetric {
+	export class AgentPerformanceMetric extends ApprovalMetric<Agent> {
 		public rank: number;
-		public key: Agent;
-		public value: number;
 		public performance: CardPeak.Entities.ApprovalMetric<string>[];
 	}
 
@@ -53,6 +45,11 @@
 		public description?: string;
 		public cardCategoryAmountDistribution?: CardPeak.Entities.AmountDistribution[];
 		public totalApproved?: number;
+	}
+
+	export class AgentDisbursementMetrics extends ApprovalMetric<Agent>
+	{
+		public disbursement?: number;
 	}
 
 }
