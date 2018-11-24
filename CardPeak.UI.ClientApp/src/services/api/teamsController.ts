@@ -11,6 +11,7 @@ const API = {
 	ADD_AGENT: (teamId: number) => {
 		return `/teams/${teamId}/add`;
 	},
+	SAVE_TEAM: '/teams/save'
 }
 
 export function getTeams(
@@ -76,6 +77,19 @@ export function addAgent(teamId: number, agentId: number, performanceYear: numbe
 	};
 
 	axios.post(API.ADD_AGENT(teamId), null, config)
+		.then((r) => {
+			successCallback(r.data);
+		})
+		.catch((reason) => {
+			errorCallback(reason);
+		});
+}
+
+export function saveTeam(team: CardPeak.Entities.Team,
+	successCallback: (data: CardPeak.Entities.Team) => void,
+	errorCallback?: (error: string) => void) {
+
+	axios.post(API.SAVE_TEAM, team)
 		.then((r) => {
 			successCallback(r.data);
 		})

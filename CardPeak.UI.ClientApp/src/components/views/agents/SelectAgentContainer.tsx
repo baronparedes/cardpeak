@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap'
 
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { ModalPanel } from '../../layout'
-import AgentList from './AgentList'
+import SelectAgentList from './SelectAgentList'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -59,7 +59,7 @@ class SelectAgentContainer extends React.Component<SelectAgentContainerProps & S
 					onToggleModal={this.handleOnToggleModal}
 					showModal={this.state.showModal}
 					title="select agent">
-					<AgentList
+					<SelectAgentList
 						data={this.props.agents}
 						onAgentSelected={this.handleOnAgentSelected}
 						isLoading={this.props.isLoading} />

@@ -70,6 +70,18 @@ namespace CardPeak.Repository.EF.Core
 			this.Context.Entry(existingEntity).State = EntityState.Modified;
 			return existingEntity;
 		}
+
+		public TEntity Upsert(int id, TEntity entity)
+		{
+			var result = this.Update(id, entity);
+			if (result == null)
+			{
+				this.Add(entity);
+				result = entity;
+			}
+
+			return result;
+		}
 	}
 
 }

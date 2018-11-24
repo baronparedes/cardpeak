@@ -5,11 +5,11 @@ import { DataListFiltered, DataListProps, DataItemProps } from '../../layout'
 type TeamDataListFiltered = new () => DataListFiltered<CardPeak.Entities.Team>;
 const TeamDataListFiltered = DataListFiltered as TeamDataListFiltered;
 
-interface TeamListProps {
+interface SelectTeamListProps {
 	onTeamSelected?: (data: CardPeak.Entities.Team) => void;
 }
 
-const TeamListRowLayout = (props: DataItemProps<CardPeak.Entities.Team> & TeamListProps) => {
+const SelectTeamListRowLayout = (props: DataItemProps<CardPeak.Entities.Team> & SelectTeamListProps) => {
 	return (
 		<Row className="team-item">
 			<Col sm={10}>
@@ -22,7 +22,7 @@ const TeamListRowLayout = (props: DataItemProps<CardPeak.Entities.Team> & TeamLi
 	)
 }
 
-const TeamList = (props: DataListProps<CardPeak.Entities.Team> & TeamListProps) => {
+const SelectTeamList = (props: DataListProps<CardPeak.Entities.Team> & SelectTeamListProps) => {
 	return (
 		<div>
 			<TeamDataListFiltered
@@ -33,11 +33,11 @@ const TeamList = (props: DataListProps<CardPeak.Entities.Team> & TeamListProps) 
 				pageSize={5}
 				onGetKey={(item) => item.teamId}
 				isLoading={props.isLoading}
-				renderHeader={() => { return <TeamListRowLayout isHeader /> }}
-				renderItem={(item, key) => { return <TeamListRowLayout item={item} key={key} onTeamSelected={props.onTeamSelected} /> }}
+				renderHeader={() => { return <SelectTeamListRowLayout isHeader /> }}
+				renderItem={(item, key) => { return <SelectTeamListRowLayout item={item} key={key} onTeamSelected={props.onTeamSelected} /> }}
 				data={props.data} />
 		</div>
 	)
 }
 
-export default TeamList;
+export default SelectTeamList;

@@ -22,12 +22,12 @@ namespace CardPeak.WebAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("create")]
-		public IHttpActionResult Create(string teamName, string description)
+		[Route("save")]
+		public IHttpActionResult Save(Domain.Team team)
 		{
 			try
 			{
-				var result = this.TeamPlacementService.CreateTeam(teamName, description);
+				var result = this.TeamPlacementService.SaveTeam(team);
 				return this.Ok(result);
 			}
 			catch (Exception e)

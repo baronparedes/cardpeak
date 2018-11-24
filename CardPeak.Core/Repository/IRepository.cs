@@ -4,16 +4,17 @@ using System.Linq.Expressions;
 
 namespace CardPeak.Core.Repository
 {
-    public interface IRepository<TEntity> where TEntity : class
-    {
-        TEntity Get(int id);
-        IEnumerable<TEntity> GetAll();
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
-        void Add(TEntity entity);
-        void AddRange(IEnumerable<TEntity> entities);
-        void Remove(TEntity entity);
-        void RemoveRange(IEnumerable<TEntity> entities);
-        TEntity Update(int id, TEntity entity);
-    }
+	public interface IRepository<TEntity> where TEntity : class
+	{
+		TEntity Get(int id);
+		IEnumerable<TEntity> GetAll();
+		IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+		TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+		void Add(TEntity entity);
+		void AddRange(IEnumerable<TEntity> entities);
+		void Remove(TEntity entity);
+		void RemoveRange(IEnumerable<TEntity> entities);
+		TEntity Update(int id, TEntity entity);
+		TEntity Upsert(int id, TEntity entity);
+	}
 }

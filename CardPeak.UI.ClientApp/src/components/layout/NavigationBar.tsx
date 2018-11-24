@@ -72,7 +72,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
 		const navs: NavProps[] = [
 			{ text: "Team Dashboard", fa: "fa-tachometer", exact: true, to: "/teams" },
 			{ divider: true },
-			{ text: "Create", fa: "fa-user-plus", exact: true, to: "/teams/create" },
+			{ text: "Manage Teams", fa: "fa-users", exact: true, to: "/teams/manage" },
 		];
 
 		return {

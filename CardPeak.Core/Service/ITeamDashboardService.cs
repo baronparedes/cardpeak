@@ -8,7 +8,7 @@ namespace CardPeak.Core.Service
 		TeamDashboard GetDashboard(int teamId, int? year);
 		TeamDashboardDetail AddAgent(int teamId, int agentId, bool isUnitManager, int performanceYear);
 		bool RemoveAgent(int teamId, int agentId);
-		Team CreateTeam(string teamName, string description);
+		Team SaveTeam(Team team);
 		bool RemoveTeam(int teamId);
 		IEnumerable<Team> GetTeams();
 	}

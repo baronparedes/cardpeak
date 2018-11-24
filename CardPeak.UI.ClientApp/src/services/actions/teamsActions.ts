@@ -19,6 +19,9 @@ export const removeAgentError = createAction<string>(TEAMS_ACTIONS.DELETE_AGENT_
 export const addAgentComplete = createAction<CardPeak.Entities.TeamDashboardDetail>(TEAMS_ACTIONS.ADD_AGENT_COMPLETE);
 export const addAgentError = createAction<string>(TEAMS_ACTIONS.ADD_AGENT_ERROR);
 
+export const saveTeamComplete = createAction<CardPeak.Entities.Team>(TEAMS_ACTIONS.SAVE_TEAM_COMPLETE);
+export const saveTeamError = createAction<string>(TEAMS_ACTIONS.SAVE_TEAM_ERROR);
+
 function filterTeam(data: CardPeak.Entities.Team[], id: number, teamFoundCallback: (agent: CardPeak.Entities.Team) => void, notFoundCallback: () => void) {
 	let team: CardPeak.Entities.Team = data.filter(_ => _.teamId == id)[0];
 	if (team) {
@@ -93,6 +96,21 @@ export function refreshTeamDashboardStart(year: number) {
 		dispatch(refreshTeamDashboard(year));
 		teamsController.getTeamDashboard(teamId, year, (data: CardPeak.Entities.TeamDashboard) => {
 			dispatch(refreshTeamDashboardComplete(data));
+		});
+	}
+}
+
+export function saveTeamStart(
+	team: CardPeak.Entities.Team,
+	saveCompleteCallback: () => void, errorCallback: (error: string) => void) {
+	return (dispatch: (e: any) => void) => {
+		teamsController.saveTeam(team, (data: CardPeak.Entities.Team) => {
+			dispatch(saveTeamComplete(data));
+			saveCompleteCallback();
+			getTeamsStart();
+		}, (error: string) => {
+			dispatch(saveTeamError(error));
+			errorCallback(error);
 		});
 	}
 }

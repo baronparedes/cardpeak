@@ -86,14 +86,6 @@ namespace CardPeak.Service
 			return detail;
 		}
 
-		public Team CreateTeam(string teamName, string description)
-		{
-			var team = new Team { Name = teamName, Description = description };
-			this.TeamRepository.Add(team);
-			this.Complete();
-			return team;
-		}
-
 		public TeamDashboard GetDashboard(int teamId, int? year = null)
 		{
 			year = year ?? DateTime.Now.Year;
@@ -155,6 +147,13 @@ namespace CardPeak.Service
 			}
 
 			return true;
+		}
+
+		public Team SaveTeam(Team team)
+		{
+			this.TeamRepository.Upsert(team.TeamId, team);
+			this.Complete();
+			return team;
 		}
 	}
 }

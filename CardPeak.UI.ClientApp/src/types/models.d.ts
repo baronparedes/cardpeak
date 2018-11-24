@@ -90,5 +90,6 @@
 		selectedYear?: number;
 		removingAgentError?: string;
 		addingAgentError?: string;
+		saveTeamError?: string;
 	}
 }

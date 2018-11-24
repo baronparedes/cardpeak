@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { ModalPanel } from '../../layout'
-import TeamList from './TeamList'
+import SelectTeamList from './SelectTeamList'
 
 interface SelectTeamProps {
 	team: CardPeak.Entities.Team;
@@ -41,7 +41,7 @@ export default class SelectTeam extends React.Component<SelectTeamProps, { showM
 					onToggleModal={this.handleOnToggleModal}
 					showModal={this.state.showModal}
 					title="select team">
-					<TeamList
+					<SelectTeamList
 						data={this.props.teams}
 						onTeamSelected={this.handleOnTeamSelected}
 						isLoading={this.props.isLoading} />
