@@ -6,12 +6,29 @@ import * as dateHelpers from '../../helpers/dateHelpers'
 const initialState: CardPeak.Models.TeamsModel = {
 };
 
+function sortTeam(data: CardPeak.Entities.Team[]) {
+	data.sort((a, b) => {
+		return a.name.localeCompare(b.name);
+	})
+}
+
 function sortDetails(data: CardPeak.Entities.TeamDashboardDetail[]) {
 	data.sort((a, b) => {
 		const one = a.teamPlacement.agent.firstName + ' ' + a.teamPlacement.agent.lastName;
 		const two = b.teamPlacement.agent.firstName + ' ' + b.teamPlacement.agent.lastName;
 		return one.localeCompare(two);
 	})
+}
+
+function removeTeam(state: CardPeak.Models.TeamsModel, payload: CardPeak.Entities.Team) {
+	return state.teams.filter(_ => _.teamId !== payload.teamId);;
+}
+
+function saveTeam(state: CardPeak.Models.TeamsModel, payload: CardPeak.Entities.Team) {
+	let data = removeTeam(state, payload);
+	data.push(payload);
+	sortTeam(data);
+	return data;
 }
 
 export default handleActions<CardPeak.Models.TeamsModel, any>({
@@ -64,9 +81,11 @@ export default handleActions<CardPeak.Models.TeamsModel, any>({
 		}
 	},
 	[TEAMS_ACTIONS.SAVE_TEAM_COMPLETE]: (state, action) => {
+		const teams = saveTeam(state, action.payload);
 		return {
 			...state,
-			removingAgentError: undefined
+			removingAgentError: undefined,
+			teams
 		}
 	},
 	[TEAMS_ACTIONS.SAVE_TEAM_ERROR]: (state, action) => {

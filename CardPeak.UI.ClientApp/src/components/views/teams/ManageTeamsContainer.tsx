@@ -40,7 +40,6 @@ class ManageTeamsContainer extends React.Component<ManageTeamsContainerPropsConn
 				{
 					this.props.refreshing ? <SpinnerBlock /> :
 						<TeamList
-							onRefresh={this.handleOnRefresh}
 							onSaveTeam={this.props.actions.saveTeamStart}
 							data={this.props.teams}
 							isLoading={this.props.refreshing} />

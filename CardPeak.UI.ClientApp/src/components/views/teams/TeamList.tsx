@@ -7,7 +7,6 @@ type TeamDataListFiltered = new () => DataListFiltered<CardPeak.Entities.Team>;
 const TeamDataListFiltered = DataListFiltered as TeamDataListFiltered;
 
 interface TeamListProps {
-	onRefresh?: () => void;
 	onDeleteTeam?: (id: number) => void;
 	onSaveTeam?: (
 		team: CardPeak.Entities.Team,
@@ -85,7 +84,7 @@ const TeamList = (props: DataListProps<CardPeak.Entities.Team> & TeamListProps) 
 				renderHeader={() => { return <TeamListRowLayout isHeader /> }}
 				renderItem={(item, key) => {
 					return <TeamListRowLayout item={item} key={key}
-						onSaveTeam={props.onSaveTeam} onDeleteTeam={props.onDeleteTeam} onRefresh={props.onRefresh} />
+						onSaveTeam={props.onSaveTeam} onDeleteTeam={props.onDeleteTeam} />
 				}}
 				data={props.data} />
 		</div>

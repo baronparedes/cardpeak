@@ -39,7 +39,7 @@ class ManageTeamsActions extends React.Component<ManageTeamsActionsProps, {}> {
 									<ButtonLoadingText isLoading={this.props.refreshing} label="refresh" />
 								</Button>
 								<TeamModalForm bsStyle="success" buttonLabel={<i className="fa fa-plus" />}
-									refreshing={this.props.refreshing} team={newTeam} onRefresh={this.props.onRefresh} onSaveTeam={this.props.onSaveTeam} />
+									refreshing={this.props.refreshing} team={newTeam} onSaveTeam={this.props.onSaveTeam} />
 							</ButtonGroup>
 						</Col >
 					</Row>

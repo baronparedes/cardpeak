@@ -8,7 +8,6 @@ interface TeamModalFormProps {
 	buttonLabel: React.ReactNode;
 	refreshing?: boolean;
 	team?: CardPeak.Entities.Team;
-	onRefresh?: () => void;
 	onPostSaveComplete?: (team: CardPeak.Entities.Team) => void
 	onSaveTeam?: (
 		team: CardPeak.Entities.Team,
@@ -56,9 +55,6 @@ class TeamModalForm extends React.Component<TeamModalFormProps, TeamModalFormSta
 		this.setState({ isSaving: false, saveError: error });
 	}
 	handleOnSaveComplete = () => {
-		if (this.props.onRefresh) {
-			this.props.onRefresh();
-		}
 		if (this.props.onPostSaveComplete) {
 			this.props.onPostSaveComplete(this.state.team)
 		}

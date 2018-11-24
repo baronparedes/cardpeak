@@ -113,7 +113,8 @@ namespace CardPeak.Service
 
 		public IEnumerable<Team> GetTeams()
 		{
-			return this.TeamRepository.GetAll();
+			return this.TeamRepository.GetAll()
+				.OrderBy(_ => _.Name);
 		}
 
 		public bool RemoveAgent(int teamId, int agentId)

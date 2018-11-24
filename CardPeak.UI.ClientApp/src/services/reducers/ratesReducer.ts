@@ -13,6 +13,7 @@ function sortRates(rates: CardPeak.Entities.Rate[]) {
         return a.bank.description.localeCompare(b.bank.description) || a.cardCategory.description.localeCompare(b.cardCategory.description);
     })
 }
+
 function removeRate(state: CardPeak.Models.RatesModel, payload: CardPeak.Entities.Rate) {
     let rates: CardPeak.Entities.Rate[] = [];
     state.rates.forEach(_ => {
