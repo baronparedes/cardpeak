@@ -7,59 +7,61 @@ using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-	public sealed class RateRepository : RepositoryBase<Rate, CardPeakDbContext>, IRateRepository
+	public sealed class DefaultRateRepository : RepositoryBase<DefaultRate, CardPeakDbContext>, IDefaultRateRepository
 	{
-		public RateRepository(CardPeakDbContext context) : base(context)
+		public DefaultRateRepository(CardPeakDbContext context) : base(context)
 		{
 		}
 
-		public Rate GetRate(int agentId, int cardCategoryId, int bankId)
+		public Rate GetRate(int typeId, int cardCategoryId, int bankId)
 		{
-			var rate = this.Context.Rates
+			var rate = this.Context.DefaultRates
 				.Where(_ => _.BankId == bankId)
 				.Where(_ => _.CardCategoryId == cardCategoryId)
-				.Where(_ => _.AgentId == agentId)
-				.OrderByDescending(_ => _.AgentId)
+				.Where(_ => _.TypeId == typeId)
+				.Select(_ => new Rate
+				{
+					RateId = _.DefaultRateId,
+					AgentId = 0,
+					CardCategoryId = _.CardCategoryId,
+					BankId = _.BankId,
+					Amount = _.Amount,
+					SavingsAmount = _.SavingsAmount,
+					IsDefault = true,
+					TypeId = _.TypeId
+				})
 				.FirstOrDefault();
-
-			if (rate == null)
-			{
-				rate = this.Context.DefaultRates
-					.Where(_ => _.BankId == bankId)
-					.Where(_ => _.CardCategoryId == cardCategoryId)
-					.OrderByDescending(_ => _.TypeId)
-					.ToList()
-					.Select(_ => new Rate
-					{
-						RateId = _.DefaultRateId,
-						AgentId = 0,
-						CardCategoryId = _.CardCategoryId,
-						BankId = _.BankId,
-						Amount = _.Amount,
-						SavingsAmount = _.SavingsAmount,
-						IsDefault = true,
-						TypeId = _.TypeId
-					})
-					.FirstOrDefault();
-			}
-
 			return rate;
 		}
 
-		public IEnumerable<Rate> GetRates(int agentId)
+		public IEnumerable<Rate> GetRates(int typeId)
 		{
-			return this.Context.Rates
+			return this.Context.DefaultRates
 				.Include(_ => _.Bank)
 				.Include(_ => _.CardCategory)
-				.Where(_ => _.AgentId == agentId)
+				.Where(_ => _.TypeId == typeId)
 				.OrderBy(_ => _.Bank.Description)
 				.ThenBy(_ => _.CardCategory.Description)
-				.ToList();
+				.AsNoTracking()
+				.ToList()
+				.Select(_ => new Rate
+				{
+					RateId = _.DefaultRateId,
+					AgentId = 0,
+					CardCategoryId = _.CardCategoryId,
+					BankId = _.BankId,
+					Amount = _.Amount,
+					SavingsAmount = _.SavingsAmount,
+					IsDefault = true,
+					TypeId = _.TypeId,
+					Bank = _.Bank,
+					CardCategory = _.CardCategory
+				});
 		}
 
-		public void SaveRates(int agentId, Settings settings)
+		public void SaveRates(int typeId, Settings settings)
 		{
-			var rates = this.Context.Rates.Where(_ => _.AgentId == agentId).ToList();
+			var rates = this.Context.DefaultRates.Where(_ => _.TypeId == typeId).ToList();
 			rates.ForEach(_ =>
 			{
 				var item = settings.Rates.FirstOrDefault(rate => rate.BankId == _.BankId && rate.CardCategoryId == _.CardCategoryId);

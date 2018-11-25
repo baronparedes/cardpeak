@@ -7,6 +7,9 @@ import * as ratesController from '../api/ratesController'
 export const selectAgentRate = createAction<number>(RATE_ACTIONS.SELECT_AGENT_RATE);
 export const selectAgentRateComplete = createAction<CardPeak.Entities.Settings>(RATE_ACTIONS.SELECT_AGENT_RATE_COMPLETE);
 
+export const selectDefaultRate = createAction<number>(RATE_ACTIONS.SELECT_DEFAULT_RATE);
+export const selectDefaultRateComplete = createAction<CardPeak.Entities.Settings>(RATE_ACTIONS.SELECT_DEFAULT_RATE_COMPLETE);
+
 export const postRates = createAction(RATE_ACTIONS.POST_RATES);
 export const postRatesComplete = createAction<CardPeak.Entities.Rate[]>(RATE_ACTIONS.POST_RATES_COMPLETE);
 export const postRatesError = createAction(RATE_ACTIONS.POST_RATES_ERROR);
@@ -15,35 +18,69 @@ export const deleteRate = createAction<CardPeak.Entities.Rate>(RATE_ACTIONS.DELE
 export const addRate = createAction<CardPeak.Entities.Rate>(RATE_ACTIONS.ADD_RATE);
 
 export function selectAgentStart(agentId: number,
-    errorCallback?: (e: string) => void) {
+	errorCallback?: (e: string) => void) {
 
-    return (dispatch: (e: any) => void) => {
-        dispatch(selectAgentRate(agentId));
-        ratesController.getRates(agentId, (data: CardPeak.Entities.Settings) => {
-            dispatch(selectAgentRateComplete(data));
-        }, (message: string) => {
-            if (errorCallback) {
-                errorCallback(message);
-            }
-        });
-    }
+	return (dispatch: (e: any) => void) => {
+		dispatch(selectAgentRate(agentId));
+		ratesController.getRates(agentId, (data: CardPeak.Entities.Settings) => {
+			dispatch(selectAgentRateComplete(data));
+		}, (message: string) => {
+			if (errorCallback) {
+				errorCallback(message);
+			}
+		});
+	}
 }
 
 export function postRatesStart(agentId: number, rates: CardPeak.Entities.Rate[],
-    successCallback?: (data: CardPeak.Entities.Rate[]) => void, errorCallback?: (message: string) => void){
+	successCallback?: (data: CardPeak.Entities.Rate[]) => void, errorCallback?: (message: string) => void){
 
-    return (dispatch: (e: any) => void) => {
-        dispatch(postRates());
-        ratesController.postRates(agentId, rates, (data: CardPeak.Entities.Rate[]) => {
-            dispatch(postRatesComplete(data));
-            if (successCallback) {
-                successCallback(data);
-            }
-        }, (message: string) => {
-            dispatch(postRatesError());
-            if (errorCallback) {
-                errorCallback(message);
-            }
-        });
-    }
+	return (dispatch: (e: any) => void) => {
+		dispatch(postRates());
+		ratesController.postRates(agentId, rates, (data: CardPeak.Entities.Rate[]) => {
+			dispatch(postRatesComplete(data));
+			if (successCallback) {
+				successCallback(data);
+			}
+		}, (message: string) => {
+			dispatch(postRatesError());
+			if (errorCallback) {
+				errorCallback(message);
+			}
+		});
+	}
+}
+
+export function selectDefaultRateStart(typeId: number,
+	errorCallback?: (e: string) => void) {
+
+	return (dispatch: (e: any) => void) => {
+		dispatch(selectDefaultRate(typeId));
+		ratesController.getDefaultRates(typeId, (data: CardPeak.Entities.Settings) => {
+			dispatch(selectDefaultRateComplete(data));
+		}, (message: string) => {
+			if (errorCallback) {
+				errorCallback(message);
+			}
+		});
+	}
+}
+
+export function postDefaultRatesStart(typeId: number, rates: CardPeak.Entities.Rate[],
+	successCallback?: (data: CardPeak.Entities.Rate[]) => void, errorCallback?: (message: string) => void) {
+
+	return (dispatch: (e: any) => void) => {
+		dispatch(postRates());
+		ratesController.postDefaultRates(typeId, rates, (data: CardPeak.Entities.Rate[]) => {
+			dispatch(postRatesComplete(data));
+			if (successCallback) {
+				successCallback(data);
+			}
+		}, (message: string) => {
+			dispatch(postRatesError());
+			if (errorCallback) {
+				errorCallback(message);
+			}
+		});
+	}
 }

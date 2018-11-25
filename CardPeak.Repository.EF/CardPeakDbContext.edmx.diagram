@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="caa02d65bbb241bd87d1be7c00c9a734" Name="Diagram1" ZoomLevel="111">
+      <Diagram DiagramId="caa02d65bbb241bd87d1be7c00c9a734" Name="Diagram1" ZoomLevel="76">
         <EntityTypeShape EntityType="CardPeakModel.Account" Width="1.5" PointX="5.25" PointY="10.875" />
         <EntityTypeShape EntityType="CardPeakModel.Agent" Width="1.5" PointX="3" PointY="2" />
         <EntityTypeShape EntityType="CardPeakModel.ApprovalTransaction" Width="1.5" PointX="5.25" PointY="1.625" />
@@ -31,6 +31,10 @@
         <EntityTypeShape EntityType="CardPeakModel.TeamPlacement" Width="1.5" PointX="10.875" PointY="1.375" />
         <AssociationConnector Association="CardPeakModel.FK_TeamPlacement_Agent" />
         <AssociationConnector Association="CardPeakModel.FK_TeamPlacement_Team" />
+        <EntityTypeShape EntityType="CardPeakModel.DefaultRate" Width="1.5" PointX="5.25" PointY="23.625" />
+        <AssociationConnector Association="CardPeakModel.FK_DefaultRate_Agent" />
+        <AssociationConnector Association="CardPeakModel.FK_DefaultRate_Reference_BankId" />
+        <AssociationConnector Association="CardPeakModel.FK_DefaultRate_Reference_CardCategoryId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

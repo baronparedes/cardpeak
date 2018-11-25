@@ -85,14 +85,17 @@
 		public agent?: Agent;
 		public bank?: Reference;
 		public cardCategory?: Reference;
+		public typeId?: number;
 	}
 
 	export class Settings {
 		public banks: Reference[];
 		public cardCategories: Reference[];
+		public defaultRateTypes: Reference[];
 		public rates: Rate[];
 		public bankReferenceTypeId: number;
 		public cardCategoryReferenceTypeId: number;
+		public defaultRateReferenceTypeId: number;
 	}
 
 	export class BatchUpload {

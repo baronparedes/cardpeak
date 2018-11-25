@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Core\ContextBase.cs" />
     <Compile Include="DebitCreditTransactionRepository.cs" />
+    <Compile Include="DefaultRateRepository.cs" />
     <Compile Include="MetricsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RateRepository.cs" />

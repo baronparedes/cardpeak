@@ -14,6 +14,7 @@
 
 	export interface RatesModel {
 		agentId?: number;
+		typeId?: number;
 		rates?: CardPeak.Entities.Rate[];
 		loadingRates?: boolean;
 		postingRates?: boolean;
@@ -24,12 +25,14 @@
 	export interface SettingsModel {
 		banks?: CardPeak.Entities.Reference[];
 		cardCategories?: CardPeak.Entities.Reference[];
+		defaultRateTypes?: CardPeak.Entities.Reference[];
 		postingBank?: boolean;
 		postingCardCategory?: boolean;
 		loadingBanks?: boolean;
 		loadingCardCategories?: boolean;
 		cardCategoryReferenceTypeId?: number;
 		bankReferenceTypeId?: number;
+		defaultRateReferenceTypeId?: number;
 	}
 
 	export interface BatchUploadModel {
