@@ -97,7 +97,7 @@ class AgentDisbursementMetricsContainer extends
 
 		return (
 			<div>
-				<h2>Agent Disbursement</h2>
+				<h2>Daily Disbursement</h2>
 				<div>
 					<DateRangeAction
 						refreshing={this.props.loadingMetrics}

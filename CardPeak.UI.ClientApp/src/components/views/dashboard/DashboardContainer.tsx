@@ -45,7 +45,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
 							<Col sm={12}>
 								<Panel>
 									<Col className="text-center">
-										<PerformanceDashboard performance={this.props.performance} />
+										<PerformanceDashboard performance={this.props.performance} hideAmount />
 									</Col>
 									<Col xsHidden smHidden>
 										<br />
