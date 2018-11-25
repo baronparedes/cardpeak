@@ -3,22 +3,21 @@ import { SETTINGS_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.SettingsModel = {
 	banks: [],
-	cardCategories: []
+	cardCategories: [],
+	defaultRateTypes: []
 };
 
 export default handleActions<CardPeak.Models.SettingsModel, any>({
 	[SETTINGS_ACTIONS.LOAD_REFERENCES]: (state, action) => {
 		return {
 			...state,
-			loadingBanks: true,
-			loadingCardCategories: true
+			loading: true
 		}
 	},
 	[SETTINGS_ACTIONS.LOAD_REFERENCES_ERROR]: (state, action) => {
 		return {
 			...state,
-			loadingBanks: undefined,
-			loadingCardCategories: undefined
+			loading: undefined
 		}
 	},
 	[SETTINGS_ACTIONS.LOAD_REFERENCES_COMPLETE]: (state, action) => {
@@ -26,8 +25,7 @@ export default handleActions<CardPeak.Models.SettingsModel, any>({
 		return {
 			...state,
 			...payload,
-			loadingBanks: undefined,
-			loadingCardCategories: undefined,
+			loading: undefined
 		}
 	}
 }, initialState);

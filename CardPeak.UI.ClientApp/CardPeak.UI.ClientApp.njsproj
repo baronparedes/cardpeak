@@ -216,9 +216,6 @@
     <Content Include="src\components\views\metrics\MetricsView.tsx">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\components\views\settings\DefaultRatesView.tsx">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="src\components\views\settings\RateList.tsx">
       <SubType>Code</SubType>
     </Content>
@@ -368,6 +365,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\metrics\AgentMetricsContainer.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\settings\DefaultRatesContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\teams\ManageTeamsActions.tsx">

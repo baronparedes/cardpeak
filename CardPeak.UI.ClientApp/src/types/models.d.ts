@@ -28,8 +28,7 @@
 		defaultRateTypes?: CardPeak.Entities.Reference[];
 		postingBank?: boolean;
 		postingCardCategory?: boolean;
-		loadingBanks?: boolean;
-		loadingCardCategories?: boolean;
+		loading?: boolean;
 		cardCategoryReferenceTypeId?: number;
 		bankReferenceTypeId?: number;
 		defaultRateReferenceTypeId?: number;

@@ -40,7 +40,7 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
 							onSaveReference={this.handleOnSave}
 							data={this.props.banks}
 							referenceTypeId={this.props.bankReferenceTypeId}
-							isLoading={this.props.loadingBanks} />
+							isLoading={this.props.loading} />
 					</Col>
 					<Col lg={6} md={6} sm={12} xs={12}>
 						<ReferenceList
@@ -48,14 +48,14 @@ class ReferencesContainer extends React.Component<CardPeak.Models.SettingsModel 
 							onSaveReference={this.handleOnSave}
 							data={this.props.cardCategories}
 							referenceTypeId={this.props.cardCategoryReferenceTypeId}
-							isLoading={this.props.loadingCardCategories} />
+							isLoading={this.props.loading} />
 						<br />
 						<ReferenceList
 							title="default rates"
 							onSaveReference={this.handleOnSave}
 							data={this.props.defaultRateTypes}
 							referenceTypeId={this.props.defaultRateReferenceTypeId}
-							isLoading={this.props.loadingCardCategories} />
+							isLoading={this.props.loading} />
 					</Col>
 				</Row>
 			</Grid>
