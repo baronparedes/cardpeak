@@ -238,4 +238,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[CK_TeamPlacement_Unique]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="e631504f-16c8-4ce1-8072-20267eb6c6ee" ChangeDateTime="11/25/2018 18:31:24">
+    <Property Name="ElementName" Value="[dbo].[DefaultRate].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DefaultRate]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DefaultRateId" />
+  </Operation>
 </Operations>

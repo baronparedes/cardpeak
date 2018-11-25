@@ -1,10 +1,11 @@
 ﻿SET IDENTITY_INSERT dbo.[Reference] ON
 GO
 
-DECLARE @bankReferenceType INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Bank');
-DECLARE @ccReferenceType INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Card Category');
-DECLARE @tranReferenceType INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Transaction Type');
-DECLARE @roleReferenceType INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Role');
+DECLARE @bankReferenceType			INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Bank');
+DECLARE @ccReferenceType			INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Card Category');
+DECLARE @tranReferenceType			INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Transaction Type');
+DECLARE @roleReferenceType			INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Role');
+DECLARE @defaultRateReferenceType	INT	= (SELECT ReferenceTypeId FROM ReferenceType t WHERE t.[Description] = 'Default Rate');
 
 ;WITH Bank_CTE(ReferenceId, [Description], ShortDescription)
 AS
@@ -39,13 +40,21 @@ AS
 	UNION ALL SELECT 14, 'Reporting'
 	UNION ALL SELECT 15, 'User'
 ),
+DefaultRate_CTE(ReferenceId, [Description], ShortDescription)
+AS
+(
+	SELECT 18, 'Rookie Rate', 'RR'
+	UNION ALL SELECT 19, 'Core Rate w/o Savings', 'CR'
+	UNION ALL SELECT 20, 'Core Rate w/ Savings', 'CRS'
+),
 Union_All_CTE([ReferenceId], [Description], ShortDescription, [ReferenceTypeId])
 AS
 (
 	SELECT ReferenceId, [Description], ShortDescription, @bankReferenceType FROM Bank_CTE UNION ALL
 	SELECT ReferenceId, [Description], ShortDescription, @ccReferenceType FROM CardCategory_CTE UNION ALL
 	SELECT ReferenceId, [Description], NULL, @tranReferenceType FROM TransactionType_CTE UNION ALL
-	SELECT ReferenceId, [Description], NULL, @roleReferenceType FROM Role_CTE
+	SELECT ReferenceId, [Description], NULL, @roleReferenceType FROM Role_CTE UNION ALL
+	SELECT ReferenceId, [Description], ShortDescription, @defaultRateReferenceType FROM DefaultRate_CTE
 )
 
 MERGE dbo.Reference ref
