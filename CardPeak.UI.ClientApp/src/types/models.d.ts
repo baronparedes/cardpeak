@@ -69,6 +69,7 @@
 		agentRankingMetrics?: CardPeak.Entities.AgentRankMetric[];
 		agentPerformanceMetrics?: CardPeak.Entities.AgentPerformanceMetric[];
 		agentThresholdMetrics?: CardPeak.Entities.AgentThresholdMetric[];
+		agentDisbursementMetrics?: CardPeak.Entities.AgentDisbursementMetrics[];
 		bankAmountDistributionMetrics?: CardPeak.Entities.BankAmountDistribution[];
 	}
 

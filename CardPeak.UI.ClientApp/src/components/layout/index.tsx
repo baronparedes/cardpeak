@@ -23,6 +23,7 @@ export { Currency, ApprovalMetric } from './NumberLabel'
 export { NotFound } from './NotFound'
 export { DataList, DataListProps, DataListDisplayProps, DataItemProps } from './DataList'
 export { DataListFiltered } from './DataListFiltered'
+export { DateRangeAction } from './DateRangeAction'
 export { YearPicker, MonthPicker } from './YearMonthPicker'
 export { YearMonthAction } from './YearMonthAction'
 export {

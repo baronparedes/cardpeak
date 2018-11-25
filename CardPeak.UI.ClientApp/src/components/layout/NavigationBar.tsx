@@ -38,6 +38,7 @@ export class NavigationBar extends React.Component<{}, undefined> {
 			{ text: "Agent Rankings", fa: "fa-star", exact: true, to: "/metrics/agents/rankings" },
 			{ text: "Agent Performance", fa: "fa-line-chart", exact: true, to: "/metrics/agents/performance" },
 			{ text: "Agent Threshold", fa: "fa-area-chart", exact: true, to: "/metrics/agents/threshold" },
+			{ text: "Agent Disbursement", fa: "fa-exchange", exact: true, to: "/metrics/agents/disbursement" },
 			{ divider: true },
 			{ text: "Bank Amount Distribution", fa: "fa-pie-chart", exact: true, to: "/metrics/banks/amountdistribution" }
 		];
