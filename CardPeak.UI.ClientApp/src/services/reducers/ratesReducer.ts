@@ -3,9 +3,7 @@ import { RATE_ACTIONS } from '../../constants/actions'
 
 const initialState: CardPeak.Models.RatesModel = {
 	rates: [],
-	agentId: 0,
-	banks: [],
-	cardCategories: []
+	agentId: 0
 };
 
 function sortRates(rates: CardPeak.Entities.Rate[]) {

@@ -18,16 +18,13 @@
 		rates?: CardPeak.Entities.Rate[];
 		loadingRates?: boolean;
 		postingRates?: boolean;
-		banks?: CardPeak.Entities.Reference[];
-		cardCategories?: CardPeak.Entities.Reference[];
 	}
 
 	export interface SettingsModel {
+		initialized?: boolean;
 		banks?: CardPeak.Entities.Reference[];
 		cardCategories?: CardPeak.Entities.Reference[];
 		defaultRateTypes?: CardPeak.Entities.Reference[];
-		postingBank?: boolean;
-		postingCardCategory?: boolean;
 		loading?: boolean;
 		cardCategoryReferenceTypeId?: number;
 		bankReferenceTypeId?: number;

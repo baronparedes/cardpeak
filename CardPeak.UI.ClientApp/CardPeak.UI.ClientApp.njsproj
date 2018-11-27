@@ -367,7 +367,10 @@
     <TypeScriptCompile Include="src\components\views\metrics\AgentMetricsContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\components\views\settings\DefaultRatesContainer.tsx">
+    <TypeScriptCompile Include="src\components\views\settings\DefaultRatesView.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\settings\ReferencePickerContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\teams\ManageTeamsActions.tsx">

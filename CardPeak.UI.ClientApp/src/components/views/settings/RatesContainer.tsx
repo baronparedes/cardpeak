@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import * as RateActions from '../../../services/actions/rateActions'
+import * as SettingsActions from '../../../services/actions/settingsAction'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -9,14 +10,21 @@ import { Grid, Row, Col, Form, FormGroup, Button, ButtonGroup, Panel } from 'rea
 import { FormFieldInput, FormFieldDropdown, ConfirmButton, ErrorLabel } from '../../layout'
 import RateList from './RateList'
 
+interface RatesContainerPropsConnect {
+	banks?: CardPeak.Entities.Reference[];
+	cardCategories?: CardPeak.Entities.Reference[];
+}
+
 interface RatesContainerProps {
 	selectedAgentId: number;
 	selectedTypeId?: number;
 	defaultRate?: boolean;
+	applyDefaults?: boolean;
 }
 
 interface RatesContainerDispatchProps {
 	actions?: typeof RateActions;
+	settingsActions?: typeof SettingsActions;
 }
 
 interface RatesContainerState {
@@ -30,8 +38,8 @@ interface RatesContainerState {
 	postingRatesError?: string,
 }
 
-class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps, RatesContainerState> {
-	constructor(props: CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps) {
+class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps & RatesContainerPropsConnect, RatesContainerState> {
+	constructor(props: CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps & RatesContainerPropsConnect) {
 		super(props);
 		this.state = {
 			bankId: 0,
@@ -129,6 +137,7 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 		}
 	}
 	componentDidMount() {
+		this.props.settingsActions.initializeReferences();
 		if (this.props.defaultRate) {
 			this.props.actions.selectDefaultRateStart(this.props.selectedTypeId);
 		}
@@ -213,6 +222,14 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 									onChange={this.handleOnChange} />
 								<FormGroup>
 									<Col sm={12} className="text-right">
+										<Button 
+											disabled={this.props.postingRates || this.props.loadingRates}
+											type="button"
+											bsStyle="success"
+											className="spacer-right"
+											onClick={this.handleOnClickAddRate}>
+											Select Default
+										</Button>
 										<ButtonGroup disabled={this.props.postingRates || this.props.loadingRates}>
 											<Button
 												type="button"
@@ -264,13 +281,16 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 	}
 }
 
-const mapStateToProps = (state: RootState): CardPeak.Models.RatesModel => ({
-	...state.ratesModel
+const mapStateToProps = (state: RootState): CardPeak.Models.RatesModel & RatesContainerPropsConnect => ({
+	...state.ratesModel,
+	banks: state.settingsModel.banks,
+	cardCategories: state.settingsModel.cardCategories
 });
 
 const mapDispatchToProps = (dispatch: any): RatesContainerDispatchProps => {
 	return {
-		actions: bindActionCreators(RateActions as any, dispatch)
+		actions: bindActionCreators(RateActions as any, dispatch),
+		settingsActions: bindActionCreators(SettingsActions as any, dispatch)
 	}
 };
 

@@ -12,20 +12,29 @@ export const postReference = createAction(SETTINGS_ACTIONS.POST_REFERENCE);
 export const postReferenceComplete = createAction<{ reference: CardPeak.Entities.Reference, type: number }>(SETTINGS_ACTIONS.POST_REFERENCE_COMPLETE);
 export const postReferenceError = createAction(SETTINGS_ACTIONS.POST_REFERENCE_ERROR);
 
+export function initializeReferences() {
+	return (dispatch: (e: any) => void, getState: () => RootState) => {
+		const init = getState().settingsModel.initialized;
+		if (!init) {
+			dispatch(loadReferencesStart());
+		}
+	}
+}
+
 export function loadReferencesStart() {
-    return (dispatch: (e: any) => void) => {
-        dispatch(loadReference());
-        settingsController.getReferences((data: CardPeak.Entities.Settings) => {
-            dispatch(loadReferenceComplete(data));
-        }, (e: string) => {
-            dispatch(loadReferenceError(e));
-        });
-    }
+	return (dispatch: (e: any) => void) => {
+		dispatch(loadReference());
+		settingsController.getReferences((data: CardPeak.Entities.Settings) => {
+			dispatch(loadReferenceComplete(data));
+		}, (e: string) => {
+			dispatch(loadReferenceError(e));
+		});
+	}
 }
 
 export function postReferenceStart(reference: CardPeak.Entities.Reference, type: number) {
-    return (dispatch: (e: any) => void) => {
-        dispatch(postReference());
-        settingsController.postReference(reference, type, null, null);
-    }
+	return (dispatch: (e: any) => void) => {
+		dispatch(postReference());
+		settingsController.postReference(reference, type, null, null);
+	}
 }
