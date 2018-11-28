@@ -47,10 +47,10 @@ export default handleActions<CardPeak.Models.RatesModel, any>({
 		}
 	},
 	[RATE_ACTIONS.SELECT_AGENT_RATE_COMPLETE]: (state, action) => {
-		let payload = action.payload as CardPeak.Entities.Settings;
+		let payload = action.payload as CardPeak.Entities.Rate[];
 		return {
 			...state,
-			...payload,
+			rates: payload,
 			loadingRates: undefined
 		}
 	},
@@ -62,10 +62,30 @@ export default handleActions<CardPeak.Models.RatesModel, any>({
 		}
 	},
 	[RATE_ACTIONS.SELECT_DEFAULT_RATE_COMPLETE]: (state, action) => {
-		let payload = action.payload as CardPeak.Entities.Settings;
+		let payload = action.payload as CardPeak.Entities.Rate[];
 		return {
 			...state,
-			...payload,
+			rates: payload,
+			loadingRates: undefined
+		}
+	},
+	[RATE_ACTIONS.APPLY_DEFAULT_RATE]: (state, action) => {
+		return {
+			...state,
+			loadingRates: true
+		}
+	},
+	[RATE_ACTIONS.APPLY_DEFAULT_RATE_COMPLETE]: (state, action) => {
+		let payload = action.payload as CardPeak.Entities.Rate[];
+		return {
+			...state,
+			rates: payload,
+			loadingRates: undefined
+		}
+	},
+	[RATE_ACTIONS.APPLY_DEFAULT_RATE_NOT_FOUND]: (state, action) => {
+		return {
+			...state,
 			loadingRates: undefined
 		}
 	},
@@ -82,7 +102,6 @@ export default handleActions<CardPeak.Models.RatesModel, any>({
 		}
 	},
 	[RATE_ACTIONS.POST_RATES_COMPLETE]: (state, action) => {
-		console.log(action.payload, 'POST_COMPLETE');
 		return {
 			...state,
 			postingRates: undefined,

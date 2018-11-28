@@ -5,6 +5,7 @@ import { ModalConfirm, ButtonLoading } from '.'
 interface ConfirmButtonProps {
 	onToggleConfirm?: () => void;
 	onConfirm: () => void;
+	onPreventConfirm?: () => boolean;
 	onPreventToggle?: () => boolean;
 	confirmTitle: React.ReactNode;
 	confirmMessage?: React.ReactNode;
@@ -41,6 +42,11 @@ export class ConfirmButton extends React.Component<ConfirmButtonProps, ConfirmBu
 		}
 	}
 	handleOnConfirm = () => {
+		if (this.props.onPreventConfirm) {
+			if (this.props.onPreventConfirm()) {
+				return;
+			}
+		}
 		this.handleOnToggleModal();
 		if (this.props.onConfirm) {
 			this.props.onConfirm();

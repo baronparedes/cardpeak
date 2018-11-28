@@ -14,6 +14,7 @@ export const postReferenceError = createAction(SETTINGS_ACTIONS.POST_REFERENCE_E
 
 export function initializeReferences() {
 	return (dispatch: (e: any) => void, getState: () => RootState) => {
+		dispatch(createAction(SETTINGS_ACTIONS.INIT_REFERENCES)());
 		const init = getState().settingsModel.initialized;
 		if (!init) {
 			dispatch(loadReferencesStart());

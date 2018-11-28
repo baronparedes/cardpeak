@@ -20,7 +20,7 @@ class DefaultRatesView extends React.Component<{}, { selectedTypeId?: number }> 
 	}
 	handleOnSelectReference = (item: CardPeak.Entities.Reference, name: string) => {
 		this.setState({
-			[name]: item.referenceId
+			[name]: item ? item.referenceId : 0
 		});
 	}
 	render() {
@@ -36,6 +36,7 @@ class DefaultRatesView extends React.Component<{}, { selectedTypeId?: number }> 
 										referenceName="defaultRateTypes"
 										label="type"
 										controlId="form-selectedTypeId"
+										selectedId={this.state.selectedTypeId}
 										name="selectedTypeId"
 										onSelect={this.handleOnSelectReference} />
 								</fieldset>
@@ -46,7 +47,7 @@ class DefaultRatesView extends React.Component<{}, { selectedTypeId?: number }> 
 				<Panel >
 					{
 						this.state.selectedTypeId === 0 ? null : 
-							<RatesContainer selectedAgentId={0} selectedTypeId = {this.state.selectedTypeId} defaultRate />
+							<RatesContainer selectedAgentId={0} selectedTypeId={this.state.selectedTypeId} defaultRate />
 					}
 				</Panel>
 			</div>

@@ -9,27 +9,23 @@ import { RootState } from '../../../services/reducers'
 import { Grid, Row, Col, Form, FormGroup, Button, ButtonGroup, Panel } from 'react-bootstrap'
 import { FormFieldInput, FormFieldDropdown, ConfirmButton, ErrorLabel } from '../../layout'
 import RateList from './RateList'
+import ReferencePickerContainer from './ReferencePickerContainer'
 
-interface RatesContainerPropsConnect {
-	banks?: CardPeak.Entities.Reference[];
-	cardCategories?: CardPeak.Entities.Reference[];
-}
-
-interface RatesContainerProps {
+interface Props {
 	selectedAgentId: number;
 	selectedTypeId?: number;
 	defaultRate?: boolean;
 	applyDefaults?: boolean;
 }
 
-interface RatesContainerDispatchProps {
+interface DispatchProps {
 	actions?: typeof RateActions;
-	settingsActions?: typeof SettingsActions;
 }
 
-interface RatesContainerState {
-	bankId: number,
-	cardCategoryId: number,
+interface State {
+	selectedDefaultRate?: CardPeak.Entities.Reference;
+	bank?: CardPeak.Entities.Reference,
+	cardCategory?: CardPeak.Entities.Reference,
 	amount: number,
 	savingsAmount?: number,
 	errors: {
@@ -38,12 +34,12 @@ interface RatesContainerState {
 	postingRatesError?: string,
 }
 
-class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps & RatesContainerPropsConnect, RatesContainerState> {
-	constructor(props: CardPeak.Models.RatesModel & RatesContainerProps & RatesContainerDispatchProps & RatesContainerPropsConnect) {
+class RatesContainer extends React.Component<CardPeak.Models.RatesModel & Props & DispatchProps, State> {
+	constructor(props: CardPeak.Models.RatesModel & Props & DispatchProps) {
 		super(props);
 		this.state = {
-			bankId: 0,
-			cardCategoryId: 0,
+			bank: undefined,
+			cardCategory: undefined,
 			amount: 0,
 			savingsAmount: 0,
 			errors: {
@@ -54,16 +50,16 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 		}
 	}
 	handleOnToggleModal = () => {
-		this.setState({ postingRatesError: undefined });
-	}
-	handleOnConfirm = () => {
-		this.handleOnClickSaveRates();
+		this.setState({
+			postingRatesError: undefined,
+			selectedDefaultRate: undefined
+		});
 	}
 	handleErrors = () => {
 		let errors = this.state.errors;
 		if (!!!this.state.amount || this.state.amount === 0) errors.amount = "*";
-		if (!!!this.state.bankId || this.state.bankId === 0) errors.bankId = "*";
-		if (!!!this.state.cardCategoryId || this.state.cardCategoryId === 0) errors.cardCategoryId = "*";
+		if (!!!this.state.bank || this.state.bank.referenceId === 0) errors.bankId = "*";
+		if (!!!this.state.cardCategory || this.state.cardCategory.referenceId === 0) errors.cardCategoryId = "*";
 		this.setState({ errors });
 		return errors;
 	}
@@ -77,20 +73,20 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 			rateId: 0,
 			agentId: this.props.selectedAgentId,
 			typeId: this.props.selectedTypeId,
-			bankId: parseInt(this.state.bankId.toString()),
-			cardCategoryId: parseInt(this.state.cardCategoryId.toString()),
+			bankId: parseInt(this.state.bank.referenceId.toString()),
+			cardCategoryId: parseInt(this.state.cardCategory.referenceId.toString()),
 			amount: this.state.amount,
 			savingsAmount: this.state.savingsAmount ? this.state.savingsAmount : 0,
-			bank: this.props.banks.filter(_ => _.referenceId == this.state.bankId)[0],
-			cardCategory: this.props.cardCategories.filter(_ => _.referenceId == this.state.cardCategoryId)[0]
+			bank: this.state.bank,
+			cardCategory: this.state.cardCategory
 		};
 
 		this.props.actions.addRate(rate);
 	}
 	handleOnClearRate = () => {
 		this.setState({
-			bankId: 0,
-			cardCategoryId: 0,
+			bank: undefined,
+			cardCategory: undefined,
 			amount: 0,
 			savingsAmount: 0,
 			errors: {
@@ -98,6 +94,15 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 				bankId: '',
 				cardCategoryId: ''
 			}
+		});
+	}
+	handleOnSelectReference = (ref: CardPeak.Entities.Reference, name: any) => {
+		this.setState({ postingRatesError: undefined });
+		let errors = this.state.errors;
+		errors[name] = '';
+		this.setState({
+			[name]: ref,
+			errors
 		});
 	}
 	handleOnChange = (e: any) => {
@@ -118,8 +123,8 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 	handleOnSelectRate = (data: CardPeak.Entities.Rate) => {
 		this.setState({
 			...this.state,
-			bankId: data.bankId,
-			cardCategoryId: data.cardCategoryId,
+			bank: data.bank,
+			cardCategory: data.cardCategory,
 			amount: data.amount,
 			savingsAmount: data.savingsAmount,
 		});
@@ -136,8 +141,15 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 			});
 		}
 	}
+
+	handleOnPreventToggleDefaultRate = (): boolean => {
+		return this.state.selectedDefaultRate ? false : true;
+	}
+
+	handleOnConfirmDefaultRate = () => {
+		this.props.actions.applyDefaultRateStart(this.state.selectedDefaultRate, this.props.selectedAgentId);
+	}
 	componentDidMount() {
-		this.props.settingsActions.initializeReferences();
 		if (this.props.defaultRate) {
 			this.props.actions.selectDefaultRateStart(this.props.selectedTypeId);
 		}
@@ -145,15 +157,17 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 			this.props.actions.selectAgentStart(this.props.selectedAgentId);
 		}
 	}
-	componentWillReceiveProps(nextProps: RatesContainerProps) {
+	componentWillReceiveProps(nextProps: Props) {
 		if (nextProps.defaultRate) {
 			if (this.props.selectedTypeId !== nextProps.selectedTypeId) {
 				this.props.actions.selectDefaultRateStart(nextProps.selectedTypeId);
+				this.handleOnClearRate();
 			}
 		}
 		else {
 			if (this.props.selectedAgentId !== nextProps.selectedAgentId) {
 				this.props.actions.selectAgentStart(nextProps.selectedAgentId);
+				this.handleOnClearRate();
 			}
 		}
 	}
@@ -164,44 +178,24 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 					<Col lg={4} md={12} sm={12} xs={12}>
 						<Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
 							<fieldset disabled={this.props.postingRates || this.props.loadingRates}>
-								<FormFieldDropdown
+								<ReferencePickerContainer
 									controlId="form-bank"
 									label="Bank"
-									name="bankId"
+									name="bank"
 									error={this.state.errors.bankId}
-									value={this.state.bankId}
+									selectedId={this.state.bank ? this.state.bank.referenceId : 0}
 									isRequired
-									onChange={this.handleOnChange} >
-									<option key={0} value={0}>Select...</option>
-									{
-										this.props.banks.map((bank) => {
-											return (
-												<option key={bank.referenceId} value={bank.referenceId}>
-													{bank.description}
-												</option>
-											)
-										})
-									}
-								</FormFieldDropdown>
-								<FormFieldDropdown
+									referenceName="banks"
+									onSelect={this.handleOnSelectReference} />
+								<ReferencePickerContainer
 									controlId="form-card-category"
 									label="Category"
-									name="cardCategoryId"
+									name="cardCategory"
 									error={this.state.errors.cardCategoryId}
-									value={this.state.cardCategoryId}
+									selectedId={this.state.cardCategory ? this.state.cardCategory.referenceId : 0}
 									isRequired
-									onChange={this.handleOnChange} >
-									<option key={0} value={0}>Select...</option>
-									{
-										this.props.cardCategories.map((category) => {
-											return (
-												<option key={category.referenceId} value={category.referenceId}>
-													{category.description}
-												</option>
-											)
-										})
-									}
-								</FormFieldDropdown>
+									referenceName="cardCategories"
+									onSelect={this.handleOnSelectReference} />
 								<FormFieldInput
 									controlId="form-rate-amount"
 									type="number"
@@ -222,24 +216,52 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 									onChange={this.handleOnChange} />
 								<FormGroup>
 									<Col sm={12} className="text-right">
-										<Button 
-											disabled={this.props.postingRates || this.props.loadingRates}
-											type="button"
-											bsStyle="success"
-											className="spacer-right"
-											onClick={this.handleOnClickAddRate}>
-											Select Default
-										</Button>
 										<ButtonGroup disabled={this.props.postingRates || this.props.loadingRates}>
+											{
+												this.props.applyDefaults && this.props.selectedAgentId !== 0 ?
+													<ConfirmButton
+														bsStyle="primary"
+														buttonLabel={
+															<i className="fa fa-lg fa-sliders"></i>
+														}
+														confirmTitle="select default rate"
+														confirmMessage={
+															<div>
+																<p>
+																	<strong>
+																		Choosing a default rate will overwrite your existing changes
+															</strong>
+																</p>
+																<div className="spacer-bottom block">
+																	<ReferencePickerContainer
+																		controlId="form-default-rate-picker"
+																		label="type"
+																		name="selectedDefaultRate"
+																		selectedId={this.state.selectedDefaultRate ? this.state.selectedDefaultRate.referenceId : 0}
+																		referenceName="defaultRateTypes"
+																		onSelect={this.handleOnSelectReference} />
+																</div>
+																<br />
+																<br />
+																<p className="spacer-top">Do you wish to continue?</p>
+															</div>
+														}
+														onToggleConfirm={this.handleOnToggleModal}
+														onPreventConfirm={this.handleOnPreventToggleDefaultRate}
+														onConfirm={this.handleOnConfirmDefaultRate}
+														disabled={this.props.postingRates || this.props.loadingRates} /> : null
+											}
 											<Button
+												title="clear"
 												type="button"
 												bsStyle="warning"
 												onClick={this.handleOnClearRate}>
 												<i className="fa fa-lg fa-eraser"></i>
 											</Button>
 											<Button
+												title="update"
 												type="button"
-												bsStyle="primary"
+												bsStyle="success"
 												onClick={this.handleOnClickAddRate}>
 												<i className="fa fa-lg fa-pencil-square-o"></i>
 											</Button>
@@ -264,11 +286,11 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 						<ConfirmButton
 							useButtonLoading
 							bsStyle="success"
-							buttonLabel="Save"
+							buttonLabel="Save Changes"
 							confirmTitle="save rates"
 							confirmMessage="Do you want to continue?"
 							onToggleConfirm={this.handleOnToggleModal}
-							onConfirm={this.handleOnConfirm}
+							onConfirm={this.handleOnClickSaveRates}
 							disabled={this.props.postingRates || this.props.loadingRates}
 							isLoading={this.props.postingRates || this.props.loadingRates} />
 					</Col>
@@ -281,16 +303,13 @@ class RatesContainer extends React.Component<CardPeak.Models.RatesModel & RatesC
 	}
 }
 
-const mapStateToProps = (state: RootState): CardPeak.Models.RatesModel & RatesContainerPropsConnect => ({
-	...state.ratesModel,
-	banks: state.settingsModel.banks,
-	cardCategories: state.settingsModel.cardCategories
+const mapStateToProps = (state: RootState): CardPeak.Models.RatesModel => ({
+	...state.ratesModel
 });
 
-const mapDispatchToProps = (dispatch: any): RatesContainerDispatchProps => {
+const mapDispatchToProps = (dispatch: any): DispatchProps => {
 	return {
 		actions: bindActionCreators(RateActions as any, dispatch),
-		settingsActions: bindActionCreators(SettingsActions as any, dispatch)
 	}
 };
 

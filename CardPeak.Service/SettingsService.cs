@@ -33,26 +33,14 @@ namespace CardPeak.Service
 			};
 		}
 
-		public Settings GetDefaultRates(int typeId)
+		public IEnumerable<Rate> GetDefaultRates(int typeId)
 		{
-			return new Settings
-			{
-				Rates = this.DefaultRateRepository.GetRates(typeId),
-				Banks = this.ReferenceRepository.GetBanks(),
-				CardCategories = this.ReferenceRepository.GetCardCategories(),
-				DefaultRateTypes = this.ReferenceRepository.GetDefaultRateTypes()
-			};
+			return this.DefaultRateRepository.GetRates(typeId);
 		}
 
-		public Settings GetRates(int agentId = 0)
+		public IEnumerable<Rate> GetRates(int agentId = 0)
 		{
-			return new Settings
-			{
-				Rates = this.RateRepository.GetRates(agentId),
-				Banks = this.ReferenceRepository.GetBanks(),
-				CardCategories = this.ReferenceRepository.GetCardCategories(),
-				DefaultRateTypes = this.ReferenceRepository.GetDefaultRateTypes()
-			};
+			return this.RateRepository.GetRates(agentId);
 		}
 
 		public IEnumerable<Rate> SaveDefaultRates(int typeId, Settings settings)

@@ -145,7 +145,7 @@ class AgentContainer extends
         if (this.state.selectedAgent && !this.props.isNew) {
             return (
                 <Panel hidden={this.state.currentTab !== "rates"}>
-                    <RatesContainer selectedAgentId={this.state.selectedAgent.agentId} />
+                    <RatesContainer selectedAgentId={this.state.selectedAgent.agentId} applyDefaults />
                 </Panel>
             )
         }

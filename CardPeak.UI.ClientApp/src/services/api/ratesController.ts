@@ -24,7 +24,7 @@ export function postRates(agentId: number,
 }
 
 export function getRates(agentId: number,
-	successCallback: (data: CardPeak.Entities.Settings) => void,
+	successCallback: (data: CardPeak.Entities.Rate[]) => void,
 	errorCallback: (message: string) => void) {
 
 	get(API.GET_RATES(agentId), successCallback, errorCallback);
@@ -39,7 +39,7 @@ export function postDefaultRates(typeId: number,
 }
 
 export function getDefaultRates(typeId: number,
-	successCallback: (data: CardPeak.Entities.Settings) => void,
+	successCallback: (data: CardPeak.Entities.Rate[]) => void,
 	errorCallback: (message: string) => void) {
 
 	get(API.GET_DEFAULT_RATES(typeId), successCallback, errorCallback);
@@ -62,12 +62,12 @@ function post(api: string,
 }
 
 function get(api: string,
-	successCallback: (data: CardPeak.Entities.Settings) => void,
+	successCallback: (data: CardPeak.Entities.Rate[]) => void,
 	errorCallback: (message: string) => void) {
 
 	axios.get(api)
 		.then((r) => {
-			successCallback(r.data as CardPeak.Entities.Settings);
+			successCallback(r.data as CardPeak.Entities.Rate[]);
 		})
 		.catch((reason) => {
 			errorCallback(reason.message);
