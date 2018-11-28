@@ -8,6 +8,6 @@
 	CONSTRAINT [PK_DefaultRate] PRIMARY KEY ([BankId], [CardCategoryId], [TypeId]),
 	CONSTRAINT [FK_DefaultRate_Reference_BankId] FOREIGN KEY ([BankId]) REFERENCES [Reference]([ReferenceId]),
 	CONSTRAINT [FK_DefaultRate_Reference_CardCategoryId] FOREIGN KEY ([CardCategoryId]) REFERENCES [Reference]([ReferenceId]),
-	CONSTRAINT [FK_DefaultRate_Agent] FOREIGN KEY ([TypeId]) REFERENCES [Reference]([ReferenceId])
+	CONSTRAINT [FK_DefaultRate_Reference_TypeId] FOREIGN KEY ([TypeId]) REFERENCES [Reference]([ReferenceId])
 );
 
