@@ -5,198 +5,229 @@
 
 html,
 body {
-    min-height: 100%;
-    width: 100%;
-    background-color: @body-bg-color;
-    .page-font;
+	min-height: 100%;
+	width: 100%;
+	background-color: @body-bg-color;
+	.page-font;
 }
 
 h1, h2, h3, h4 {
-    color: @header-font-color;
-    .header-font;
+	color: @header-font-color;
+	.header-font;
 }
 
 h5, h6 {
-    color: @header-font-color;
-    font-weight: bold;
+	color: @header-font-color;
+	font-weight: bold;
 }
 
 hr {
-    border-color: @theme-color-light;
-    border-width: 3px;
-    max-width: 200px;
+	border-color: @theme-color-light;
+	border-width: 3px;
+	max-width: 200px;
 }
 
 .spacer-right-sm {
-    margin-right: 5px;
+	margin-right: 5px;
 }
 
 .spacer-left-sm {
-    margin-left: 5px;
+	margin-left: 5px;
 }
 
 .spacer-right {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 
 .spacer-left {
-    margin-left: 10px;
+	margin-left: 10px;
 }
 
 .spacer-bottom {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
+}
+
+.spacer-bottom-2x {
+	margin-bottom: 20px;
 }
 
 .spacer-top {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .spacer-top-large {
-    margin-top: 50px;
+	margin-top: 50px;
+}
+
+.float-right {
+	float: right;
 }
 
 .grid-rows {
-    background-image: none;
-    background-color: @body-bg-color;
+	background-image: none;
+	background-color: @body-bg-color;
 }
 
 .badge {
-    background-color: @theme-color-credit !important;
+	background-color: @theme-color-credit !important;
 }
 
 .panel-row-header {
-    padding: 0;
-    margin: 0;
-    padding-bottom: -10px;
-    background-image: none;
-    background-color: @panel-row-header-bg-color;
-    border: none;
+	padding: 0;
+	margin: 0;
+	padding-bottom: -10px;
+	background-image: none;
+	background-color: @panel-row-header-bg-color;
+	border: none;
 }
 
 .panel-row {
-    padding: 0;
-    margin: 0;
-    .panel-body {
-        padding: 10px;
-    }
+	padding: 0;
+	margin: 0;
+	.panel-body {
+		padding: 10px;
+	}
 }
 
 .panel-label-dashboard {
-    height: 100%;
-    min-height: 110px;
-    vertical-align: central;
+	height: 100%;
+	min-height: 80px;
+	vertical-align: central;
 }
 
 .currency:before {
-    content: "PHP ";
+	content: "PHP ";
 }
 
-.text-small {
-    font-size: smaller;
+.block {
+	display: block;
+}
+
+.inline {
+	display: inline;
+	float: left;
 }
 
 .text-highlight {
-    font-size: larger;
-    font-weight: bold;
-    color: @header-font-color;
+	font-size: larger;
+	font-weight: bold;
+	color: @header-font-color;
 
-    &.text-danger,
-    &.amount-debit {
-        color: @theme-color-debit;
-    }
+	&.text-danger,
+	&.amount-debit {
+		color: @theme-color-debit;
+	}
 
-    &.text-success,
-    &.amount-credit {
-        color: @theme-color-credit;
-    }
+	&.text-success,
+	&.amount-credit {
+		color: @theme-color-credit;
+	}
 
-    &.text-info,
-    &.amount-incentive {
-        color: @theme-color-incentive;
-    }
+	&.text-info,
+	&.amount-incentive {
+		color: @theme-color-incentive;
+	}
 
-    &.row-amount {
-        font-size: medium;
-    }
+	&.row-amount {
+		font-size: medium;
+	}
 
-    &.text-small {
-        font-size: smaller;
-    }
+	&.text-medium {
+		font-size: small;
+	}
 
-    &.text-larger {
-        font-size: x-large;
-    }
+	&.text-small {
+		font-size: smaller;
+	}
 
-    &.text-success {
-    }
+	&.text-larger {
+		font-size: x-large;
+	}
+
+	&.text-success {
+	}
 }
 
 .no-padding {
-    padding: 0;
-    margin: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.no-padding-bottom {
+	padding-bottom: 0;
+	margin-bottom: 0;
 }
 
 .modal {
-    text-align: center;
-    padding: 0 !important;
+	text-align: center;
+	padding: 0 !important;
 }
 
 .modal:before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-right: -4px;
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -4px;
 }
 
 .modal-dialog {
-    display: inline-block;
-    text-align: left;
-    vertical-align: middle;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }
 
 .modal-header, .modal-footer {
-    background-color: @body-bg-color;
-    background-image: none;
+	background-color: @body-bg-color;
+	background-image: none;
 }
 
 .perf-up {
-    color: @theme-color-credit;
+	color: @theme-color-credit;
 }
 
 .perf-down {
-    color: @theme-color-debit;
+	color: @theme-color-debit;
 }
 
 .btn, label, .grid-label, .dashboard-label {
-    text-transform: lowercase;
+	text-transform: lowercase;
 }
 
 .dashboard-label {
-    min-width: 50px;
+	min-width: 50px;
 }
 
 .addon-form{
-    .fa{
-        font-size: 8px;
-    }
+	.fa{
+		font-size: 8px;
+	}
 }
 
 .pie-chart-container {
 }
 
 .money-incentive {
-    color: @theme-color-incentive;
+	color: @theme-color-incentive;
 }
 
 .money-zero-balance {
-    color: @theme-color;
+	color: @theme-color;
 }
 
 .money-credit {
-    color: @theme-color-credit;
+	color: @theme-color-credit;
 }
 
 .money-debit {
-    color: @theme-color-debit;
+	color: @theme-color-debit;
+}
+
+.total-approved-metric {
+	display: block;
+	font-size: xx-large;
+}
+
+.performance-metric {
+	height: 75px;
 }

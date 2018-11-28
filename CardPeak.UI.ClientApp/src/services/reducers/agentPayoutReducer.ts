@@ -10,7 +10,7 @@ const initialState: CardPeak.Models.AgentPayoutModel = {
 };
 
 export default handleActions<CardPeak.Models.AgentPayoutModel, any>({
-    [AGENT_PAYOUT_ACTIONS.INIT]: (state, action) => {
+    [AGENT_PAYOUT_ACTIONS.INIT_PAYOUTS]: (state, action) => {
         return {
             ...state,
             initialized: true

@@ -78,6 +78,9 @@
     <None Include="Script\Defaults\PopulateDefaultRates.sql" />
     <None Include="Script\PopulateReferenceTypes.sql" />
     <Build Include="dbo\Tables\BatchFileConfiguration.sql" />
+    <Build Include="dbo\Tables\Team.sql" />
+    <Build Include="dbo\Tables\TeamPlacement.sql" />
+    <Build Include="dbo\Tables\DefaultRate.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

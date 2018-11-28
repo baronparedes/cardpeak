@@ -66,9 +66,6 @@ class AgentContainer extends
             }
         }
     }
-    handleOnSelectAgent = () => {
-        this.props.actions.getAllAgentsStart();
-    }
     handleOnAgentSelected = (agent: CardPeak.Entities.Agent) => {
         if (this.props.history) {
             this.props.history.push("/agents/update/" + agent.agentId);
@@ -148,7 +145,7 @@ class AgentContainer extends
         if (this.state.selectedAgent && !this.props.isNew) {
             return (
                 <Panel hidden={this.state.currentTab !== "rates"}>
-                    <RatesContainer selectedAgentId={this.state.selectedAgent.agentId} />
+                    <RatesContainer selectedAgentId={this.state.selectedAgent.agentId} applyDefaults />
                 </Panel>
             )
         }
@@ -161,10 +158,7 @@ class AgentContainer extends
                 <Panel>
                     <SelectAgent
                         agent={this.state.selectedAgent}
-                        agents={this.props.agents}
-                        isLoading={this.props.loadingAgents}
-                        onAgentSelected={this.handleOnAgentSelected}
-                        onSelectAgent={this.handleOnSelectAgent} />
+                        onAgentSelected={this.handleOnAgentSelected} />
                 </Panel>
             )
         }
@@ -184,8 +178,6 @@ class AgentContainer extends
 }
 
 const mapStateToProps = (state: RootState): AgentContainerPropsConnect => ({
-    agents: state.agentModel.agents,
-    loadingAgents: state.agentModel.loadingAgents,
     updatingAgent: state.agentModel.updatingAgent,
     creatingAgent: state.agentModel.creatingAgent
 });

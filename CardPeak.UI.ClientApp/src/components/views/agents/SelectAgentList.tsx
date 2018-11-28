@@ -5,11 +5,11 @@ import { DataListFiltered, DataListProps, DataItemProps } from '../../layout'
 type AgentDataListFiltered = new () => DataListFiltered<CardPeak.Entities.Agent>;
 const AgentDataListFiltered = DataListFiltered as AgentDataListFiltered;
 
-interface AgentListProps {
+interface SelectAgentListProps {
     onAgentSelected?: (data: CardPeak.Entities.Agent) => void;
 }
 
-const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & AgentListProps) => {
+const SelectAgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & SelectAgentListProps) => {
     return (
         <Row className="agent-item">
             <Col sm={10}>
@@ -22,7 +22,7 @@ const AgentListRowLayout = (props: DataItemProps<CardPeak.Entities.Agent> & Agen
     )
 }
 
-const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListProps) => {
+const SelectAgentList = (props: DataListProps<CardPeak.Entities.Agent> & SelectAgentListProps) => {
     return (
         <div>
             <AgentDataListFiltered
@@ -34,11 +34,11 @@ const AgentList = (props: DataListProps<CardPeak.Entities.Agent> & AgentListProp
                 pageSize={5}
                 onGetKey={(item) => item.agentId}
                 isLoading={props.isLoading}
-                renderHeader={() => { return <AgentListRowLayout isHeader/> }}
-                renderItem={(item, key) => { return <AgentListRowLayout item={item} key={key} onAgentSelected={props.onAgentSelected} /> }}
+                renderHeader={() => { return <SelectAgentListRowLayout isHeader/> }}
+                renderItem={(item, key) => { return <SelectAgentListRowLayout item={item} key={key} onAgentSelected={props.onAgentSelected} /> }}
                 data={props.data} />
         </div>
     )
 }
 
-export default AgentList;
+export default SelectAgentList;

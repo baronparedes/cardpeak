@@ -103,8 +103,7 @@ class BatchFileConfigurationContainer extends React.Component<BatchFileConfigura
 
 const mapStateToProps = (state: RootState): BatchFileConfigurationContainerProps => ({
     banks: state.settingsModel.banks,
-    loadingBanks: state.settingsModel.loadingBanks,
-    loadingBatchFileConfig: state.batchUploadModel.loadingBatchFileConfiguration,
+    loadingBanks: state.settingsModel.loading,
     selectedBatchFileConfig: state.batchUploadModel.selectedBatchFileConfiguration,
     postingBatchFileConfig: state.batchUploadModel.postingBatchFileConfiguration
 });
