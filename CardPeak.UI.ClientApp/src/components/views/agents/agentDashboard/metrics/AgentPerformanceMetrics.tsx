@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Panel } from 'react-bootstrap'
-import { PerformanceDashboard } from '../../../layout'
+import { PerformanceDashboard } from '../../../../layout'
 
 export const AgentPerformanceMetrics = (props: { performance: CardPeak.Entities.ApprovalMetric<string>[] }) => {
     return (

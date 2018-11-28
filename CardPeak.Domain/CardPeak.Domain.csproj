@@ -51,6 +51,18 @@
     </Compile>
     <Compile Include="AgentDashboardTransaction.cs" />
     <Compile Include="AgentPayout.cs" />
+    <Compile Include="Generated\DefaultRate.cs">
+      <DependentUpon>CardPeakDomain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metrics\AgentDisbursementMetrics.cs" />
+    <Compile Include="Rate.partial.cs" />
+    <Compile Include="TeamDashboardDetail.cs" />
+    <Compile Include="Generated\Team.cs">
+      <DependentUpon>CardPeakDomain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Generated\TeamPlacement.cs">
+      <DependentUpon>CardPeakDomain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Metrics\AgentApprovalMetric.cs" />
     <Compile Include="AgentDashboard.cs" />
     <Compile Include="Metrics\AgentMetrics.cs" />
@@ -105,6 +117,7 @@
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="TeamDashboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Generated\CardPeakDomain.tt">

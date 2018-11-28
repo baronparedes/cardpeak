@@ -1,10 +1,10 @@
 ﻿import * as React from 'react'
 import { Button } from 'react-bootstrap'
-import { Toggle } from '../../layout'
-import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
-import DebitCreditTransactionList from '../transactions//DebitCreditTransactionList'
-import IncentiveTransactionList from '../transactions//IncentiveTransactionList'
-import AgentDashboardTransactionList from '../transactions/AgentDashboardTransactionList'
+import { Toggle } from '../../../layout'
+import ApprovalTransactionList from '../../transactions/ApprovalTransactionList'
+import DebitCreditTransactionList from '../../transactions//DebitCreditTransactionList'
+import IncentiveTransactionList from '../../transactions//IncentiveTransactionList'
+import AgentDashboardTransactionList from '../../transactions/AgentDashboardTransactionList'
 
 interface AgentDashboardTransactionsProps {
     agentDashboard: CardPeak.Entities.AgentDashboard
@@ -30,8 +30,6 @@ export default class AgentDashboardTransactions extends React.Component<AgentDas
         return (
             <div>
                 <DebitCreditTransactionList data={this.props.agentDashboard.debitCreditTransactions} />
-                <br />
-                <IncentiveTransactionList data={this.props.agentDashboard.incentiveTransactions} />
                 <br />
                 <ApprovalTransactionList data={this.props.agentDashboard.approvalTransactions} hideSearchBar />
             </div>

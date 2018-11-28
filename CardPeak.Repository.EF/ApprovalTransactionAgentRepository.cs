@@ -9,157 +9,211 @@ using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-    public sealed class ApprovalTransactionAgentRepository : ApprovalTransactionRepository, IApprovalTransactionAgentRepository
-    {
-        public ApprovalTransactionAgentRepository(CardPeakDbContext context) : base(context)
-        {
-        }
+	public sealed class ApprovalTransactionAgentRepository : ApprovalTransactionRepository, IApprovalTransactionAgentRepository
+	{
+		public ApprovalTransactionAgentRepository(CardPeakDbContext context) : base(context)
+		{
+		}
 
-        private IQueryable<ApprovalTransaction> QueryByAgentAndDateRange(int agentId, DateTime startDate, DateTime? endDate)
-        {
-            var result = this.Context.ApprovalTransactions
-                .Include(_ => _.Agent)
-                .Include(_ => _.Bank)
-                .Include(_ => _.CardCategory)
-                .Where(_ => !_.IsDeleted)
-                .Where(_ => !_.Agent.IsDeleted)
-                .Where(_ => _.AgentId == agentId)
-                .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
+		private IQueryable<ApprovalTransaction> QueryByAgentAndDateRange(int agentId, DateTime startDate, DateTime? endDate)
+		{
+			var result = this.Context.ApprovalTransactions
+				.Include(_ => _.Agent)
+				.Include(_ => _.Bank)
+				.Include(_ => _.CardCategory)
+				.Where(_ => !_.IsDeleted)
+				.Where(_ => !_.Agent.IsDeleted)
+				.Where(_ => _.AgentId == agentId)
+				.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) >= startDate.Date);
 
-            if (endDate != null && startDate.Date <= endDate.Value.Date)
-            {
-                result = result
-                    .Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= DbFunctions.TruncateTime(endDate.Value));
-            }
+			if (endDate != null && startDate.Date <= endDate.Value.Date)
+			{
+				result = result
+					.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= DbFunctions.TruncateTime(endDate.Value));
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        public IEnumerable<ApprovalTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate)
-        {
-            var result = this.QueryByAgentAndDateRange(agentId, startDate, endDate);
-            result = result
-                .OrderByDescending(_ => _.Id);
+		public IEnumerable<ApprovalTransaction> FindByAgent(int agentId, DateTime startDate, DateTime? endDate)
+		{
+			var result = this.QueryByAgentAndDateRange(agentId, startDate, endDate);
+			result = result
+				.OrderByDescending(_ => _.Id);
 
-            return result
-                .AsNoTracking()
-                .ToList();
-        }
+			return result
+				.AsNoTracking()
+				.ToList();
+		}
 
-        public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null)
-        {
-            var result = this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == agentId && !_.IsDeleted);
+		public decimal GetAgentAccountBalance(int agentId, DateTime? endDate = null)
+		{
+			var result = this.Context.ApprovalTransactions
+				.Where(_ => _.AgentId == agentId && !_.IsDeleted);
 
-            if (endDate.HasValue)
-            {
-                result = result.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= endDate.Value);
-            }
+			if (endDate.HasValue)
+			{
+				result = result.Where(_ => DbFunctions.TruncateTime(_.ApprovalDate) <= endDate.Value);
+			}
 
-            return result
-                .GroupBy(_ => _.AgentId)
-                .Select(balance => balance.Sum(_ => _.Amount))
-                .FirstOrDefault();
-        }
+			return result
+				.GroupBy(_ => _.AgentId)
+				.Select(balance => balance.Sum(_ => _.Amount))
+				.FirstOrDefault();
+		}
 
-        public decimal GetAgentTotalApprovals(int agentId, DateTime startDate, DateTime? endDate)
-        {
-            return this.QueryByAgentAndDateRange(agentId, startDate, endDate)
-                .Select(_ => _.Units)
-                .DefaultIfEmpty(0)
-                .Sum();
-        }
+		public decimal GetAgentTotalApprovals(int agentId, DateTime startDate, DateTime? endDate)
+		{
+			return this.QueryByAgentAndDateRange(agentId, startDate, endDate)
+				.Select(_ => _.Units)
+				.DefaultIfEmpty(0)
+				.Sum();
+		}
 
-        public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId)
-        {
-            var months = 6;
-            var previousMonthsExcludingCurrentMonth = (months - 1) * -1;
-            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(previousMonthsExcludingCurrentMonth);
-            var endDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).AddDays(-1);
-            var result = new Dictionary<string, decimal>();
-            for (int i = previousMonthsExcludingCurrentMonth; i < 1; i++)
-            {
-                result.Add(DateTime.Now.AddMonths(i).ToString(Configurations.MonthFormat), 0);
-            }
+		public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId)
+		{
+			return this.GetPerformance(this.GetPerformanceQueryByAgent, agentId, DateTime.Now, true);
+		}
 
-            var query = this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == agentId)
-                .Where(_ => !_.IsDeleted)
-                .Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
-                .GroupBy(_ => _.ApprovalDate.Month)
-                .Select(_ => new
-                {
-                    Month = _.FirstOrDefault().ApprovalDate.Month,
-                    Approvals = _.Sum(approvals => approvals.Units)
-                })
-                .ToList();
+		public IEnumerable<ApprovalMetric<string>> GetAgentPerformance(int agentId, int year)
+		{
+			return this.GetPerformance(this.GetPerformanceQueryByAgent, agentId, new DateTime(year, 12, 31), false);
+		}
 
-            query.ForEach(_ => {
-                result[new DateTime(DateTime.Now.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = _.Approvals;
-            });
+		public IEnumerable<ApprovalMetric<string>> GetTeamPerformance(int teamId, int year)
+		{
+			return this.GetPerformance(this.GetPerformanceQueryByTeam, teamId, new DateTime(year, 12, 31), false);
+		}
 
-            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
-        }
+		private IQueryable<IGrouping<int, ApprovalTransaction>> GetPerformanceQueryByAgent(int agentId, DateTime startDate, DateTime endDate)
+		{
+			var query = this.Context.ApprovalTransactions
+				.Where(_ => _.AgentId == agentId)
+				.Where(_ => !_.IsDeleted)
+				.Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
+				.GroupBy(_ => _.ApprovalDate.Month);
 
-        public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, DateTime startDate, DateTime? endDate)
-        {
-            var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
-                .ToDictionary(_ => _.Description, _ => 0m);
+			return query;
+		}
 
-            var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
-                .GroupBy(_ => _.BankId)
-                .Select(_ => new { Bank = _.FirstOrDefault().Bank.Description, Approvals = _.Sum(t => t.Units) })
-                .ToList();
+		private IQueryable<IGrouping<int, ApprovalTransaction>> GetPerformanceQueryByTeam(int teamId, DateTime startDate, DateTime endDate)
+		{
+			var agents = this.Context.TeamPlacements
+				.Where(_ => _.TeamId == teamId)
+				.Select(_ => _.AgentId);
 
-            query.ForEach(_ => {
-                result[_.Bank] = _.Approvals;
-            });
+			var query = this.Context.ApprovalTransactions
+				.Where(_ => agents.Contains(_.AgentId))
+				.Where(_ => !_.IsDeleted)
+				.Where(_ => _.ApprovalDate >= startDate && _.ApprovalDate <= endDate)
+				.GroupBy(_ => _.ApprovalDate.Month);
 
-            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
-        }
+			return query;
+		}
 
-        public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByCategory(int agentId, DateTime startDate, DateTime? endDate)
-        {
-            var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory)
-                .ToDictionary(_ => _.Description, _ => 0m);
+		private IEnumerable<ApprovalMetric<string>> GetPerformance(
+			Func<int, DateTime, DateTime, IQueryable<IGrouping<int, ApprovalTransaction>>> getQuery,
+			int id, DateTime targetDate, bool showAmount)
+		{
+			var months = Configurations.DisplayAgentPerformanceMonths;
+			var previousMonthsExcludingCurrentMonth = (months - 1) * -1;
+			var startDate = new DateTime(targetDate.Year, targetDate.Month, 1).AddMonths(previousMonthsExcludingCurrentMonth);
+			var endDate = new DateTime(targetDate.Year, targetDate.Month, 1).AddMonths(1).AddDays(-1);
+			var result = new Dictionary<string, dynamic>();
+			for (int i = previousMonthsExcludingCurrentMonth; i < 1; i++)
+			{
+				result.Add(targetDate.AddMonths(i).ToString(Configurations.MonthFormat), null);
+			}
 
-            var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
-                .GroupBy(_ => _.BankId)
-                .Select(_ => new { CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
-                .ToList();
+			var query = getQuery(id, startDate, endDate)
+				.AsNoTracking()
+				.Select(_ => new
+				{
+					_.FirstOrDefault().ApprovalDate.Month,
+					Approvals = _.Sum(approvals => approvals.Units),
+					Amount = _.Sum(approvals => approvals.Amount)
+				})
+				.ToList();
 
-            query.ForEach(_ => {
-                result[_.CardCategory] = _.Approvals;
-            });
+			query.ForEach(_ =>
+			{
+				result[new DateTime(targetDate.Year, _.Month, 1).ToString(Configurations.MonthFormat)] = new
+				{
+					_.Approvals,
+					_.Amount
+				};
+			});
 
-            return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
-        }
+			return result.Select(_ => new ApprovalMetric<string>
+			{
+				Key = _.Key,
+				Value = _.Value?.Approvals ?? 0,
+				Amount = showAmount ? _.Value?.Amount ?? 0 : 0
+			});
+		}
 
-        public IDictionary<string, IEnumerable<ApprovalMetric<string>>> GetAgentApprovalsByBankDetails(int agentId, DateTime startDate, DateTime? endDate)
-        {
-            var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank).ToList();
-            var categories = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory).ToList();
+		public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByBank(int agentId, DateTime startDate, DateTime? endDate)
+		{
+			var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank)
+				.ToDictionary(_ => _.Description, _ => 0m);
 
-            var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
-                .GroupBy(_ => new { _.BankId, _.CardCategoryId })
-                .Select(_ => new { BankId = _.FirstOrDefault().Bank.ReferenceId, CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
-                .ToList();
+			var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
+				.GroupBy(_ => _.BankId)
+				.Select(_ => new { Bank = _.FirstOrDefault().Bank.Description, Approvals = _.Sum(t => t.Units) })
+				.ToList();
 
-            var result = new Dictionary<string, IEnumerable<ApprovalMetric<string>>>();
+			query.ForEach(_ =>
+			{
+				result[_.Bank] = _.Approvals;
+			});
 
-            foreach (var item in banks)
-            {
-                var metrics = categories.ToDictionary(_ => _.Description, _ => 0m);
-                query.Where(_ => _.BankId == item.ReferenceId)
-                    .ToList()
-                    .ForEach(_ => {
-                        metrics[_.CardCategory] = _.Approvals;
-                    });
+			return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
+		}
 
-                result.Add(item.Description, metrics.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value }));
-            }
+		public IEnumerable<ApprovalMetric<string>> GetAgentApprovalsByCategory(int agentId, DateTime startDate, DateTime? endDate)
+		{
+			var result = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory)
+				.ToDictionary(_ => _.Description, _ => 0m);
 
-            return result;
-        }
-    }
+			var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
+				.GroupBy(_ => _.BankId)
+				.Select(_ => new { CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
+				.ToList();
+
+			query.ForEach(_ =>
+			{
+				result[_.CardCategory] = _.Approvals;
+			});
+
+			return result.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value });
+		}
+
+		public IDictionary<string, IEnumerable<ApprovalMetric<string>>> GetAgentApprovalsByBankDetails(int agentId, DateTime startDate, DateTime? endDate)
+		{
+			var banks = this.QueryReference(Domain.Enums.ReferenceTypeEnum.Bank).ToList();
+			var categories = this.QueryReference(Domain.Enums.ReferenceTypeEnum.CardCategory).ToList();
+
+			var query = this.QueryByAgentAndDateRange(agentId, startDate, endDate)
+				.GroupBy(_ => new { _.BankId, _.CardCategoryId })
+				.Select(_ => new { BankId = _.FirstOrDefault().Bank.ReferenceId, CardCategory = _.FirstOrDefault().CardCategory.Description, Approvals = _.Sum(t => t.Units) })
+				.ToList();
+
+			var result = new Dictionary<string, IEnumerable<ApprovalMetric<string>>>();
+
+			foreach (var item in banks)
+			{
+				var metrics = categories.ToDictionary(_ => _.Description, _ => 0m);
+				query.Where(_ => _.BankId == item.ReferenceId)
+					.ToList()
+					.ForEach(_ =>
+					{
+						metrics[_.CardCategory] = _.Approvals;
+					});
+
+				result.Add(item.Description, metrics.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value }));
+			}
+
+			return result;
+		}
+	}
 }

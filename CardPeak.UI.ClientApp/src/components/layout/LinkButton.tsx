@@ -49,6 +49,16 @@ export const AgentDashboardLinkButton: React.StatelessComponent<{ id: number }> 
     )
 }
 
+export const TeamDashboardLinkButton: React.StatelessComponent<{ id: number }> = (props) => {
+	return (
+		<LinkButton to={"/teams/" + props.id} button={
+			<Button bsStyle="primary">
+				<i className="fa fa-tachometer"></i>
+			</Button>
+		} />
+	)
+}
+
 export const ManageBatchLinkButton = () => {
     return (
         <Link to="/transactions/batch">

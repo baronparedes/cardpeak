@@ -13,107 +13,124 @@ export const getAgentMetricsComplete = createAction<CardPeak.Entities.AgentMetri
 export const getAgentRankingMetricsComplete = createAction<CardPeak.Entities.AgentRankMetric[]>(METRIC_ACTIONS.GET_AGENT_RANKING_METRICS_COMPLETE);
 export const getAgentPerformanceMetricsComplete = createAction<CardPeak.Entities.AgentPerformanceMetric[]>(METRIC_ACTIONS.GET_AGENT_PERFORMANCE_METRICS_COMPLETE);
 export const getAgentThresholdMetricsComplete = createAction<CardPeak.Entities.AgentThresholdMetric[]>(METRIC_ACTIONS.GET_AGENT_THRESHOLD_METRICS_COMPLETE);
+export const getAgentDisbursementMetricsComplete = createAction<CardPeak.Entities.AgentDisbursementMetrics[]>(METRIC_ACTIONS.GET_AGENT_DISBURSEMENT_METRICS_COMPLETE);
 export const getBankAmountDistributionMetricsComplete = createAction<CardPeak.Entities.BankAmountDistribution[]>(METRIC_ACTIONS.GET_BANK_AMOUNT_DISTRIBUTION_METRICS_COMPLETE);
 
+export function getAgentDisbursementMetricsStart(startDate: string, endDate?: string,
+	errorCallback?: (e: string) => void) {
+
+	return (dispatch: (e: any) => void) => {
+		dispatch(getMetrics());
+		metricsController.getMetricsByDateRange<CardPeak.Entities.AgentDisbursementMetrics[]>(metricsController.API.GET_AGENT_DISBURSEMENT_METRICS, startDate, endDate,
+			(data: CardPeak.Entities.AgentDisbursementMetrics[]) => {
+				dispatch(getAgentDisbursementMetricsComplete(data));
+			}, (error: string) => {
+				dispatch(getMetricsError(error));
+				if (errorCallback) {
+					errorCallback(error);
+				}
+			});
+	}
+}
+
 export function getAgentThresholdMetricsStart(year: number, month?: number,
-    errorCallback?: (e: string) => void) {
+	errorCallback?: (e: string) => void) {
 
-    return (dispatch: (e: any) => void) => {
-        dispatch(getMetrics());
-        metricsController.getMetrics<CardPeak.Entities.AgentThresholdMetric[]>(metricsController.API.GET_AGENT_THRESHOLD_METRICS, year, month,
-            (data: CardPeak.Entities.AgentThresholdMetric[]) => {
-                dispatch(getAgentThresholdMetricsComplete(data));
-            }, (error: string) => {
-                dispatch(getMetricsError(error));
-                if (errorCallback) {
-                    errorCallback(error);
-                }
-            });
-    }
-
+	return (dispatch: (e: any) => void) => {
+		dispatch(getMetrics());
+		metricsController.getMetricsByYearMonth<CardPeak.Entities.AgentThresholdMetric[]>(metricsController.API.GET_AGENT_THRESHOLD_METRICS, year, month,
+			(data: CardPeak.Entities.AgentThresholdMetric[]) => {
+				dispatch(getAgentThresholdMetricsComplete(data));
+			}, (error: string) => {
+				dispatch(getMetricsError(error));
+				if (errorCallback) {
+					errorCallback(error);
+				}
+			});
+	}
 }
 
 export function getBankAmountDistributionMetricsStart(year: number, month?: number,
-    errorCallback?: (e: string) => void) {
+	errorCallback?: (e: string) => void) {
 
-    return (dispatch: (e: any) => void) => {
-        dispatch(getMetrics());
-        metricsController.getMetrics<CardPeak.Entities.BankAmountDistribution[]>(metricsController.API.GET_BANK_AMOUNT_DISTRIBUTION_METRICS, year, month,
-            (data: CardPeak.Entities.BankAmountDistribution[]) => {
-                dispatch(getBankAmountDistributionMetricsComplete(data));
-            }, (error: string) => {
-                dispatch(getMetricsError(error));
-                if (errorCallback) {
-                    errorCallback(error);
-                }
-            });
-    }
+	return (dispatch: (e: any) => void) => {
+		dispatch(getMetrics());
+		metricsController.getMetricsByYearMonth<CardPeak.Entities.BankAmountDistribution[]>(metricsController.API.GET_BANK_AMOUNT_DISTRIBUTION_METRICS, year, month,
+			(data: CardPeak.Entities.BankAmountDistribution[]) => {
+				dispatch(getBankAmountDistributionMetricsComplete(data));
+			}, (error: string) => {
+				dispatch(getMetricsError(error));
+				if (errorCallback) {
+					errorCallback(error);
+				}
+			});
+	}
 }
 
 export function getAgentPerformanceMetricsStart(year: number, month?: number,
-    errorCallback?: (e: string) => void) {
+	errorCallback?: (e: string) => void) {
 
-    return (dispatch: (e: any) => void) => {
-        dispatch(getMetrics());
-        metricsController.getMetrics<CardPeak.Entities.AgentPerformanceMetric[]>(metricsController.API.GET_AGENT_PERFORMANCE_METRICS, year, month,
-            (data: CardPeak.Entities.AgentPerformanceMetric[]) => {
-                dispatch(getAgentPerformanceMetricsComplete(data));
-            }, (error: string) => {
-                dispatch(getMetricsError(error));
-                if (errorCallback) {
-                    errorCallback(error);
-                }
-            });
-    }
+	return (dispatch: (e: any) => void) => {
+		dispatch(getMetrics());
+		metricsController.getMetricsByYearMonth<CardPeak.Entities.AgentPerformanceMetric[]>(metricsController.API.GET_AGENT_PERFORMANCE_METRICS, year, month,
+			(data: CardPeak.Entities.AgentPerformanceMetric[]) => {
+				dispatch(getAgentPerformanceMetricsComplete(data));
+			}, (error: string) => {
+				dispatch(getMetricsError(error));
+				if (errorCallback) {
+					errorCallback(error);
+				}
+			});
+	}
 }
 
 export function getAgentRankingMetricsStart(year: number, month: number, bankId: number,
-    errorCallback?: (e: string) => void) {
+	errorCallback?: (e: string) => void) {
 
-    return (dispatch: (e: any) => void) => {
-        dispatch(getMetrics());
+	return (dispatch: (e: any) => void) => {
+		dispatch(getMetrics());
 
-        let params = {
-            year,
-            month,
-            bankId
-        };
+		let params = {
+			year,
+			month,
+			bankId
+		};
 
-        metricsController.getMetricsWithParams<CardPeak.Entities.AgentRankMetric[]>(metricsController.API.GET_AGENT_RANKING_METRICS, params,
-            (data: CardPeak.Entities.AgentRankMetric[]) => {
-                dispatch(getAgentRankingMetricsComplete(data));
-            }, (error: string) => {
-                dispatch(getMetricsError(error));
-                if (errorCallback) {
-                    errorCallback(error);
-                }
-            });
-    }
+		metricsController.getMetricsWithParams<CardPeak.Entities.AgentRankMetric[]>(metricsController.API.GET_AGENT_RANKING_METRICS, params,
+			(data: CardPeak.Entities.AgentRankMetric[]) => {
+				dispatch(getAgentRankingMetricsComplete(data));
+			}, (error: string) => {
+				dispatch(getMetricsError(error));
+				if (errorCallback) {
+					errorCallback(error);
+				}
+			});
+	}
 }
 
 export function getAgentMetricsStart(year: number, month: number,
-    errorCallback?: (e: string) => void) {
+	errorCallback?: (e: string) => void) {
 
-    return (dispatch: (e: any) => void) => {
-        dispatch(getMetrics());
-        metricsController.getMetrics(metricsController.API.GET_AGENT_METRICS, year, month,
-            (data: CardPeak.Entities.AgentMetrics) => {
-                dispatch(getAgentMetricsComplete(data));
-            }, (error: string) => {
-                dispatch(getMetricsError(error));
-                if (errorCallback) {
-                    errorCallback(error);
-                }
-            });
-    }
+	return (dispatch: (e: any) => void) => {
+		dispatch(getMetrics());
+		metricsController.getMetricsByYearMonth(metricsController.API.GET_AGENT_METRICS, year, month,
+			(data: CardPeak.Entities.AgentMetrics) => {
+				dispatch(getAgentMetricsComplete(data));
+			}, (error: string) => {
+				dispatch(getMetricsError(error));
+				if (errorCallback) {
+					errorCallback(error);
+				}
+			});
+	}
 }
 
 export function getAvailableYears() {
-    return (dispatch: (e: any) => void, getState: () => RootState) => {
-        if (!getState().metricsModel.availableYears) {
-            dashboardController.getAvailableYears((data) => {
-                dispatch(getYears(data));
-            });
-        }
-    }
+	return (dispatch: (e: any) => void, getState: () => RootState) => {
+		if (!getState().metricsModel.availableYears) {
+			dashboardController.getAvailableYears((data) => {
+				dispatch(getYears(data));
+			});
+		}
+	}
 }

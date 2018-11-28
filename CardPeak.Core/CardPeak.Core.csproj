@@ -53,10 +53,13 @@
     <Compile Include="Repository\IBatchFileConfigurationRepository.cs" />
     <Compile Include="Repository\IBatchUploadRepository.cs" />
     <Compile Include="Repository\IDebitCreditTransactionRepository.cs" />
+    <Compile Include="Repository\IDefaultRateRepository.cs" />
     <Compile Include="Repository\IMetricsRepository.cs" />
     <Compile Include="Repository\IRateRepository.cs" />
     <Compile Include="Repository\IReferenceRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\ITeamPlacementRepository.cs" />
+    <Compile Include="Repository\ITeamRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Service\IAgentService.cs" />
     <Compile Include="Service\IBatchService.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="Service\IMetricsService.cs" />
     <Compile Include="Service\IProcessorService.cs" />
     <Compile Include="Service\ISettingsService.cs" />
+    <Compile Include="Service\ITeamDashboardService.cs" />
     <Compile Include="Service\ITransactionService.cs" />
     <Compile Include="Service\IUnitOfWork.cs" />
   </ItemGroup>

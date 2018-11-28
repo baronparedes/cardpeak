@@ -99,6 +99,19 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="BatchId" Type="int" />
         </EntityType>
+        <EntityType Name="DefaultRate">
+          <Key>
+            <PropertyRef Name="BankId" />
+            <PropertyRef Name="CardCategoryId" />
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="DefaultRateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="BankId" Type="int" Nullable="false" />
+          <Property Name="CardCategoryId" Type="int" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="SavingsAmount" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+        </EntityType>
         <EntityType Name="Rate">
           <Key>
             <PropertyRef Name="BankId" />
@@ -127,6 +140,23 @@
           </Key>
           <Property Name="ReferenceTypeId" Type="int" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="TeamPlacement">
+          <Key>
+            <PropertyRef Name="TeamPlacementId" />
+          </Key>
+          <Property Name="TeamPlacementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId" Type="int" Nullable="false" />
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="IsUnitManager" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -236,6 +266,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DefaultRate_Agent">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="DefaultRate" Type="Self.DefaultRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DefaultRate">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DefaultRate_Reference_BankId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="DefaultRate" Type="Self.DefaultRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DefaultRate">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DefaultRate_Reference_CardCategoryId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="DefaultRate" Type="Self.DefaultRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DefaultRate">
+              <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Rate_Agent">
           <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
           <End Role="Rate" Type="Self.Rate" Multiplicity="*" />
@@ -284,6 +350,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TeamPlacement_Agent">
+          <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
+          <End Role="TeamPlacement" Type="Self.TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamPlacement_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="TeamPlacement" Type="Self.TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CardPeakModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
@@ -291,9 +381,12 @@
           <EntitySet Name="BatchFileConfiguration" EntityType="Self.BatchFileConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BatchUpload" EntityType="Self.BatchUpload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DebitCreditTransaction" EntityType="Self.DebitCreditTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DefaultRate" EntityType="Self.DefaultRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reference" EntityType="Self.Reference" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReferenceType" EntityType="Self.ReferenceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamPlacement" EntityType="Self.TeamPlacement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Account_Agent" Association="Self.FK_Account_Agent">
             <End Role="Agent" EntitySet="Agent" />
@@ -327,6 +420,18 @@
             <End Role="Reference" EntitySet="Reference" />
             <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransaction" />
           </AssociationSet>
+          <AssociationSet Name="FK_DefaultRate_Agent" Association="Self.FK_DefaultRate_Agent">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="DefaultRate" EntitySet="DefaultRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DefaultRate_Reference_BankId" Association="Self.FK_DefaultRate_Reference_BankId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="DefaultRate" EntitySet="DefaultRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DefaultRate_Reference_CardCategoryId" Association="Self.FK_DefaultRate_Reference_CardCategoryId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="DefaultRate" EntitySet="DefaultRate" />
+          </AssociationSet>
           <AssociationSet Name="FK_Rate_Agent" Association="Self.FK_Rate_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="Rate" EntitySet="Rate" />
@@ -342,6 +447,14 @@
           <AssociationSet Name="FK_Reference_ReferenceType" Association="Self.FK_Reference_ReferenceType">
             <End Role="ReferenceType" EntitySet="ReferenceType" />
             <End Role="Reference" EntitySet="Reference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamPlacement_Agent" Association="Self.FK_TeamPlacement_Agent">
+            <End Role="Agent" EntitySet="Agent" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamPlacement_Team" Association="Self.FK_TeamPlacement_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacement" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -407,6 +520,29 @@
             <End Role="Reference" EntitySet="References" />
             <End Role="BatchFileConfiguration" EntitySet="BatchFileConfiguration" />
           </AssociationSet>
+          <EntitySet Name="Teams" EntityType="CardPeakModel.Team" />
+          <EntitySet Name="TeamPlacements" EntityType="CardPeakModel.TeamPlacement" />
+          <AssociationSet Name="FK_TeamPlacement_Agent" Association="CardPeakModel.FK_TeamPlacement_Agent">
+            <End Role="Agent" EntitySet="Agents" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamPlacement_Team" Association="CardPeakModel.FK_TeamPlacement_Team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamPlacement" EntitySet="TeamPlacements" />
+          </AssociationSet>
+          <EntitySet Name="DefaultRates" EntityType="CardPeakModel.DefaultRate" />
+          <AssociationSet Name="FK_DefaultRate_Agent" Association="CardPeakModel.FK_DefaultRate_Agent">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="DefaultRate" EntitySet="DefaultRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DefaultRate_Reference_BankId" Association="CardPeakModel.FK_DefaultRate_Reference_BankId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="DefaultRate" EntitySet="DefaultRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DefaultRate_Reference_CardCategoryId" Association="CardPeakModel.FK_DefaultRate_Reference_CardCategoryId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="DefaultRate" EntitySet="DefaultRates" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -433,6 +569,7 @@
           <NavigationProperty Name="ApprovalTransactions" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="Agent" ToRole="ApprovalTransaction" />
           <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
           <NavigationProperty Name="Rates" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Agent" ToRole="Rate" />
+          <NavigationProperty Name="TeamPlacement" Relationship="CardPeakModel.FK_TeamPlacement_Agent" FromRole="Agent" ToRole="TeamPlacement" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
@@ -704,6 +841,102 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamId" />
+          </Key>
+          <Property Name="TeamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TeamPlacement" Relationship="CardPeakModel.FK_TeamPlacement_Team" FromRole="Team" ToRole="TeamPlacement" />
+        </EntityType>
+        <EntityType Name="TeamPlacement">
+          <Key>
+            <PropertyRef Name="TeamPlacementId" />
+          </Key>
+          <Property Name="TeamPlacementId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId" Type="Int32" Nullable="false" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="IsUnitManager" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Agent" Relationship="CardPeakModel.FK_TeamPlacement_Agent" FromRole="TeamPlacement" ToRole="Agent" />
+          <NavigationProperty Name="Team" Relationship="CardPeakModel.FK_TeamPlacement_Team" FromRole="TeamPlacement" ToRole="Team" />
+        </EntityType>
+        <Association Name="FK_TeamPlacement_Agent">
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="1" />
+          <End Type="CardPeakModel.TeamPlacement" Role="TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agent">
+              <PropertyRef Name="AgentId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamPlacement_Team">
+          <End Type="CardPeakModel.Team" Role="Team" Multiplicity="1" />
+          <End Type="CardPeakModel.TeamPlacement" Role="TeamPlacement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamId" />
+            </Principal>
+            <Dependent Role="TeamPlacement">
+              <PropertyRef Name="TeamId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DefaultRate">
+          <Key>
+            <PropertyRef Name="BankId" />
+            <PropertyRef Name="CardCategoryId" />
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="DefaultRateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="BankId" Type="Int32" Nullable="false" />
+          <Property Name="CardCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="SavingsAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="DefaultRateType" Relationship="CardPeakModel.FK_DefaultRate_Agent" FromRole="DefaultRate" ToRole="Reference" />
+          <NavigationProperty Name="Bank" Relationship="CardPeakModel.FK_DefaultRate_Reference_BankId" FromRole="DefaultRate" ToRole="Reference" />
+          <NavigationProperty Name="CardCategory" Relationship="CardPeakModel.FK_DefaultRate_Reference_CardCategoryId" FromRole="DefaultRate" ToRole="Reference" />
+        </EntityType>
+        <Association Name="FK_DefaultRate_Agent">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.DefaultRate" Role="DefaultRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DefaultRate">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DefaultRate_Reference_BankId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.DefaultRate" Role="DefaultRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DefaultRate">
+              <PropertyRef Name="BankId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DefaultRate_Reference_CardCategoryId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.DefaultRate" Role="DefaultRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DefaultRate">
+              <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -849,6 +1082,37 @@
                 <ScalarProperty Name="HasHeader" ColumnName="HasHeader" />
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
                 <ScalarProperty Name="BatchFileConfigurationId" ColumnName="BatchFileConfigurationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="CardPeakModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamPlacements">
+            <EntityTypeMapping TypeName="CardPeakModel.TeamPlacement">
+              <MappingFragment StoreEntitySet="TeamPlacement">
+                <ScalarProperty Name="IsUnitManager" ColumnName="IsUnitManager" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="TeamId" ColumnName="TeamId" />
+                <ScalarProperty Name="TeamPlacementId" ColumnName="TeamPlacementId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DefaultRates">
+            <EntityTypeMapping TypeName="CardPeakModel.DefaultRate">
+              <MappingFragment StoreEntitySet="DefaultRate">
+                <ScalarProperty Name="SavingsAmount" ColumnName="SavingsAmount" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="CardCategoryId" ColumnName="CardCategoryId" />
+                <ScalarProperty Name="BankId" ColumnName="BankId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DefaultRateId" ColumnName="DefaultRateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
