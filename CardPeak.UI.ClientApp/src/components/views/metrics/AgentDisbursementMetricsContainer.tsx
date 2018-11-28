@@ -8,8 +8,8 @@ import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
 import {
-	DateRangeAction, DataListFiltered, TotalApprovedMetrics,
-	DataItemProps, ApprovalMetric, Currency, DashboardLabel
+	DateRangeAction, DataListFiltered,
+	DataItemProps, ApprovalMetric, Currency
 } from '../../layout'
 
 type AgentDisbursementMetricsDataListFiltered = new () => DataListFiltered<CardPeak.Entities.AgentDisbursementMetrics>;
@@ -24,7 +24,34 @@ interface AgentDisbursementMetricsContainerState {
 	agentDisbursementMetrics?: CardPeak.Entities.AgentDisbursementMetrics[];
 }
 
+const AgentDisbursementDetails: React.StatelessComponent<{ details: CardPeak.Entities.DebitCreditTransaction[] }> = (props) => {
+	return (
+		<div>
+			{
+				props.details.map(_ => {
+					return (
+						<div className="block">
+							<small className="text-muted">
+								{_.remarks}
+								{
+									props.details.length === 1 ? null :
+										<span>
+											(<span className="money-debit">{_.amount}</span>)
+										</span>
+								}
+							</small>
+						</div>
+					)
+				})
+			}
+		</div>
+	)
+}
+
 const AgentDisbursementMetricsRowLayout: React.StatelessComponent<DataItemProps<CardPeak.Entities.AgentDisbursementMetrics>> = (props) => {
+
+	const comments = ['ca','payout', 'payout 3'];
+
 	return (
 		<Row>
 			<Col mdHidden
@@ -33,17 +60,17 @@ const AgentDisbursementMetricsRowLayout: React.StatelessComponent<DataItemProps<
 				xsHidden={!props.isHeader} className="text-center">
 				<span className="grid-label spacer-left">agent metrics</span>
 			</Col>
-			<Col sm={3} xs={12} xsHidden={props.isHeader}>
+			<Col sm={4} xsHidden={props.isHeader}>
 				{props.isHeader ? "agent" : props.item.key.firstName + " " + props.item.key.lastName}
 			</Col>
-			<Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
-				{props.isHeader ? "approvals" : <ApprovalMetric metric={props.item.value} />}
+			<Col sm={4} xsHidden={props.isHeader} className="text-center">
+				{props.isHeader ? "total disbursed" : <Currency currency={props.item.totalDisbursed} />}
 			</Col>
-			<Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
-				{props.isHeader ? "amount" : <Currency currency={props.item.amount} noCurrencyColor />}
-			</Col>
-			<Col sm={3} xs={4} xsHidden={props.isHeader} className="text-center">
-				{props.isHeader ? "disbursement" : <Currency currency={props.item.disbursement} />}
+			<Col sm={4} xsHidden={props.isHeader} className="text-center">
+				{
+					props.isHeader ? "details" :
+						props.item.details ? <AgentDisbursementDetails details={props.item.details} /> : null
+				}
 			</Col>
 		</Row>
 	)
@@ -72,9 +99,9 @@ class AgentDisbursementMetricsContainer extends
 			this.filterMetrics(this.props.agentDisbursementMetrics);
 		});
 	}
-	filterMetrics(data: CardPeak.Entities.AgentDisbursementMetrics[]) {
+	filterMetrics = (data: CardPeak.Entities.AgentDisbursementMetrics[]) => {
 		let filteredData = data.filter((item) => {
-			return item.disbursement < 0 || this.state.displayAll;
+			return item.totalDisbursed < 0 || this.state.displayAll;
 		});
 		this.setState({
 			agentDisbursementMetrics: filteredData
@@ -82,16 +109,16 @@ class AgentDisbursementMetricsContainer extends
 	}
 	render() {
 		let summary = {
-			totalApprovals: 0,
-			totalCredited: 0,
-			totalDisbursed: 0
+			grandTotalApprovals: 0,
+			grandTotalCredited: 0,
+			grandTotalDisbursed: 0
 		};
 
 		if (this.state.agentDisbursementMetrics) {
 			this.state.agentDisbursementMetrics.forEach(_ => {
-				summary.totalApprovals += _.value;
-				summary.totalCredited += _.amount;
-				summary.totalDisbursed += _.disbursement;
+				summary.grandTotalApprovals += _.value;
+				summary.grandTotalCredited += _.amount;
+				summary.grandTotalDisbursed += _.totalDisbursed;
 			});
 		}
 
@@ -105,27 +132,19 @@ class AgentDisbursementMetricsContainer extends
 						label="metrics"
 						startDateLabel="target date"
 						hideEndDate />
-					<br />
 					<Grid fluid>
-						<Row>
-							<Row>
-								<Col sm={6}>
-									<TotalApprovedMetrics totalApprovals={summary.totalApprovals} />
-								</Col>
-								<Col sm={6}>
-									<Panel className="panel-label-dashboard">
-										<DashboardLabel className="pull-right" label="approvals credited" metrics={summary.totalCredited} isCurrency noCurrencyColor />
-										<DashboardLabel className="pull-right" label="disbursed" metrics={summary.totalDisbursed} isCurrency />
-									</Panel>
-								</Col>
-							</Row>
-						</Row>
 						<Row className="text-right">
 							<FormGroup>
 								<Checkbox name="displayAll" checked={this.state.displayAll} onChange={this.handleOnChange} inline>
-									<span className="text-highlight text-muted">display all</span>
+									<span className="text-muted">display all</span>
 								</Checkbox>
 							</FormGroup>
+							<Panel>
+								<div>
+									<label className="text-muted spacer-right">total disbursed</label>
+									<Currency currency={summary.grandTotalDisbursed} />
+								</div>
+							</Panel>
 						</Row>
 						<Row>
 							<AgentDisbursementMetricsDataListFiltered

@@ -376,12 +376,7 @@ namespace CardPeak.Repository.EF
 			var debitTransactions = this.QueryDebitCreditTransactionByYearMonth(targetDate.Year, targetDate.Month, targetDate.Day)
 				.Where(_ => _.Amount < 0)
 				.Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
-				.GroupBy(_ => new { _.AgentId })
-				.Select(_ => new
-				{
-					_.FirstOrDefault().AgentId,
-					Amount = _.Sum(d => d.Amount)
-				})
+				.AsNoTracking()
 				.ToList();
 
 			var result = agents
@@ -398,11 +393,11 @@ namespace CardPeak.Repository.EF
 						.Select(at => at.Amount)
 						.DefaultIfEmpty(0)
 						.Sum(),
-					Disbursement = debitTransactions
-						.Where(dcst => dcst.AgentId == _.AgentId)
-						.Select(at => at.Amount)
-						.DefaultIfEmpty(0)
-						.Sum()
+					TotalDisbursed = debitTransactions
+						.Where(dt => dt.AgentId == _.AgentId)
+						.Sum(dt => dt.Amount),
+					Details = debitTransactions
+						.Where(dt => dt.AgentId == _.AgentId)
 				});
 
 			return result;

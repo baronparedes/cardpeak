@@ -49,7 +49,8 @@
 
 	export class AgentDisbursementMetrics extends ApprovalMetric<Agent>
 	{
-		public disbursement?: number;
+		public totalDisbursed?: number;
+		public details?: CardPeak.Entities.DebitCreditTransaction[];
 	}
 
 }
