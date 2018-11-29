@@ -10,10 +10,11 @@ namespace CardPeak.Service
 {
 	public sealed class TeamDashboardService : UnitOfWork, ITeamDashboardService
 	{
-		private readonly ITeamPlacementRepository TeamPlacementRepository;
-		private readonly ITeamRepository TeamRepository;
-		private readonly IApprovalTransactionAgentRepository ApprovalAgentRepository;
-		private readonly IApprovalTransactionDashboardRepository ApprovalTransactionDashboardRepository;
+		private ITeamPlacementRepository TeamPlacementRepository { get; set; }
+		private ITeamRepository TeamRepository { get; set; }
+		private IApprovalTransactionAgentRepository ApprovalAgentRepository { get; set; }
+		private IApprovalTransactionDashboardRepository ApprovalTransactionDashboardRepository { get; set; }
+		private IMetricsRepository MetricsRepository { get; set; }
 
 		public TeamDashboardService(CardPeakDbContext context) : base(context)
 		{
@@ -21,29 +22,14 @@ namespace CardPeak.Service
 			this.TeamRepository = new TeamRepository(context);
 			this.ApprovalAgentRepository = new ApprovalTransactionAgentRepository(context);
 			this.ApprovalTransactionDashboardRepository = new ApprovalTransactionDashboardRepository(context);
+			this.MetricsRepository = new MetricsRepository(context);
 		}
 
-		private IEnumerable<TeamDashboardDetail> GetDashboardDetails(int teamId, int year)
+		private IEnumerable<TeamDashboardDetail> GetDashboardDetails(int year, int teamId)
 		{
-			var details = new List<TeamDashboardDetail>();
-			var teamPlacements = this.TeamPlacementRepository.GetTeamMembers(teamId).ToList();
-			if (teamPlacements != null && teamPlacements.Count > 0)
-			{
-				teamPlacements.ForEach(_ =>
-				{
-					var performance = this.ApprovalAgentRepository.GetAgentPerformance(_.AgentId, year);
-					var detail = new TeamDashboardDetail
-					{
-						TeamPlacement = _,
-						Performance = performance,
-						TotalApprovals = performance == null ? 0m : performance.Sum(p => p.Value)
-					};
-					details.Add(detail);
-				});
-			}
-
-			return details
+			var details = this.MetricsRepository.GetTeamPerformanceDetails(year, teamId)
 				.OrderBy(_ => _.TeamPlacement.Agent.FirstName + " " + _.TeamPlacement.Agent.LastName);
+			return details;
 		}
 
 		private int? AddAgent(int teamId, int agentId, bool isUnitManager)
@@ -100,7 +86,7 @@ namespace CardPeak.Service
 			var dashboard = new TeamDashboard
 			{
 				Team = team,
-				Details = this.GetDashboardDetails(teamId, year.GetValueOrDefault()),
+				Details = this.GetDashboardDetails(year.GetValueOrDefault(), teamId),
 				Performance = this.ApprovalAgentRepository.GetTeamPerformance(teamId, year.GetValueOrDefault()),
 				AvailableYears = availableYears,
 				TotalApprovals = availableYears

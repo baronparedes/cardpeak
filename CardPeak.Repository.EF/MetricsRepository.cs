@@ -402,5 +402,63 @@ namespace CardPeak.Repository.EF
 
 			return result;
 		}
+
+		public IEnumerable<TeamDashboardDetail> GetTeamPerformanceDetails(int year, int teamId)
+		{
+			var startDate = new DateTime(year, 1, 1);
+			var endDate = new DateTime(year, 12, 31);
+			var performanceYear = new Dictionary<string, decimal>();
+
+			var teamMembers = this.Context.TeamPlacements
+				.Include(_ => _.Team)
+				.Include(_ => _.Agent)
+				.AsNoTracking()
+				.Where(_ => _.TeamId == teamId);
+
+			for (int i = 1; i <= 12; i++)
+			{
+				performanceYear.Add(new DateTime(year, i, 1).ToString(Configurations.MonthFormat), 0);
+			}
+
+			var query = this.QueryApprovalTransactionsByYearMonth(year, 0);
+			if (teamMembers != null)
+			{
+				query = query
+					.Where(_ => teamMembers.Select(tm => tm.AgentId).Contains(_.AgentId));
+			}
+
+			var metrics = query
+				.Include(_ => _.Agent)
+				.GroupBy(_ => new { _.AgentId, _.Agent })
+				.OrderByDescending(_ => _.Sum(t => t.Units))
+				.AsNoTracking()
+				.ToList();
+
+			var result = new List<TeamDashboardDetail>();
+			foreach (var agent in metrics)
+			{
+				var approvalsPerMonth = performanceYear.ToDictionary(_ => _.Key, _ => 0m);
+				agent.GroupBy(_ => _.ApprovalDate.Month)
+					.Select(_ => new
+					{
+						_.FirstOrDefault().ApprovalDate.Month,
+						Approvals = _.Sum(approvals => approvals.Units)
+					}).ToList().ForEach(item =>
+					{
+						approvalsPerMonth[new DateTime(year, item.Month, 1).ToString(Configurations.MonthFormat)] = item.Approvals;
+					});
+
+				var detail = new TeamDashboardDetail()
+				{
+					TeamPlacement = teamMembers?.Where(tm => tm.AgentId == agent.Key.AgentId).FirstOrDefault(),
+					TotalApprovals = approvalsPerMonth.Sum(_ => _.Value),
+					Performance = approvalsPerMonth.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
+				};
+
+				result.Add(detail);
+			}
+
+			return result;
+		}
 	}
 }

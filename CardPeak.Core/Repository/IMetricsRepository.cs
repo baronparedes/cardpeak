@@ -1,4 +1,5 @@
-﻿using CardPeak.Domain.Metrics;
+﻿using CardPeak.Domain;
+using CardPeak.Domain.Metrics;
 using System;
 using System.Collections.Generic;
 
@@ -12,6 +13,6 @@ namespace CardPeak.Core.Repository
 		IEnumerable<AgentThresholdMetric> GetAgentThresholdMetrics(int year, int month);
 		IEnumerable<AgentDisbursementMetrics> GetAgentDisbursementMetrics(DateTime targetDate);
 		IEnumerable<BankAmountDistribution> GetBankAmountDistribution(int year, int month);
-
+		IEnumerable<TeamDashboardDetail> GetTeamPerformanceDetails(int year, int teamId);
 	}
 }
