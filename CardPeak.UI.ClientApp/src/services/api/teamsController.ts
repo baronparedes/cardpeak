@@ -53,7 +53,7 @@ export function deleteAgent(
 	successCallback: () => void, errorCallback?: (error: string) => void) {
 
 
-	axios.delete(API.DELETE_AGENT(teamId, agentId))
+	axios.post(API.DELETE_AGENT(teamId, agentId))
 		.then((r) => {
 			if (r.status === 200) {
 				successCallback();

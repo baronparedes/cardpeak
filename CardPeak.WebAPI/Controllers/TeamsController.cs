@@ -66,7 +66,7 @@ namespace CardPeak.WebAPI.Controllers
 			return this.Ok(result);
 		}
 
-		[HttpDelete]
+		[HttpPost]
 		[Route("{id}/delete")]
 		public IHttpActionResult DeleteAgent(int id, int agentId)
 		{
