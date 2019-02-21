@@ -7,7 +7,7 @@ namespace CardPeak.Core.Repository
     {
         IEnumerable<Agent> GetAllOrderedByName();
         Agent Update(Agent agent, List<Account> accounts);
-        AgentPayout GetAgentPayouts();
+        AgentPayoutTransaction GetAgentPayouts();
         void DeactivateAgent(int agentId);
     }
 }

@@ -170,6 +170,22 @@
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AgentPayout">
+          <Key>
+            <PropertyRef Name="AgentId" />
+          </Key>
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Payout" Type="decimal" Precision="38" Scale="4" />
+        </EntityType>
         <Association Name="FK_Account_Agent">
           <End Role="Agent" Type="Self.Agent" Multiplicity="1" />
           <End Role="Account" Type="Self.Account" Multiplicity="*" />
@@ -388,6 +404,19 @@
           <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamPlacement" EntityType="Self.TeamPlacement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AgentPayout" EntityType="Self.AgentPayout" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AgentPayout].[AgentId] AS [AgentId], 
+    [AgentPayout].[FirstName] AS [FirstName], 
+    [AgentPayout].[MiddleName] AS [MiddleName], 
+    [AgentPayout].[LastName] AS [LastName], 
+    [AgentPayout].[Gender] AS [Gender], 
+    [AgentPayout].[BirthDate] AS [BirthDate], 
+    [AgentPayout].[Email] AS [Email], 
+    [AgentPayout].[IsDeleted] AS [IsDeleted], 
+    [AgentPayout].[Payout] AS [Payout]
+    FROM [dbo].[AgentPayout] AS [AgentPayout]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Account_Agent" Association="Self.FK_Account_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="Account" EntitySet="Account" />
@@ -543,6 +572,7 @@
             <End Role="Reference" EntitySet="References" />
             <End Role="DefaultRate" EntitySet="DefaultRates" />
           </AssociationSet>
+          <EntitySet Name="AgentPayout" EntityType="CardPeakModel.AgentPayout" />
           </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -937,6 +967,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AgentPayout">
+          <Key>
+            <PropertyRef Name="AgentId" />
+          </Key>
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="Payout" Type="Decimal" Precision="38" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1113,6 +1157,21 @@
                 <ScalarProperty Name="BankId" ColumnName="BankId" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="DefaultRateId" ColumnName="DefaultRateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AgentPayout">
+            <EntityTypeMapping TypeName="CardPeakModel.AgentPayout">
+              <MappingFragment StoreEntitySet="AgentPayout">
+                <ScalarProperty Name="Payout" ColumnName="Payout" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
