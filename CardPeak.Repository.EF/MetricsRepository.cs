@@ -435,27 +435,34 @@ namespace CardPeak.Repository.EF
 				.ToList();
 
 			var result = new List<TeamDashboardDetail>();
-			foreach (var agent in metrics)
+			if (teamMembers != null)
 			{
-				var approvalsPerMonth = performanceYear.ToDictionary(_ => _.Key, _ => 0m);
-				agent.GroupBy(_ => _.ApprovalDate.Month)
-					.Select(_ => new
-					{
-						_.FirstOrDefault().ApprovalDate.Month,
-						Approvals = _.Sum(approvals => approvals.Units)
-					}).ToList().ForEach(item =>
-					{
-						approvalsPerMonth[new DateTime(year, item.Month, 1).ToString(Configurations.MonthFormat)] = item.Approvals;
-					});
-
-				var detail = new TeamDashboardDetail()
+				foreach (var member in teamMembers)
 				{
-					TeamPlacement = teamMembers?.Where(tm => tm.AgentId == agent.Key.AgentId).FirstOrDefault(),
-					TotalApprovals = approvalsPerMonth.Sum(_ => _.Value),
-					Performance = approvalsPerMonth.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
-				};
+					var approvalsPerMonth = performanceYear.ToDictionary(_ => _.Key, _ => 0m);
+					var agent = metrics.Where(_ => _.FirstOrDefault().AgentId == member.AgentId).FirstOrDefault();
+					if (agent != null)
+					{
+						agent.GroupBy(_ => _.ApprovalDate.Month)
+							.Select(_ => new
+							{
+								_.FirstOrDefault().ApprovalDate.Month,
+								Approvals = _.Sum(approvals => approvals.Units)
+							}).ToList().ForEach(item =>
+							{
+								approvalsPerMonth[new DateTime(year, item.Month, 1).ToString(Configurations.MonthFormat)] = item.Approvals;
+							});
+					}
 
-				result.Add(detail);
+					var detail = new TeamDashboardDetail()
+					{
+						TeamPlacement = member,
+						TotalApprovals = approvalsPerMonth.Sum(_ => _.Value),
+						Performance = approvalsPerMonth.Select(_ => new ApprovalMetric<string> { Key = _.Key, Value = _.Value })
+					};
+
+					result.Add(detail);
+				}
 			}
 
 			return result;
