@@ -50,7 +50,10 @@
       <Link>Properties\AppVersion.cs</Link>
     </Compile>
     <Compile Include="AgentDashboardTransaction.cs" />
-    <Compile Include="AgentPayout.cs" />
+    <Compile Include="AgentPayoutTransaction.cs" />
+    <Compile Include="Generated\AgentPayout.cs">
+      <DependentUpon>CardPeakDomain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Generated\DefaultRate.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>

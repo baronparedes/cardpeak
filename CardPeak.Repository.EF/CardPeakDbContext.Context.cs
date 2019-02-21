@@ -40,5 +40,6 @@ namespace CardPeak.Repository.EF
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamPlacement> TeamPlacements { get; set; }
         public virtual DbSet<DefaultRate> DefaultRates { get; set; }
+        public virtual DbSet<AgentPayout> AgentPayout { get; set; }
     }
 }

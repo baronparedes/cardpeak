@@ -13,7 +13,7 @@ namespace CardPeak.Core.Service
         DebitCreditTransaction AddIncentiveTransaction(int agentId, decimal amount, string remarks);
         Agent Update(Agent agent);
         Agent Create(Agent agent);
-        AgentPayout GetAgentPayouts();
+        AgentPayoutTransaction GetAgentPayouts();
         void DeactivateAgent(int agentId);
     }
 }

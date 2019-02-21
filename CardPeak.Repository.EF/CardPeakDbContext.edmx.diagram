@@ -35,6 +35,7 @@
         <AssociationConnector Association="CardPeakModel.FK_DefaultRate_Agent" />
         <AssociationConnector Association="CardPeakModel.FK_DefaultRate_Reference_BankId" />
         <AssociationConnector Association="CardPeakModel.FK_DefaultRate_Reference_CardCategoryId" />
+        <EntityTypeShape EntityType="CardPeakModel.AgentPayout" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
