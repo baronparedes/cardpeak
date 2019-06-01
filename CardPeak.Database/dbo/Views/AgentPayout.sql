@@ -28,8 +28,6 @@ AS
 						GROUP BY A.AgentId
 					) AS ATS_1 ON ATS_1.AgentId = A.AgentId
 	WHERE	( A.IsDeleted = 0 ) AND
-			( DBT_1.TotalDebitCreditAmount + ATS_1.TotalApprovalAmount > 0 )
+			( COALESCE(DBT_1.TotalDebitCreditAmount, 0) + COALESCE(ATS_1.TotalApprovalAmount, 0) > 1 )
 );
 GO
-
-
