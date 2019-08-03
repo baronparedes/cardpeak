@@ -4,6 +4,7 @@ import { Form, FormGroup, Col, Button } from 'react-bootstrap'
 import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButton, ErrorLabel } from '../../layout'
 
 import AgentAccountList from './AgentAccountList'
+import AgentTeamList from './AgentTeamList'
 
 interface AgentFormProps {
     agent: CardPeak.Entities.Agent;
@@ -114,6 +115,37 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             }
         });
     }
+    handleOnAddTeam = (teamPlacement: CardPeak.Entities.TeamPlacement) => {
+        if (this.state.agent) {
+            if (!this.state.agent.teamPlacements) {
+                this.setState({
+                    agent: {
+                        ...this.state.agent,
+                        teamPlacements: [teamPlacement]
+                    }
+                });
+            }
+            else {
+                const exists = this.state.agent.teamPlacements.find(t => t.teamId === teamPlacement.teamId);
+                if (!exists) {
+                    this.setState({
+                        agent: {
+                            ...this.state.agent,
+                            teamPlacements: [...this.state.agent.teamPlacements, teamPlacement]
+                        }
+                    });
+                }
+            }
+        }
+    }
+    handleOnDeleteTeam = (teamId: number) => {
+        this.setState({
+            agent: {
+                ...this.state.agent,
+                teamPlacements: this.state.agent.teamPlacements.filter(t => t.teamId !== teamId)
+            }
+        });
+    }
     componentWillReceiveProps(nextProps: AgentFormProps) {
         if (this.state.agent.agentId != nextProps.agent.agentId || nextProps.agent.agentId === 0) {
             this.setState({
@@ -121,7 +153,7 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             });
         }
     }
-    renderFooter() {
+    renderActions() {
         return (
             <FormGroup>
                 <Col sm={12} className="text-right">
@@ -143,13 +175,33 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             </FormGroup>
         )
     }
+    renderTeamsAndAccounts() {
+        return (
+            <FormGroup>
+                <Col lg={6} md={6} sm={12} xs={12}>
+                    <AgentTeamList
+                        agent={this.state.agent}
+                        isSaving={this.props.isSaving}
+                        onAddTeamPlacement={this.handleOnAddTeam}
+                        onRemoveTeamPlacement={this.handleOnDeleteTeam} />
+                </Col>
+                <Col lg={6} md={6} sm={12} xs={12}>
+                    <AgentAccountList
+                        agent={this.state.agent}
+                        isSaving={this.props.isSaving}
+                        onAddAccount={this.handleOnAddAccount}
+                        onRemoveAccount={this.handleOnDeleteAccount} />
+                </Col>
+            </FormGroup>
+        )
+    }
     render() {
         return(
             <div className="container-fluid">
                 <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
                     <fieldset disabled={this.props.isSaving}>
                         <FormGroup>
-                            <Col lg={7} md={6} sm={12} xs={12}>
+                            <Col lg={6} md={6} sm={12} xs={12}>
                                 <FormFieldInput
                                     controlId="form-first-name"
                                     type="text"
@@ -178,6 +230,8 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     isRequired
                                     onFocus={this.handleFocus}
                                     onChange={this.handleChange} />
+                            </Col>
+                            <Col lg={6} md={6} sm={12} xs={12}>
                                 <FormFieldRadioGroup
                                     controlId="form-gender"
                                     name="gender"
@@ -203,15 +257,10 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     value={this.state.agent.birthDate}
                                     onChangeDate={this.handleChangeBirthDate} />
                             </Col>
-                            <Col lg={5} md={6} sm={12} xs={12}>
-                                <AgentAccountList
-                                    accounts={this.state.agent.accounts}
-                                    isSaving={this.props.isSaving}
-                                    onAddAccount={this.handleOnAddAccount}
-                                    onRemoveAccount={this.handleOnDeleteAccount} />
-                            </Col>
                         </FormGroup>
-                        {this.renderFooter()}
+                        <br/>
+                        {this.renderTeamsAndAccounts()}
+                        {this.renderActions()}
                     </fieldset>
                 </Form>
             </div>

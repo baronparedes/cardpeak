@@ -17,13 +17,8 @@ namespace CardPeak.Repository.EF
         public bool Exists(ApprovalTransaction transaction)
         {
             return this.Context.ApprovalTransactions
-                .Where(_ => _.AgentId == transaction.AgentId)
                 .Where(_ => _.BankId == transaction.BankId)
-                .Where(_ => _.CardCategoryId == transaction.CardCategoryId)
-                .Where(_ => _.ProductType == transaction.ProductType)
                 .Where(_ => _.Client == transaction.Client)
-                .Where(_ => _.ReferenceNumber1 == transaction.ReferenceNumber1)
-                .Where(_ => _.ReferenceNumber2 == transaction.ReferenceNumber2)
                 .Where(_ => !_.IsDeleted)
                 .Any();
         }

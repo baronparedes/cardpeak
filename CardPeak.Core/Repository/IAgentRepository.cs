@@ -6,7 +6,7 @@ namespace CardPeak.Core.Repository
     public interface IAgentRepository : IRepository<Agent>
     {
         IEnumerable<Agent> GetAllOrderedByName();
-        Agent Update(Agent agent, List<Account> accounts);
+        Agent Update(Agent agent, List<Account> accounts, List<TeamPlacement> teams);
         AgentPayoutTransaction GetAgentPayouts();
         void DeactivateAgent(int agentId);
     }

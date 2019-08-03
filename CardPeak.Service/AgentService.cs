@@ -14,6 +14,7 @@ namespace CardPeak.Service
 		private IAccountRepository AccountRepository;
 		private IApprovalTransactionAgentRepository ApprovalTransactionAgentRepository;
 		private IDebitCreditTransactionRepository DebitCreditTransactionRepository;
+        private ITeamPlacementRepository TeamPlacementRepository;
 
 		private string GenerateAgentDashboardTransactionRemarks(ApprovalTransaction approvalTransaction)
 		{
@@ -81,6 +82,7 @@ namespace CardPeak.Service
 			this.AccountRepository = new AccountRepository(context);
 			this.ApprovalTransactionAgentRepository = new ApprovalTransactionAgentRepository(context);
 			this.DebitCreditTransactionRepository = new DebitCreditTransactionRepository(context);
+            this.TeamPlacementRepository = new TeamPlacementRepository(context);
 		}
 
 		public IEnumerable<Agent> GetAllAgents()
@@ -174,7 +176,8 @@ namespace CardPeak.Service
 		public Agent Update(Agent agent)
 		{
 			var accounts = this.AccountRepository.Find(_ => _.AgentId == agent.AgentId).ToList();
-			this.AgentRepository.Update(agent, accounts);
+            var teams = this.TeamPlacementRepository.Find(_ => _.AgentId == agent.AgentId).ToList();
+			this.AgentRepository.Update(agent, accounts, teams);
 			this.Complete();
 			return agent;
 		}
@@ -186,12 +189,29 @@ namespace CardPeak.Service
 			return agent;
 		}
 
-		public IEnumerable<Account> GetAccounts(int agentId)
+        private IEnumerable<Account> GetAccounts(int agentId)
 		{
 			return this.AccountRepository.FindByAgent(agentId);
 		}
 
-		public AgentPayoutTransaction GetAgentPayouts()
+        private IEnumerable<TeamPlacement> GetTeams(int agentId)
+        {
+            return this.TeamPlacementRepository.FindByAgent(agentId);
+        }
+
+        public AgentDetails GetAgentDetails(int agentId)
+        {
+            var accounts = this.GetAccounts(agentId);
+            var teams = this.GetTeams(agentId);
+
+            return new AgentDetails
+            {
+                Accounts = accounts,
+                TeamPlacements = teams
+            };
+        }
+
+        public AgentPayoutTransaction GetAgentPayouts()
 		{
 			return this.AgentRepository.GetAgentPayouts();
 		}

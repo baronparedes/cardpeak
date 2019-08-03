@@ -72,5 +72,14 @@ namespace CardPeak.Repository.EF
 				.AsNoTracking()
 				.ToList();
 		}
+
+        public IEnumerable<TeamPlacement> FindByAgent(int agentId)
+        {
+            return this.Context.TeamPlacements
+                .Include(_ => _.Team)
+                .Where(_ => _.AgentId == agentId)
+                .AsNoTracking()
+                .ToList();
+        }
 	}
 }

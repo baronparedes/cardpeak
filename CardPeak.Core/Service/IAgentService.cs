@@ -7,7 +7,7 @@ namespace CardPeak.Core.Service
     public interface IAgentService : IUnitOfWork
     {
         IEnumerable<Agent> GetAllAgents();
-        IEnumerable<Account> GetAccounts(int agentId);
+        AgentDetails GetAgentDetails(int agentId);
         AgentDashboard GetAgentDashboard(int agentId, DateTime startDate, DateTime? endDate);
         DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit);
         DebitCreditTransaction AddIncentiveTransaction(int agentId, decimal amount, string remarks);

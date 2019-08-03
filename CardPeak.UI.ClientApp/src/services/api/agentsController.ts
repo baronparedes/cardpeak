@@ -21,8 +21,8 @@ const API = {
         return '/agents/' + agentId + '/update'
     },
     CREATE_AGENT: '/agents/create',
-    GET_ACCOUNTS: (agentId: number) => {
-        return '/agents/' + agentId + '/accounts';
+    GET_DETAILS: (agentId: number) => {
+        return '/agents/' + agentId + '/details';
     },
     GET_AGENT_PAYOUT: '/agents/payout',
     DEACTIVATE_AGENT: (agentId: number) => {
@@ -143,10 +143,10 @@ export function createAgent(agent: CardPeak.Entities.Agent,
         })
 }
 
-export async function getAccountsAsync(agentId: number) {
-    let result = await axios(API.GET_ACCOUNTS(agentId));
+export async function getDetailsAsync(agentId: number) {
+    let result = await axios(API.GET_DETAILS(agentId));
     if (result.status != 200) {
-        return [];
+        return undefined;
     }
-    return result.data as CardPeak.Entities.Account[];
+    return result.data as CardPeak.Entities.AgentDetails;
 }

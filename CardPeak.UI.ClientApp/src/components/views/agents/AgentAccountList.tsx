@@ -3,7 +3,7 @@ import { Panel, Row, Col, Button, FormGroup, InputGroup } from 'react-bootstrap'
 import { GridList, ListNoRecordsRow, FormFieldInput } from '../../layout'
 
 interface AgentAccountListProps {
-    accounts: CardPeak.Entities.Account[],
+    agent: CardPeak.Entities.Agent,
     onRemoveAccount: (account: string) => void;
     onAddAccount: (account: string) => void;
     isSaving?: boolean;
@@ -123,8 +123,8 @@ class AgentAccountList extends React.Component<AgentAccountListProps, AgentAccou
                 </FormGroup>
                 <GridList header={<AgentAccountDetailRowLayout isHeader={true} />}>
                     {
-                        this.props.accounts && this.props.accounts.length > 0 ?
-                            this.props.accounts.map((account) => {
+                        this.props.agent.accounts && this.props.agent.accounts.length > 0 ?
+                            this.props.agent.accounts.map((account) => {
                                 return (
                                     <Panel className="panel-row" key={account.alias}>
                                         <AgentAccountDetailRowLayout

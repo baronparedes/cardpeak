@@ -37,10 +37,10 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{id}/accounts")]
-        public IHttpActionResult GetAccounts(int id)
+        [Route("{id}/details")]
+        public IHttpActionResult GetDetails(int id)
         {
-            var result = this.AgentService.GetAccounts(id);
+            var result = this.AgentService.GetAgentDetails(id);
             if (result == null)
             {
                 return this.NotFound();

@@ -58,14 +58,13 @@ export function selectAgentById(id: number, agentFoundCallback: (agent: CardPeak
     }
 }
 
-export function getAccounts(agentId: number, successCallback:(data: CardPeak.Entities.Account[]) => void) {
+export function getAgentDetails(agentId: number, successCallback:(data: CardPeak.Entities.AgentDetails) => void) {
     return (dispatch: (e: any) => void) => {
-        let selectAgentAction = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.SELECT_AGENT);
-        agentsController.getAccountsAsync(agentId).then((data: CardPeak.Entities.Account[]) => {
+        agentsController.getDetailsAsync(agentId).then((data: CardPeak.Entities.AgentDetails) => {
             if (successCallback) {
                 successCallback(data);
             }
-            dispatch(createAction<CardPeak.Entities.Account[]>(AGENT_ACTIONS.GET_ACCOUNTS)(data));
+            dispatch(createAction<CardPeak.Entities.AgentDetails>(AGENT_ACTIONS.GET_DETAILS)(data));
         });
     }
 }

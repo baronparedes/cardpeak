@@ -1,5 +1,6 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
+import * as TeamsActions from '../../../services/actions/teamsActions'
 import * as dateHelper from '../../../helpers/dateHelpers'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { SpinnerBlock, RadioGroup, AgentDashboardLinkButton, NavigationProps, ConfirmButton } from '../../layout'
@@ -70,8 +71,11 @@ class AgentContainer extends
         if (this.props.history) {
             this.props.history.push("/agents/update/" + agent.agentId);
         }
-        this.props.actions.getAccounts(agent.agentId, (data: CardPeak.Entities.Account[]) => {
-            agent.accounts = data;
+        this.props.actions.getAgentDetails(agent.agentId, (data: CardPeak.Entities.AgentDetails) => {
+            if (data) {
+                agent.accounts = data.accounts;
+                agent.teamPlacements = data.teamPlacements;
+            }
             this.setState({ selectedAgent: agent });
         });
     }

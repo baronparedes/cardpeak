@@ -176,7 +176,7 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
     },
     [AGENT_ACTIONS.CREATE_AGENT_COMPLETE]: (state, action) => {
         let agent = action.payload as CardPeak.Entities.Agent;
-        let agents = state.agents.slice();
+        let agents = state.agents ? state.agents.slice() : [];
         agents.push(agent);
 
         return {

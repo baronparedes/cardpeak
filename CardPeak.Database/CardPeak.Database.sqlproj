@@ -95,6 +95,7 @@
     <None Include="Script\Defaults\PopulateDefaultUsers.sql" />
     <None Include="Script\Sample Data\Sample Agent.sql" />
     <None Include="Script\Defaults\PopulateBatchFileConfigurations.sql" />
+    <None Include="CardPeak.Database.CONTAINER.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CardPeak.Database.refactorlog" />
