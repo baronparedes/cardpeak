@@ -9,7 +9,7 @@
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <ToolsVersionPromptShown>0.0</ToolsVersionPromptShown>
     <TypeScriptToolsVersion>2.4</TypeScriptToolsVersion>
-    <NameOfLastUsedPublishProfile>release</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>Release</NameOfLastUsedPublishProfile>
     <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
   </PropertyGroup>
@@ -355,9 +355,14 @@
     <TypeScriptCompile Include="src\components\layout\DateRangeAction.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\agents\AgentSavingsActions.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\agents\AgentSavingsView.tsx" />
     <TypeScriptCompile Include="src\components\views\agents\AgentTeamList.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\agents\AgentSavingsContainer.tsx" />
     <TypeScriptCompile Include="src\components\views\agents\SelectAgentContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

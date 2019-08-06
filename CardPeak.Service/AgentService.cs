@@ -120,13 +120,13 @@ namespace CardPeak.Service
 			};
 		}
 
-		private DebitCreditTransaction AddTransaction(int agentId, decimal amount, string remarks, Domain.Enums.TransactionTypeEnum transactionType)
+		private DebitCreditTransaction AddTransaction(int agentId, decimal amount, string remarks, DateTime? transactionDate, Domain.Enums.TransactionTypeEnum transactionType)
 		{
 			var transaction = new DebitCreditTransaction
 			{
 				AgentId = agentId,
 				Remarks = remarks,
-				TransactionDateTime = DateTime.Now,
+				TransactionDateTime = transactionDate ?? DateTime.Now,
 				TransactionTypeId = (int)transactionType,
 				IsDeleted = false,
 				Amount = amount
@@ -138,7 +138,7 @@ namespace CardPeak.Service
 			return transaction;
 		}
 
-		public DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit)
+        public DebitCreditTransaction AddDebitCreditTransaction(int agentId, decimal amount, string remarks, bool isDebit)
 		{
 			try
 			{
@@ -147,7 +147,7 @@ namespace CardPeak.Service
 					throw new ArgumentNullException("Amount cannot be 0 or less.");
 				}
 				var transactionAmount = (isDebit) ? Math.Abs(amount) * -1 : Math.Abs(amount);
-				return this.AddTransaction(agentId, transactionAmount, remarks, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
+				return this.AddTransaction(agentId, transactionAmount, remarks, null, Domain.Enums.TransactionTypeEnum.DebitCreditTransaction);
 			}
 			catch
 			{
@@ -164,7 +164,7 @@ namespace CardPeak.Service
 				{
 					throw new ArgumentNullException("Amount cannot be 0 or less.");
 				}
-				return this.AddTransaction(agentId, Math.Abs(amount), remarks, Domain.Enums.TransactionTypeEnum.IncentivesTransaction);
+				return this.AddTransaction(agentId, Math.Abs(amount), remarks, null, Domain.Enums.TransactionTypeEnum.IncentivesTransaction);
 			}
 			catch
 			{
@@ -173,7 +173,25 @@ namespace CardPeak.Service
 			}
 		}
 
-		public Agent Update(Agent agent)
+        public DebitCreditTransaction AddDebitCreditSavingsTransaction(int agentId, decimal amount, string remarks, DateTime? transactionDate, bool isDebit)
+        {
+            try
+            {
+                if (amount <= 0)
+                {
+                    throw new ArgumentNullException("Amount cannot be 0 or less.");
+                }
+                var transactionAmount = (isDebit) ? Math.Abs(amount) * -1 : Math.Abs(amount);
+                return this.AddTransaction(agentId, transactionAmount, remarks, transactionDate, Domain.Enums.TransactionTypeEnum.SavingsTransaction);
+            }
+            catch
+            {
+                // TODO: Log Errors
+                return null;
+            }
+        }
+
+        public Agent Update(Agent agent)
 		{
 			var accounts = this.AccountRepository.Find(_ => _.AgentId == agent.AgentId).ToList();
             var teams = this.TeamPlacementRepository.Find(_ => _.AgentId == agent.AgentId).ToList();
@@ -221,5 +239,16 @@ namespace CardPeak.Service
 			this.AgentRepository.DeactivateAgent(agentId);
 			this.Complete();
 		}
-	}
+
+        public AgentSavings GetAgentSavings(int agentId, int? year)
+        {
+            return new AgentSavings
+            {
+                Agent = this.AgentRepository.Find(_ => _.AgentId == agentId).SingleOrDefault(),
+                SavingsBalance = this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, null, Domain.Enums.TransactionTypeEnum.SavingsTransaction),
+                SavingsByMonth = this.DebitCreditTransactionRepository.GetSavingsByMonth(agentId, year),
+                SavingsByYear = this.DebitCreditTransactionRepository.GetSavingsByYear(agentId)
+            };
+        }
+    }
 }

@@ -21,6 +21,9 @@ export const createAgent = createAction(AGENT_ACTIONS.CREATE_AGENT);
 export const createAgentComplete = createAction<CardPeak.Entities.Agent>(AGENT_ACTIONS.CREATE_AGENT_COMPLETE);
 export const createAgentError = createAction(AGENT_ACTIONS.CREATE_AGENT_ERROR);
 export const setDateFilters = createAction<CardPeak.Entities.DateFilters>(AGENT_ACTIONS.SET_DASHBOARD_DATE_FILTERS);
+export const selectAgentSavings = createAction(AGENT_ACTIONS.SELECT_AGENT_SAVINGS);
+export const selectAgentSavingsComplete = createAction<CardPeak.Entities.AgentSavings>(AGENT_ACTIONS.SELECT_AGENT_SAVINGS_COMPLETE);
+
 
 function filterAgent(data: CardPeak.Entities.Agent[], id: number, agentFoundCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
     let agent: CardPeak.Entities.Agent = data.filter(_ => _.agentId == id)[0];
@@ -151,6 +154,25 @@ export function selectAgentDashboardStart() {
         dispatch(selectAgentDashboard());
         agentsController.getAgentDashboard(agent.agentId, (data: CardPeak.Entities.AgentDashboard) => {
             dispatch(selectAgentDashboardComplete(data));
+        });
+    }
+}
+
+export function selectAgentSavingsStart() {
+    return (dispatch: (e: any) => void, getState: () => RootState) => {
+        let agent = getState().agentModel.selectedAgent;
+        dispatch(selectAgentSavings());
+        agentsController.getAgentSavings(agent.agentId, (data: CardPeak.Entities.AgentSavings) => {
+            dispatch(selectAgentSavingsComplete(data));
+        });
+    }
+}
+
+export function getAgentSavingsStart(agentId: number, year: number) {
+    return (dispatch: (e: any) => void) => {
+        dispatch(selectAgentSavings());
+        agentsController.getAgentSavingsByYear(agentId, year, (data) => {
+            dispatch(selectAgentSavingsComplete(data));
         });
     }
 }

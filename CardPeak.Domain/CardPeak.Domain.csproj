@@ -52,6 +52,7 @@
     <Compile Include="AgentDashboardTransaction.cs" />
     <Compile Include="AgentDetails.cs" />
     <Compile Include="AgentPayoutTransaction.cs" />
+    <Compile Include="AgentSavings.cs" />
     <Compile Include="Generated\AgentPayout.cs">
       <DependentUpon>CardPeakDomain.tt</DependentUpon>
     </Compile>

@@ -24,6 +24,9 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel
         if (this.props.match.params.id) {
             if (this.props.selectedAgent) {
                 if (this.props.selectedAgent.agentId == this.props.match.params.id) {
+                    if (!this.props.selectedAgentDashboard) {
+                        this.props.actions.selectAgentDashboardStart();
+                    }
                     return;
                 }
             }
@@ -37,6 +40,9 @@ class AgentDashboardContainer extends React.Component<CardPeak.Models.AgentModel
         }
 
         if (this.props.selectedAgent) {
+            if (!this.props.selectedAgentDashboard) {
+                this.props.actions.selectAgentDashboardStart();
+            }
             this.props.history.push("/agents/" + this.props.selectedAgent.agentId);
         }
     }

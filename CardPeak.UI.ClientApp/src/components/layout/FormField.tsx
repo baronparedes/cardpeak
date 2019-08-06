@@ -83,10 +83,11 @@ export const FormFieldRadioGroup: React.StatelessComponent<FormFieldProps> = (pr
     )
 }
 
-export const FormFieldDate: React.StatelessComponent<FormFieldProps> = (props) => {
+export const FormFieldDate: React.StatelessComponent<FormFieldProps & { maxDate?: any }> = (props) => {
     return (
         <FormFieldInline {...props}>
             <DatePickerForm
+                maxDate={props.maxDate}
                 showClearButton={false}
                 value={dateFormatISO(new Date(props.value))}
                 onChange={props.onChange} />

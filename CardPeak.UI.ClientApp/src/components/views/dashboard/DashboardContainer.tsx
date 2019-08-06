@@ -9,7 +9,7 @@ import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import {
 	YearMonthAction,
 	SpinnerBlock, PerformanceDashboard, DashboardLabel,
-	ApprovalMetrics, ApprovalMetricsLineChart, TotalApprovedMetrics
+	ApprovalMetrics, MetricsLineChart, TotalApprovedMetrics
 } from '../../layout'
 
 import { LatestProcessedBatchList, TopAgentList } from './metrics'
@@ -49,7 +49,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
 									</Col>
 									<Col xsHidden smHidden>
 										<br />
-										<ApprovalMetricsLineChart metrics={this.props.performance} label="yearly performance" />
+										<MetricsLineChart metrics={this.props.performance} label="yearly performance" />
 									</Col>
 								</Panel>
 							</Col>

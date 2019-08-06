@@ -1,5 +1,5 @@
 ﻿import * as React from 'react'
-import { Doughnut, HorizontalBar, Line } from 'react-chartjs-2'
+import { Doughnut, HorizontalBar, Line, Bar } from 'react-chartjs-2'
 import * as colorScale from '../../constants/colorScale'
 
 
@@ -7,10 +7,11 @@ interface ChartProps {
     metrics?: CardPeak.Entities.ApprovalMetric<any>[];
     label?: string;
     onClick?: (e: any) => void;
+    height?: number
 }
 
 function getLineData(props: ChartProps) {
-    const palette: number = props.metrics.length > 12 ? 12 : props.metrics.length;
+    const colorPalette = props.metrics.length > 12 ? colorScale.paletteV2 : colorScale.palette[props.metrics.length];
     let labels: string[] = [];
     let dataSet: number[] = [];
 
@@ -27,8 +28,8 @@ function getLineData(props: ChartProps) {
         labels: labels,
         datasets: [{
             data: dataSet,
-            backgroundColor: colorScale.palette[palette],
-            hoverBackgroundColor: colorScale.palette[palette],
+            backgroundColor: colorPalette,
+            hoverBackgroundColor: colorPalette,
             fill: false,
             borderColor: colorScale.palette[3][0],
             borderCapStyle: 'butt',
@@ -51,7 +52,7 @@ function getLineData(props: ChartProps) {
 }
 
 function getData(props: ChartProps) {
-    const palette: number = props.metrics.length > 12 ? 12 : props.metrics.length;
+    const colorPalette = props.metrics.length > 12 ? colorScale.paletteV2 : colorScale.palette[props.metrics.length];
     let labels: string[] = [];
     let dataSet: number[] = [];
 
@@ -71,8 +72,8 @@ function getData(props: ChartProps) {
         datasets: [{
             label: props.label,
             data: dataSet,
-            backgroundColor: colorScale.palette[palette],
-            hoverBackgroundColor: colorScale.palette[palette],
+            backgroundColor: colorPalette,
+            hoverBackgroundColor: colorPalette,
         }],
         legendOpts: legendOpts
     };
@@ -80,7 +81,7 @@ function getData(props: ChartProps) {
     return data;
 }
 
-export const ApprovalMetricsLineChart = (props: ChartProps) => {
+export const MetricsLineChart = (props: ChartProps) => {
     if (!props.metrics) {
         return null;
     }
@@ -94,7 +95,7 @@ export const ApprovalMetricsLineChart = (props: ChartProps) => {
     )
 }
 
-export const ApprovalMetricsBarChart = (props: ChartProps) => {
+export const MetricsHorizontalBarChart = (props: ChartProps) => {
     if (!props.metrics) {
         return null;
     }
@@ -103,12 +104,30 @@ export const ApprovalMetricsBarChart = (props: ChartProps) => {
 
     return (
         <div>
-            <HorizontalBar data={data} legend={data.legendOpts} onElementsClick={props.onClick} height={180} />
+            <HorizontalBar data={data} legend={data.legendOpts} onElementsClick={props.onClick} height={props.height ? props.height : 180} />
         </div>
     )
 }
 
-export const ApprovalMetricsPieChart = (props: ChartProps) => {
+export const MetricsBarChart = (props: ChartProps) => {
+    if (!props.metrics) {
+        return null;
+    }
+
+    const data = getData(props);
+
+    return (
+        <div>
+            <Bar data={data}
+                legend={data.legendOpts}
+                onElementsClick={props.onClick}
+                height={props.height ? props.height : 180}
+                options={{ maintainAspectRatio: false }} />
+        </div>
+    )
+}
+
+export const MetricsPieChart = (props: ChartProps) => {
     if (!props.metrics) {
         return null;
     }

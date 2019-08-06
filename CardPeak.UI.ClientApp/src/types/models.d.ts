@@ -1,12 +1,15 @@
 ﻿declare module CardPeak.Models {
 	export interface AgentModel {
 		selectedAgent?: CardPeak.Entities.Agent;
-		selectedAgentDashboard?: CardPeak.Entities.AgentDashboard;
+        selectedAgentDashboard?: CardPeak.Entities.AgentDashboard;
+        selectedAgentSavings?: CardPeak.Entities.AgentSavings;
 		agents?: CardPeak.Entities.Agent[];
 		loadingAgents?: boolean;
-		loadingAgentDashboard?: boolean;
+        loadingAgentDashboard?: boolean;
+        loadingAgentSavings?: boolean;
 		postingTransaction?: boolean;
-		refreshingAgentDashboard?: boolean;
+        refreshingAgentDashboard?: boolean;
+        refreshingAgentSavings?: boolean;
 		updatingAgent?: boolean;
 		creatingAgent?: boolean;
 		dateFilters?: CardPeak.Entities.DateFilters

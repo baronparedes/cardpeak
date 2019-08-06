@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { RootState } from '../../../services/reducers'
 
 import { Col, Row, Grid } from 'react-bootstrap'
-import { YearMonthAction, DataList, DataItemProps, DashboardLabel, PerformanceDashboard, ApprovalMetricsBarChart } from '../../layout'
+import { YearMonthAction, DataList, DataItemProps, DashboardLabel, PerformanceDashboard, MetricsHorizontalBarChart } from '../../layout'
 
 type BankAmountDistributionMetricsDataList = new () => DataList<CardPeak.Entities.BankAmountDistribution>;
 const BankAmountDistributionMetricsDataList = DataList as BankAmountDistributionMetricsDataList;
@@ -26,7 +26,7 @@ const CardCategoryAmountDistributionMetricsRowLayout: React.StatelessComponent<D
                             <Col sm={4} className="text-center" key={_.description}>
                                 {
                                     _.approvalsByAmount && _.approvalsByAmount.length > 0 ? 
-                                        <ApprovalMetricsBarChart metrics={_.approvalsByAmount} label={_.description} /> : null
+                                            <MetricsHorizontalBarChart metrics={_.approvalsByAmount} label={_.description} height={400} /> : null
                                 }
                             </Col>
                         )

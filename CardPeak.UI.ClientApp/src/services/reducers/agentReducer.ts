@@ -190,5 +190,21 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
             ...state,
             dateFilters: action.payload
         }
-    }
+    },
+    [AGENT_ACTIONS.SELECT_AGENT_SAVINGS]: (state, action) => {
+        return {
+            ...state,
+            loadingAgentSavings: true,
+            selectedAgentSavings: undefined,
+            refreshingAgentSavings: undefined
+        }
+    },
+    [AGENT_ACTIONS.SELECT_AGENT_SAVINGS_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            loadingAgentSavings: undefined,
+            selectedAgentSavings: action.payload,
+            refreshingAgentSavings: undefined
+        }
+    },
 }, initialState);

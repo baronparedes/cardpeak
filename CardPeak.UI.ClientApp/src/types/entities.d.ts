@@ -71,7 +71,14 @@
 		public approvalsByBank?: ApprovalMetric<string>[];
 		public approvalsByCategory?: ApprovalMetric<string>[];
 		public approvalsByBankDetails?: any;
-	}
+    }
+
+    export class AgentSavings {
+        public agent: Agent;
+        public savingsBalance: number;
+        public savingsByMonth?: ApprovalMetric<string>[];
+        public savingsByYear?: ApprovalMetric<string>[];
+    }
 
 	export class Reference 
 	{

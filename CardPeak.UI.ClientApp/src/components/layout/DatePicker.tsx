@@ -6,12 +6,14 @@ interface DatePickerProps {
     value?: string,
     onChange?: (value: string, formattedValue: string) => void,
     disabled?: boolean,
-    showClearButton?: boolean
+    showClearButton?: boolean,
+    maxDate?: string
 }
 
 export const DatePickerForm = (props: DatePickerProps) => {
     return (
         <DatePickerBootstrap
+            maxDate={props.maxDate}
             onChange={props.onChange}
             className="date-picker"
             showTodayButton
