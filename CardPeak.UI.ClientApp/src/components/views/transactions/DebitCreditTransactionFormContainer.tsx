@@ -102,7 +102,6 @@ class DebitCreditTransactionFormContainer extends React.Component<
         });
     }
     handleOnTransactionDateChange = (value: string, formattedValue: string) => {
-        console.log(value);
         this.setState({ transactionDate: new Date(value) });
     }
     render() {
@@ -116,8 +115,8 @@ class DebitCreditTransactionFormContainer extends React.Component<
                 transaction = "Credit Savings";
                 break;
             case "savings-debit":
-                buttonClass = "success";
-                amountClass = "amount-credit";
+                buttonClass = "danger";
+                amountClass = "amount-debit";
                 transaction = "Debit Savings";
                 break;
             case "credit":

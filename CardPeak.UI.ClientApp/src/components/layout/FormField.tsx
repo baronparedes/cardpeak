@@ -90,7 +90,7 @@ export const FormFieldDate: React.StatelessComponent<FormFieldProps & { maxDate?
                 maxDate={props.maxDate}
                 showClearButton={false}
                 value={dateFormatISO(new Date(props.value))}
-                onChange={props.onChange} />
+                onChange={props.onChangeDate} />
         </FormFieldInline>
     )
 }

@@ -102,6 +102,7 @@ export default class AgentSavingsActions extends React.Component<AgentSavingsAct
                 showTransactionDate
                 agent={this.props.agent}
                 onToggleModal={this.handleOnToggleModal}
+                onTransactionSubmitted={this.handleOnRefreshTransactions}
                 showModal={this.state.showModal}
                 transaction={this.state.transaction} />
         )
