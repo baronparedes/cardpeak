@@ -72,13 +72,16 @@ export function getAgentDetails(agentId: number, successCallback:(data: CardPeak
     }
 }
 
-export function createAgentStart(agent: CardPeak.Entities.Agent, successCallback?: () => void, errorCallback?: (e: string) => void) {
+export function createAgentStart(agent: CardPeak.Entities.Agent,
+    successCallback?: (a: CardPeak.Entities.Agent) => void,
+    errorCallback?: (e: string) => void) {
     return (dispatch: (e: any) => void) => {
         dispatch(createAgent());
-        agentsController.createAgent(agent, (agent: CardPeak.Entities.Agent) => {
-            dispatch(createAgentComplete(agent));
+        agentsController.createAgent(agent, (data) => {
+            dispatch(createAgentComplete(data));
+            dispatch(selectAgent(data));
             if (successCallback) {
-                successCallback();
+                successCallback(data);
             }
         }, (error: string) => {
             dispatch(createAgentError());

@@ -5,6 +5,8 @@ import * as dateHelper from '../../../helpers/dateHelpers'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { SpinnerBlock, RadioGroup, AgentDashboardLinkButton, NavigationProps, ConfirmButton } from '../../layout'
 
+import { withRouter } from 'react-router-dom'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
@@ -84,8 +86,12 @@ class AgentContainer extends
     }
     handleOnSaveAgent = (agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) => {
         if (this.props.isNew) {
-            this.props.actions.createAgentStart(agent, () => {
-                this.setState({ selectedAgent: agent });
+            this.props.actions.createAgentStart(agent, (data) => {
+                this.setState({ selectedAgent: data }, () => {
+                    if (this.props.history) {
+                        this.props.history.push("/agents/update/" + data.agentId);
+                    }
+                });
             }, errorCallback);
         }
         else {
@@ -192,4 +198,4 @@ const mapDispatchToProps = (dispatch: any): AgentContainerDispatchProps => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AgentContainer));
