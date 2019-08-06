@@ -8,15 +8,21 @@
 		public gender: string;
 		public birthDate?: Date;
 		public email?: string;
-		public accounts?: CardPeak.Entities.Account[]
-	}
+        public accounts?: CardPeak.Entities.Account[];
+        public teamPlacements?: CardPeak.Entities.TeamPlacement[];
+    }
+
+    export class AgentDetails {
+        public accounts?: CardPeak.Entities.Account[];
+        public teamPlacements?: CardPeak.Entities.TeamPlacement[];
+    }
 
 	export class Account {
 		public agentId: number;
 		public alias: string;
-	}
+    }
 
-	export class ApprovalTransaction {
+    export class ApprovalTransaction {
 		public id: number;
 		public bankId: number;
 		public cardCategoryId: number;
@@ -65,7 +71,14 @@
 		public approvalsByBank?: ApprovalMetric<string>[];
 		public approvalsByCategory?: ApprovalMetric<string>[];
 		public approvalsByBankDetails?: any;
-	}
+    }
+
+    export class AgentSavings {
+        public agent: Agent;
+        public savingsBalance: number;
+        public savingsByMonth?: ApprovalMetric<string>[];
+        public savingsByYear?: ApprovalMetric<string>[];
+    }
 
 	export class Reference 
 	{

@@ -1,8 +1,11 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
+import * as TeamsActions from '../../../services/actions/teamsActions'
 import * as dateHelper from '../../../helpers/dateHelpers'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { SpinnerBlock, RadioGroup, AgentDashboardLinkButton, NavigationProps, ConfirmButton } from '../../layout'
+
+import { withRouter } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -70,8 +73,11 @@ class AgentContainer extends
         if (this.props.history) {
             this.props.history.push("/agents/update/" + agent.agentId);
         }
-        this.props.actions.getAccounts(agent.agentId, (data: CardPeak.Entities.Account[]) => {
-            agent.accounts = data;
+        this.props.actions.getAgentDetails(agent.agentId, (data: CardPeak.Entities.AgentDetails) => {
+            if (data) {
+                agent.accounts = data.accounts;
+                agent.teamPlacements = data.teamPlacements;
+            }
             this.setState({ selectedAgent: agent });
         });
     }
@@ -80,8 +86,12 @@ class AgentContainer extends
     }
     handleOnSaveAgent = (agent: CardPeak.Entities.Agent, errorCallback: (e: string) => void) => {
         if (this.props.isNew) {
-            this.props.actions.createAgentStart(agent, () => {
-                this.setState({ selectedAgent: agent });
+            this.props.actions.createAgentStart(agent, (data) => {
+                this.setState({ selectedAgent: data }, () => {
+                    if (this.props.history) {
+                        this.props.history.push("/agents/update/" + data.agentId);
+                    }
+                });
             }, errorCallback);
         }
         else {
@@ -188,4 +198,4 @@ const mapDispatchToProps = (dispatch: any): AgentContainerDispatchProps => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AgentContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AgentContainer));

@@ -21,7 +21,7 @@ namespace CardPeak.Domain
             this.ApprovalTransactions = new HashSet<ApprovalTransaction>();
             this.DebitCreditTransactions = new HashSet<DebitCreditTransaction>();
             this.Rates = new HashSet<Rate>();
-            this.TeamPlacement = new HashSet<TeamPlacement>();
+            this.TeamPlacements = new HashSet<TeamPlacement>();
         }
     
         public int AgentId { get; set; }
@@ -42,6 +42,6 @@ namespace CardPeak.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rate> Rates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamPlacement> TeamPlacement { get; set; }
+        public virtual ICollection<TeamPlacement> TeamPlacements { get; set; }
     }
 }

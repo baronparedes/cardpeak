@@ -1,5 +1,7 @@
 ﻿using CardPeak.Core.Repository;
 using CardPeak.Domain;
+using CardPeak.Domain.Constants;
+using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF.Core;
 using System;
 using System.Collections.Generic;
@@ -84,6 +86,66 @@ namespace CardPeak.Repository.EF
         public decimal GetAccountBalance(int year, int month, Domain.Enums.TransactionTypeEnum transactionType = Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
         {
             return this.QueryBalance(year, month, transactionType);
+        }
+
+        public IEnumerable<ApprovalMetric<string>> GetSavingsByYear(int agentId)
+        {
+            var query = this.Context.DebitCreditTransactions
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.AgentId == agentId)
+                .Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.SavingsTransaction)
+                .GroupBy(_ => _.TransactionDateTime.Year)
+                .Select(_ => new
+                {
+                    _.FirstOrDefault().TransactionDateTime.Year,
+                    Amount = _.Sum(approvals => approvals.Amount)
+                })
+                .ToList();
+
+            return query.Select(_ => new ApprovalMetric<string>
+            {
+                Key = _.Year.ToString(),
+                Value = _.Amount,
+                Amount = _.Amount
+            });
+        }
+
+        public IEnumerable<ApprovalMetric<string>> GetSavingsByMonth(int agentId, int? year = null)
+        {
+            year = year ?? DateTime.Now.Year;
+
+            var startDate = new DateTime(year.Value, 1, 1);
+            var endDate = new DateTime(year.Value, 12, 31);
+            var result = new Dictionary<string, decimal?>();
+
+            for (int i = 1; i <= 12; i++)
+            {
+                result.Add(new DateTime(year.Value, i, 1).ToString(Configurations.MonthFormat), null);
+            }
+
+            var query = this.Context.DebitCreditTransactions
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.TransactionDateTime >= startDate && _.TransactionDateTime <= endDate)
+                .Where(_ => _.AgentId == agentId)
+                .Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.SavingsTransaction)
+                .GroupBy(_ => _.TransactionDateTime.Month)
+                .Select(_ => new
+                {
+                    _.FirstOrDefault().TransactionDateTime.Month,
+                    Amount = _.Sum(approvals => approvals.Amount)
+                })
+                .ToList();
+
+            query.ForEach(_ =>
+            {
+                result[new DateTime(year.Value, _.Month, 1).ToString(Configurations.MonthFormat)] = _.Amount;
+            });
+
+            return result.Select(_ => new ApprovalMetric<string>
+            {
+                Key = _.Key,
+                Amount = _.Value ?? 0
+            });
         }
     }
 }

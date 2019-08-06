@@ -131,7 +131,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
 						bsStyle="success"
 						data-name="Credit"
 						disabled={this.props.refreshingAgentDashboard}>
-						<i className="fa fa-plus" title="Credit Credit" data-name="Credit"></i>
+						<i className="fa fa-plus" title="Credit Transaction" data-name="Credit"></i>
 					</Button>
 					<Button
 						onClick={this.handleOnTransactionToggleModal}
@@ -147,7 +147,7 @@ export default class AgentDashboardActions extends React.Component<AgentDashboar
 	}
 	renderModals() {
 		return (
-			<DebitCreditTransactionFormModal
+            <DebitCreditTransactionFormModal
 				agent={this.props.agent}
 				onToggleModal={this.handleOnToggleModal}
 				showModal={this.state.showModal}

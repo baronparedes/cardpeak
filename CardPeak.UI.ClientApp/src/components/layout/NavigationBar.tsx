@@ -56,7 +56,9 @@ export class NavigationBar extends React.Component<{}, undefined> {
 		const navs: NavProps[] = [
 			{ text: "Agent Dashboard", fa: "fa-tachometer", exact: true, to: "/agents" },
 			{ divider: true },
-			{ text: "Payout", fa: "fa-money", exact: true, to: "/agents/payout", addOn: <PayoutBadgeContainer autoRefresh /> },
+            { text: "Payout", fa: "fa-money", exact: true, to: "/agents/payout", addOn: <PayoutBadgeContainer autoRefresh /> },
+            { divider: true },
+            { text: "Manage Savings", fa: "fa-bank", exact: true, to: "/agents/savings" },
 			{ divider: true },
 			{ text: "Create", fa: "fa-user-plus", exact: true, to: "/agents/create" },
 			{ text: "Update", fa: "fa-pencil", exact: true, to: "/agents/update" }

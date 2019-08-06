@@ -599,7 +599,7 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
           <NavigationProperty Name="ApprovalTransactions" Relationship="CardPeakModel.FK_ApprovalTransaction_Agent" FromRole="Agent" ToRole="ApprovalTransaction" />
           <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
           <NavigationProperty Name="Rates" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Agent" ToRole="Rate" />
-          <NavigationProperty Name="TeamPlacement" Relationship="CardPeakModel.FK_TeamPlacement_Agent" FromRole="Agent" ToRole="TeamPlacement" />
+          <NavigationProperty Name="TeamPlacements" Relationship="CardPeakModel.FK_TeamPlacement_Agent" FromRole="Agent" ToRole="TeamPlacement" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>

@@ -2,6 +2,7 @@
 using CardPeak.Domain;
 using CardPeak.Domain.Metrics;
 using CardPeak.Repository.EF.Core;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -21,37 +22,80 @@ namespace CardPeak.Repository.EF
 				.OrderBy(_ => _.FirstName).ThenBy(_ => _.LastName).ToList();
 		}
 
-		public Agent Update(Agent agent, List<Account> accounts)
+		public Agent Update(Agent agent, List<Account> accounts, List<TeamPlacement> teams)
 		{
-			accounts.ForEach(_ =>
-			{
-				var item = agent.Accounts.FirstOrDefault(account => account.Alias.ToLower() == _.Alias.ToLower());
-				if (item != null)
-				{
-					_.Alias = item.Alias;
-					this.Context.Entry(_).State = EntityState.Modified;
-				}
-				else
-				{
-					this.Context.Entry(_).State = EntityState.Deleted;
-				}
-			});
+            this.UpdateAccounts(agent, accounts);
+            this.UpdateTeams(agent, teams);
 
-			var newAccounts = agent.Accounts.ToList();
-			newAccounts.ForEach(_ =>
-			{
-				var item = accounts.FirstOrDefault(account => account.Alias.ToLower() == _.Alias.ToLower());
-				if (item == null)
-				{
-					this.Context.Entry(_).State = EntityState.Added;
-				}
-			});
-
+            agent.TeamPlacements = null;
 			agent.Accounts = null;
 			this.Context.Entry(agent).State = EntityState.Modified;
 
 			return agent;
 		}
+
+        public override void Add(Agent entity)
+        {
+            if (entity.TeamPlacements != null)
+            {
+                foreach (var item in entity.TeamPlacements)
+                {
+                    this.Context.Entry(item.Team).State = EntityState.Unchanged;
+                }
+            }
+            base.Add(entity);
+        }
+
+        public void UpdateTeams(Agent agent, List<TeamPlacement> teams)
+        {
+            teams.ForEach(_ =>
+            {
+                var item = agent.TeamPlacements.FirstOrDefault(team => team.TeamId == _.TeamId);
+                if (item == null)
+                {
+                    _.Team = null;
+                    this.Context.Entry(_).State = EntityState.Deleted;
+                }
+            });
+
+            var newTeams = agent.TeamPlacements.ToList();
+            newTeams.ForEach(_ =>
+            {
+                var item = teams.FirstOrDefault(team => team.TeamId == _.TeamId);
+                _.Team = null;
+                if (item == null)
+                {
+                    this.Context.Entry(_).State = EntityState.Added;
+                }
+            });
+        }
+
+        public void UpdateAccounts(Agent agent, List<Account> accounts)
+        {
+            accounts.ForEach(_ =>
+            {
+                var item = agent.Accounts.FirstOrDefault(account => account.Alias.ToLower() == _.Alias.ToLower());
+                if (item != null)
+                {
+                    _.Alias = item.Alias;
+                    this.Context.Entry(_).State = EntityState.Modified;
+                }
+                else
+                {
+                    this.Context.Entry(_).State = EntityState.Deleted;
+                }
+            });
+
+            var newAccounts = agent.Accounts.ToList();
+            newAccounts.ForEach(_ =>
+            {
+                var item = accounts.FirstOrDefault(account => account.Alias.ToLower() == _.Alias.ToLower());
+                if (item == null)
+                {
+                    this.Context.Entry(_).State = EntityState.Added;
+                }
+            });
+        }
 
 		public AgentPayoutTransaction GetAgentPayoutsV2()
 		{
@@ -81,7 +125,8 @@ namespace CardPeak.Repository.EF
 			};
 		}
 
-		public AgentPayoutTransaction GetAgentPayoutsV1()
+        [Obsolete("Use GetAgentPayoutsV2 instead")]
+        public AgentPayoutTransaction GetAgentPayoutsV1()
 		{
 			var approvalTransactions = this.Context.ApprovalTransactions
 				.Include(_ => _.Agent)

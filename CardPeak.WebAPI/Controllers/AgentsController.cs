@@ -37,10 +37,10 @@ namespace CardPeak.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{id}/accounts")]
-        public IHttpActionResult GetAccounts(int id)
+        [Route("{id}/details")]
+        public IHttpActionResult GetDetails(int id)
         {
-            var result = this.AgentService.GetAccounts(id);
+            var result = this.AgentService.GetAgentDetails(id);
             if (result == null)
             {
                 return this.NotFound();
@@ -137,6 +137,45 @@ namespace CardPeak.WebAPI.Controllers
         public IHttpActionResult IncentiveAgent(int id, decimal amount, string remarks)
         {
             var result = this.AgentService.AddIncentiveTransaction(id, amount, remarks);
+            if (result == null)
+            {
+                return this.InternalServerError();
+            }
+
+            return this.Ok(result);
+        }
+
+        [HttpGet]
+        [Route("{id}/savings")]
+        public IHttpActionResult GetAgentSavings(int id, [FromUri]int? year = null)
+        {
+            var result = this.AgentService.GetAgentSavings(id, year);
+            if (result == null)
+            {
+                return this.InternalServerError();
+            }
+
+            return this.Ok(result);
+        }
+
+        [HttpPost]
+        [Route("{id}/savings/credit")]
+        public IHttpActionResult SavingsCreditAgent(int id, decimal amount, string remarks, DateTime? transactionDate)
+        {
+            return this.SavingsDebitCreditAgent(id, amount, remarks, transactionDate, false);
+        }
+
+        [HttpPost]
+        [Route("{id}/savings/debit")]
+        public IHttpActionResult SavingsDebitAgent(int id, decimal amount, string remarks, DateTime? transactionDate)
+        {
+            return this.SavingsDebitCreditAgent(id, amount, remarks, transactionDate, true);
+        }
+
+
+        private IHttpActionResult SavingsDebitCreditAgent(int id, decimal amount, string remarks, DateTime? transactionDate, bool isDebit)
+        {
+            var result = this.AgentService.AddDebitCreditSavingsTransaction(id, amount, remarks, transactionDate, isDebit);
             if (result == null)
             {
                 return this.InternalServerError();

@@ -2,10 +2,19 @@
 import { Panel } from 'react-bootstrap'
 import { PerformanceDashboard } from '../../../../layout'
 
-export const AgentPerformanceMetrics = (props: { performance: CardPeak.Entities.ApprovalMetric<string>[] }) => {
+interface AgentPerformanceMetricsProps {
+    performance: CardPeak.Entities.ApprovalMetric<string>[];
+    hideValue?: boolean;
+    header?: React.ReactNode;
+}
+
+export const AgentPerformanceMetrics = (props: AgentPerformanceMetricsProps) => {
     return (
         <Panel className="text-center panel-label-dashboard hidden-print">
-            <PerformanceDashboard performance={props.performance} />
+            <h2>
+                {props.header}
+            </h2>
+            <PerformanceDashboard performance={props.performance} hideValue={props.hideValue} />
         </Panel>
     )
 }

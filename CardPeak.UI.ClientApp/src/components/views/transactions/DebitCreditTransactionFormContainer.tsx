@@ -1,17 +1,19 @@
 ﻿import * as React from 'react'
 import * as AgentsActions from '../../../services/actions/agentActions'
+import * as dateHelpers from '../../../helpers/dateHelpers'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, ModalConfirm, ButtonLoadingText, Currency, ConfirmButton, ErrorLabel }from '../../layout'
+import { FormFieldInput, ModalConfirm, ButtonLoadingText, Currency, ConfirmButton, ErrorLabel, FormFieldDate } from '../../layout'
 
 interface DebitCreditTransactionFormState {
     showConfirmModal: boolean;
     remarks: string;
     amount: number;
+    transactionDate?: Date
     errors: {
         [error: string]: string,
     };
@@ -22,6 +24,7 @@ interface DebitCreditTransactionFormProps {
     agent: CardPeak.Entities.Agent;
     transaction: Transaction;
     onTransactionSubmitted?: () => void;
+    showTransactionDate?: boolean;
 }
 
 interface DebitCreditTransactionFormPropsConnect {
@@ -40,6 +43,7 @@ class DebitCreditTransactionFormContainer extends React.Component<
         this.state = {
             amount: 0,
             remarks: '',
+            transactionDate: new Date(dateHelpers.currentDay()),
             errors: {
                 remarks: '',
                 amount: ''
@@ -61,10 +65,11 @@ class DebitCreditTransactionFormContainer extends React.Component<
         this.props.actions.postAgentTransactionStart({
             agentId: this.props.agent.agentId,
             amount: this.state.amount,
-            remarks: this.state.remarks
-            },
-            this.props.transaction,
-            this.handleOnTransactionSubmitted, this.handleOnTransactionSubmittedError);
+            remarks: this.state.remarks,
+            transactionDateTime: this.state.transactionDate
+        },
+        this.props.transaction,
+        this.handleOnTransactionSubmitted, this.handleOnTransactionSubmittedError);
     }
     handleOnTransactionSubmitted = () => {
         this.setState({ postingTransactionError: undefined });
@@ -96,11 +101,24 @@ class DebitCreditTransactionFormContainer extends React.Component<
             errors
         });
     }
+    handleOnTransactionDateChange = (value: string, formattedValue: string) => {
+        this.setState({ transactionDate: new Date(value) });
+    }
     render() {
         let buttonClass: string;
         let amountClass: string;
         let transaction: string;
         switch (this.props.transaction.toLowerCase()) {
+            case "savings-credit":
+                buttonClass = "success";
+                amountClass = "amount-credit";
+                transaction = "Credit Savings";
+                break;
+            case "savings-debit":
+                buttonClass = "danger";
+                amountClass = "amount-debit";
+                transaction = "Debit Savings";
+                break;
             case "credit":
                 buttonClass = "success";
                 amountClass = "amount-credit";
@@ -140,6 +158,17 @@ class DebitCreditTransactionFormContainer extends React.Component<
                             error={this.state.errors.remarks}
                             value={this.state.remarks}
                             onChange={this.handleChange} />
+                        {
+                            this.props.showTransactionDate &&
+                            <FormFieldDate
+                                maxDate={dateHelpers.currentDay()}
+                                controlId="form-transaction-date"
+                                name="transactionDate"
+                                label="transaction date"
+                                value={this.state.transactionDate}
+                                error={this.state.errors.transactionDate}
+                                onChangeDate={this.handleOnTransactionDateChange} />
+                        }
                         <FormGroup>
                             <Col sm={12} className="text-right">
                                 <ConfirmButton
@@ -150,10 +179,10 @@ class DebitCreditTransactionFormContainer extends React.Component<
                                     confirmTitle="confirm transaction"
                                     isLoading={this.props.postingTransaction}
                                     disabled={this.props.postingTransaction}
-                                    buttonLabel={this.props.transaction}>
+                                    buttonLabel={transaction}>
 
                                     <p>
-                                        You are about to <strong>{this.props.transaction} </strong>
+                                        You are about to <strong>{transaction} </strong>
                                         <br />
                                         <span className="text-muted spacer-right">amount:</span>
                                         <Currency noCurrencyColor className={amountClass} currency={this.state.amount} />

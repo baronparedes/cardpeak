@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { Row, Col, Panel } from 'react-bootstrap'
-import { ApprovalMetricsBarChart, ApprovalMetricsPieChart, FormFieldDropdown } from './'
+import { MetricsHorizontalBarChart, MetricsPieChart, FormFieldDropdown } from './'
 
 interface ApprovalMetricsProps {
     approvalsByBank?: CardPeak.Entities.ApprovalMetric<string>[];
@@ -65,12 +65,12 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
             <Row className="hidden-print">
                 <Col sm={6}>
                     <Panel>
-                        <ApprovalMetricsBarChart metrics={this.props.approvalsByBank} label="approval by banks" onClick={this.handleOnClick} />
+                        <MetricsHorizontalBarChart metrics={this.props.approvalsByBank} label="approval by banks" onClick={this.handleOnClick} />
                     </Panel>
                 </Col>
                 <Col sm={6}>
                     <Panel>
-                        <ApprovalMetricsPieChart metrics={this.state.approvalsByCategoryFiltered} label="approval by categories" />
+                        <MetricsPieChart metrics={this.state.approvalsByCategoryFiltered} label="approval by categories" />
                         <br />
                         <FormFieldDropdown
                             onChange={this.handleOnCategoryFilterChange}

@@ -18,6 +18,59 @@ function isBetween(dateFilters: CardPeak.Entities.DateFilters, transactionDate: 
     }
 }
 
+function updateSelectedAgentDashboard(state: CardPeak.Models.AgentModel, action: any) {
+
+    if (!state.selectedAgentDashboard) {
+        return undefined;
+    }
+
+    let debitCreditTransactions = state.selectedAgentDashboard.debitCreditTransactions.slice();
+    let agentDashboardTransactions = state.selectedAgentDashboard.agentDashboardTransactions.slice();
+    let incentiveTransactions = state.selectedAgentDashboard.incentiveTransactions.slice();
+    let accountBalance = state.selectedAgentDashboard.accountBalance;
+    let incentivesBalance = state.selectedAgentDashboard.incentivesBalance;
+    let savingsBalance = state.selectedAgentDashboard.savingsBalance;
+
+    const transaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
+    const agentDashboardTransaction: CardPeak.Entities.AgentDashboardTransaction = {
+        details: transaction.remarks,
+        transactionAmount: transaction.amount,
+        transactionId: transaction.id,
+        transactionType: transaction.transactionTypeId,
+        transactionDate: transaction.transactionDateTime,
+        runningBalance: agentDashboardTransactions.length === 0 ?
+            transaction.amount : agentDashboardTransactions[0].runningBalance + transaction.amount
+    };
+
+    if (transaction.transactionTypeId === TransactionType.DebitCreditTransaction) {
+        accountBalance += transaction.amount;
+        if (isBetween(state.dateFilters, transaction.transactionDateTime)) {
+            debitCreditTransactions.unshift(transaction);
+            agentDashboardTransactions.unshift(agentDashboardTransaction);
+        }
+    }
+
+    if (transaction.transactionTypeId === TransactionType.IncentivesTransaction) {
+        incentivesBalance += transaction.amount;
+        if (isBetween(state.dateFilters, transaction.transactionDateTime)) {
+            incentiveTransactions.unshift(transaction);
+        }
+    }
+
+    if (transaction.transactionTypeId === TransactionType.SavingsTransaction) {
+        savingsBalance += transaction.amount;
+    }
+
+    return {
+        ...state.selectedAgentDashboard,
+        accountBalance,
+        incentivesBalance,
+        debitCreditTransactions,
+        incentiveTransactions,
+        agentDashboardTransactions
+    };
+}
+
 export default handleActions<CardPeak.Models.AgentModel, any>({
     [AGENT_ACTIONS.SELECT_AGENT]: (state, action) => {
         return {
@@ -65,50 +118,10 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
         };
     },
     [AGENT_ACTIONS.POST_AGENT_TRANSACTION_COMPLETE]: (state, action) => {
-        let debitCreditTransactions = state.selectedAgentDashboard.debitCreditTransactions.slice();
-        let agentDashboardTransactions = state.selectedAgentDashboard.agentDashboardTransactions.slice();
-        let incentiveTransactions = state.selectedAgentDashboard.incentiveTransactions.slice();
-        let accountBalance = state.selectedAgentDashboard.accountBalance;
-        let incentivesBalance = state.selectedAgentDashboard.incentivesBalance;
-
-        const transaction = action.payload as CardPeak.Entities.DebitCreditTransaction;
-        const agentDashboardTransaction: CardPeak.Entities.AgentDashboardTransaction = {
-            details: transaction.remarks,
-            transactionAmount: transaction.amount,
-            transactionId: transaction.id,
-            transactionType: transaction.transactionTypeId,
-            transactionDate: transaction.transactionDateTime,
-            runningBalance: agentDashboardTransactions.length === 0 ?
-                transaction.amount : agentDashboardTransactions[0].runningBalance + transaction.amount
-        };
-
-        if (transaction.transactionTypeId === TransactionType.DebitCreditTransaction) {
-            accountBalance += transaction.amount;
-            if (isBetween(state.dateFilters, transaction.transactionDateTime)) {
-                debitCreditTransactions.unshift(transaction);
-                agentDashboardTransactions.unshift(agentDashboardTransaction);
-            }
-        }
-
-        if (transaction.transactionTypeId === TransactionType.IncentivesTransaction) {
-            incentivesBalance += transaction.amount;
-            if (isBetween(state.dateFilters, transaction.transactionDateTime)) {
-                incentiveTransactions.unshift(transaction);
-                //agentDashboardTransactions.unshift(agentDashboardTransaction);
-            }
-        }
-
         return {
             ...state,
             postingTransaction: undefined,
-            selectedAgentDashboard: {
-                ...state.selectedAgentDashboard,
-                accountBalance,
-                incentivesBalance,
-                debitCreditTransactions,
-                incentiveTransactions,
-                agentDashboardTransactions
-            },
+            selectedAgentDashboard: updateSelectedAgentDashboard(state, action)
         };
     },
     [AGENT_ACTIONS.POST_AGENT_TRANSACTION_ERROR]: (state, action) => {
@@ -176,7 +189,7 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
     },
     [AGENT_ACTIONS.CREATE_AGENT_COMPLETE]: (state, action) => {
         let agent = action.payload as CardPeak.Entities.Agent;
-        let agents = state.agents.slice();
+        let agents = state.agents ? state.agents.slice() : [];
         agents.push(agent);
 
         return {
@@ -190,5 +203,21 @@ export default handleActions<CardPeak.Models.AgentModel, any>({
             ...state,
             dateFilters: action.payload
         }
-    }
+    },
+    [AGENT_ACTIONS.SELECT_AGENT_SAVINGS]: (state, action) => {
+        return {
+            ...state,
+            loadingAgentSavings: true,
+            selectedAgentSavings: undefined,
+            refreshingAgentSavings: undefined
+        }
+    },
+    [AGENT_ACTIONS.SELECT_AGENT_SAVINGS_COMPLETE]: (state, action) => {
+        return {
+            ...state,
+            loadingAgentSavings: undefined,
+            selectedAgentSavings: action.payload,
+            refreshingAgentSavings: undefined
+        }
+    },
 }, initialState);

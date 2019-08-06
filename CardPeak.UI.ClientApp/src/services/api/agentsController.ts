@@ -5,6 +5,12 @@ const API = {
     GET_AGENT_DASHBOARD: (agentId: number) => {
         return '/agents/' + agentId;
     },
+    GET_AGENT_SAVINGS: (agentId: number) => {
+        return '/agents/' + agentId + '/savings'
+    },
+    GET_AGENT_SAVINGS_BY_YEAR: (agentId: number, year: number) => {
+        return '/agents/' + agentId + '/savings?year=' + year
+    },
     GET_AGENT_DASHBOARD_FILTER: (agentId: number) => {
         return '/agents/' + agentId + "/filter"
     },
@@ -17,12 +23,18 @@ const API = {
     INCENTIVE_AGENT: (agentId: number) => {
         return '/agents/' + agentId + '/incentive'
     },
+    SAVINGS_CREDIT_AGENT: (agentId: number) => {
+        return '/agents/' + agentId + '/savings/credit'
+    },
+    SAVINGS_DEBIT_AGENT: (agentId: number) => {
+        return '/agents/' + agentId + '/savings/debit'
+    },
     UPDATE_AGENT: (agentId: number) => {
         return '/agents/' + agentId + '/update'
     },
     CREATE_AGENT: '/agents/create',
-    GET_ACCOUNTS: (agentId: number) => {
-        return '/agents/' + agentId + '/accounts';
+    GET_DETAILS: (agentId: number) => {
+        return '/agents/' + agentId + '/details';
     },
     GET_AGENT_PAYOUT: '/agents/payout',
     DEACTIVATE_AGENT: (agentId: number) => {
@@ -68,6 +80,24 @@ export function getAgentDashboard(agentId: number,
         });
 }
 
+export function getAgentSavings(agentId: number,
+    successCallback: (data: CardPeak.Entities.AgentSavings) => void) {
+
+    axios.get(API.GET_AGENT_SAVINGS(agentId))
+        .then((r) => {
+            successCallback(r.data as CardPeak.Entities.AgentSavings);
+        });
+}
+
+export function getAgentSavingsByYear(agentId: number, year: number,
+    successCallback: (data: CardPeak.Entities.AgentSavings) => void) {
+
+    axios.get(API.GET_AGENT_SAVINGS_BY_YEAR(agentId, year))
+        .then((r) => {
+            successCallback(r.data as CardPeak.Entities.AgentSavings);
+        });
+}
+
 export function getAgentDashboardFiltered(agentId: number, startDate?: string, endDate?: string,
     successCallback?: (data: CardPeak.Entities.AgentDashboard) => void) {
 
@@ -101,10 +131,17 @@ export function postAgentTransaction(
         case "incentive":
             url = API.INCENTIVE_AGENT(transaction.agentId);
             break;
+        case "savings-credit":
+            url = API.SAVINGS_CREDIT_AGENT(transaction.agentId);
+            break;
+        case "savings-debit":
+            url = API.SAVINGS_DEBIT_AGENT(transaction.agentId);
+            break;
     }
+
     axios.post(url, null, {
             params: {
-                amount: transaction.amount, remarks: transaction.remarks
+                amount: transaction.amount, remarks: transaction.remarks, transactionDate: transaction.transactionDateTime
             }
         })
         .then((r) => {
@@ -143,10 +180,10 @@ export function createAgent(agent: CardPeak.Entities.Agent,
         })
 }
 
-export async function getAccountsAsync(agentId: number) {
-    let result = await axios(API.GET_ACCOUNTS(agentId));
+export async function getDetailsAsync(agentId: number) {
+    let result = await axios(API.GET_DETAILS(agentId));
     if (result.status != 200) {
-        return [];
+        return undefined;
     }
-    return result.data as CardPeak.Entities.Account[];
+    return result.data as CardPeak.Entities.AgentDetails;
 }
