@@ -1,27 +1,29 @@
 ﻿import * as React from 'react'
 import { Doughnut, HorizontalBar, Line, Bar } from 'react-chartjs-2'
 import * as colorScale from '../../constants/colorScale'
+import { roundOff } from '../../helpers/currencyHelper'
 
 
 interface ChartProps {
     metrics?: CardPeak.Entities.ApprovalMetric<any>[];
     label?: string;
     onClick?: (e: any) => void;
-    height?: number
+    height?: number;
+    displayLegend?: boolean;
 }
 
-function getLineData(props: ChartProps) {
+function getData(props: ChartProps) {
     const colorPalette = props.metrics.length > 12 ? colorScale.paletteV2 : colorScale.palette[props.metrics.length];
     let labels: string[] = [];
     let dataSet: number[] = [];
 
     const legendOpts = {
-        display: false,
+        display: props.displayLegend,
     };
 
     props.metrics.forEach(_ => {
-        labels.push(_.key.toString() + " (" + _.value + ")");
-        dataSet.push(_.value);
+        labels.push(_.key.toString() + " (" + roundOff(_.value) + ")");
+        dataSet.push(roundOff(_.value));
     });
 
     const data = {
@@ -51,42 +53,12 @@ function getLineData(props: ChartProps) {
     return data;
 }
 
-function getData(props: ChartProps) {
-    const colorPalette = props.metrics.length > 12 ? colorScale.paletteV2 : colorScale.palette[props.metrics.length];
-    let labels: string[] = [];
-    let dataSet: number[] = [];
-
-    const legendOpts = {
-        display: true,
-        fullWidth: true,
-        reverse: false,
-    };
-
-    props.metrics.forEach(_ => {
-        labels.push(_.key + " (" + _.value + ")");
-        dataSet.push(_.value);
-    });
-
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: props.label,
-            data: dataSet,
-            backgroundColor: colorPalette,
-            hoverBackgroundColor: colorPalette,
-        }],
-        legendOpts: legendOpts
-    };
-
-    return data;
-}
-
 export const MetricsLineChart = (props: ChartProps) => {
     if (!props.metrics) {
         return null;
     }
 
-    const data = getLineData(props);
+    const data = getData(props);
 
     return (
         <div>
