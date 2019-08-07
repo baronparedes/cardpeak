@@ -50,9 +50,16 @@ namespace CardPeak.Repository.EF
                 .Where(_ => _.TransactionTypeId == (int)transactionType)
                 .Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) >= startDate.Date);
 
+
             if (endDate != null && startDate.Date <= endDate.Value.Date)
             {
                 result = result.Where(_ => DbFunctions.TruncateTime(_.TransactionDateTime) <= DbFunctions.TruncateTime(endDate.Value));
+            }
+
+            if (transactionType == Domain.Enums.TransactionTypeEnum.SavingsTransaction)
+            {
+                result = result
+                    .Where(_ => _.BatchId == null && _.TransactionId == null);
             }
 
             return result

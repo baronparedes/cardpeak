@@ -242,12 +242,23 @@ namespace CardPeak.Service
 
         public AgentSavings GetAgentSavings(int agentId, int? year)
         {
+            year = year ?? DateTime.Now.Year;
+
+            var savingsTransactions = this.DebitCreditTransactionRepository
+                .FindByAgent(
+                    agentId, 
+                    new DateTime(year.Value, 1, 1), 
+                    new DateTime(year.Value, 12, 31), 
+                    Domain.Enums.TransactionTypeEnum.SavingsTransaction)
+                .OrderByDescending(_ => _.TransactionDateTime);
+
             return new AgentSavings
             {
                 Agent = this.AgentRepository.Find(_ => _.AgentId == agentId).SingleOrDefault(),
                 SavingsBalance = this.DebitCreditTransactionRepository.GetAgentAccountBalance(agentId, null, Domain.Enums.TransactionTypeEnum.SavingsTransaction),
                 SavingsByMonth = this.DebitCreditTransactionRepository.GetSavingsByMonth(agentId, year),
-                SavingsByYear = this.DebitCreditTransactionRepository.GetSavingsByYear(agentId)
+                SavingsByYear = this.DebitCreditTransactionRepository.GetSavingsByYear(agentId),
+                SavingsTransactions = savingsTransactions
             };
         }
     }

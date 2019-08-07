@@ -316,7 +316,7 @@
     <Content Include="src\styles\theme.less">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="src\types\entities.metrics.d.tsx">
+    <Content Include="src\%40types\entities.metrics.d.tsx">
       <SubType>Code</SubType>
     </Content>
     <Content Include="tsconfig.json">
@@ -344,7 +344,7 @@
     <Folder Include="src\constants\" />
     <Folder Include="src\helpers\" />
     <Folder Include="src\img\" />
-    <Folder Include="src\types\" />
+    <Folder Include="src\%40types\" />
     <Folder Include="src\services\" />
     <Folder Include="src\services\actions\" />
     <Folder Include="src\services\api\" />
@@ -512,17 +512,17 @@
     <TypeScriptCompile Include="src\store.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\types\entities.d.ts">
+    <TypeScriptCompile Include="src\%40types\entities.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\constants\enums.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\types\models.d.ts" />
-    <TypeScriptCompile Include="src\types\plugins.d.ts">
+    <TypeScriptCompile Include="src\%40types\models.d.ts" />
+    <TypeScriptCompile Include="src\%40types\plugins.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\types\props.d.ts">
+    <TypeScriptCompile Include="src\%40types\props.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

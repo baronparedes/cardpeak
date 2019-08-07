@@ -78,6 +78,7 @@
         public savingsBalance: number;
         public savingsByMonth?: ApprovalMetric<string>[];
         public savingsByYear?: ApprovalMetric<string>[];
+        public savingsTransactions?: DebitCreditTransaction[];
     }
 
 	export class Reference 

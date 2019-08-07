@@ -6,6 +6,7 @@ import { AgentPerformanceMetrics } from "./agentDashboard/metrics/AgentPerforman
 import { DashboardLabel } from "../../layout/DashboardLabel";
 import { MetricsBarChart } from "../../layout/Charts";
 import AgentSavingsActions from "./AgentSavingsActions";
+import DebitCreditTransactionList from '../transactions//DebitCreditTransactionList';
 
 interface AgentSavingsViewProps {
     loadingAgentSavings?: boolean;
@@ -27,7 +28,9 @@ const AgentSavingsView = (props: AgentSavingsViewProps) => {
                 return;
             }
         });
-        props.onYearSelect(parseInt(target));
+        if (props.selectedYear !== parseInt(target)) {
+            props.onYearSelect(parseInt(target));
+        }
     }
 
     if (props.loadingAgentSavings) {
@@ -72,6 +75,11 @@ const AgentSavingsView = (props: AgentSavingsViewProps) => {
                                             hideValue
                                             header={props.selectedYear}
                                             performance={props.agentSavings.savingsByMonth} />
+                                        <Panel>
+                                            <DebitCreditTransactionList
+                                                pageSize={10}
+                                                data={props.agentSavings.savingsTransactions} />
+                                        </Panel>
                                     </Col>
                                 </Row>
                             </Grid>

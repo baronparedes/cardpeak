@@ -70,7 +70,7 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
                 </Col>
                 <Col sm={6}>
                     <Panel>
-                        <MetricsPieChart metrics={this.state.approvalsByCategoryFiltered} label="approval by categories" />
+                        <MetricsPieChart metrics={this.state.approvalsByCategoryFiltered} label="approval by categories" displayLegend />
                         <br />
                         <FormFieldDropdown
                             onChange={this.handleOnCategoryFilterChange}
