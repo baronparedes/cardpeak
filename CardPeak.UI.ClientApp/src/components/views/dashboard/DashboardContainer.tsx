@@ -12,6 +12,7 @@ import {
 	ApprovalMetrics, MetricsLineChart, TotalApprovedMetrics
 } from '../../layout'
 
+import PayoutTotalContainer from '../../layout/PayoutTotalContainer'
 import { LatestProcessedBatchList, TopAgentList } from './metrics'
 
 interface DashboardContainerDispatchProps {
@@ -69,6 +70,7 @@ class DashboardContainer extends React.Component<CardPeak.Models.DashboardModel 
 						<Panel>
 							<LatestProcessedBatchList data={this.props.latestProcessedBatch} />
 						</Panel>
+						<PayoutTotalContainer />
 					</Col>
 				</Row>
 			</Grid>

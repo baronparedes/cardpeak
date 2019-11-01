@@ -77,7 +77,8 @@
 
 	export interface AgentPayoutModel {
 		initialized?: boolean;
-		count?: number;
+        count?: number;
+        total?: number;
 		payouts?: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[];
 		loadingPayouts?: boolean;
 		loadingPayoutsError?: string;
