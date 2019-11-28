@@ -55,7 +55,7 @@
     "babel-polyfill": "6.26.0",
     "chart.js": "2.7.0",
     "classnames": "2.2.5",
-    "moment": "2.18.1",
+    "moment": "2.19.3",
     "react": "15.6.1",
     "react-bootstrap": "0.31.2",
     "react-bootstrap-date-picker": "5.1.0",
