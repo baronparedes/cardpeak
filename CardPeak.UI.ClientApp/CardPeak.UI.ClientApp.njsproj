@@ -358,6 +358,9 @@
     <TypeScriptCompile Include="src\components\layout\PayoutTotalContainer.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\layout\ScrollToTop.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\agents\AgentSavingsActions.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
