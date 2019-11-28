@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { RootState } from '../../../services/reducers'
 
 import { DataList, DataListProps, DataItemProps, Currency, AgentDashboardLinkButton } from '../../layout'
+import PayoutTotalContainer from '../../layout/PayoutTotalContainer'
 
 type AgentPayoutList = new () => DataList<CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>>;
 const AgentPayoutList = DataList as AgentPayoutList;
@@ -53,6 +54,7 @@ class AgentPayoutContainer extends React.Component<CardPeak.Models.AgentPayoutMo
         return (
             <div>
                 <h2>Agent Payouts</h2>
+                <PayoutTotalContainer />
                 <div>
                     <AgentPayoutList
                         onGetKey={(item) => item.key.agentId}

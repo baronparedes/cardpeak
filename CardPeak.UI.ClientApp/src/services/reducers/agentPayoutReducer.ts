@@ -32,12 +32,23 @@ export default handleActions<CardPeak.Models.AgentPayoutModel, any>({
     },
     [AGENT_PAYOUT_ACTIONS.GET_AGENT_PAYOUT_COMPLETE]: (state, action) => {
         const payload = (action.payload as CardPeak.Models.AgentPayoutModel);
+        const getTotal = (p: CardPeak.Entities.ApprovalMetric<CardPeak.Entities.Agent>[]): number | undefined => {
+            if (payload.payouts) {
+                let total = 0;
+                payload.payouts.forEach(_ => {
+                    total += _.value;
+                });
+                return total;
+            }
+            return undefined;
+        };
         return {
             ...state,
             loadingPayouts: undefined,
             loadingPayoutsError: undefined,
             payouts: payload.payouts,
             count: payload.count,
+            total: getTotal(payload.payouts),
         }
     }
 }, initialState);

@@ -24,5 +24,10 @@
 
 GO
 
-CREATE INDEX [IX_ApprovalTransaction_CheckDuplicate] ON [dbo].[ApprovalTransaction] (BankId, CardCategoryId, AgentId, ProductType, ReferenceNumber1, ReferenceNumber2, Client, IsDeleted)
+CREATE INDEX [IX_ApprovalTransaction_CheckDuplicate] 
+    ON [dbo].[ApprovalTransaction] (BankId, CardCategoryId, AgentId, ProductType, ReferenceNumber1, ReferenceNumber2, Client, IsDeleted)
+GO
+
+CREATE NONCLUSTERED INDEX [IX_ApprovalTransaction_IsDeleted]
+    ON [dbo].[ApprovalTransaction] ([IsDeleted]) INCLUDE ([AgentId],[Amount],[ApprovalDate])
 GO
