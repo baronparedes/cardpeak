@@ -1,5 +1,5 @@
-﻿import * as React from 'react'
-import BatchUploadContainer from './BatchUploadContainer'
+﻿import * as React from 'react';
+import BatchUploadContainer from './BatchUploadContainer';
 
 const BatchUploadView = () => {
     return (
@@ -7,7 +7,7 @@ const BatchUploadView = () => {
             <h2>Batch Upload</h2>
             <BatchUploadContainer />
         </div>
-    )
-}
+    );
+};
 
 export default BatchUploadView;

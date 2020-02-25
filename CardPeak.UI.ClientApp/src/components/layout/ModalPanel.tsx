@@ -1,5 +1,5 @@
-﻿import * as React from 'react'
-import { Button, Modal, Panel, ButtonGroup, ButtonProps } from 'react-bootstrap'
+﻿import * as React from 'react';
+import { Button, Modal } from 'react-bootstrap';
 
 interface ModalPanelProps {
     onToggleModal: () => void;
@@ -8,18 +8,24 @@ interface ModalPanelProps {
     footer?: React.ReactNode;
 }
 
-export const ModalPanel: React.StatelessComponent<ModalPanelProps> = (props) => {
+export const ModalPanel: React.StatelessComponent<ModalPanelProps> = props => {
     return (
         <Modal show={props.showModal} onHide={props.onToggleModal}>
             <Modal.Header>
                 <Modal.Title>{props.title}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                {props.children}
-            </Modal.Body>
+            <Modal.Body>{props.children}</Modal.Body>
             <Modal.Footer>
-                {props.footer ? props.footer : <Button bsStyle="warning" onClick={props.onToggleModal}>Close</Button>}
+                {props.footer ? (
+                    props.footer
+                ) : (
+                    <Button
+                        bsStyle="warning"
+                        onClick={props.onToggleModal}>
+                        Close
+                    </Button>
+                )}
             </Modal.Footer>
         </Modal>
-    )
-}
+    );
+};

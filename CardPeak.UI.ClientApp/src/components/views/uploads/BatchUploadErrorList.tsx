@@ -1,27 +1,38 @@
-﻿import * as React from 'react'
-import * as concat from 'classnames'
-import { Row, Col, Button, ButtonGroup } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps, ModalPanel } from '../../layout'
-import { dateFormat } from '../../../helpers/dateHelpers'
-import { Currency } from '../../layout'
+﻿import * as React from 'react';
+import { Button, Col, Row } from 'react-bootstrap';
+import {
+    DataItemProps,
+    DataList,
+    DataListProps,
+    ModalPanel
+} from '../../layout';
 
-type BatchUploadErrorDataList = new () => DataList<CardPeak.Entities.ProcessedApprovalTransaction>;
+type BatchUploadErrorDataList = new () => DataList<
+    CardPeak.Entities.ProcessedApprovalTransaction
+>;
 const BatchUploadErrorDataList = DataList as BatchUploadErrorDataList;
 
 interface BatchUploadErrorDetailRowLayoutState {
     showModal?: boolean;
 }
 
-class BatchUploadErrorRowLayout extends React.Component<DataItemProps<CardPeak.Entities.ProcessedApprovalTransaction>, BatchUploadErrorDetailRowLayoutState> {
-    constructor(props: DataItemProps<CardPeak.Entities.ProcessedApprovalTransaction>) {
+class BatchUploadErrorRowLayout extends React.Component<
+    DataItemProps<CardPeak.Entities.ProcessedApprovalTransaction>,
+    BatchUploadErrorDetailRowLayoutState
+> {
+    constructor(
+        props: DataItemProps<
+            CardPeak.Entities.ProcessedApprovalTransaction
+        >
+    ) {
         super(props);
         this.state = {
             showModal: undefined
-        }
+        };
     }
     handleOnToggleModal = () => {
         this.setState({ showModal: !this.state.showModal });
-    }
+    };
     renderShowErrorButton() {
         let key: number = 0;
         if (this.props.isHeader) {
@@ -29,22 +40,35 @@ class BatchUploadErrorRowLayout extends React.Component<DataItemProps<CardPeak.E
         }
         return (
             <div>
-                <Button bsStyle="danger" bsSize="sm" onClick={this.handleOnToggleModal}>
+                <Button
+                    bsStyle="danger"
+                    bsSize="sm"
+                    onClick={this.handleOnToggleModal}>
                     <i className="fa fa-lg fa-exclamation-circle"></i>
                 </Button>
-                <ModalPanel title={"Errors found on row # " + this.props.item.row} onToggleModal={this.handleOnToggleModal} showModal={this.state.showModal}>
+                <ModalPanel
+                    title={
+                        'Errors found on row # ' + this.props.item.row
+                    }
+                    onToggleModal={this.handleOnToggleModal}
+                    showModal={this.state.showModal}>
                     {this.props.item.errorMessages.map(error => {
                         key++;
-                        return (<div key={this.props.item.row + "." + key}>{error}</div>);
+                        return (
+                            <div key={this.props.item.row + '.' + key}>
+                                {error}
+                            </div>
+                        );
                     })}
                 </ModalPanel>
             </div>
-        )
+        );
     }
     renderCardCategoryDescription() {
         if (this.props.item.approvalTransaction) {
             if (this.props.item.approvalTransaction.cardCategory) {
-                return this.props.item.approvalTransaction.cardCategory.description;
+                return this.props.item.approvalTransaction.cardCategory
+                    .description;
             }
         }
         return null;
@@ -52,46 +76,93 @@ class BatchUploadErrorRowLayout extends React.Component<DataItemProps<CardPeak.E
     render() {
         return (
             <Row>
-                <Col mdHidden
+                <Col
+                    mdHidden
                     lgHidden
                     smHidden
                     xsHidden={!this.props.isHeader}>
-                    <span className="grid-label text-center spacer-left">Processed Transactions</span>
+                    <span className="grid-label text-center spacer-left">
+                        Processed Transactions
+                    </span>
                 </Col>
-                <Col lg={1} md={1} sm={1} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "row" : this.props.item.row}
+                <Col
+                    lg={1}
+                    md={1}
+                    sm={1}
+                    xsHidden={this.props.isHeader}>
+                    {this.props.isHeader ? 'row' : this.props.item.row}
                 </Col>
-                <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "card category" : this.renderCardCategoryDescription()}
+                <Col
+                    lg={2}
+                    md={2}
+                    sm={2}
+                    xsHidden={this.props.isHeader}>
+                    {this.props.isHeader
+                        ? 'card category'
+                        : this.renderCardCategoryDescription()}
                 </Col>
-                <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "product" : this.props.item.approvalTransaction.productType}
+                <Col
+                    lg={2}
+                    md={2}
+                    sm={2}
+                    xsHidden={this.props.isHeader}>
+                    {this.props.isHeader
+                        ? 'product'
+                        : this.props.item.approvalTransaction
+                              .productType}
                 </Col>
-                <Col lg={4} md={4} sm={3} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "client" : this.props.item.approvalTransaction.client}
+                <Col
+                    lg={4}
+                    md={4}
+                    sm={3}
+                    xsHidden={this.props.isHeader}>
+                    {this.props.isHeader
+                        ? 'client'
+                        : this.props.item.approvalTransaction.client}
                 </Col>
-                <Col lg={2} md={2} sm={2} xsHidden={this.props.isHeader}>
-                    {this.props.isHeader ? "alias" : this.props.item.alias}
+                <Col
+                    lg={2}
+                    md={2}
+                    sm={2}
+                    xsHidden={this.props.isHeader}>
+                    {this.props.isHeader
+                        ? 'alias'
+                        : this.props.item.alias}
                 </Col>
-                <Col lg={1} md={1} sm={2} xsHidden={this.props.isHeader}>
+                <Col
+                    lg={1}
+                    md={1}
+                    sm={2}
+                    xsHidden={this.props.isHeader}>
                     {this.renderShowErrorButton()}
                 </Col>
             </Row>
-        )
+        );
     }
 }
 
-
-const BatchUploadErrorList = (props: DataListProps<CardPeak.Entities.ProcessedApprovalTransaction>) => {
+const BatchUploadErrorList = (
+    props: DataListProps<CardPeak.Entities.ProcessedApprovalTransaction>
+) => {
     return (
         <div>
             <BatchUploadErrorDataList
                 isLoading={props.isLoading}
-                renderHeader={() => { return <BatchUploadErrorRowLayout isHeader /> }}
-                renderItem={(item, key) => { return <BatchUploadErrorRowLayout item={item} key={key} /> }}
-                data={props.data} />
+                renderHeader={() => {
+                    return <BatchUploadErrorRowLayout isHeader />;
+                }}
+                renderItem={(item, key) => {
+                    return (
+                        <BatchUploadErrorRowLayout
+                            item={item}
+                            key={key}
+                        />
+                    );
+                }}
+                data={props.data}
+            />
         </div>
-    )
-}
+    );
+};
 
-export default BatchUploadErrorList
+export default BatchUploadErrorList;

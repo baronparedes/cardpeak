@@ -1,29 +1,9 @@
 ﻿const bluePalette = {
-    DATA_1: [
-        '#5EBCD2'
-    ],
-    DATA_2: [
-        '#85CBCF',
-        '#3984B6'
-    ],
-    DATA_3: [
-        '#85CBCF',
-        '#3984B6',
-        '#1D2E81'
-    ],
-    DATA_4: [
-        '#9ED5CD',
-        '#44A7CB',
-        '#2E62A1',
-        '#192574'
-    ],
-    DATA_5: [
-        '#B7DFCB',
-        '#5ABAD1',
-        '#3984B6',
-        '#264992',
-        '#161F63'
-    ],
+    DATA_1: ['#5EBCD2'],
+    DATA_2: ['#85CBCF', '#3984B6'],
+    DATA_3: ['#85CBCF', '#3984B6', '#1D2E81'],
+    DATA_4: ['#9ED5CD', '#44A7CB', '#2E62A1', '#192574'],
+    DATA_5: ['#B7DFCB', '#5ABAD1', '#3984B6', '#264992', '#161F63'],
     DATA_6: [
         '#BEE0CC',
         '#70C3D0',
@@ -100,8 +80,8 @@
         '#1C2B7F',
         '#162065',
         '#11174B'
-    ],
-}
+    ]
+};
 
 export const palette = [
     [],
@@ -116,7 +96,38 @@ export const palette = [
     bluePalette.DATA_9,
     bluePalette.DATA_10,
     bluePalette.DATA_11,
-    bluePalette.DATA_12,
-]
+    bluePalette.DATA_12
+];
 
-export const paletteV2 = ['#00429d', '#1448a0', '#204fa3', '#2955a6', '#315ca9', '#3862ac', '#3f69af', '#466fb2', '#4c76b5', '#527db7', '#5884ba', '#5e8abd', '#6491c0', '#6a98c2', '#709fc5', '#76a6c8', '#7cadca', '#83b4cd', '#89bbcf', '#90c2d2', '#97c9d4', '#9fd0d6', '#a7d6d8', '#afddda', '#b8e4dc', '#c2eade', '#ccf1e0', '#d9f7e1', '#e8fce1', '#ffffe0']
+export const paletteV2 = [
+    '#00429d',
+    '#1448a0',
+    '#204fa3',
+    '#2955a6',
+    '#315ca9',
+    '#3862ac',
+    '#3f69af',
+    '#466fb2',
+    '#4c76b5',
+    '#527db7',
+    '#5884ba',
+    '#5e8abd',
+    '#6491c0',
+    '#6a98c2',
+    '#709fc5',
+    '#76a6c8',
+    '#7cadca',
+    '#83b4cd',
+    '#89bbcf',
+    '#90c2d2',
+    '#97c9d4',
+    '#9fd0d6',
+    '#a7d6d8',
+    '#afddda',
+    '#b8e4dc',
+    '#c2eade',
+    '#ccf1e0',
+    '#d9f7e1',
+    '#e8fce1',
+    '#ffffe0'
+];

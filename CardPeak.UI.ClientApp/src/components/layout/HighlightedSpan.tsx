@@ -1,15 +1,18 @@
-﻿import * as React from 'react'
+﻿import * as React from 'react';
 
 interface HighlightedSpanProps {
     className?: string;
-    value: any
+    value: any;
 }
 
 interface HighlightedSpanState {
-    valueChanged: boolean
+    valueChanged: boolean;
 }
 
-export class HighlightedSpan extends React.Component<HighlightedSpanProps, HighlightedSpanState> {
+export class HighlightedSpan extends React.Component<
+    HighlightedSpanProps,
+    HighlightedSpanState
+> {
     controls: {
         highlightedSpan?: HTMLSpanElement;
     } = {};
@@ -17,7 +20,7 @@ export class HighlightedSpan extends React.Component<HighlightedSpanProps, Highl
         super(props);
         this.state = {
             valueChanged: false
-        }
+        };
     }
     componentWillReceiveProps(nextProps: HighlightedSpanProps) {
         if (this.props.value != nextProps.value) {
@@ -26,8 +29,12 @@ export class HighlightedSpan extends React.Component<HighlightedSpanProps, Highl
     }
     componentDidUpdate() {
         if (this.state.valueChanged) {
-            let classNames = this.props.className ? this.props.className : "";
-            this.controls.highlightedSpan.className = (this.state.valueChanged ? "text-highlight " : "") + classNames
+            let classNames = this.props.className
+                ? this.props.className
+                : '';
+            this.controls.highlightedSpan.className =
+                (this.state.valueChanged ? 'text-highlight ' : '') +
+                classNames;
             setTimeout(() => {
                 this.controls.highlightedSpan.className = classNames;
             }, 2000);
@@ -35,13 +42,15 @@ export class HighlightedSpan extends React.Component<HighlightedSpanProps, Highl
         }
     }
     render() {
-        let classNames = this.props.className ? this.props.className : "";
+        let classNames = this.props.className
+            ? this.props.className
+            : '';
         return (
             <span
-                ref={(span) => this.controls.highlightedSpan = span}
+                ref={span => (this.controls.highlightedSpan = span)}
                 className={classNames}>
                 {this.props.value}
             </span>
-        )
+        );
     }
 }

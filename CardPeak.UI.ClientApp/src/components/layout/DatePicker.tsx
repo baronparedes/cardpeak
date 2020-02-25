@@ -1,13 +1,13 @@
-﻿import * as React from 'react'
-import * as DatePickerBootstrap from 'react-bootstrap-date-picker'
-import { FormGroup } from 'react-bootstrap'
+﻿import * as React from 'react';
+import { FormGroup } from 'react-bootstrap';
+import * as DatePickerBootstrap from 'react-bootstrap-date-picker';
 
 interface DatePickerProps {
-    value?: string,
-    onChange?: (value: string, formattedValue: string) => void,
-    disabled?: boolean,
-    showClearButton?: boolean,
-    maxDate?: string
+    value?: string;
+    onChange?: (value: string, formattedValue: string) => void;
+    disabled?: boolean;
+    showClearButton?: boolean;
+    maxDate?: string;
 }
 
 export const DatePickerForm = (props: DatePickerProps) => {
@@ -20,15 +20,14 @@ export const DatePickerForm = (props: DatePickerProps) => {
             showClearButton={props.showClearButton}
             clearButtonElement={<i className="fa fa-lg fa-eraser"></i>}
             disabled={props.disabled}
-            value={props.value}>
-        </DatePickerBootstrap>
-    )
-}
+            value={props.value}></DatePickerBootstrap>
+    );
+};
 
 export const DatePicker = (props: DatePickerProps) => {
     return (
         <FormGroup>
             <DatePickerForm {...props} />
         </FormGroup>
-    )
-}
+    );
+};

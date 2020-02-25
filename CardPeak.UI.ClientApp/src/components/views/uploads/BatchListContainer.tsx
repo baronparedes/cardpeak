@@ -1,13 +1,14 @@
-﻿import * as React from 'react'
-import * as TransactionActions from '../../../services/actions/transactionActions'
-
-import { connect } from 'react-redux'
+﻿import * as React from 'react';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { RootState } from '../../../services/reducers'
-
-import { SpinnerBlock, NavigationProps, ErrorLabel } from '../../layout'
-
-import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
+import * as TransactionActions from '../../../services/actions/transactionActions';
+import { RootState } from '../../../services/reducers';
+import {
+    ErrorLabel,
+    NavigationProps,
+    SpinnerBlock
+} from '../../layout';
+import ApprovalTransactionList from '../transactions/ApprovalTransactionList';
 
 interface BatchListContainerDispatchProps {
     actions?: typeof TransactionActions;
@@ -20,62 +21,80 @@ interface BatchListContainerState {
     count?: number;
 }
 
-class BatchListContainer extends React.Component<NavigationProps<any> & BatchListContainerDispatchProps, BatchListContainerState> {
-    constructor(props: NavigationProps<any> & BatchListContainerDispatchProps) {
+class BatchListContainer extends React.Component<
+    NavigationProps<any> & BatchListContainerDispatchProps,
+    BatchListContainerState
+> {
+    constructor(
+        props: NavigationProps<any> & BatchListContainerDispatchProps
+    ) {
         super(props);
         this.state = {
             loadingError: undefined,
             count: 0
-        }
+        };
     }
     componentDidMount() {
-        this.props.actions.getTransactionsByBatchStart(this.props.match.params.id,
-            this.handleOnGetTransactionsComplete, this.handleOnGetTransactionsError);
+        this.props.actions.getTransactionsByBatchStart(
+            this.props.match.params.id,
+            this.handleOnGetTransactionsComplete,
+            this.handleOnGetTransactionsError
+        );
     }
     handleOnGetTransactions = () => {
         this.setState({ isLoading: true, loadingError: undefined });
-        this.props.actions.getTransactionsByBatchStart(this.props.match.params.id,
+        this.props.actions.getTransactionsByBatchStart(
+            this.props.match.params.id,
             this.handleOnGetTransactionsComplete,
-            this.handleOnGetTransactionsError)
-    }
-    handleOnGetTransactionsComplete = (data: CardPeak.Entities.ApprovalTransaction[]) => {
+            this.handleOnGetTransactionsError
+        );
+    };
+    handleOnGetTransactionsComplete = (
+        data: CardPeak.Entities.ApprovalTransaction[]
+    ) => {
         this.setState({
             isLoading: undefined,
             loadingError: undefined,
             transactions: data
         });
-    }
+    };
     handleOnGetTransactionsError = (e: string) => {
         this.setState({
             isLoading: undefined,
             loadingError: e
         });
-    }
+    };
     render() {
         return (
             <div>
                 <h2>Batch {this.props.match.params.id} transactions</h2>
                 <ErrorLabel error={this.state.loadingError} />
-                {
-                    this.state.isLoading ? <SpinnerBlock /> :
-                        <ApprovalTransactionList
-                            data={this.state.transactions}
-                            showAgent
-                            hideAmount
-                            onDelete={this.props.actions.deleteTransaciton} />
-                }
+                {this.state.isLoading ? (
+                    <SpinnerBlock />
+                ) : (
+                    <ApprovalTransactionList
+                        data={this.state.transactions}
+                        showAgent
+                        hideAmount
+                        onDelete={this.props.actions.deleteTransaciton}
+                    />
+                )}
             </div>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state: RootState): {} => ({
-});
+const mapStateToProps = (state: RootState): {} => ({});
 
-const mapDispatchToProps = (dispatch: any): BatchListContainerDispatchProps => {
+const mapDispatchToProps = (
+    dispatch: any
+): BatchListContainerDispatchProps => {
     return {
-        actions: bindActionCreators(TransactionActions as any, dispatch),
-    }
+        actions: bindActionCreators(TransactionActions as any, dispatch)
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BatchListContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(BatchListContainer);

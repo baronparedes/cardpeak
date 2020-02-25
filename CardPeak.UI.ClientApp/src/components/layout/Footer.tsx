@@ -1,4 +1,4 @@
-﻿import * as React from 'react'
+﻿import * as React from 'react';
 
 export class Footer extends React.Component<{}, undefined> {
     render() {
@@ -11,6 +11,6 @@ export class Footer extends React.Component<{}, undefined> {
                     </p>
                 </div>
             </footer>
-        )
+        );
     }
 }

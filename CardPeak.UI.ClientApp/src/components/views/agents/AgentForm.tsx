@@ -1,26 +1,36 @@
-﻿import * as React from 'react'
-
-import { Form, FormGroup, Col, Button } from 'react-bootstrap'
-import { FormFieldInput, FormFieldDate, FormFieldRadioGroup, ConfirmButton, ErrorLabel } from '../../layout'
-
-import AgentAccountList from './AgentAccountList'
-import AgentTeamList from './AgentTeamList'
+﻿import * as React from 'react';
+import { Col, Form, FormGroup } from 'react-bootstrap';
+import {
+    ConfirmButton,
+    ErrorLabel,
+    FormFieldDate,
+    FormFieldInput,
+    FormFieldRadioGroup
+} from '../../layout';
+import AgentAccountList from './AgentAccountList';
+import AgentTeamList from './AgentTeamList';
 
 interface AgentFormProps {
     agent: CardPeak.Entities.Agent;
-    onSave: (agent: CardPeak.Entities.Agent, errorCallback?: (error: string) => void) => void;
+    onSave: (
+        agent: CardPeak.Entities.Agent,
+        errorCallback?: (error: string) => void
+    ) => void;
     isSaving: boolean;
 }
 
 interface AgentFormState {
     agent?: CardPeak.Entities.Agent;
     errors: {
-        [error: string]: string,
+        [error: string]: string;
     };
     onSaveAgentErrorMessage?: string;
 }
 
-export default class AgentForm extends React.Component<AgentFormProps, AgentFormState> {
+export default class AgentForm extends React.Component<
+    AgentFormProps,
+    AgentFormState
+> {
     constructor(props: AgentFormProps) {
         super(props);
         this.state = {
@@ -28,50 +38,53 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
             errors: {
                 firstName: '',
                 lastName: '',
-                gender: '',
+                gender: ''
             }
         };
     }
     hasErrors = () => {
         this.handleErrors();
-        if (!!this.state.errors.firstName || !!this.state.errors.lastName) {
+        if (
+            !!this.state.errors.firstName ||
+            !!this.state.errors.lastName
+        ) {
             return true;
         }
         return false;
-    }
+    };
     handleErrors = () => {
         let errors = this.state.errors;
-        if (this.state.agent.firstName === "") errors.firstName = "*";
-        if (this.state.agent.lastName === "") errors.lastName = "*";
+        if (this.state.agent.firstName === '') errors.firstName = '*';
+        if (this.state.agent.lastName === '') errors.lastName = '*';
         this.setState({ errors });
         return errors;
-    }
+    };
     handleOnConfirm = () => {
         this.handleOnUpdateAgentSubmitted();
-    }
+    };
     handleOnToggleModal = () => {
         this.setState({ onSaveAgentErrorMessage: undefined });
-    }
+    };
     handleOnUpdateAgentSubmitted = () => {
         this.setState({ onSaveAgentErrorMessage: undefined });
         this.props.onSave(this.state.agent, (e: string) => {
-            this.setState({ onSaveAgentErrorMessage: e })
+            this.setState({ onSaveAgentErrorMessage: e });
         });
-    }
+    };
     handleFocus = (e: any) => {
         e.target.select();
-    }
+    };
     handleChange = (e: any) => {
         let errors = this.state.errors;
         errors[e.target.name] = '';
         this.setState({
             agent: {
                 ...this.state.agent,
-                [e.target.name]: e.target.value,
+                [e.target.name]: e.target.value
             },
             errors
         });
-    }
+    };
     handleChangeBirthDate = (value: string, formatted: string) => {
         this.setState({
             ...this.state,
@@ -79,10 +92,10 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                 ...this.state.agent,
                 birthDate: new Date(value)
             }
-        })
-    }
+        });
+    };
     handleOnAddAccount = (account: string) => {
-        let accounts: CardPeak.Entities.Account[] = []
+        let accounts: CardPeak.Entities.Account[] = [];
         this.state.agent.accounts.forEach(_ => {
             if (_.alias.toLowerCase() === account.toLowerCase()) {
                 return;
@@ -99,9 +112,9 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                 accounts
             }
         });
-    }
+    };
     handleOnDeleteAccount = (account: string) => {
-        let accounts: CardPeak.Entities.Account[] = []
+        let accounts: CardPeak.Entities.Account[] = [];
         this.state.agent.accounts.forEach(_ => {
             if (_.alias.toLowerCase() === account.toLowerCase()) {
                 return;
@@ -114,8 +127,10 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                 accounts
             }
         });
-    }
-    handleOnAddTeam = (teamPlacement: CardPeak.Entities.TeamPlacement) => {
+    };
+    handleOnAddTeam = (
+        teamPlacement: CardPeak.Entities.TeamPlacement
+    ) => {
         if (this.state.agent) {
             if (!this.state.agent.teamPlacements) {
                 this.setState({
@@ -124,30 +139,39 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                         teamPlacements: [teamPlacement]
                     }
                 });
-            }
-            else {
-                const exists = this.state.agent.teamPlacements.find(t => t.teamId === teamPlacement.teamId);
+            } else {
+                const exists = this.state.agent.teamPlacements.find(
+                    t => t.teamId === teamPlacement.teamId
+                );
                 if (!exists) {
                     this.setState({
                         agent: {
                             ...this.state.agent,
-                            teamPlacements: [...this.state.agent.teamPlacements, teamPlacement]
+                            teamPlacements: [
+                                ...this.state.agent.teamPlacements,
+                                teamPlacement
+                            ]
                         }
                     });
                 }
             }
         }
-    }
+    };
     handleOnDeleteTeam = (teamId: number) => {
         this.setState({
             agent: {
                 ...this.state.agent,
-                teamPlacements: this.state.agent.teamPlacements.filter(t => t.teamId !== teamId)
+                teamPlacements: this.state.agent.teamPlacements.filter(
+                    t => t.teamId !== teamId
+                )
             }
         });
-    }
+    };
     componentWillReceiveProps(nextProps: AgentFormProps) {
-        if (this.state.agent.agentId != nextProps.agent.agentId || nextProps.agent.agentId === 0) {
+        if (
+            this.state.agent.agentId != nextProps.agent.agentId ||
+            nextProps.agent.agentId === 0
+        ) {
             this.setState({
                 agent: nextProps.agent
             });
@@ -167,13 +191,16 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                         onToggleConfirm={this.handleOnToggleModal}
                         onPreventToggle={this.hasErrors}
                         isLoading={this.props.isSaving}
-                        disabled={this.props.isSaving} />
+                        disabled={this.props.isSaving}
+                    />
                 </Col>
                 <Col sm={12} xs={12} md={12} lg={12}>
-                    <ErrorLabel error={this.state.onSaveAgentErrorMessage} />
+                    <ErrorLabel
+                        error={this.state.onSaveAgentErrorMessage}
+                    />
                 </Col>
             </FormGroup>
-        )
+        );
     }
     renderTeamsAndAccounts() {
         return (
@@ -183,22 +210,28 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                         agent={this.state.agent}
                         isSaving={this.props.isSaving}
                         onAddTeamPlacement={this.handleOnAddTeam}
-                        onRemoveTeamPlacement={this.handleOnDeleteTeam} />
+                        onRemoveTeamPlacement={this.handleOnDeleteTeam}
+                    />
                 </Col>
                 <Col lg={6} md={6} sm={12} xs={12}>
                     <AgentAccountList
                         agent={this.state.agent}
                         isSaving={this.props.isSaving}
                         onAddAccount={this.handleOnAddAccount}
-                        onRemoveAccount={this.handleOnDeleteAccount} />
+                        onRemoveAccount={this.handleOnDeleteAccount}
+                    />
                 </Col>
             </FormGroup>
-        )
+        );
     }
     render() {
-        return(
+        return (
             <div className="container-fluid">
-                <Form horizontal onSubmit={(e) => { e.preventDefault(); }}>
+                <Form
+                    horizontal
+                    onSubmit={e => {
+                        e.preventDefault();
+                    }}>
                     <fieldset disabled={this.props.isSaving}>
                         <FormGroup>
                             <Col lg={6} md={6} sm={12} xs={12}>
@@ -211,7 +244,8 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     value={this.state.agent.firstName}
                                     isRequired
                                     onFocus={this.handleFocus}
-                                    onChange={this.handleChange} />
+                                    onChange={this.handleChange}
+                                />
                                 <FormFieldInput
                                     controlId="form-middle-name"
                                     type="text"
@@ -219,7 +253,8 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     label="middle name"
                                     value={this.state.agent.middleName}
                                     onFocus={this.handleFocus}
-                                    onChange={this.handleChange} />
+                                    onChange={this.handleChange}
+                                />
                                 <FormFieldInput
                                     controlId="form-last-name"
                                     type="text"
@@ -229,7 +264,8 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     value={this.state.agent.lastName}
                                     isRequired
                                     onFocus={this.handleFocus}
-                                    onChange={this.handleChange} />
+                                    onChange={this.handleChange}
+                                />
                             </Col>
                             <Col lg={6} md={6} sm={12} xs={12}>
                                 <FormFieldRadioGroup
@@ -241,7 +277,8 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                         ['M', 'male'],
                                         ['F', 'female']
                                     ]}
-                                    onChange={this.handleChange} />
+                                    onChange={this.handleChange}
+                                />
                                 <FormFieldInput
                                     controlId="form-email"
                                     type="email"
@@ -249,21 +286,25 @@ export default class AgentForm extends React.Component<AgentFormProps, AgentForm
                                     label="email"
                                     value={this.state.agent.email}
                                     onFocus={this.handleFocus}
-                                    onChange={this.handleChange} />
+                                    onChange={this.handleChange}
+                                />
                                 <FormFieldDate
                                     controlId="form-birth-date"
                                     name="birthDate"
                                     label="birth date"
                                     value={this.state.agent.birthDate}
-                                    onChangeDate={this.handleChangeBirthDate} />
+                                    onChangeDate={
+                                        this.handleChangeBirthDate
+                                    }
+                                />
                             </Col>
                         </FormGroup>
-                        <br/>
+                        <br />
                         {this.renderTeamsAndAccounts()}
                         {this.renderActions()}
                     </fieldset>
                 </Form>
             </div>
-        )
+        );
     }
 }

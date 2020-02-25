@@ -1,9 +1,9 @@
-﻿import * as React from 'react'
-import { withRouter, RouteProps } from 'react-router-dom'
+﻿import * as React from 'react';
+import { RouteProps, withRouter } from 'react-router-dom';
 
 type Props = {
-    children: JSX.Element
-}
+    children: JSX.Element;
+};
 
 class ScrollToTop extends React.Component<RouteProps & Props> {
     componentDidUpdate(prevProps: RouteProps) {
