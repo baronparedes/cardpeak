@@ -1,17 +1,14 @@
-﻿import * as React from 'react'
-import * as Actions from '../../../services/actions/transactionActions'
-
-import { connect } from 'react-redux'
+﻿import * as React from 'react';
+import { FormGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { RootState } from '../../../services/reducers'
-
-import { Panel, Button, FormGroup } from 'react-bootstrap'
-import { SearchBar, SpinnerBlock, ErrorLabel } from '../../layout'
-
-import ApprovalTransactionList from '../transactions/ApprovalTransactionList'
+import * as Actions from '../../../services/actions/transactionActions';
+import { RootState } from '../../../services/reducers';
+import { ErrorLabel, SearchBar, SpinnerBlock } from '../../layout';
+import ApprovalTransactionList from '../transactions/ApprovalTransactionList';
 
 interface FindTransactionContainerDispatchProps {
-    actions?: typeof Actions
+    actions?: typeof Actions;
 }
 
 interface FindTransactionsContainerState {
@@ -20,11 +17,14 @@ interface FindTransactionsContainerState {
     loadingError?: string;
     clientName: string;
     errors: {
-        [error: string]: string,
+        [error: string]: string;
     };
 }
 
-class FindTransactionsContainer extends React.Component<FindTransactionContainerDispatchProps, FindTransactionsContainerState> {
+class FindTransactionsContainer extends React.Component<
+    FindTransactionContainerDispatchProps,
+    FindTransactionsContainerState
+> {
     constructor(props: FindTransactionContainerDispatchProps) {
         super(props);
         this.state = {
@@ -33,7 +33,7 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
             errors: {
                 clientName: ''
             }
-        }
+        };
     }
     hasErrors: () => boolean = () => {
         this.handleErrors();
@@ -42,35 +42,39 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
             result = true;
         }
         return result;
-    }
+    };
     handleErrors = () => {
         let errors = this.state.errors;
-        if (this.state.clientName === "") errors.clientName = "*";
+        if (this.state.clientName === '') errors.clientName = '*';
         this.setState({ errors });
         return errors;
-    }
+    };
     handleOnGetTransactions = () => {
         if (this.hasErrors()) {
             return;
         }
         this.setState({ isLoading: true, loadingError: undefined });
-        this.props.actions.getTransactionsByClientStart(this.state.clientName,
+        this.props.actions.getTransactionsByClientStart(
+            this.state.clientName,
             this.handleOnGetTransactionsComplete,
-            this.handleOnGetTransactionsError)
-    }
-    handleOnGetTransactionsComplete = (data: CardPeak.Entities.ApprovalTransaction[]) => {
+            this.handleOnGetTransactionsError
+        );
+    };
+    handleOnGetTransactionsComplete = (
+        data: CardPeak.Entities.ApprovalTransaction[]
+    ) => {
         this.setState({
             isLoading: undefined,
             loadingError: undefined,
             transactions: data
         });
-    }
+    };
     handleOnGetTransactionsError = (e: string) => {
         this.setState({
             isLoading: undefined,
             loadingError: e
         });
-    }
+    };
     handleOnSearchBarChange = (e: any) => {
         let errors = this.state.errors;
         errors[e.target.name] = '';
@@ -78,51 +82,70 @@ class FindTransactionsContainer extends React.Component<FindTransactionContainer
             [e.target.name]: e.target.value,
             errors
         });
-    }
+    };
     handleOnSearchBarKeyPress = (e: any) => {
         if (e.charCode === 13) {
             e.preventDefault();
             this.handleOnGetTransactions();
         }
-    }
+    };
     render() {
         return (
             <div>
                 <div>
-                    <FormGroup validationState={!!this.state.errors.clientName && this.state.errors.clientName != "" ? "error" : null}>
+                    <FormGroup
+                        validationState={
+                            !!this.state.errors.clientName &&
+                            this.state.errors.clientName != ''
+                                ? 'error'
+                                : null
+                        }>
                         <SearchBar
                             name="clientName"
                             placeholder="client name"
                             showButton={true}
                             disabled={this.state.isLoading}
-                            onSearchBarKeyPress={this.handleOnSearchBarKeyPress}
-                            onSearchBarClick={this.handleOnGetTransactions}
-                            onSearchBarChange={this.handleOnSearchBarChange} />
+                            onSearchBarKeyPress={
+                                this.handleOnSearchBarKeyPress
+                            }
+                            onSearchBarClick={
+                                this.handleOnGetTransactions
+                            }
+                            onSearchBarChange={
+                                this.handleOnSearchBarChange
+                            }
+                        />
                     </FormGroup>
                     <ErrorLabel error={this.state.loadingError} />
                 </div>
-                {
-                    this.state.isLoading ? <SpinnerBlock /> :
-                        <ApprovalTransactionList
-                            pageSize={10}
-                            data={this.state.transactions}
-                            showAgent
-                            hideAmount
-                            hideSearchBar
-                            onDelete={this.props.actions.deleteTransaciton} />
-                }
+                {this.state.isLoading ? (
+                    <SpinnerBlock />
+                ) : (
+                    <ApprovalTransactionList
+                        pageSize={10}
+                        data={this.state.transactions}
+                        showAgent
+                        hideAmount
+                        hideSearchBar
+                        onDelete={this.props.actions.deleteTransaciton}
+                    />
+                )}
             </div>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state: RootState): {} => ({
-});
+const mapStateToProps = (state: RootState): {} => ({});
 
-const mapDispatchToProps = (dispatch: any): FindTransactionContainerDispatchProps => {
+const mapDispatchToProps = (
+    dispatch: any
+): FindTransactionContainerDispatchProps => {
     return {
         actions: bindActionCreators(Actions as any, dispatch)
-    }
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FindTransactionsContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FindTransactionsContainer);

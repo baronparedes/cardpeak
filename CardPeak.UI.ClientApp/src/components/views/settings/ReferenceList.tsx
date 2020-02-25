@@ -1,8 +1,10 @@
-﻿import * as React from 'react'
-import { Row, Col, Button, Panel } from 'react-bootstrap'
-import { DataList, DataListProps, DataItemProps } from '../../layout'
+﻿import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { DataItemProps, DataList, DataListProps } from '../../layout';
 
-type ReferenceDataList = new () => DataList<CardPeak.Entities.Reference>;
+type ReferenceDataList = new () => DataList<
+    CardPeak.Entities.Reference
+>;
 const ReferenceDataList = DataList as ReferenceDataList;
 
 interface ReferenceListProps {
@@ -11,37 +13,61 @@ interface ReferenceListProps {
     referenceTypeId?: number;
 }
 
-const ReferenceRowLayout = (props: DataItemProps<CardPeak.Entities.Reference> & ReferenceListProps) => {
+const ReferenceRowLayout = (
+    props: DataItemProps<CardPeak.Entities.Reference> &
+        ReferenceListProps
+) => {
     return (
         <Row>
             <Col sm={3}>
-                {props.isHeader ? "id" : props.item.referenceId}
+                {props.isHeader ? 'id' : props.item.referenceId}
             </Col>
             <Col sm={6}>
-                {props.isHeader ? "description" : props.item.description}
+                {props.isHeader
+                    ? 'description'
+                    : props.item.description}
             </Col>
             <Col sm={3}>
-                {props.isHeader ? "" : props.item.shortDescription}
+                {props.isHeader ? '' : props.item.shortDescription}
             </Col>
         </Row>
-    )
-}
+    );
+};
 
-const ReferenceList = (props: DataListProps<CardPeak.Entities.Reference> & ReferenceListProps) => {
+const ReferenceList = (
+    props: DataListProps<CardPeak.Entities.Reference> &
+        ReferenceListProps
+) => {
     return (
         <div>
             <ReferenceDataList
                 addOn={
-                    <Col sm={12} xsHidden={true} className="text-center spacer-top spacer-bottom">
-                        <label className="text-muted">{props.title}</label>
+                    <Col
+                        sm={12}
+                        xsHidden={true}
+                        className="text-center spacer-top spacer-bottom">
+                        <label className="text-muted">
+                            {props.title}
+                        </label>
                     </Col>
                 }
-                onGetKey={(item) => item.referenceId}
-                renderHeader={() => { return <ReferenceRowLayout isHeader /> }}
-                renderItem={(item, key) => { return <ReferenceRowLayout item={item} key={key} onSaveReference={props.onSaveReference} /> }}
-                data={props.data} />
+                onGetKey={item => item.referenceId}
+                renderHeader={() => {
+                    return <ReferenceRowLayout isHeader />;
+                }}
+                renderItem={(item, key) => {
+                    return (
+                        <ReferenceRowLayout
+                            item={item}
+                            key={key}
+                            onSaveReference={props.onSaveReference}
+                        />
+                    );
+                }}
+                data={props.data}
+            />
         </div>
-    )
-}
+    );
+};
 
 export default ReferenceList;

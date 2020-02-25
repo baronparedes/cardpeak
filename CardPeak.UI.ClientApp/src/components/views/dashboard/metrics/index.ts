@@ -1,2 +1,2 @@
-﻿export { LatestProcessedBatchList } from './LatestProcessedBatchList'
-export { TopAgentList } from './TopAgentList'
+﻿export { LatestProcessedBatchList } from './LatestProcessedBatchList';
+export { TopAgentList } from './TopAgentList';

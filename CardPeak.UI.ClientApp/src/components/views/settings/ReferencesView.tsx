@@ -1,6 +1,6 @@
-﻿import * as React from 'react'
-import ReferencesContainer from './ReferencesContainer'
-import { Panel } from 'react-bootstrap'
+﻿import * as React from 'react';
+import { Panel } from 'react-bootstrap';
+import ReferencesContainer from './ReferencesContainer';
 
 const ReferencesView = () => {
     return (
@@ -10,7 +10,7 @@ const ReferencesView = () => {
                 <ReferencesContainer />
             </Panel>
         </div>
-    )
-}
+    );
+};
 
 export default ReferencesView;

@@ -1,5 +1,5 @@
-﻿import * as React from 'react'
-import FindTransactionsContainer from './FindTransactionsContainer'
+﻿import * as React from 'react';
+import FindTransactionsContainer from './FindTransactionsContainer';
 
 const FindTransactionsView = () => {
     return (
@@ -7,7 +7,7 @@ const FindTransactionsView = () => {
             <h2>Transaction History</h2>
             <FindTransactionsContainer />
         </div>
-    )
-}
+    );
+};
 
 export default FindTransactionsView;

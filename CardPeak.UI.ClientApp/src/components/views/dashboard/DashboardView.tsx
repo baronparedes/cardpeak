@@ -1,6 +1,5 @@
-﻿import * as React from 'react'
-import { Panel } from 'react-bootstrap'
-import DashboardContainer from './DashboardContainer'
+﻿import * as React from 'react';
+import DashboardContainer from './DashboardContainer';
 
 const DashboardView = () => {
     return (
@@ -8,7 +7,7 @@ const DashboardView = () => {
             <h2>Dashboard</h2>
             <DashboardContainer />
         </div>
-    )
-}
+    );
+};
 
 export default DashboardView;

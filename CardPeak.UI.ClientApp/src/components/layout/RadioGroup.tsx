@@ -1,5 +1,5 @@
-﻿import * as React from 'react'
-import { ButtonGroup, Button } from 'react-bootstrap'
+﻿import * as React from 'react';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 interface RadioGroupProps {
     name: string;
@@ -9,19 +9,23 @@ interface RadioGroupProps {
     className?: string;
 }
 
-export const RadioGroup: React.StatelessComponent<RadioGroupProps> = (props) => {
+export const RadioGroup: React.StatelessComponent<RadioGroupProps> = props => {
     return (
         <ButtonGroup className={props.className}>
-            {props.options.map(option =>
+            {props.options.map(option => (
                 <Button
                     key={option[0]}
-                    bsStyle={option[0] === props.value ? "primary" : "default"}
+                    bsStyle={
+                        option[0] === props.value
+                            ? 'primary'
+                            : 'default'
+                    }
                     children={option[1]}
                     name={props.name}
                     onClick={props.onChange}
                     value={option[0]}
                 />
-            )}
+            ))}
         </ButtonGroup>
-    )
-}
+    );
+};

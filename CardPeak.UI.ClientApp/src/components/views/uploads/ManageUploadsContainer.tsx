@@ -1,13 +1,11 @@
-﻿import * as React from 'react'
-import * as UploadActions from '../../../services/actions/uploadActions'
-import * as dateHelpers from '../../../helpers/dateHelpers'
-
-import { connect } from 'react-redux'
+﻿import * as React from 'react';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { RootState } from '../../../services/reducers'
-
-import ManageUploadsActions from './ManageUploadsActions'
-import BatchUploadList from './BatchUploadList'
+import * as dateHelpers from '../../../helpers/dateHelpers';
+import * as UploadActions from '../../../services/actions/uploadActions';
+import { RootState } from '../../../services/reducers';
+import BatchUploadList from './BatchUploadList';
+import ManageUploadsActions from './ManageUploadsActions';
 
 interface ManageUploadsContainerProps {
     batchUploads?: CardPeak.Entities.BatchUpload[];
@@ -19,12 +17,20 @@ interface ManageUploadsContainerDispatchProps {
     uploadActions?: typeof UploadActions;
 }
 
-class ManageUploadsContainer extends React.Component<ManageUploadsContainerProps & ManageUploadsContainerDispatchProps, {}> {
-    constructor(props: ManageUploadsContainerProps & ManageUploadsContainerDispatchProps) {
+class ManageUploadsContainer extends React.Component<
+    ManageUploadsContainerProps & ManageUploadsContainerDispatchProps,
+    {}
+> {
+    constructor(
+        props: ManageUploadsContainerProps &
+            ManageUploadsContainerDispatchProps
+    ) {
         super(props);
     }
     componentDidMount() {
-        this.props.uploadActions.manageUploadsStart(dateHelpers.firstDayOfTheMonth());
+        this.props.uploadActions.manageUploadsStart(
+            dateHelpers.firstDayOfTheMonth()
+        );
     }
     render() {
         return (
@@ -32,28 +38,42 @@ class ManageUploadsContainer extends React.Component<ManageUploadsContainerProps
                 <ManageUploadsActions
                     disabled={this.props.deletingBatch}
                     refreshing={this.props.loadingBatchUploads}
-                    onRefresh={this.props.uploadActions.manageUploadsStart} />
+                    onRefresh={
+                        this.props.uploadActions.manageUploadsStart
+                    }
+                />
                 <br />
                 <BatchUploadList
                     onDelete={this.props.uploadActions.deleteBatchStart}
                     isLoading={this.props.loadingBatchUploads}
                     deletingBatch={this.props.deletingBatch}
-                    data={this.props.batchUploads} />
+                    data={this.props.batchUploads}
+                />
             </div>
-        )
+        );
     }
 }
 
-const mapStateToProps = (state: RootState): ManageUploadsContainerProps => ({
+const mapStateToProps = (
+    state: RootState
+): ManageUploadsContainerProps => ({
     batchUploads: state.batchUploadModel.batchUploads,
     deletingBatch: state.batchUploadModel.deletingBatch,
     loadingBatchUploads: state.batchUploadModel.loadingBatchUploads
 });
 
-const mapDispatchToProps = (dispatch: any): ManageUploadsContainerDispatchProps => {
+const mapDispatchToProps = (
+    dispatch: any
+): ManageUploadsContainerDispatchProps => {
     return {
-        uploadActions: bindActionCreators(UploadActions as any, dispatch)
-    }
+        uploadActions: bindActionCreators(
+            UploadActions as any,
+            dispatch
+        )
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageUploadsContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ManageUploadsContainer);

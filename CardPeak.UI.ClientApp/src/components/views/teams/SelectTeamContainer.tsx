@@ -1,14 +1,11 @@
-﻿import * as React from 'react'
-import * as TeamsActions from '../../../services/actions/teamsActions'
-import { Row, Col, Grid } from 'react-bootstrap'
-
-import { Button, ButtonGroup } from 'react-bootstrap'
-import { ModalPanel } from '../../layout'
-import SelectTeamList from './SelectTeamList'
-
-import { connect } from 'react-redux'
+﻿import * as React from 'react';
+import { Button, ButtonGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { RootState } from '../../../services/reducers'
+import * as TeamsActions from '../../../services/actions/teamsActions';
+import { RootState } from '../../../services/reducers';
+import { ModalPanel } from '../../layout';
+import SelectTeamList from './SelectTeamList';
 
 interface SelectTeamContainerPropsConnect {
     Teams?: CardPeak.Entities.Team[];
@@ -27,24 +24,33 @@ interface SelectTeamContainerDispatchProps {
     actions?: typeof TeamsActions;
 }
 
-class SelectTeamContainer extends React.Component<SelectTeamContainerProps & SelectTeamContainerPropsConnect & SelectTeamContainerDispatchProps, { showModal: boolean }> {
-    constructor(props: SelectTeamContainerProps & SelectTeamContainerPropsConnect & SelectTeamContainerDispatchProps) {
+class SelectTeamContainer extends React.Component<
+    SelectTeamContainerProps &
+        SelectTeamContainerPropsConnect &
+        SelectTeamContainerDispatchProps,
+    { showModal: boolean }
+> {
+    constructor(
+        props: SelectTeamContainerProps &
+            SelectTeamContainerPropsConnect &
+            SelectTeamContainerDispatchProps
+    ) {
         super(props);
         this.state = { showModal: false };
     }
     handleOnSelectTeam = () => {
         this.props.actions.getTeamsStart();
         this.handleOnToggleModal();
-    }
+    };
     handleOnToggleModal = () => {
         this.setState({ showModal: !this.state.showModal });
-    }
+    };
     handleOnTeamSelected = (Team: CardPeak.Entities.Team) => {
         this.handleOnToggleModal();
         if (this.props.onTeamSelected) {
             this.props.onTeamSelected(Team);
         }
-    }
+    };
     render() {
         return (
             <ButtonGroup className="hidden-print">
@@ -62,22 +68,30 @@ class SelectTeamContainer extends React.Component<SelectTeamContainerProps & Sel
                     <SelectTeamList
                         data={this.props.Teams}
                         onTeamSelected={this.handleOnTeamSelected}
-                        isLoading={this.props.isLoading} />
+                        isLoading={this.props.isLoading}
+                    />
                 </ModalPanel>
             </ButtonGroup>
         );
     }
 }
 
-const mapStateToProps = (state: RootState): SelectTeamContainerPropsConnect => ({
+const mapStateToProps = (
+    state: RootState
+): SelectTeamContainerPropsConnect => ({
     Teams: state.teamsModel.teams,
     isLoading: state.teamsModel.loadingTeams
 });
 
-const mapDispatchToProps = (dispatch: any): SelectTeamContainerDispatchProps => {
+const mapDispatchToProps = (
+    dispatch: any
+): SelectTeamContainerDispatchProps => {
     return {
         actions: bindActionCreators(TeamsActions as any, dispatch)
-    }
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectTeamContainer);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SelectTeamContainer);
