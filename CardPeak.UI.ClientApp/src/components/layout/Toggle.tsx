@@ -1,5 +1,5 @@
-﻿import * as React from 'react'
-import { RadioGroup } from './'
+﻿import * as React from 'react';
+import { RadioGroup } from './';
 
 interface ToggleProps {
     label?: string;
@@ -12,33 +12,36 @@ interface ToggleProps {
 
 export class Toggle extends React.Component<ToggleProps, {}> {
     public static defaultProps: Partial<ToggleProps> = {
-        toggleOnLabel: "On",
-        toggleOffLabel: "Off",
-        name: "toggle"
-    }
+        toggleOnLabel: 'On',
+        toggleOffLabel: 'Off',
+        name: 'toggle'
+    };
     constructor(props: ToggleProps) {
         super(props);
     }
     handleOnToggle = (e: any) => {
         const value = e.target.value;
-        const on = parseInt("1") === parseInt(value);
+        const on = parseInt('1') === parseInt(value);
         if (this.props.onToggle) {
             this.props.onToggle(on);
         }
-    }
+    };
     render() {
         return (
             <span>
-                <label className="text-muted spacer-right">{this.props.label}</label>
+                <label className="text-muted spacer-right">
+                    {this.props.label}
+                </label>
                 <RadioGroup
                     name={this.props.name}
-                    value={this.props.isToggled ? "1" : "0"}
+                    value={this.props.isToggled ? '1' : '0'}
                     options={[
-                        ["1", this.props.toggleOnLabel],
-                        ["0", this.props.toggleOffLabel]
+                        ['1', this.props.toggleOnLabel],
+                        ['0', this.props.toggleOffLabel]
                     ]}
-                    onChange={this.handleOnToggle} />
+                    onChange={this.handleOnToggle}
+                />
             </span>
-        )
+        );
     }
 }

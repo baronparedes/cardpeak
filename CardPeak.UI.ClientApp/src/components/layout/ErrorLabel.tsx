@@ -4,15 +4,12 @@ interface ErrorLabelProps {
     error?: string;
 }
 
-export const ErrorLabel: React.StatelessComponent<ErrorLabelProps> = (props) => {
+export const ErrorLabel: React.StatelessComponent<ErrorLabelProps> = props => {
     return (
         <div>
-            {
-                props.error ?
-                    <label className="text-danger">
-                        {props.error}
-                    </label> : null
-            }
+            {props.error ? (
+                <label className="text-danger">{props.error}</label>
+            ) : null}
         </div>
-    )
-}
+    );
+};

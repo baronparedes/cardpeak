@@ -1,6 +1,10 @@
-﻿import * as React from 'react'
-import { Row, Col, Panel } from 'react-bootstrap'
-import { MetricsHorizontalBarChart, MetricsPieChart, FormFieldDropdown } from './'
+﻿import * as React from 'react';
+import { Col, Panel, Row } from 'react-bootstrap';
+import {
+    FormFieldDropdown,
+    MetricsHorizontalBarChart,
+    MetricsPieChart
+} from './';
 
 interface ApprovalMetricsProps {
     approvalsByBank?: CardPeak.Entities.ApprovalMetric<string>[];
@@ -9,32 +13,41 @@ interface ApprovalMetricsProps {
 }
 
 interface ApprovalMetricsState {
-    approvalsByCategoryFiltered?: CardPeak.Entities.ApprovalMetric<string>[];
+    approvalsByCategoryFiltered?: CardPeak.Entities.ApprovalMetric<
+        string
+    >[];
     selectedCategoryFilter?: string;
 }
 
-export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, ApprovalMetricsState> {
+export class ApprovalMetrics extends React.Component<
+    ApprovalMetricsProps,
+    ApprovalMetricsState
+> {
     constructor(props: ApprovalMetricsProps) {
         super(props);
         this.state = {
             approvalsByCategoryFiltered: this.props.approvalsByCategory,
-            selectedCategoryFilter: ""
-        }
+            selectedCategoryFilter: ''
+        };
     }
     componentWillReceiveProps(nextProps: ApprovalMetricsProps) {
-        this.setState({ approvalsByCategoryFiltered: nextProps.approvalsByCategory })
+        this.setState({
+            approvalsByCategoryFiltered: nextProps.approvalsByCategory
+        });
     }
     handleOnCategoryFilter = (target: string) => {
-        let metrics: CardPeak.Entities.ApprovalMetric<string>[]
-        if (target === "") {
+        let metrics: CardPeak.Entities.ApprovalMetric<string>[];
+        if (target === '') {
             metrics = this.props.approvalsByCategory;
-        }
-        else {
+        } else {
             if (this.props.approvalsByBankDetails) {
-                const bankKey: string = target.charAt(0).toLowerCase() + target.slice(1);
+                const bankKey: string =
+                    target.charAt(0).toLowerCase() + target.slice(1);
                 metrics = this.props.approvalsByBankDetails[bankKey];
                 if (!metrics) {
-                    metrics = this.props.approvalsByBankDetails[bankKey.toLowerCase()];
+                    metrics = this.props.approvalsByBankDetails[
+                        bankKey.toLowerCase()
+                    ];
                 }
             }
         }
@@ -42,12 +55,11 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
         this.setState({
             approvalsByCategoryFiltered: metrics,
             selectedCategoryFilter: target
-        })
-
-    }
+        });
+    };
     handleOnClick = (e: any) => {
         const label: string = e[0]._view.label;
-        let target: string = "";
+        let target: string = '';
         this.props.approvalsByBank.forEach(_ => {
             if (label.startsWith(_.key)) {
                 target = _.key;
@@ -55,22 +67,32 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
             }
         });
         this.handleOnCategoryFilter(target);
-    }
+    };
     handleOnCategoryFilterChange = (e: any) => {
         let target: string = e.target.value;
         this.handleOnCategoryFilter(target);
-    }
+    };
     render() {
         return (
             <Row className="hidden-print">
                 <Col sm={6}>
                     <Panel>
-                        <MetricsHorizontalBarChart metrics={this.props.approvalsByBank} label="approval by banks" onClick={this.handleOnClick} />
+                        <MetricsHorizontalBarChart
+                            metrics={this.props.approvalsByBank}
+                            label="approval by banks"
+                            onClick={this.handleOnClick}
+                        />
                     </Panel>
                 </Col>
                 <Col sm={6}>
                     <Panel>
-                        <MetricsPieChart metrics={this.state.approvalsByCategoryFiltered} label="approval by categories" displayLegend />
+                        <MetricsPieChart
+                            metrics={
+                                this.state.approvalsByCategoryFiltered
+                            }
+                            label="approval by categories"
+                            displayLegend
+                        />
                         <br />
                         <FormFieldDropdown
                             onChange={this.handleOnCategoryFilterChange}
@@ -78,20 +100,29 @@ export class ApprovalMetrics extends React.Component<ApprovalMetricsProps, Appro
                             value={this.state.selectedCategoryFilter}
                             label="filter"
                             name="filter">
-                            <option key={0} value={""}>All</option>
-                            {
-                                this.props.approvalsByBank ? this.props.approvalsByBank.map((bank) => {
-                                    return (
-                                        <option key={bank.key} value={bank.key}>
-                                            {bank.key + " (" + bank.value + ")"}
-                                        </option>
-                                    )
-                                }) : null
-                            }
+                            <option key={0} value={''}>
+                                All
+                            </option>
+                            {this.props.approvalsByBank
+                                ? this.props.approvalsByBank.map(
+                                      bank => {
+                                          return (
+                                              <option
+                                                  key={bank.key}
+                                                  value={bank.key}>
+                                                  {bank.key +
+                                                      ' (' +
+                                                      bank.value +
+                                                      ')'}
+                                              </option>
+                                          );
+                                      }
+                                  )
+                                : null}
                         </FormFieldDropdown>
                     </Panel>
                 </Col>
             </Row>
-        )
+        );
     }
 }

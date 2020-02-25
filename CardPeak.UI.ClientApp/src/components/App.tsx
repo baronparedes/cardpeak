@@ -1,7 +1,7 @@
-﻿import * as React from 'react'
-import { NavigationBar, Footer } from './layout'
+﻿import * as React from 'react';
+import { Footer, NavigationBar } from './layout';
 
-export class App extends React.Component<{}, undefined>{
+export class App extends React.Component<{}, undefined> {
     render() {
         return (
             <div>
@@ -11,6 +11,6 @@ export class App extends React.Component<{}, undefined>{
                 </div>
                 <Footer />
             </div>
-        )
+        );
     }
 }
