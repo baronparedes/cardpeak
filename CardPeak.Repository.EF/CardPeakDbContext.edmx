@@ -25,6 +25,7 @@
           <Property Name="BirthDate" Type="date" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="AgentTypeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
@@ -175,6 +176,10 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
         <EntityType Name="AgentPayout">
           <Key>
             <PropertyRef Name="AgentId" />
+            
+            
+            
+            
           </Key>
           <Property Name="AgentId" Type="int" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
@@ -195,6 +200,18 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
             </Principal>
             <Dependent Role="Account">
               <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Agent_Reference_AgentTypeId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="Agent" Type="Self.Agent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="Agent">
+              <PropertyRef Name="AgentTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -282,18 +299,6 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DefaultRate_Agent">
-          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
-          <End Role="DefaultRate" Type="Self.DefaultRate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Reference">
-              <PropertyRef Name="ReferenceId" />
-            </Principal>
-            <Dependent Role="DefaultRate">
-              <PropertyRef Name="TypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DefaultRate_Reference_BankId">
           <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
           <End Role="DefaultRate" Type="Self.DefaultRate" Multiplicity="*" />
@@ -315,6 +320,18 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
             </Principal>
             <Dependent Role="DefaultRate">
               <PropertyRef Name="CardCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DefaultRate_Reference_TypeId">
+          <End Role="Reference" Type="Self.Reference" Multiplicity="1" />
+          <End Role="DefaultRate" Type="Self.DefaultRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="DefaultRate">
+              <PropertyRef Name="TypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -421,6 +438,10 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
             <End Role="Agent" EntitySet="Agent" />
             <End Role="Account" EntitySet="Account" />
           </AssociationSet>
+          <AssociationSet Name="FK_Agent_Reference_AgentTypeId" Association="Self.FK_Agent_Reference_AgentTypeId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="Agent" EntitySet="Agent" />
+          </AssociationSet>
           <AssociationSet Name="FK_ApprovalTransaction_Agent" Association="Self.FK_ApprovalTransaction_Agent">
             <End Role="Agent" EntitySet="Agent" />
             <End Role="ApprovalTransaction" EntitySet="ApprovalTransaction" />
@@ -449,15 +470,15 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
             <End Role="Reference" EntitySet="Reference" />
             <End Role="DebitCreditTransaction" EntitySet="DebitCreditTransaction" />
           </AssociationSet>
-          <AssociationSet Name="FK_DefaultRate_Agent" Association="Self.FK_DefaultRate_Agent">
-            <End Role="Reference" EntitySet="Reference" />
-            <End Role="DefaultRate" EntitySet="DefaultRate" />
-          </AssociationSet>
           <AssociationSet Name="FK_DefaultRate_Reference_BankId" Association="Self.FK_DefaultRate_Reference_BankId">
             <End Role="Reference" EntitySet="Reference" />
             <End Role="DefaultRate" EntitySet="DefaultRate" />
           </AssociationSet>
           <AssociationSet Name="FK_DefaultRate_Reference_CardCategoryId" Association="Self.FK_DefaultRate_Reference_CardCategoryId">
+            <End Role="Reference" EntitySet="Reference" />
+            <End Role="DefaultRate" EntitySet="DefaultRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DefaultRate_Reference_TypeId" Association="Self.FK_DefaultRate_Reference_TypeId">
             <End Role="Reference" EntitySet="Reference" />
             <End Role="DefaultRate" EntitySet="DefaultRate" />
           </AssociationSet>
@@ -573,6 +594,10 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
             <End Role="DefaultRate" EntitySet="DefaultRates" />
           </AssociationSet>
           <EntitySet Name="AgentPayout" EntityType="CardPeakModel.AgentPayout" />
+          <AssociationSet Name="FK_Agent_Reference_AgentTypeId" Association="CardPeakModel.FK_Agent_Reference_AgentTypeId">
+            <End Role="Reference" EntitySet="References" />
+            <End Role="Agent" EntitySet="Agents" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -600,6 +625,8 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
           <NavigationProperty Name="DebitCreditTransactions" Relationship="CardPeakModel.FK_DebitCreditTransaction_Agent" FromRole="Agent" ToRole="DebitCreditTransaction" />
           <NavigationProperty Name="Rates" Relationship="CardPeakModel.FK_Rate_Agent" FromRole="Agent" ToRole="Rate" />
           <NavigationProperty Name="TeamPlacements" Relationship="CardPeakModel.FK_TeamPlacement_Agent" FromRole="Agent" ToRole="TeamPlacement" />
+          <Property Name="AgentTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AgentType" Relationship="CardPeakModel.FK_Agent_Reference_AgentTypeId" FromRole="Agent" ToRole="Reference" />
         </EntityType>
         <EntityType Name="ApprovalTransaction">
           <Key>
@@ -981,6 +1008,18 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="Payout" Type="Decimal" Precision="38" Scale="4" />
         </EntityType>
+        <Association Name="FK_Agent_Reference_AgentTypeId">
+          <End Type="CardPeakModel.Reference" Role="Reference" Multiplicity="1" />
+          <End Type="CardPeakModel.Agent" Role="Agent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reference">
+              <PropertyRef Name="ReferenceId" />
+            </Principal>
+            <Dependent Role="Agent">
+              <PropertyRef Name="AgentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -998,6 +1037,7 @@ warning 6002: The table/view 'CardPeak.dbo.AgentPayout' does not have a primary 
           <EntitySetMapping Name="Agents">
             <EntityTypeMapping TypeName="CardPeakModel.Agent">
               <MappingFragment StoreEntitySet="Agent">
+                <ScalarProperty Name="AgentTypeId" ColumnName="AgentTypeId" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />

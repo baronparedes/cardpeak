@@ -43,6 +43,16 @@ class ReferencesContainer extends React.Component<
                             onSaveReference={this.handleOnSave}
                             data={this.props.banks}
                             referenceTypeId={
+                                this.props.agentTypeReferenceTypeId
+                            }
+                            isLoading={this.props.loading}
+                        />
+                        <br />
+                        <ReferenceList
+                            title="agent types"
+                            onSaveReference={this.handleOnSave}
+                            data={this.props.agentTypes}
+                            referenceTypeId={
                                 this.props.bankReferenceTypeId
                             }
                             isLoading={this.props.loading}

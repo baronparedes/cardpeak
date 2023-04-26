@@ -245,4 +245,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="DefaultRateId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="47c7f157-fd99-45fd-927b-403ba0888b0e" ChangeDateTime="04/26/2023 11:45:41">
+    <Property Name="ElementName" Value="[dbo].[Agent].[TypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Agent]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AgentTypeId" />
+  </Operation>
 </Operations>

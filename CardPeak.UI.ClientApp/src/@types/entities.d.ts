@@ -9,6 +9,8 @@
         public email?: string;
         public accounts?: CardPeak.Entities.Account[];
         public teamPlacements?: CardPeak.Entities.TeamPlacement[];
+        public agentTypeId: number;
+        public agentType?: Reference;
     }
 
     export class AgentDetails {

@@ -41,6 +41,10 @@ export default class SelectAgent extends React.Component<
                         this.props.agent.lastName}
                 </span>
                 {this.renderSelectAgent()}
+                <br />
+                <span className="text-muted">
+                    {this.props.agent.agentType.description}
+                </span>
             </h5>
         );
     }
