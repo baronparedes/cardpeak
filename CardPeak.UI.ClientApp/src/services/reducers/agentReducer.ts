@@ -270,7 +270,25 @@ export default handleActions<CardPeak.Models.AgentModel, any>(
                 selectedAgentSavings: action.payload,
                 refreshingAgentSavings: undefined
             };
-        }
+        },
+        [AGENT_ACTIONS.UPLOAD_PHOTO]: (state, action) => {
+            return {
+                ...state,
+                uploadingFile: true
+            };
+        },
+        [AGENT_ACTIONS.UPLOAD_PHOTO_ERROR]: (state, action) => {
+            return {
+                ...state,
+                uploadingFile: undefined
+            };
+        },
+        [AGENT_ACTIONS.UPLOAD_PHOTO_COMPLETE]: (state, action) => {
+            return {
+                ...state,
+                uploadingFile: undefined,
+            };
+        },
     },
     initialState
 );

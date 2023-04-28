@@ -83,6 +83,7 @@
     <Build Include="dbo\Tables\TeamPlacement.sql" />
     <Build Include="dbo\Tables\DefaultRate.sql" />
     <Build Include="dbo\Views\AgentPayout.sql" />
+    <Build Include="dbo\Views\DuplicateTransactions.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

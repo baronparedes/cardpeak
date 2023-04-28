@@ -7,7 +7,7 @@ namespace CardPeak.Core.Service
     {
         IEnumerable<Account> GetAgentsByAlias(string alias);
         Reference GetCardCategoryByCode(string code);
-        Rate GetRate(int agentId, int cardCategoryId, int bankId);
+        Rate GetAgentRate(int agentId, int cardCategoryId, int bankId, Reference agentType);
         bool TransactionHasDuplicates(ApprovalTransaction transaction);
     }
 }

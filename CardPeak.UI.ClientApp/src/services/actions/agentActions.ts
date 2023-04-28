@@ -23,6 +23,9 @@ export const createAgentError = createAction(AGENT_ACTIONS.CREATE_AGENT_ERROR);
 export const setDateFilters = createAction<CardPeak.Entities.DateFilters>(AGENT_ACTIONS.SET_DASHBOARD_DATE_FILTERS);
 export const selectAgentSavings = createAction(AGENT_ACTIONS.SELECT_AGENT_SAVINGS);
 export const selectAgentSavingsComplete = createAction<CardPeak.Entities.AgentSavings>(AGENT_ACTIONS.SELECT_AGENT_SAVINGS_COMPLETE);
+export const uploadPhoto = createAction(AGENT_ACTIONS.UPLOAD_PHOTO);
+export const uploadPhotoComplete = createAction(AGENT_ACTIONS.UPLOAD_PHOTO_COMPLETE);
+export const uploadPhotoError = createAction(AGENT_ACTIONS.UPLOAD_PHOTO_ERROR);
 
 
 function filterAgent(data: CardPeak.Entities.Agent[], id: number, agentFoundCallback: (agent: CardPeak.Entities.Agent) => void, notFoundCallback: () => void) {
@@ -177,5 +180,21 @@ export function getAgentSavingsStart(agentId: number, year: number) {
         agentsController.getAgentSavingsByYear(agentId, year, (data) => {
             dispatch(selectAgentSavingsComplete(data));
         });
+    }
+}
+
+export function uploadPhotoStart(agentId: number, data: FormData, successCallback?: () => void, errorCallback?: (e: string) => void) {
+    return (dispatch: (e: any) => void) => {
+        agentsController.uploadPhoto(agentId, data, () => {
+            dispatch(uploadPhotoComplete());
+            if (successCallback) {
+                successCallback();
+            }
+        }, (e: string) => {
+            dispatch(uploadPhotoError());
+            if (errorCallback) {
+                errorCallback(e);
+            }
+        })
     }
 }

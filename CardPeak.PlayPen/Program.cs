@@ -7,60 +7,60 @@ using System.Linq;
 
 namespace CardPeak.PlayPen
 {
-	class Program
-	{
-		static void Main(string[] args)
-		{
-			Program.TestDefaultRate();
-		}
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Program.TestDefaultRate();
+        }
 
-		static void TestDefaultRate()
-		{
-			var context = new CardPeakDbContext();
-			var service = new ProcessorService(context);
-			var rate = service.GetRate(6, 7, 2);
-			Console.WriteLine(rate.ToString());
-			Console.ReadLine();
-		}
+        static void TestDefaultRate()
+        {
+            var context = new CardPeakDbContext();
+            var service = new ProcessorService(context);
+            var rate = service.GetAgentRate(6, 7, 2, null);
+            Console.WriteLine(rate.ToString());
+            Console.ReadLine();
+        }
 
-		static void TestProcessor()
-		{
-			var context = new CardPeakDbContext();
-			var service = new ProcessorService(context);
-			var batchUpload = new BatchUpload();
-			batchUpload.BankId = 1;
-			batchUpload.BatchId = 1;
+        static void TestProcessor()
+        {
+            var context = new CardPeakDbContext();
+            var service = new ProcessorService(context);
+            var batchUpload = new BatchUpload();
+            batchUpload.BankId = 1;
+            batchUpload.BatchId = 1;
 
-			var batchConfig = new BatchFileConfiguration();
-			batchConfig.HasHeader = true;
-			batchConfig.Ref1Column = 0;
-			batchConfig.ApprovalDateColumn = 2;
-			batchConfig.ClientLastNameColumn = 3;
-			batchConfig.ClientFirstNameColumn = 4;
-			batchConfig.ClientMiddleNameColumn = 5;
-			batchConfig.ProductTypeColumn = 7;
-			batchConfig.CardCountColumn = 10;
-			batchConfig.AliasColumn = 11;
-			batchConfig.CardCategoryColumn = 13;
+            var batchConfig = new BatchFileConfiguration();
+            batchConfig.HasHeader = true;
+            batchConfig.Ref1Column = 0;
+            batchConfig.ApprovalDateColumn = 2;
+            batchConfig.ClientLastNameColumn = 3;
+            batchConfig.ClientFirstNameColumn = 4;
+            batchConfig.ClientMiddleNameColumn = 5;
+            batchConfig.ProductTypeColumn = 7;
+            batchConfig.CardCountColumn = 10;
+            batchConfig.AliasColumn = 11;
+            batchConfig.CardCategoryColumn = 13;
 
-			var fileName = @"D:\Metrobank.xlsx";
-			var file = new FileInfo(fileName);
-			var processor = new CardPeak.Processor.Excel.Processor(service);
-			var result = processor.Process(file, batchUpload, batchConfig);
+            var fileName = @"D:\Metrobank.xlsx";
+            var file = new FileInfo(fileName);
+            var processor = new CardPeak.Processor.Excel.Processor(service);
+            var result = processor.Process(file, batchUpload, batchConfig);
 
-			Console.WriteLine("Errors");
-			foreach (var item in result.Where(_ => _.HasErrors))
-			{
-				Console.WriteLine(item.ApprovalTransaction.ReferenceNumber1);
-			}
+            Console.WriteLine("Errors");
+            foreach (var item in result.Where(_ => _.HasErrors))
+            {
+                Console.WriteLine(item.ApprovalTransaction.ReferenceNumber1);
+            }
 
-			Console.WriteLine("Processed");
-			foreach (var item in result.Where(_ => !_.HasErrors))
-			{
-				Console.WriteLine(item.ApprovalTransaction.ReferenceNumber1);
-			}
+            Console.WriteLine("Processed");
+            foreach (var item in result.Where(_ => !_.HasErrors))
+            {
+                Console.WriteLine(item.ApprovalTransaction.ReferenceNumber1);
+            }
 
-			Console.ReadLine();
-		}
-	}
+            Console.ReadLine();
+        }
+    }
 }

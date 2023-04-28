@@ -39,7 +39,10 @@ const API = {
     GET_AGENT_PAYOUT: '/agents/payout',
     DEACTIVATE_AGENT: (agentId: number) => {
         return '/agents/deactivate/' + agentId;
-    }
+    },
+    PHOTO: (agentId: number) => {
+        return '/agents/' + agentId + '/photo';
+    },
 };
 
 export function deactivateAgent(
@@ -214,4 +217,28 @@ export async function getDetailsAsync(agentId: number) {
         return undefined;
     }
     return result.data as CardPeak.Entities.AgentDetails;
+}
+
+export async function uploadPhoto(
+    agentId: number,
+    data: FormData,
+    successCallback: () => void,
+    errorCallback: (message: string) => void
+) {
+    const config = {
+        headers: { 'content-type': 'multipart/form-data' }
+    };
+
+    axios
+        .post(API.PHOTO(agentId), data, config)
+        .then(() => {
+            successCallback();
+        })
+        .catch(reason => {
+            try {
+                errorCallback(reason.response.data.exceptionMessage);
+            } catch (e) {
+                errorCallback(reason.message);
+            }
+        });
 }

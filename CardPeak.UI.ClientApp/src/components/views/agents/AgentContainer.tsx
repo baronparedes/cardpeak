@@ -44,7 +44,8 @@ const emptyAgent: CardPeak.Entities.Agent = {
     gender: 'M',
     email: '',
     birthDate: new Date(),
-    accounts: []
+    accounts: [],
+    agentTypeId: 0
 };
 
 class AgentContainer extends React.Component<
