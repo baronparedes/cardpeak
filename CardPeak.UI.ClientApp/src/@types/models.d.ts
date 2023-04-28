@@ -13,6 +13,7 @@
         updatingAgent?: boolean;
         creatingAgent?: boolean;
         dateFilters?: CardPeak.Entities.DateFilters;
+        uploadingAgentPhoto?: boolean;
     }
 
     export interface RatesModel {

@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import SelectAgentContainer from './SelectAgentContainer';
+import AgentProfileImageContainer from './AgentProfileImageContainer'
 import { Grid, Row, Col } from "react-bootstrap";
 
 interface SelectAgentProps {
@@ -52,7 +53,7 @@ export default class SelectAgent extends React.Component<
                         </h5>
                     </Col>
                     <Col md={6} smHidden xsHidden>
-                        <img className="img-round-overlap float-right" alt="profile-photo" src='https://images.pexels.com/photos/1000366/pexels-photo-1000366.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
+                        <AgentProfileImageContainer />
                     </Col>
                 </Row>
             </Grid>

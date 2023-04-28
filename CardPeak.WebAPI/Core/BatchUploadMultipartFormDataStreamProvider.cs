@@ -19,8 +19,8 @@ namespace CardPeak.WebAPI.Core
             }
 
             var fileName = headers.ContentDisposition.FileName.Replace("\"", string.Empty);
-            var result = string.Format("{0}.{1}{2}", 
-                Path.GetFileNameWithoutExtension(fileName), 
+            var result = string.Format("{0}.{1}{2}",
+                Path.GetFileNameWithoutExtension(fileName),
                 Guid.NewGuid().ToString(),
                 Path.GetExtension(fileName));
             this.OriginalFileName = fileName;
