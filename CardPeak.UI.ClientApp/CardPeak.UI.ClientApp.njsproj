@@ -294,11 +294,15 @@
     <Content Include="src\components\views\uploads\TransactionsView.tsx">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="src\img\profile-photo.png" />
     <Content Include="src\img\favicon.ico" />
     <Content Include="src\index.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\index.tsx">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="src\%40types\images.d.ts">
       <SubType>Code</SubType>
     </Content>
     <Content Include="src\styles\button.less">
@@ -359,6 +363,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\layout\ScrollToTop.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\components\views\agents\AgentProfileImage.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\components\views\agents\AgentSavingsActions.tsx">

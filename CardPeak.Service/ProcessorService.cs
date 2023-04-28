@@ -21,9 +21,9 @@ namespace CardPeak.Service
             this.ApprovalTransactionRepository = new ApprovalTransactionRepository(context);
         }
 
-        public Rate GetRate(int agentId, int cardCategoryId, int bankId)
+        public Rate GetAgentRate(int agentId, int cardCategoryId, int bankId, Reference agentType)
         {
-            return this.RateRepository.GetRate(agentId, cardCategoryId, bankId);
+            return this.RateRepository.GetAgentRate(agentId, cardCategoryId, bankId, agentType);
         }
 
         public IEnumerable<Account> GetAgentsByAlias(string alias)

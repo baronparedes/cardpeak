@@ -120,7 +120,7 @@ const loaders = [
     },
     {
         test: /\.(jpg|png)$/,
-        use: 'file-loader?name=' + path.join(assetsContent, '[hash].[ext]')
+        use: 'file-loader?name=[name].[ext]'
     },
     {
         test: /\.(woff|woff2|eot|ttf|svg|gif)$/,

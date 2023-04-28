@@ -42,7 +42,7 @@ namespace CardPeak.Service
 
         public IEnumerable<Rate> GetRates(int agentId = 0)
         {
-            return this.RateRepository.GetRates(agentId);
+            return this.RateRepository.GetAgentRates(agentId);
         }
 
         public IEnumerable<Rate> SaveDefaultRates(int typeId, Settings settings)
@@ -54,9 +54,9 @@ namespace CardPeak.Service
 
         public IEnumerable<Rate> SaveRates(int agentId, Settings settings)
         {
-            this.RateRepository.SaveRates(agentId, settings);
+            this.RateRepository.SaveAgentRates(agentId, settings);
             this.Complete();
-            return this.RateRepository.GetRates(agentId);
+            return this.RateRepository.GetAgentRates(agentId);
         }
     }
 }
