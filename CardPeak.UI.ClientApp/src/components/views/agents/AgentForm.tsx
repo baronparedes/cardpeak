@@ -9,6 +9,7 @@ import {
 } from '../../layout';
 import AgentAccountList from './AgentAccountList';
 import AgentTeamList from './AgentTeamList';
+import ReferencePickerContainer from '../settings/ReferencePickerContainer'
 
 interface AgentFormProps {
     agent: CardPeak.Entities.Agent;
@@ -38,7 +39,8 @@ export default class AgentForm extends React.Component<
             errors: {
                 firstName: '',
                 lastName: '',
-                gender: ''
+                gender: '',
+                agentTypeId: ''
             }
         };
     }
@@ -46,7 +48,8 @@ export default class AgentForm extends React.Component<
         this.handleErrors();
         if (
             !!this.state.errors.firstName ||
-            !!this.state.errors.lastName
+            !!this.state.errors.lastName ||
+            !!this.state.errors.agentTypeId
         ) {
             return true;
         }
@@ -56,6 +59,7 @@ export default class AgentForm extends React.Component<
         let errors = this.state.errors;
         if (this.state.agent.firstName === '') errors.firstName = '*';
         if (this.state.agent.lastName === '') errors.lastName = '*';
+        if (this.state.agent.agentTypeId === 0) errors.agentTypeId = '*';
         this.setState({ errors });
         return errors;
     };
@@ -167,6 +171,20 @@ export default class AgentForm extends React.Component<
             }
         });
     };
+    handleOnSelectAgentType = (
+        item: CardPeak.Entities.Reference,
+        name: string
+    ) => {
+        let errors = this.state.errors;
+        errors.agentTypeId = '';
+        this.setState({
+            agent: {
+                ...this.state.agent,
+                agentTypeId: item ? item.referenceId : 0
+            },
+            errors
+        });
+    };
     componentWillReceiveProps(nextProps: AgentFormProps) {
         if (
             this.state.agent.agentId != nextProps.agent.agentId ||
@@ -265,6 +283,20 @@ export default class AgentForm extends React.Component<
                                     isRequired
                                     onFocus={this.handleFocus}
                                     onChange={this.handleChange}
+                                />
+                                <ReferencePickerContainer
+                                    controlId="form-agent-type-id"
+                                    label="Agent Type"
+                                    name="agentTypeId"
+                                    error={this.state.errors.agentTypeId}
+                                    selectedId={
+                                        this.state.agent.agentTypeId
+                                    }
+                                    isRequired
+                                    referenceName="agentTypes"
+                                    onSelect={
+                                        this.handleOnSelectAgentType
+                                    }
                                 />
                             </Col>
                             <Col lg={6} md={6} sm={12} xs={12}>

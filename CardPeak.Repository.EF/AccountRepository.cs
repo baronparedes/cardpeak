@@ -27,6 +27,7 @@ namespace CardPeak.Repository.EF
         {
             return this.Context.Accounts
                 .Include(_ => _.Agent)
+                .Include(_ => _.Agent.AgentType)
                 .Where(_ => _.Alias.ToLower() == alias.ToLower())
                 .Where(_ => !_.Agent.IsDeleted)
                 .AsNoTracking()

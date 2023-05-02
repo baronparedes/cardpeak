@@ -9,30 +9,35 @@ using System.Linq;
 
 namespace CardPeak.Repository.EF
 {
-	public sealed class AgentRepository : RepositoryBase<Agent, CardPeakDbContext>, IAgentRepository
-	{
-		public AgentRepository(CardPeakDbContext context) : base(context)
-		{
-		}
+    public sealed class AgentRepository : RepositoryBase<Agent, CardPeakDbContext>, IAgentRepository
+    {
+        public AgentRepository(CardPeakDbContext context) : base(context)
+        {
+        }
 
-		public IEnumerable<Agent> GetAllOrderedByName()
-		{
-			return this.Context.Agents
-				.Where(_ => !_.IsDeleted)
-				.OrderBy(_ => _.FirstName).ThenBy(_ => _.LastName).ToList();
-		}
+        public IEnumerable<Agent> GetAllOrderedByName()
+        {
+            return this.Context.Agents
+                .Include(_ => _.AgentType)
+                .Where(_ => !_.IsDeleted)
+                .OrderBy(_ => _.FirstName).ThenBy(_ => _.LastName)
+                .AsNoTracking()
+                .ToList();
+        }
 
-		public Agent Update(Agent agent, List<Account> accounts, List<TeamPlacement> teams)
-		{
+        public Agent Update(Agent agent, List<Account> accounts, List<TeamPlacement> teams)
+        {
             this.UpdateAccounts(agent, accounts);
             this.UpdateTeams(agent, teams);
 
+            agent.AgentType = null;
             agent.TeamPlacements = null;
-			agent.Accounts = null;
-			this.Context.Entry(agent).State = EntityState.Modified;
+            agent.Accounts = null;
 
-			return agent;
-		}
+            this.Context.Entry(agent).State = EntityState.Modified;
+
+            return agent;
+        }
 
         public override void Add(Agent entity)
         {
@@ -97,95 +102,95 @@ namespace CardPeak.Repository.EF
             });
         }
 
-		public AgentPayoutTransaction GetAgentPayoutsV2()
-		{
-			var query = this.Context.AgentPayout
-				.Select(_ => new
-				{
-					_.AgentId,
-					_.FirstName,
-					_.LastName,
-					_.Payout
-				}).ToList();
+        public AgentPayoutTransaction GetAgentPayoutsV2()
+        {
+            var query = this.Context.AgentPayout
+                .Select(_ => new
+                {
+                    _.AgentId,
+                    _.FirstName,
+                    _.LastName,
+                    _.Payout
+                }).ToList();
 
-			var payouts = query.Select(_ => new ApprovalMetric<Agent>
-			{
-				Key = new Agent
-				{
-					AgentId = _.AgentId,
-					FirstName = _.FirstName,
-					LastName = _.LastName
-				},
-				Value = _.Payout.GetValueOrDefault()
-			}).ToList();
+            var payouts = query.Select(_ => new ApprovalMetric<Agent>
+            {
+                Key = new Agent
+                {
+                    AgentId = _.AgentId,
+                    FirstName = _.FirstName,
+                    LastName = _.LastName
+                },
+                Value = _.Payout.GetValueOrDefault()
+            }).ToList();
 
-			return new AgentPayoutTransaction
-			{
-				Payouts = payouts
-			};
-		}
+            return new AgentPayoutTransaction
+            {
+                Payouts = payouts
+            };
+        }
 
         [Obsolete("Use GetAgentPayoutsV2 instead")]
         public AgentPayoutTransaction GetAgentPayoutsV1()
-		{
-			var approvalTransactions = this.Context.ApprovalTransactions
-				.Include(_ => _.Agent)
-				.Where(_ => !_.Agent.IsDeleted)
-				.Where(_ => !_.IsDeleted)
-				.GroupBy(_ => new { _.AgentId, _.Agent })
-				.Select(_ => new
-				{
-					AgentId = _.FirstOrDefault().AgentId,
-					Agent = _.FirstOrDefault().Agent,
-					Amount = _.Sum(t => t.Amount)
-				});
+        {
+            var approvalTransactions = this.Context.ApprovalTransactions
+                .Include(_ => _.Agent)
+                .Where(_ => !_.Agent.IsDeleted)
+                .Where(_ => !_.IsDeleted)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .Select(_ => new
+                {
+                    AgentId = _.FirstOrDefault().AgentId,
+                    Agent = _.FirstOrDefault().Agent,
+                    Amount = _.Sum(t => t.Amount)
+                });
 
-			var creditDebitTransactions = this.Context.DebitCreditTransactions
-				.Include(_ => _.Agent)
-				.Where(_ => !_.Agent.IsDeleted)
-				.Where(_ => !_.IsDeleted)
-				.Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
-				.GroupBy(_ => new { _.AgentId, _.Agent })
-				.Select(_ => new
-				{
-					AgentId = _.FirstOrDefault().AgentId,
-					Agent = _.FirstOrDefault().Agent,
-					Amount = _.Sum(t => t.Amount)
-				});
+            var creditDebitTransactions = this.Context.DebitCreditTransactions
+                .Include(_ => _.Agent)
+                .Where(_ => !_.Agent.IsDeleted)
+                .Where(_ => !_.IsDeleted)
+                .Where(_ => _.TransactionTypeId == (int)Domain.Enums.TransactionTypeEnum.DebitCreditTransaction)
+                .GroupBy(_ => new { _.AgentId, _.Agent })
+                .Select(_ => new
+                {
+                    AgentId = _.FirstOrDefault().AgentId,
+                    Agent = _.FirstOrDefault().Agent,
+                    Amount = _.Sum(t => t.Amount)
+                });
 
-			var query = approvalTransactions.Union(creditDebitTransactions)
-				.GroupBy(_ => _.AgentId)
-				.Select(_ => new
-				{
-					AgentId = _.FirstOrDefault().AgentId,
-					Agent = _.FirstOrDefault().Agent,
-					Amount = _.Sum(t => t.Amount)
-				})
-				.Where(_ => _.Amount > 0);
+            var query = approvalTransactions.Union(creditDebitTransactions)
+                .GroupBy(_ => _.AgentId)
+                .Select(_ => new
+                {
+                    AgentId = _.FirstOrDefault().AgentId,
+                    Agent = _.FirstOrDefault().Agent,
+                    Amount = _.Sum(t => t.Amount)
+                })
+                .Where(_ => _.Amount > 0);
 
 
-			var payouts = query.Select(_ => new ApprovalMetric<Agent>
-			{
-				Key = _.Agent,
-				Value = _.Amount
-			}).ToList();
+            var payouts = query.Select(_ => new ApprovalMetric<Agent>
+            {
+                Key = _.Agent,
+                Value = _.Amount
+            }).ToList();
 
-			return new AgentPayoutTransaction
-			{
-				Payouts = payouts
-			};
-		}
+            return new AgentPayoutTransaction
+            {
+                Payouts = payouts
+            };
+        }
 
-		public AgentPayoutTransaction GetAgentPayouts()
-		{
-			return this.GetAgentPayoutsV2();
-		}
+        public AgentPayoutTransaction GetAgentPayouts()
+        {
+            return this.GetAgentPayoutsV2();
+        }
 
-		public void DeactivateAgent(int agentId)
-		{
-			var agent = this.Context.Agents.Single(_ => _.AgentId == agentId);
-			agent.IsDeleted = true;
-			this.Context.Entry(agent).State = EntityState.Modified;
-		}
-	}
+        public void DeactivateAgent(int agentId)
+        {
+            var agent = this.Context.Agents.Single(_ => _.AgentId == agentId);
+            agent.IsDeleted = true;
+            this.Context.Entry(agent).State = EntityState.Modified;
+        }
+    }
 }

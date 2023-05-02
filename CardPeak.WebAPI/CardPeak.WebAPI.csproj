@@ -113,6 +113,7 @@
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
+    <Compile Include="Core\AgentProfileMultipartFormDataStreamProvider.cs" />
     <Compile Include="Core\BatchUploadMultipartFormDataStreamProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

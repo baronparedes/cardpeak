@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { AppRouter } from './components/AppRouter';
 import { store } from './store';
 import './styles/main.less';
+import './img/profile-photo.png';
 
 axios.defaults.baseURL = __API_BASE_URL__;
 

@@ -1,6 +1,9 @@
-﻿CREATE VIEW dbo.AgentPayout
+﻿
+
+CREATE VIEW [dbo].[AgentPayout]
 AS
-( SELECT	A.AgentId ,
+( SELECT TOP 1000
+			A.AgentId ,
 			A.FirstName ,
 			A.MiddleName ,
 			A.LastName ,
@@ -29,5 +32,6 @@ AS
 					) AS ATS_1 ON ATS_1.AgentId = A.AgentId
 	WHERE	( A.IsDeleted = 0 ) AND
 			( COALESCE(DBT_1.TotalDebitCreditAmount, 0) + COALESCE(ATS_1.TotalApprovalAmount, 0) > 1 )
+	ORDER BY (A.FirstName + ' ' + A.LastName)
 );
 GO

@@ -44,7 +44,8 @@ const emptyAgent: CardPeak.Entities.Agent = {
     gender: 'M',
     email: '',
     birthDate: new Date(),
-    accounts: []
+    accounts: [],
+    agentTypeId: 0
 };
 
 class AgentContainer extends React.Component<
@@ -91,10 +92,15 @@ class AgentContainer extends React.Component<
             agent.agentId,
             (data: CardPeak.Entities.AgentDetails) => {
                 if (data) {
-                    agent.accounts = data.accounts;
-                    agent.teamPlacements = data.teamPlacements;
+                    const agentWithDetails = {
+                        ...agent,
+                        accounts: data.accounts,
+                        teamPlacements: data.teamPlacements
+                    };
+                    this.setState({ selectedAgent: agentWithDetails });
+                } else {
+                    this.setState({ selectedAgent: agent });
                 }
-                this.setState({ selectedAgent: agent });
             }
         );
     };

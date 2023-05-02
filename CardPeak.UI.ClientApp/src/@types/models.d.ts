@@ -13,6 +13,7 @@
         updatingAgent?: boolean;
         creatingAgent?: boolean;
         dateFilters?: CardPeak.Entities.DateFilters;
+        uploadingAgentPhoto?: boolean;
     }
 
     export interface RatesModel {
@@ -28,10 +29,12 @@
         banks?: CardPeak.Entities.Reference[];
         cardCategories?: CardPeak.Entities.Reference[];
         defaultRateTypes?: CardPeak.Entities.Reference[];
+        agentTypes?: CardPeak.Entities.Reference[];
         loading?: boolean;
         cardCategoryReferenceTypeId?: number;
         bankReferenceTypeId?: number;
         defaultRateReferenceTypeId?: number;
+        agentTypeReferenceTypeId?: number;
     }
 
     export interface BatchUploadModel {
