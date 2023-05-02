@@ -54,9 +54,9 @@ AS
 AgentType_CTE(ReferenceId, [Description], ShortDescription)
 AS
 (
-	SELECT 30, 'Rookie', NULL
-	UNION ALL SELECT 31, 'Core', NULL
-	UNION ALL SELECT 32, 'Tie Up', NULL
+	SELECT 30, 'Rookie', 'RR'
+	UNION ALL SELECT 31, 'Core', 'CRS'
+	UNION ALL SELECT 32, 'Tie Up', 'CR'
 ),
 Union_All_CTE([ReferenceId], [Description], ShortDescription, [ReferenceTypeId])
 AS

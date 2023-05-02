@@ -30,8 +30,10 @@ namespace CardPeak.Repository.EF
             this.UpdateAccounts(agent, accounts);
             this.UpdateTeams(agent, teams);
 
+            agent.AgentType = null;
             agent.TeamPlacements = null;
             agent.Accounts = null;
+
             this.Context.Entry(agent).State = EntityState.Modified;
 
             return agent;

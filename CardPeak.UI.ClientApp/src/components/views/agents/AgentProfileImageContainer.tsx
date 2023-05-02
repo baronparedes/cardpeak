@@ -40,7 +40,10 @@ class AgentProfileImageContainer extends React.Component<
         }
     }
     getPhotoUrl = () => {
-        return __API_BASE_URL__ + '/agents/' + this.props.selectedAgent.agentId + '/photo';
+        if (this.props.selectedAgent) {
+            return __API_BASE_URL__ + '/agents/' + this.props.selectedAgent.agentId + '/photo';
+        }
+        return '';
     }
     hasErrors: () => boolean = () => {
         this.handleErrors();
